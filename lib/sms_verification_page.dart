@@ -51,7 +51,7 @@ class SmsVerificationPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          PersonalInformationPage(), // Replace with your SMS verification page
+                          PersonalInformationPage(userId: '',), // Replace with your SMS verification page
                     ),
                   );
                 },

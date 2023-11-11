@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
-import 'login_register_page.dart';
+import 'register.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final keyApplicationId = 'WRA6Rjonj88lwnpOJU1jTLt7pZXl0dFRNVIyMCqH';
+  final keyClientKey = 'Ftb2Hg6LWjV6Q4PQX4SfyeXGUjh8dD7kH4ixOam3';
+  final keyParseServerUrl = 'https://parseapi.back4app.com';
+
+  await Parse().initialize(keyApplicationId, keyParseServerUrl,
+      clientKey: keyClientKey, autoSendSessionId: true);
+  var firstObject = ParseObject('FirstClass')
+    ..set(
+        'message', 'Hey ! First message from Flutter. Parse is now connected');
+  await firstObject.save();
+
+  print('done');
   runApp(const MyApp());
 }
 
@@ -18,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginRegisterPage(),
+      home: RegisterPage(),
     );
   }
 }

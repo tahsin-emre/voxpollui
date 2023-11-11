@@ -1,110 +1,101 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
-import 'interest_page.dart';
+import 'interestpage.dart';
 
 class PersonalInformationPage extends StatefulWidget {
+  final String userId;
+
+  PersonalInformationPage({Key? key, required this.userId}) : super(key: key);
+
   @override
   _PersonalInformationPageState createState() => _PersonalInformationPageState();
 }
 
 class _PersonalInformationPageState extends State<PersonalInformationPage> {
-  // Define controllers for text fields
-  TextEditingController nameController = TextEditingController();
-  TextEditingController surnameController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController birthdateController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController locationController = TextEditingController();
-  TextEditingController location2Controller = TextEditingController();
-  TextEditingController genderController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _surnameController = TextEditingController();
+  final TextEditingController _birthDateController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _districtController = TextEditingController();
+  String _gender = 'Erkek'; // Varsayılan cinsiyet
+  Future<void> _saveDetails() async {
+    final ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+    if (currentUser == null) {
+      // Handle the case where there is no logged-in user
+      print("No current user found");
+      return;
+    }
+
+    currentUser
+      ..set('name', _nameController.text.trim())
+      ..set('surname', _surnameController.text.trim())
+      ..set('birthDate', _birthDateController.text.trim())
+      ..set('city', _cityController.text.trim())
+      ..set('district', _districtController.text.trim())
+      ..set('gender', _gender);
+
+    final response = await currentUser.update();
+
+    if (response.success) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => InterestsPage(userId: currentUser.objectId!)),
+      );
+    } else {
+      // Show error message
+      print("Failed to update user: ${response.error}");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: Text('Kişisel Bilgiler'),
       ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 0.0),
-              child: Text(
-                'Kişisel Bilgiler',
-                style: TextStyle(fontSize: 40.0),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 0.0),
-              child: Text(
-                'Bazı bilgiler sonradan değiştirilemez. Doğru girdiğinizden emin olun.',
-              ),
+          children: <Widget>[
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(hintText: 'Ad'),
             ),
             TextField(
-              controller: nameController,
-              decoration: InputDecoration(labelText: 'Ad'),
+              controller: _surnameController,
+              decoration: InputDecoration(hintText: 'Soyad'),
             ),
             TextField(
-              controller: surnameController,
-              decoration: InputDecoration(labelText: 'Soyad'),
+              controller: _birthDateController,
+              decoration: InputDecoration(hintText: 'Doğum Tarihi'),
             ),
             TextField(
-              controller: usernameController,
-              decoration: InputDecoration(labelText: 'Kullanıcı Adı'),
+              controller: _cityController,
+              decoration: InputDecoration(hintText: 'Şehir'),
             ),
             TextField(
-              controller: birthdateController,
-              decoration: InputDecoration(labelText: 'Doğum Tarihi'),
+              controller: _districtController,
+              decoration: InputDecoration(hintText: 'İlçe'),
             ),
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(labelText: 'E-posta'),
+            DropdownButton<String>(
+              value: _gender,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _gender = newValue!;
+                });
+              },
+              items: <String>['Erkek', 'Kadın', 'Diğer']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
-            TextField(
-              controller: locationController,
-              decoration: InputDecoration(labelText: 'İl'),
-            ),
-            TextField(
-              controller: location2Controller,
-              decoration: InputDecoration(labelText: 'İlçe'),
-            ),
-            TextField(
-              controller: genderController,
-              decoration: InputDecoration(labelText: 'Cinsiyet'),
-            ),
-            SizedBox(height: 20.0),
-            Container(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: Implement login functionality
-                  // After successful login, navigate to SMS verification page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          InterestsPage(), // Replace with your SMS verification page
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF2355FF), // Button background color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0), // Button border radius
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0), // Button padding
-                  minimumSize: Size(double.infinity, 0), // Butonun en az yükseklik değeri (0 olmalı)
-                ),
-                child: Text(
-                  'Giriş Yap',
-                  style: TextStyle(
-                    color: Colors.white, // Button text color
-                  ),
-                ),
-              ),
+            ElevatedButton(
+              onPressed: _saveDetails,
+              child: Text('Kaydet'),
             ),
           ],
         ),
