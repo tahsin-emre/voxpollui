@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 class SurveyPage extends StatefulWidget {
   final Map<String, dynamic> pollData;
@@ -10,8 +11,9 @@ class SurveyPage extends StatefulWidget {
   _SurveyPageState createState() => _SurveyPageState();
 }
 class _SurveyPageState extends State<SurveyPage> {
-  // Bu fonksiyon topluluk kartını oluşturur.
   Widget _buildCardCommunity() {
+    ParseObject? creator = widget.pollData['creator'];    // 'creator' içindeki 'username' değerini al
+    String creatorUsername = creator?.get<String>('username') ?? 'Bilinmiyor';    // Bu fonksiyon topluluk kartını oluşturur.
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: AssetImage('assets/login.png'),
@@ -22,7 +24,7 @@ class _SurveyPageState extends State<SurveyPage> {
           SizedBox(width: 4.0),
           Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
           SizedBox(width: 4.0),
-          Text('@kullaniciadi', style: TextStyle(fontSize: 12.0)),
+          Text('@$creatorUsername', style: TextStyle(fontSize: 12.0)),
         ],
       ),
       subtitle: Text('Topluluk Açıklaması'),
@@ -32,9 +34,13 @@ class _SurveyPageState extends State<SurveyPage> {
 
   // Anket verilerini oluşturur.
   Map<String, dynamic> _createPollData() {
+    ParseObject? pollDataForPoll = widget.pollData['poll'];
+    ParseObject? pollDataForPollOption = widget.pollData['poll'];
+    String pollDataBaslik = pollDataForPoll?.get<String>('title') ?? 'Bilinmiyor';
+    String pollDataOption = pollDataForPollOption?.get<String>('text') ?? 'Bilinmiyor';
     return {
       'id': 1,
-      'question': 'Hangi meyveyi daha çok seversiniz?',
+      'question': '$pollDataBaslik',
       'options': [
         {'id': 1, 'title': 'Elma', 'votes': 5},
         {'id': 2, 'title': 'Muz', 'votes': 0},
