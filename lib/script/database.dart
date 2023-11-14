@@ -2,21 +2,31 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 class Database {
   Future<List<Map<String, dynamic>>> fetchPolls() async {
-  final query = QueryBuilder(ParseObject('Poll'));
-  final response = await query.query();
+  final queryForPoll = QueryBuilder(ParseObject('Poll'));
+  final queryForPollOption = QueryBuilder(ParseObject('PollOption'));
+  final responseForPoll = await queryForPoll.query();
+  final responseForPollOption = await queryForPollOption.query();
 
-  if (response.success && response.results != null) {
-    List<Map<String, dynamic>> combinedResults = [];
-    for (var poll in response.results as List<ParseObject>) {
-      var createdBy = poll.get<String>('createdBy');
-      var creatorData = await fetchCreater(createdBy);
-      combinedResults.add({
-        'poll': poll,
-        'creator': creatorData,
-      });
+  if (responseForPoll.success && responseForPoll.results != null) {
+    if (responseForPollOption.success && responseForPollOption.result != null) {
+      List<Map<String, dynamic>> combinedResults = [];
+      for (var poll in responseForPoll.results as List<ParseObject>) {
+        var createdBy = poll.get<String>('createdBy');
+        var creatorData = await fetchCreater(createdBy);
+        combinedResults.add({
+          'poll': poll,
+          'creator': creatorData,
+        });
+      }
+      for (var pollOption in responseForPollOption.results as List<ParseObject>) {
+        combinedResults.add({
+          'pollOption': pollOption,
+        });
+      }
+      return combinedResults;
+    } else {
+      return [];
     }
-
-    return combinedResults;
   } else {
     // Hata durumunda işlem
     return [];
