@@ -1,0 +1,10 @@
+name: 'My Custom Action'
+description: 'Performs some tasks'
+inputs:
+  my-input:
+    description: 'Input for my action'
+    required: true
+    default: 'default value'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
