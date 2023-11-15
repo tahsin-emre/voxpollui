@@ -152,7 +152,7 @@ class _Page0State extends State<Page0> {
     if (currentUser != null) {
       setState(() {
         username = currentUser.username!;
-        surname = currentUser.get<String>('surname') ?? 'Varsayılan Soyad';
+        surname = currentUser.get<String>('surname') ?? 'Soyad';
         //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
       });
     }

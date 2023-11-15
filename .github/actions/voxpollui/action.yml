@@ -1,0 +1,20 @@
+name: 'AI Code Reviewer'
+description: 'Review code using AI'
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub Token'
+    required: true
+  OPENAI_API_KEY:
+    description: 'OpenAI API Key'
+    required: true
+  OPENAI_API_MODEL:
+    description: 'OpenAI API Model'
+    required: false
+    default: 'gpt-4'
+  exclude:
+    description: 'Exclude patterns'
+    required: false
+    default: '**/*.json, **/*.md, **/*.dart, **/*.yaml'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
