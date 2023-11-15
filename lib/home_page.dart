@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/SurveyPage.dart';
-
+import 'package:voxpollui/script/database.dart';
 import 'createpoll.dart';
 import 'notifications_page.dart';
 
@@ -107,7 +107,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
 class PlaceholderPage extends StatelessWidget {
   final int pageIndex;
 
@@ -130,39 +129,36 @@ class Page0 extends StatefulWidget {
 class _Page0State extends State<Page0> {
   bool _showUnansweredSurveyBox = true;
   String username = 'Yükleniyor..';
-  List<ParseObject> polls = []; // Anketleri saklamak için bir liste
+  String surname = 'Yükleniyor..';
+  String createrId = 'Yükleniyor..';
+  List<Map<String, dynamic>>? polls; // Anketleri saklamak için bir liste
+  Database database = Database();
   @override
   void initState() {
     super.initState();
     _loadCurrentUser();
     _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
   }
-  void _loadPolls() async {
-    var fetchedPolls = await fetchPolls();
+
+    void _loadPolls() async {
+    var fetchedPolls = await database.fetchPolls();
     setState(() {
       polls = fetchedPolls;
     });
   }
-  Future<void> _loadCurrentUser() async {
+
+    Future<void> _loadCurrentUser() async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
     if (currentUser != null) {
       setState(() {
         username = currentUser.username!;
+        surname = currentUser.get<String>('surname') ?? 'Varsayılan Soyad';
+        //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
       });
     }
   }
-  Future<List<ParseObject>> fetchPolls() async {
-    final query = QueryBuilder(ParseObject('Poll'))
-      ..includeObject(['createdBy']);
-    final response = await query.query();
+  
 
-    if (response.success && response.results != null) {
-      return response.results as List<ParseObject>;
-    } else {
-      // Hata durumunda işlem
-      return [];
-    }
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,7 +181,7 @@ class _Page0State extends State<Page0> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              username,
+                              '$username $surname',
                               style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                             ),
                             Text(
@@ -313,9 +309,9 @@ class _Page0State extends State<Page0> {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                    return _buildCard(polls[index]); // Her anket için bir kart oluştur
+                    return _buildCard(polls![index]); // Her anket için bir kart oluştur
                   },
-                  childCount: polls.length, // Anket sayısı kadar kart oluştur
+                  childCount: polls?.length, // Anket sayısı kadar kart oluştur
                 ),
               ),
             ],
@@ -325,7 +321,12 @@ class _Page0State extends State<Page0> {
     );
   }
 
-  Widget _buildCard(ParseObject poll) {
+  Widget _buildCard(Map<String, dynamic> poll) {
+    ParseObject? creator = poll['creator'];
+    ParseObject? pollData = poll['poll'];
+    // 'creator' içindeki 'username' değerini al
+    String creatorUsername = creator?.get<String>('username') ?? 'Bilinmiyor';
+    String pollDataBaslik = pollData?.get<String>('title') ?? 'Bilinmiyor';
     return Card(
       color: Colors.white,
       elevation: 0.0,
@@ -346,7 +347,7 @@ class _Page0State extends State<Page0> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Takipçi Adı',
+                      creatorUsername,
                       style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
                     Text('100 Takipçi'),
@@ -356,16 +357,16 @@ class _Page0State extends State<Page0> {
             ),
             SizedBox(height: 10.0),
             Text(
-              poll.get<String>('title') ?? 'Anket Başlığı', // Anket başlığını al
+              pollDataBaslik, // Anket başlığını al
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
-            Text('${poll.get<int>('participantCount') ?? 0} Kişi Katıldı'), // Katılımcı sayısını al
+            Text('${poll['poll'].get<int>('followed') ?? 0} Kişi Katıldı'),
             SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SurveyPage()),
+                  MaterialPageRoute(builder: (context) => SurveyPage(pollData: poll)),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -401,10 +402,27 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  //bool _showUnansweredSurveyBox = true;
+  String username = 'Yükleniyor..';
+  String surname = 'Yükleniyor..';
+  String createrId = 'Yükleniyor..';
+  List<Map<String, dynamic>>? polls; // Anketleri saklamak için bir liste
+  Database database = Database();
+  @override
+  void initState() {
+    super.initState();
+    _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
+  }
+
+    void _loadPolls() async {
+    var fetchedPolls = await database.fetchPolls();
+    setState(() {
+      polls = fetchedPolls;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SafeArea( // İçeriği SafeArea içerisine alın
         child: Column(
           children: [
@@ -450,9 +468,9 @@ class _SearchPageState extends State<SearchPage> {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                        return _buildCard();
+                        return _buildCard(polls![index]);
                       },
-                      childCount: 5,
+                      childCount: polls?.length,
                     ),
                   ),
                 ],
@@ -463,7 +481,12 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
-  Widget _buildCard() {
+  Widget _buildCard(Map<String, dynamic> poll) {
+    ParseObject? creator = poll['creator'];
+    ParseObject? pollData = poll['poll'];
+    // 'creator' içindeki 'username' değerini al
+    String creatorUsername = creator?.get<String>('username') ?? 'Bilinmiyor';
+    String pollDataBaslik = pollData?.get<String>('title') ?? 'Bilinmiyor';
     return Card(
       color: Colors.white,
       elevation: 0.0,
@@ -484,7 +507,7 @@ class _SearchPageState extends State<SearchPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Takipçi Adı',
+                      creatorUsername,
                       style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
                     Text('100 Takipçi'),
@@ -494,17 +517,17 @@ class _SearchPageState extends State<SearchPage> {
             ),
             SizedBox(height: 10.0),
             Text(
-              'Anket Başlığı',
+              pollDataBaslik,
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
             Text('5 Kişi Katıldı'),
             SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
+                /*Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SurveyPage()),
-                );
+                );*/
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF2355FF), // Button background color
@@ -539,6 +562,23 @@ class CommunityPage extends StatefulWidget {
 }
 
 class _CommunityPageState extends State<CommunityPage> {
+  String username = 'Yükleniyor..';
+  String surname = 'Yükleniyor..';
+  String createrId = 'Yükleniyor..';
+  List<Map<String, dynamic>>? polls; // Anketleri saklamak için bir liste
+  Database database = Database();
+  @override
+  void initState() {
+    super.initState();
+    _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
+  }
+
+    void _loadPolls() async {
+    var fetchedPolls = await database.fetchPolls();
+    setState(() {
+      polls = fetchedPolls;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -769,6 +809,4 @@ Widget _buildCardCommunity() {
     trailing: Icon(Icons.arrow_forward),
   );
 }
-
-
 

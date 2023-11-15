@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 class SurveyPage extends StatefulWidget {
+  final Map<String, dynamic> pollData;
+
+  SurveyPage({Key? key, required this.pollData}) : super(key: key);
+
   @override
   _SurveyPageState createState() => _SurveyPageState();
 }
-
 class _SurveyPageState extends State<SurveyPage> {
   Widget _buildCardCommunity() {
+    ParseObject? creator = widget.pollData['creator'];    // 'creator' içindeki 'username' değerini al
+    String creatorUsername = creator?.get<String>('username') ?? 'Bilinmiyor';    // Bu fonksiyon topluluk kartını oluşturur.
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: AssetImage('assets/login.png'),
@@ -18,15 +24,41 @@ class _SurveyPageState extends State<SurveyPage> {
           SizedBox(width: 4.0),
           Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
           SizedBox(width: 4.0),
-          Text('@kullaniciadi', style: TextStyle(fontSize: 12.0)),
+          Text('@$creatorUsername', style: TextStyle(fontSize: 12.0)),
         ],
       ),
       subtitle: Text('Topluluk Açıklaması'),
       trailing: Icon(Icons.arrow_forward),
     );
   }
+
+  // Anket verilerini oluşturur.
+  Map<String, dynamic> _createPollData() {
+    ParseObject? pollDataForPoll = widget.pollData['poll'];
+    ParseObject? pollDataForPollOption = widget.pollData['poll'];
+    String pollDataBaslik = pollDataForPoll?.get<String>('title') ?? 'Bilinmiyor';
+    String pollDataOption = pollDataForPollOption?.get<String>('text') ?? 'Bilinmiyor';
+    return {
+      'id': 1,
+      'question': '$pollDataBaslik',
+      'options': [
+        {'id': 1, 'title': 'Elma', 'votes': 5},
+        {'id': 2, 'title': 'Muz', 'votes': 0},
+        {'id': 3, 'title': 'Üzüm', 'votes': 0},
+      ],
+      'end_date': DateTime.now().add(Duration(days: 2)),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
+    final poll = _createPollData();
+    final days = DateTime(
+      poll['end_date'].year,
+      poll['end_date'].month,
+      poll['end_date'].day,
+    ).difference(DateTime.now()).inDays;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Anket Sayfası'),
@@ -37,36 +69,12 @@ class _SurveyPageState extends State<SurveyPage> {
       ),
       body: Container(
         padding: const EdgeInsets.all(20),
-        child: ListView.builder(
-          itemCount: 1,
-          itemBuilder: (BuildContext context, int index) {
-            final Map<String, dynamic> poll = {
-              'id': 1,
-              'question': 'Hangi meyveyi daha çok seversiniz?',
-              'options': [
-                {'id': 1, 'title': 'Elma', 'votes': 5},
-                {'id': 2, 'title': 'Muz', 'votes': 0},
-                {'id': 3, 'title': 'Üzüm', 'votes': 0},
-              ],
-              'end_date': DateTime.now().add(Duration(days: 2)),
-            };
-
-            final int days = DateTime(
-              poll['end_date'].year,
-              poll['end_date'].month,
-              poll['end_date'].day,
-            ).difference(DateTime(
-              DateTime.now().year,
-              DateTime.now().month,
-              DateTime.now().day,
-            )).inDays;
-
-            return Column(
-                children: [
-                _buildCardCommunity(),
+        child: ListView(
+          children: [
+            _buildCardCommunity(),
             Container(
-            margin: const EdgeInsets.only(bottom: 20),
-            child: FlutterPolls(
+              margin: const EdgeInsets.only(bottom: 20),
+              child: FlutterPolls(
                 pollId: poll['id'].toString(),
                 onVoted: (PollOption pollOption, int newTotalVotes) async {
                   await Future.delayed(const Duration(seconds: 1));
@@ -85,8 +93,8 @@ class _SurveyPageState extends State<SurveyPage> {
                 ),
                 pollOptions: List<PollOption>.from(
                   poll['options'].map(
-                        (option) {
-                      var a = PollOption(
+                    (option) {
+                      return PollOption(
                         id: option['id'],
                         title: Text(
                           option['title'],
@@ -97,7 +105,6 @@ class _SurveyPageState extends State<SurveyPage> {
                         ),
                         votes: option['votes'],
                       );
-                      return a;
                     },
                   ),
                 ),
@@ -108,22 +115,14 @@ class _SurveyPageState extends State<SurveyPage> {
                 metaWidget: Row(
                   children: [
                     const SizedBox(width: 6),
-                    const Text(
-                      '•',
-                    ),
-                    const SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      days < 0 ? "ended" : "ends $days days",
-                    ),
+                    const Text('•'),
+                    const SizedBox(width: 6),
+                    Text(days < 0 ? "Anket sona erdi" : "Anket sona eriyor: $days gün"),
                   ],
                 ),
-              )
-            )
-            ]
-            );
-          },
+              ),
+            ),
+          ],
         ),
       ),
     );
