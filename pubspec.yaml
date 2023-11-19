@@ -62,7 +62,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - .env
+    - .env.sample
     - assets/login.png
     - assets/onboard1.png
     - assets/onboard2.png

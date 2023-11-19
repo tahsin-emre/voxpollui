@@ -6,7 +6,7 @@ import 'register.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: ".env.sample");
 
   // Use the environment variables
   final keyApplicationId = dotenv.env['APPLICATION_ID'];

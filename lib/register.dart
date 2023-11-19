@@ -70,6 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _birthDateController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _districtController = TextEditingController();
+  final TextEditingController _biographyController = TextEditingController();
   String _gender = 'Erkek'; // Varsayılan cinsiyet
   Future<void> _registerUser() async {
     final username = _usernameController.text.trim();
@@ -84,11 +85,13 @@ class _RegisterPageState extends State<RegisterPage> {
     final birthDate = _birthDateController.text.trim();
     final city = _cityController.text.trim();
     final district = _districtController.text.trim();
+    final biography = _biographyController.text.trim();
 
     if (username.isEmpty || email.isEmpty || password.isEmpty || name.isEmpty || surname.isEmpty || birthDate.isEmpty || city.isEmpty || district.isEmpty || selectedInterests.isEmpty) {
       // Kullanıcı bilgileri eksik
       return;
     }
+    
 
     final user = ParseUser.createUser(username, password, email)
       ..set('name', name)
@@ -97,7 +100,8 @@ class _RegisterPageState extends State<RegisterPage> {
       ..set('city', city)
       ..set('district', district)
       ..set('gender', _gender)
-      ..set('interests', selectedInterests); // İlgi alanlarını kullanıcıya ekle
+      ..set('interests', selectedInterests) // İlgi alanlarını kullanıcıya ekle
+      ..set('biography', biography ?? '');
 
     var response = await user.signUp();
 
@@ -179,6 +183,10 @@ class _RegisterPageState extends State<RegisterPage> {
               TextField(
                 controller: _districtController,
                 decoration: InputDecoration(hintText: 'İlçe'),
+              ),
+              TextField(
+                controller: _biographyController,
+                decoration: InputDecoration(hintText: 'Biyografi (isteğe bağlı)'),
               ),
               DropdownButton<String>(
                 value: _gender,
