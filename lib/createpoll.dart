@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:voxpollui/home_page.dart';
 
 class CreatePollPage extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
         await pollOption.save();
       }
       // Anket başarıyla kaydedildi mesajı göster ve ana sayfaya yönlendir
-      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: ((context) => HomePage())));
     } else {
       // Hata mesajı göster
     }

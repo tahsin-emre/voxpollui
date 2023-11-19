@@ -128,9 +128,11 @@ class Page0 extends StatefulWidget {
 
 class _Page0State extends State<Page0> {
   bool _showUnansweredSurveyBox = true;
+  int? followed;
   String username = 'Yükleniyor..';
   String surname = 'Yükleniyor..';
   String createrId = 'Yükleniyor..';
+
   List<Map<String, dynamic>>? polls; // Anketleri saklamak için bir liste
   Database database = Database();
   @override
@@ -153,6 +155,7 @@ class _Page0State extends State<Page0> {
       setState(() {
         username = currentUser.username!;
         surname = currentUser.get<String>('surname') ?? 'Soyad test';
+        followed = currentUser.get<int>('followed') ?? 0;
         //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
       });
     }
@@ -185,7 +188,7 @@ class _Page0State extends State<Page0> {
                               style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              '100 Takipçi',
+                              '${followed.toString()}',
                               style: TextStyle(fontSize: 16.0),
                             ),
                           ],
@@ -307,13 +310,16 @@ class _Page0State extends State<Page0> {
                 ),
               ),
               SliverList(
-                delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                    return _buildCard(polls![index]); // Her anket için bir kart oluştur
-                  },
-                  childCount: polls?.length, // Anket sayısı kadar kart oluştur
-                ),
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  if (polls == null) {
+                    return Center(child: CircularProgressIndicator()); // Yükleme göstergesi
+                  }
+                  return _buildCard(polls![index]); // Anket kartını oluştur
+                },
+                childCount: polls?.length ?? 1, // Eğer polls null ise, yükleme göstergesi için 1 eleman göster
               ),
+            ),
             ],
           ),
         ),
@@ -324,6 +330,11 @@ class _Page0State extends State<Page0> {
   Widget _buildCard(Map<String, dynamic> poll) {
     ParseObject? creator = poll['creator'];
     ParseObject? pollData = poll['poll'];
+    if (pollData == null) {
+    // pollData null ise, burada uygun bir işlem yapın
+    // Örneğin, bir hata mesajı göstermek veya varsayılan bir değer kullanmak
+    return SizedBox.shrink(); // Geçici bir çözüm olarak boş bir widget döndür
+  }
     // 'creator' içindeki 'username' değerini al
     String creatorUsername = creator?.get<String>('username') ?? 'Bilinmiyor';
     String pollDataBaslik = pollData?.get<String>('title') ?? 'Bilinmiyor';
