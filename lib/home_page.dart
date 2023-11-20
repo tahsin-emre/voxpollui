@@ -6,7 +6,7 @@ import 'package:voxpollui/SurveyPage.dart';
 import 'package:voxpollui/script/database.dart';
 import 'createpoll.dart';
 import 'notifications_page.dart';
-
+Database database = Database();
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -134,7 +134,6 @@ class _Page0State extends State<Page0> {
   String createrId = 'Yükleniyor..';
 
   List<Map<String, dynamic>>? polls; // Anketleri saklamak için bir liste
-  Database database = Database();
   @override
   void initState() {
     super.initState();
@@ -665,6 +664,46 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  bool _showUnansweredSurveyBox = true;
+  var followed;
+  var followers;
+  String username = 'Yükleniyor..';
+  String name = 'Yükleniyor..';
+  String surname = 'Yükleniyor..';
+  String createrId = 'Yükleniyor..';
+  String biyografi = 'Yükleniyor..';
+
+  List<Map<String, dynamic>>? polls; // Anketleri saklamak için bir liste
+  @override
+  void initState() {
+    super.initState();
+    _loadCurrentUser();
+    _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
+  }
+
+    void _loadPolls() async {
+    var fetchedPolls = await database.fetchPolls();
+    setState(() {
+      polls = fetchedPolls;
+    });
+  }
+
+    Future<void> _loadCurrentUser() async {
+    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+    if (currentUser != null) {
+      setState(() {
+        username = currentUser.username!;
+        name = currentUser.get<String>('name') ?? 'name test';
+        surname = currentUser.get<String>('surname') ?? 'Soyad test';
+        followed = currentUser.get<dynamic>('followed') ?? '0';
+        biyografi = currentUser.get<String>('biography') ?? '';
+        followers = currentUser.get<dynamic>('followers') ?? '0';
+
+
+        //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -709,22 +748,22 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             Text(
-              'Profil Adı',
+              '$name $surname',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            Text('@kullaniciadi'),
+            Text('@$username'),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Kısa biyografi burada yazacak.',
+                '${biyografi ?? '' }',
                 textAlign: TextAlign.center,
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildStatColumn('Takip Edilen', 100),
-                _buildStatColumn('Takipçi', 200),
+                _buildStatColumn('Takip Edilen', '$followed'),
+                _buildStatColumn('Takipçi', '$followers'),
                 _buildStatColumn('Katıldığı Anket', 50),
               ],
             ),
@@ -761,7 +800,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Column _buildStatColumn(String label, int number) {
+  Column _buildStatColumn(String label, dynamic number) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
