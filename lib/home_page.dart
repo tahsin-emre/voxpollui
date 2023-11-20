@@ -362,7 +362,7 @@ class _Page0State extends State<Page0> {
                       creatorUsername,
                       style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
-                    Text('100 Takipçi'),
+                    Text('${poll['poll'].get<int>('followed') ?? 100} Takipçi'),
                   ],
                 ),
               ],
@@ -478,13 +478,17 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ),
                   SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        return _buildCard(polls![index]);
-                      },
-                      childCount: polls?.length,
-                    ),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      if (polls == null || polls!.isEmpty) {
+                        // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      return _buildCard(polls![index]); // Anket kartını oluştur
+                    },
+                    childCount: (polls != null && polls!.isNotEmpty) ? polls!.length : 1,
                   ),
+                ),
                 ],
               ),
             ),
@@ -494,11 +498,13 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
   Widget _buildCard(Map<String, dynamic> poll) {
-    ParseObject? creator = poll['creator'];
-    ParseObject? pollData = poll['poll'];
-    // 'creator' içindeki 'username' değerini al
-    String creatorUsername = creator?.get<String>('username') ?? 'Bilinmiyor';
-    String pollDataBaslik = pollData?.get<String>('title') ?? 'Bilinmiyor';
+  ParseObject? creator = poll['creator'];
+  ParseObject? pollData = poll['poll'];
+
+  // 'creator' ve 'pollData' objelerinin null olup olmadığını kontrol et
+  String creatorUsername = creator != null ? creator.get<String>('username') ?? 'Bilinmiyor' : 'Bilinmiyor';
+  String pollDataBaslik = pollData != null ? pollData.get<String>('title') ?? 'Bilinmiyor' : 'Bilinmiyor';
+  int followedCount = pollData != null ? pollData.get<int>('followed') ?? 0 : 0;
     return Card(
       color: Colors.white,
       elevation: 0.0,
@@ -522,7 +528,7 @@ class _SearchPageState extends State<SearchPage> {
                       creatorUsername,
                       style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
-                    Text('100 Takipçi'),
+                    Text('${followedCount ?? 100} Takipçi'),
                   ],
                 ),
               ],
@@ -532,14 +538,14 @@ class _SearchPageState extends State<SearchPage> {
               pollDataBaslik,
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
-            Text('5 Kişi Katıldı'),
+            Text('${followedCount ?? 0} Kişi Katıldı'),
             SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: () {
-                /*Navigator.push(
+                Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SurveyPage()),
-                );*/
+                  MaterialPageRoute(builder: (context) => SurveyPage(pollData: poll,)),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF2355FF), // Button background color
