@@ -624,7 +624,7 @@ class _CommunityPageState extends State<CommunityPage> {
               ),
             ),
             Expanded(
-              child: ListView(
+              child: polls == null ? CircularProgressIndicator() : ListView(
                 children: [
                   SizedBox(height: 10.0),
                   Padding(
@@ -635,8 +635,7 @@ class _CommunityPageState extends State<CommunityPage> {
                     ),
                   ),
                   SizedBox(height: 10.0),
-                  _buildCardCommunity(),
-                  _buildCardCommunity(),
+              ...List.generate(polls!.length, (index) => _buildCardCommunity(polls![index])),
                   SizedBox(height: 10.0),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -646,9 +645,7 @@ class _CommunityPageState extends State<CommunityPage> {
                     ),
                   ),
                   SizedBox(height: 10.0),
-                  _buildCardCommunityWithJoinButton(),
-                  _buildCardCommunityWithJoinButton(),
-                  _buildCardCommunityWithJoinButton(),
+              ...List.generate(polls!.length, (index) => _buildCardCommunityWithJoinButton(polls![index])),
                 ],
               ),
             ),
@@ -744,13 +741,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   ListView.builder(
                     itemCount: 10,
                     itemBuilder: (BuildContext context, int index) {
-                      return _buildCardCommunity();
+                      Map<String, dynamic> deneme = {};
+                      return _buildCardCommunity(deneme);
                     },
                   ),
                   ListView.builder(
                     itemCount: 10,
-                    itemBuilder: (BuildContext context, int index) {
-                      return _buildCardCommunity();
+                    itemBuilder: (BuildContext context, int index) {                     
+                      Map<String, dynamic> deneme = {};
+                      return _buildCardCommunity(deneme);
                     },
                   ),
                 ],
@@ -783,7 +782,7 @@ class _ProfilePageState extends State<ProfilePage> {
 }
 
 
-Widget _buildCardCommunityWithJoinButton() {
+Widget _buildCardCommunityWithJoinButton(Map<String, dynamic> poll) {
   return ListTile(
     leading: CircleAvatar(
       backgroundImage: AssetImage('assets/login.png'),
@@ -809,7 +808,7 @@ Widget _buildCardCommunityWithJoinButton() {
   );
 }
 
-Widget _buildCardCommunity() {
+Widget _buildCardCommunity(Map<String, dynamic> poll) {
   return ListTile(
     leading: CircleAvatar(
       backgroundImage: AssetImage('assets/login.png'),
