@@ -131,7 +131,7 @@ class _SurveyPageState extends State<SurveyPage> {
     onTap: () {
       // Burada tıklama olayını işleyin
       print('Trailing ikonuna tıklandı!');
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(4)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: widget.pollData, i: 4)));
     },
     child: Icon(Icons.arrow_forward),
   ),
