@@ -22,7 +22,8 @@ class _SurveyPageState extends State<SurveyPage> {
   }
 
   Future<List<PollOption>> _fetchPollOptions() async {
-  var pollId = widget.pollData['poll'].objectId;
+  var poll = widget.pollData['poll'];
+  String pollId = poll?.get<String>('objectId') ?? 'Bilinmiyor';
   QueryBuilder<ParseObject> queryPollOptions = QueryBuilder<ParseObject>(ParseObject('PollOption'))
       ..whereEqualTo('pollId', pollId);
 
@@ -46,7 +47,7 @@ class _SurveyPageState extends State<SurveyPage> {
 
   @override
   Widget build(BuildContext context) {
-    final poll = widget.pollData['poll'];
+    var poll = widget.pollData['poll'];
 
     DateTime? endDate = poll.get<DateTime>('endDate');
     bool pollEnded = endDate != null ? DateTime.now().isAfter(endDate) : false;

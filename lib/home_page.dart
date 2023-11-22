@@ -484,7 +484,7 @@ class _SearchPageState extends State<SearchPage> {
                         // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
                         return Center(child: CircularProgressIndicator());
                       }
-                      return _buildCard(polls![index]); // Anket kartını oluştur
+                      return _buildCard(polls!,index); // Anket kartını oluştur
                     },
                     childCount: (polls != null && polls!.isNotEmpty) ? polls!.length : 1,
                   ),
@@ -497,9 +497,10 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
-  Widget _buildCard(Map<String, dynamic> poll) {
-  ParseObject? creator = poll['creator'];
-  ParseObject? pollData = poll['poll'];
+  Widget _buildCard(List<Map<String, dynamic>> poll, int i) {
+    Map<String, dynamic> data = poll[i];
+    ParseObject? creator = data['creator'];
+    ParseObject? pollData = data['poll'];
 
   // 'creator' ve 'pollData' objelerinin null olup olmadığını kontrol et
   String creatorUsername = creator != null ? creator.get<String>('username') ?? 'Bilinmiyor' : 'Bilinmiyor';
@@ -544,7 +545,7 @@ class _SearchPageState extends State<SearchPage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SurveyPage(pollData: poll,)),
+                  MaterialPageRoute(builder: (context) => SurveyPage(pollData: data,)),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -676,21 +677,41 @@ class _ProfilePageState extends State<ProfilePage> {
   String biyografi = 'Yükleniyor..';
 
   List<Map<String, dynamic>>? polls; // Anketleri saklamak için bir liste
+
   @override
   void initState() {
     super.initState();
-    _loadCurrentUser();
-    _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
+    if (widget.pollData == null) {
+      _loadCurrentUser(); // Kullanıcının kendi verilerini yükler
+    } else {
+      _loadPollData(); // pollData'dan gelen verileri yükler
+    }
+    _loadPolls();
   }
 
-    void _loadPolls() async {
-    var fetchedPolls = await database.fetchPolls();
+  void _loadPolls() async {
+  var fetchedPolls = await database.fetchPolls();
+  if (mounted) {
     setState(() {
       polls = fetchedPolls;
     });
   }
+}
 
-    Future<void> _loadCurrentUser() async {
+
+  void _loadPollData() {
+    setState(() {
+      // pollData'dan gelen verileri ayarla
+      username = widget.pollData!['creator']['username'] ?? 'Yükleniyor..';
+      name = widget.pollData!['creator']['name'] ?? 'Yükleniyor..';
+      surname = widget.pollData!['creator']['surname'] ?? 'Yükleniyor..';
+      followed = widget.pollData!['creator']['followed'] ?? '0';
+      biyografi = widget.pollData!['creator']['biography'] ?? '';
+      followers = widget.pollData!['creator']['followers'] ?? '0';
+    });
+  }
+
+  Future<void> _loadCurrentUser() async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
     if (currentUser != null) {
       setState(() {
@@ -700,108 +721,116 @@ class _ProfilePageState extends State<ProfilePage> {
         followed = currentUser.get<dynamic>('followed') ?? '0';
         biyografi = currentUser.get<String>('biography') ?? '';
         followers = currentUser.get<dynamic>('followers') ?? '0';
-        //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
       });
     }
   }
-  @override
-  Widget build(BuildContext context) {
-    Map<String, dynamic>? data = widget.pollData;
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        body: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/cover.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 16,
-                  left: 16,
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-                Positioned(
-                  top: 16,
-                  right: 16,
-                  child: IconButton(
-                    icon: Icon(Icons.settings, color: Colors.white),
-                    onPressed: () {},
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              transform: Matrix4.translationValues(0, -50, 0),
-              child: CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/profilepicture.png'),
-              ),
-            ),
-            Text(
-              "${data!['creator']['name'] ?? name} ${data!['creator']['name'] ?? surname}",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Text('@$username'),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                '${biyografi ?? '' }',
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildStatColumn('Takip Edilen', '$followed'),
-                _buildStatColumn('Takipçi', '$followers'),
-                _buildStatColumn('Katıldığı Anket', 50),
-              ],
-            ),
-            Divider(),
-            TabBar(
-              tabs: [
-                Tab(text: 'Katıldıklarım'),
-                Tab(text: 'Oluşturduklarım'),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (BuildContext context, int index) {
-                      List<Map<String, dynamic>> bos = [{}];
-                      return _buildCardCommunity(context ,polls ?? bos, index);
-                    },
-                  ),
-                  ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (BuildContext context, int index) {                     
-                      List<Map<String, dynamic>> bos = [{}];
-                      return _buildCardCommunity(context ,polls ?? bos, index);
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
-  Column _buildStatColumn(String label, dynamic number) {
+  @override
+Widget build(BuildContext context) {
+  final data = widget.pollData ?? {
+    'creator': {
+      'username': username,
+      'name': name,
+      'surname': surname,
+      'followed': followed,
+      'biography': biyografi,
+      'followers': followers,
+    }
+  };
+
+  return DefaultTabController(
+    length: 2,
+    child: Scaffold(
+      body: Column(
+        children: [
+          Container(
+            height: 200,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/cover.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 16,
+            left: 16,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+          Positioned(
+            top: 16,
+            right: 16,
+            child: IconButton(
+              icon: Icon(Icons.settings, color: Colors.white),
+              onPressed: () {},
+            ),
+          ),
+          Container(
+            transform: Matrix4.translationValues(0, -50, 0),
+            child: CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/profilepicture.png'),
+            ),
+          ),
+          Text(
+            "${data!['creator']['name'] ?? name} ${data!['creator']['surname'] ?? surname}",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          Text('@$username'),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              '${biyografi ?? ''}',
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildStatColumn('Takip Edilen', '$followed'),
+              _buildStatColumn('Takipçi', '$followers'),
+              _buildStatColumn('Katıldığı Anket', '50'), // Katıldığı anket sayısını sabit olarak veriyorum, gerektiğine göre düzeltebilirsiniz.
+            ],
+          ),
+          Divider(),
+          TabBar(
+            tabs: [
+              Tab(text: 'Katıldıklarım'),
+              Tab(text: 'Oluşturduklarım'),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              children: [
+                ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) {
+                    List<Map<String, dynamic>> bos = [{}];
+                    return _buildCardCommunity(
+                        context, polls ?? bos, index);
+                  },
+                ),
+                ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) {
+                    List<Map<String, dynamic>> bos = [{}];
+                    return _buildCardCommunity(
+                        context, polls ?? bos, index);
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+ Column _buildStatColumn(String label, dynamic number) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -818,7 +847,6 @@ class _ProfilePageState extends State<ProfilePage> {
       ],
     );
   }
-
 }
 
 
@@ -863,6 +891,9 @@ Widget _buildCardCommunity(BuildContext context , List<Map<String, dynamic>> pol
 
   String creatorUsername = creator != null ? creator.get<String>('username') ?? 'Bilinmiyor' : 'Bilinmiyor';
   String pollDataBaslik = pollData != null ? pollData.get<String>('title') ?? 'Bilinmiyor' : 'Bilinmiyor';
+  String toplulukNameOrnektir = creator != null ? creator.get<String>('name') ?? 'Bilinmiyor' : 'Bilinmiyor';
+  //String toplulukNameOrnektir = creator != null ? creator.get<String>('name') ?? 'Bilinmiyor' : 'Bilinmiyor';
+
 
   return ListTile(
     leading: CircleAvatar(

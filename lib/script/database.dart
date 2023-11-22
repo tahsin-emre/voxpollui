@@ -14,10 +14,11 @@ class Database {
         creatorData = await fetchCreater(createdBy);
       }
       combinedResults.add({
-        'poll': poll,
-        'creator': creatorData,
+          'poll': poll,
+          'creator': creatorData,
       });
     }
+    print('$combinedResults    COOOMMMBİİİNEEEDDDRESSUUULLLTSSS');
     return combinedResults;
   } else {
     // Hata durumunda işlem
