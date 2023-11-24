@@ -678,26 +678,26 @@ class _ProfilePageState extends State<ProfilePage> {
 
   List<Map<String, dynamic>>? polls; // Anketleri saklamak için bir liste
 
+   bool _isLoading = true; // Yükleme durumunu takip eden bir değişken ekleyin
+
   @override
   void initState() {
     super.initState();
     if (widget.pollData == null) {
-      _loadCurrentUser(); // Kullanıcının kendi verilerini yükler
+      _loadCurrentUser();
     } else {
-      _loadPollData(); // pollData'dan gelen verileri yükler
+      _loadPollData();
     }
     _loadPolls();
   }
 
   void _loadPolls() async {
-  var fetchedPolls = await database.fetchPolls();
-  if (mounted) {
+    var fetchedPolls = await database.fetchPolls();
     setState(() {
       polls = fetchedPolls;
+      _isLoading = false; // Veriler yüklendikten sonra yükleme durumunu güncelleyin
     });
   }
-}
-
 
   void _loadPollData() {
     setState(() {
@@ -743,6 +743,9 @@ Widget build(BuildContext context) {
     child: Scaffold(
       body: Column(
         children: [
+          if (_isLoading) // Yükleme durumu kontrolü
+              CircularProgressIndicator()
+            else
           Container(
             height: 200,
             decoration: BoxDecoration(
@@ -803,27 +806,31 @@ Widget build(BuildContext context) {
             ],
           ),
           Expanded(
-            child: TabBarView(
-              children: [
-                ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context, int index) {
-                    List<Map<String, dynamic>> bos = [{}];
-                    return _buildCardCommunity(
-                        context, polls ?? bos, index);
-                  },
+                child: TabBarView(
+                  children: [
+                    // Katıldıklarım bölümü
+                    if (polls != null)
+                      ListView.builder(
+                        itemCount: polls!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          List<Map<String, dynamic>> bos = [{}];
+                          return _buildCardCommunityWithJoinButton(
+                              context, polls ?? bos, index);
+                        },
+                      ),
+                    // Oluşturduklarım bölümü
+                    if (polls != null)
+                      ListView.builder(
+                        itemCount: polls!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          List<Map<String, dynamic>> bos = [{}];
+                          return _buildCardCommunity(
+                              context, polls ?? bos, index);
+                        },
+                      ),
+                  ],
                 ),
-                ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context, int index) {
-                    List<Map<String, dynamic>> bos = [{}];
-                    return _buildCardCommunity(
-                        context, polls ?? bos, index);
-                  },
-                ),
-              ],
-            ),
-          ),
+              ),
         ],
       ),
     ),
@@ -857,6 +864,7 @@ Widget _buildCardCommunityWithJoinButton(BuildContext context , List<Map<String,
 
   String creatorUsername = creator != null ? creator.get<String>('username') ?? 'Bilinmiyor' : 'Bilinmiyor';
   String pollDataBaslik = pollData != null ? pollData.get<String>('title') ?? 'Bilinmiyor' : 'Bilinmiyor';
+
   return ListTile(
     leading: CircleAvatar(
       backgroundImage: AssetImage('assets/login.png'),
