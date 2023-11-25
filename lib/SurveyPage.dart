@@ -71,25 +71,21 @@
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
                   }
-
                   if (snapshot.hasError) {
                     return Text('Hata: ${snapshot.error}');
                   }
-
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
                     return Text('Anket seçenekleri bulunamadı');
                   }
-
                   return FlutterPolls(
                     pollId: poll.objectId,
                     onVoted: (PollOption pollOption, int newTotalVotes) async {
                       // Oturum açmış kullanıcının bilgilerini al
                       ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
                       String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
-
                       // Seçilen anket seçeneğinin objectId'sini al
                       String optionId = pollOption.id.toString(); // 'id' int'ten String'e dönüştürülüyor
-
+                      print("Kullanıcı ID: $userId, Anket ID: ${poll.objectId}, Seçenek ID: $optionId");
                       // Cloud fonksiyonunu çağır
                       ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
                       final Map<String, dynamic> params = <String, dynamic>{
@@ -100,16 +96,17 @@
                       final ParseResponse result = await function.execute(parameters: params);
 
                       if (result.success) {
+                        print('Oy Başarıyla Kaydedildi');
                         // Anket verilerini yeniden yükle
                         setState(() {
                           _pollOptions = _fetchPollOptions();
                         });
+                        return true;
                       } else {
                         // Hata işleme
                         print("Anket cevabı kaydedilemedi: ${result.error}");
+                        return false;
                       }
-
-                      return true;
                     },
 
                     pollEnded: pollEnded,
