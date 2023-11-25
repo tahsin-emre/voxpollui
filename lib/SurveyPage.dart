@@ -14,38 +14,69 @@ class SurveyPage extends StatefulWidget {
 
 class _SurveyPageState extends State<SurveyPage> {
   late Future<List<PollOption>> _pollOptions;
+  List<String> _pollOptionTitles = []; // Bu yeni listeyi ekleyin
+  bool _hasVoted = false;
 
   @override
   void initState() {
     super.initState();
     _pollOptions = _fetchPollOptions();
+    _checkIfUserVoted();
   }
 
-  Future<List<PollOption>> _fetchPollOptions({String? selectedOptionId}) async {
-  var poll = widget.pollData['poll'];
-  String pollId = poll?.get<String>('objectId') ?? 'Bilinmiyor';
-  QueryBuilder<ParseObject> queryPollOptions = QueryBuilder<ParseObject>(ParseObject('PollOption'))
-      ..whereEqualTo('pollId', pollId);
+  Future<void> _checkIfUserVoted() async {
+    bool hasVoted = await _hasUserVoted();
+    if (hasVoted) {
+      setState(() {
+        _hasVoted = true;
+      });
+    }
+  }
 
-  final ParseResponse apiResponse = await queryPollOptions.query();
+  Future<bool> _hasUserVoted() async {
+  ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+  String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
+  String pollId = widget.pollData['poll'].objectId;
 
-  if (apiResponse.success && apiResponse.results != null) {
-    return apiResponse.results!.map((e) {
-      String optionId = e.get<String>('objectId') ?? 'Bilinmiyor'; // Seçenek kimlik bilgisini al
-      return PollOption(
-        id: optionId,
-        title: Text(e.get<String>('text') ?? 'Hata'),
-        votes: e.get<int>('votes') ?? 0,
-      );
-    }).toList();
+  QueryBuilder<ParseObject> queryUserPollResponse = QueryBuilder<ParseObject>(ParseObject('PollResponse'))
+    ..whereEqualTo('userId', userId)
+    ..whereEqualTo('pollId', pollId);
+
+  final ParseResponse apiResponse = await queryUserPollResponse.query();
+
+  if (apiResponse.success && apiResponse.results != null && apiResponse.results!.isNotEmpty) {
+    // Kullanıcı bu ankette daha önce oy kullanmış
+    return true;
   } else {
-    // Hata durumunda boş liste döndür
-    return [];
+    // Kullanıcı bu ankette daha önce oy kullanmamış
+    return false;
   }
 }
 
+  Future<List<PollOption>> _fetchPollOptions() async {
+    var poll = widget.pollData['poll'];
+    String pollId = poll?.get<String>('objectId') ?? 'Bilinmiyor';
+    QueryBuilder<ParseObject> queryPollOptions = QueryBuilder<ParseObject>(ParseObject('PollOption'))
+      ..whereEqualTo('pollId', pollId);
 
+    final ParseResponse apiResponse = await queryPollOptions.query();
 
+    if (apiResponse.success && apiResponse.results != null) {
+      _pollOptionTitles.clear(); // Listeyi temizleyin
+      return apiResponse.results!.map((e) {
+        String optionId = e.get<String>('objectId') ?? 'Bilinmiyor';
+        String optionTitle = e.get<String>('text') ?? 'Hata';
+        _pollOptionTitles.add(optionTitle); // Başlığı listeye ekleyin
+        return PollOption(
+          id: optionId,
+          title: Text(optionTitle),
+          votes: e.get<int>('votes') ?? 0,
+        );
+      }).toList();
+    } else {
+      return [];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,71 +98,66 @@ class _SurveyPageState extends State<SurveyPage> {
         child: ListView(
           children: [
             _buildCardCommunity(),
-            FutureBuilder<List<PollOption>>(
-              future: _pollOptions,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                }
-
-                if (snapshot.hasError) {
-                  return Text('Hata: ${snapshot.error}');
-                }
-
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Text('Anket seçenekleri bulunamadı');
-                }
-
-                return FlutterPolls(
-                  pollId: poll.objectId,
-                  onVoted: (PollOption pollOption, int newTotalVotes) async {
-                      // Oturum açmış kullanıcının bilgilerini al
-                      ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-                      String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
-                      // Seçilen anket seçeneğinin objectId'sini al
-                      String optionId = pollOption.id.toString(); // 'id' int'ten String'e dönüştürülüyor
-                      print("Kullanıcı ID: $userId, Anket ID: ${poll.objectId}, Seçenek ID: $optionId");
-                      // Cloud fonksiyonunu çağır
-                      ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
-                      final Map<String, dynamic> params = <String, dynamic>{
-                        'userId': userId,
-                        'pollId': poll.objectId,
-                        'optionId': optionId
-                      };
-                      final ParseResponse result = await function.execute(parameters: params);
-
-                      if (result.success) {
-                        print('Oy Başarıyla Kaydedildi');
-                        // Anket verilerini yeniden yükle
-                        setState(() {
-                          _pollOptions = _fetchPollOptions();
-                        });
-                        return true;
-                      } else {
-                        // Hata işleme
-                        print("Anket cevabı kaydedilemedi: ${result.error}");
-                        return false;
+            _hasVoted
+                ? _buildPollResults()
+                : FutureBuilder<List<PollOption>>(
+                    future: _pollOptions,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
                       }
+
+                      if (snapshot.hasError) {
+                        return Text('Hata: ${snapshot.error}');
+                      }
+
+                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return Text('Anket seçenekleri bulunamadı');
+                      }
+
+                      return FlutterPolls(
+                        pollId: poll.objectId,
+                        onVoted: (PollOption pollOption, int newTotalVotes) async {
+                          ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+                          String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
+                          String optionId = pollOption.id.toString();
+                          print("Kullanıcı ID: $userId, Anket ID: ${poll.objectId}, Seçenek ID: $optionId");
+                          ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
+                          final Map<String, dynamic> params = <String, dynamic>{
+                            'userId': userId,
+                            'pollId': poll.objectId,
+                            'optionId': optionId
+                          };
+                          final ParseResponse result = await function.execute(parameters: params);
+
+                          if (result.success) {
+                            print('Oy Başarıyla Kaydedildi');
+                            // _pollOptions'ı yeniden yüklemeyi burada yapabilirsiniz
+                            return true;
+                          } else {
+                            print("Anket cevabı kaydedilemedi: ${result.error}");
+                            return false;
+                          }
+                        },
+                        pollEnded: pollEnded,
+                        pollTitle: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            poll.get<String>('title'),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        pollOptions: snapshot.data!,
+                        votedPercentageTextStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      );
                     },
-                  pollEnded: pollEnded,
-                  pollTitle: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      poll.get<String>('title'),
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
                   ),
-                  pollOptions: snapshot.data!,
-                  votedPercentageTextStyle: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                );
-              },
-            ),
           ],
         ),
       ),
@@ -164,9 +190,47 @@ class _SurveyPageState extends State<SurveyPage> {
     child: Icon(Icons.arrow_forward),
   ),
 );
+}
+  Widget _buildPollResults() {
+    return FutureBuilder<List<PollOption>>(
+      future: _pollOptions,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+
+        if (snapshot.hasError) {
+          return Text('Hata: ${snapshot.error}');
+        }
+
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Text('Anket sonuçları bulunamadı');
+        }
+
+        List<PollOption> options = snapshot.data!;
+        int totalVotes = options.fold(0, (sum, item) => sum + item.votes);
+
+        return Column(
+          children: [
+            Text('Daha önce oy verdiniz. İşte sonuçlar:'),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: options.length,
+              itemBuilder: (context, index) {
+                PollOption option = options[index];
+                double percentage = totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0;
+                return ListTile(
+                  title: Text(_pollOptionTitles[index]), // Burada listeyi kullanın
+                  trailing: Text('${option.votes} Oy (%${percentage.toStringAsFixed(2)})'),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
-
 /*import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
   import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
