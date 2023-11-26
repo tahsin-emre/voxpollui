@@ -16,6 +16,7 @@ class _SurveyPageState extends State<SurveyPage> {
   late Future<List<PollOption>> _pollOptions;
   List<String> _pollOptionTitles = []; // Bu yeni listeyi ekleyin
   bool _hasVoted = false;
+  bool _isLoading = true; // Yükleme durumu ekleyin
 
   @override
   void initState() {
@@ -29,11 +30,12 @@ class _SurveyPageState extends State<SurveyPage> {
     if (hasVoted) {
       setState(() {
         _hasVoted = true;
+        _isLoading = false; // Veriler yüklendiğinde yükleme durumunu güncelleyin
       });
     }
   }
 
-  Future<bool> _hasUserVoted() async {
+    Future<bool> _hasUserVoted() async {
   ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
   String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
   String pollId = widget.pollData['poll'].objectId;
@@ -53,7 +55,7 @@ class _SurveyPageState extends State<SurveyPage> {
   }
 }
 
-  Future<List<PollOption>> _fetchPollOptions() async {
+   Future<List<PollOption>> _fetchPollOptions() async {
     var poll = widget.pollData['poll'];
     String pollId = poll?.get<String>('objectId') ?? 'Bilinmiyor';
     QueryBuilder<ParseObject> queryPollOptions = QueryBuilder<ParseObject>(ParseObject('PollOption'))
@@ -78,6 +80,7 @@ class _SurveyPageState extends State<SurveyPage> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     var poll = widget.pollData['poll'];
@@ -95,27 +98,29 @@ class _SurveyPageState extends State<SurveyPage> {
       ),
       body: Container(
         padding: const EdgeInsets.all(20),
-        child: ListView(
-          children: [
-            _buildCardCommunity(),
-            _hasVoted
-                ? _buildPollResults()
-                : FutureBuilder<List<PollOption>>(
-                    future: _pollOptions,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
-                      }
+        child: _isLoading // Yükleme durumunu kontrol edin
+            ? CircularProgressIndicator() // Yükleme sırasında dönme çemberi göster
+            : ListView(
+                children: [
+                  _buildCardCommunity(),
+                  _hasVoted
+                      ? _buildPollResults()
+                      : FutureBuilder<List<PollOption>>(
+                          future: _pollOptions,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return CircularProgressIndicator();
+                            }
 
-                      if (snapshot.hasError) {
-                        return Text('Hata: ${snapshot.error}');
-                      }
+                            if (snapshot.hasError) {
+                              return Text('Hata: ${snapshot.error}');
+                            }
 
-                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return Text('Anket seçenekleri bulunamadı');
-                      }
+                            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                              return Text('Anket seçenekleri bulunamadı');
+                            }
 
-                      return FlutterPolls(
+                             return FlutterPolls(
                         pollId: poll.objectId,
                         onVoted: (PollOption pollOption, int newTotalVotes) async {
                           ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
@@ -164,7 +169,7 @@ class _SurveyPageState extends State<SurveyPage> {
     );
   }
 
-  Widget _buildCardCommunity() {
+   Widget _buildCardCommunity() {
     ParseObject? creator = widget.pollData['creator'];
     String creatorUsername = creator?.get<String>('username') ?? 'Bilinmiyor';
     return ListTile(
@@ -191,7 +196,7 @@ class _SurveyPageState extends State<SurveyPage> {
   ),
 );
 }
-  Widget _buildPollResults() {
+   Widget _buildPollResults() {
     return FutureBuilder<List<PollOption>>(
       future: _pollOptions,
       builder: (context, snapshot) {
@@ -231,6 +236,8 @@ class _SurveyPageState extends State<SurveyPage> {
     );
   }
 }
+
+
 /*import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
   import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';

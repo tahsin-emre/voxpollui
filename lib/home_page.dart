@@ -658,6 +658,7 @@ class _CommunityPageState extends State<CommunityPage> {
 
 }
 
+// ignore: must_be_immutable
 class ProfilePage extends StatefulWidget {
   Map<String, dynamic>? pollData;
   ProfilePage({this.pollData, int? i});
