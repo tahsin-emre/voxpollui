@@ -21,41 +21,45 @@ class _SurveyPageState extends State<SurveyPage> {
   @override
   void initState() {
     super.initState();
-    _pollOptions = _fetchPollOptions();
-    _checkIfUserVoted();
+    _isLoading = true; // İlk başta yükleniyor olarak ayarlayın
+    _pollOptions = _fetchPollOptions(); // _pollOptions'ı başlatın
+    _checkIfUserVoted(); // Sonra _hasUserVoted'ı çağırın
   }
 
   Future<void> _checkIfUserVoted() async {
-    bool hasVoted = await _hasUserVoted();
-    if (hasVoted) {
-      setState(() {
-        _hasVoted = true;
-        _isLoading = false; // Veriler yüklendiğinde yükleme durumunu güncelleyin
-      });
+  bool hasVoted = await _hasUserVoted();
+  print("_hasVoted: $hasVoted"); // Debug için yazdırın
+  setState(() {
+    _hasVoted = hasVoted;
+    if (!_hasVoted) {
+      _pollOptions = _fetchPollOptions();
+    }
+    _isLoading = false; // Veriler yüklendiğinde yükleme durumunu güncelleyin
+  });
+}
+
+
+  Future<bool> _hasUserVoted() async {
+    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+    String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
+    String pollId = widget.pollData['poll'].objectId;
+
+    QueryBuilder<ParseObject> queryUserPollResponse = QueryBuilder<ParseObject>(ParseObject('PollResponse'))
+      ..whereEqualTo('userId', userId)
+      ..whereEqualTo('pollId', pollId);
+
+    final ParseResponse apiResponse = await queryUserPollResponse.query();
+
+    if (apiResponse.success && apiResponse.results != null && apiResponse.results!.isNotEmpty) {
+      // Kullanıcı bu ankette daha önce oy kullanmış
+      return true;
+    } else {
+      // Kullanıcı bu ankette daha önce oy kullanmamış
+      return false;
     }
   }
 
-    Future<bool> _hasUserVoted() async {
-  ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-  String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
-  String pollId = widget.pollData['poll'].objectId;
-
-  QueryBuilder<ParseObject> queryUserPollResponse = QueryBuilder<ParseObject>(ParseObject('PollResponse'))
-    ..whereEqualTo('userId', userId)
-    ..whereEqualTo('pollId', pollId);
-
-  final ParseResponse apiResponse = await queryUserPollResponse.query();
-
-  if (apiResponse.success && apiResponse.results != null && apiResponse.results!.isNotEmpty) {
-    // Kullanıcı bu ankette daha önce oy kullanmış
-    return true;
-  } else {
-    // Kullanıcı bu ankette daha önce oy kullanmamış
-    return false;
-  }
-}
-
-   Future<List<PollOption>> _fetchPollOptions() async {
+  Future<List<PollOption>> _fetchPollOptions() async {
     var poll = widget.pollData['poll'];
     String pollId = poll?.get<String>('objectId') ?? 'Bilinmiyor';
     QueryBuilder<ParseObject> queryPollOptions = QueryBuilder<ParseObject>(ParseObject('PollOption'))
@@ -79,7 +83,6 @@ class _SurveyPageState extends State<SurveyPage> {
       return [];
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -120,83 +123,84 @@ class _SurveyPageState extends State<SurveyPage> {
                               return Text('Anket seçenekleri bulunamadı');
                             }
 
-                             return FlutterPolls(
-                        pollId: poll.objectId,
-                        onVoted: (PollOption pollOption, int newTotalVotes) async {
-                          ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-                          String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
-                          String optionId = pollOption.id.toString();
-                          print("Kullanıcı ID: $userId, Anket ID: ${poll.objectId}, Seçenek ID: $optionId");
-                          ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
-                          final Map<String, dynamic> params = <String, dynamic>{
-                            'userId': userId,
-                            'pollId': poll.objectId,
-                            'optionId': optionId
-                          };
-                          final ParseResponse result = await function.execute(parameters: params);
+                            return FlutterPolls(
+                              pollId: poll.objectId,
+                              onVoted: (PollOption pollOption, int newTotalVotes) async {
+                                ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+                                String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
+                                String optionId = pollOption.id.toString();
+                                print("Kullanıcı ID: $userId, Anket ID: ${poll.objectId}, Seçenek ID: $optionId");
+                                ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
+                                final Map<String, dynamic> params = <String, dynamic>{
+                                  'userId': userId,
+                                  'pollId': poll.objectId,
+                                  'optionId': optionId
+                                };
+                                final ParseResponse result = await function.execute(parameters: params);
 
-                          if (result.success) {
-                            print('Oy Başarıyla Kaydedildi');
-                            // _pollOptions'ı yeniden yüklemeyi burada yapabilirsiniz
-                            return true;
-                          } else {
-                            print("Anket cevabı kaydedilemedi: ${result.error}");
-                            return false;
-                          }
-                        },
-                        pollEnded: pollEnded,
-                        pollTitle: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            poll.get<String>('title'),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                                if (result.success) {
+                                  print('Oy Başarıyla Kaydedildi');
+                                  // _pollOptions'ı yeniden yüklemeyi burada yapabilirsiniz
+                                  return true;
+                                } else {
+                                  print("Anket cevabı kaydedilemedi: ${result.error}");
+                                  return false;
+                                }
+                              },
+                              pollEnded: pollEnded,
+                              pollTitle: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  poll.get<String>('title'),
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              pollOptions: snapshot.data!,
+                              votedPercentageTextStyle: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            );
+                          },
                         ),
-                        pollOptions: snapshot.data!,
-                        votedPercentageTextStyle: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      );
-                    },
-                  ),
-          ],
-        ),
+                ],
+              ),
       ),
     );
   }
 
-   Widget _buildCardCommunity() {
+  Widget _buildCardCommunity() {
     ParseObject? creator = widget.pollData['creator'];
     String creatorUsername = creator?.get<String>('username') ?? 'Bilinmiyor';
     return ListTile(
-  leading: CircleAvatar(
-    backgroundImage: AssetImage('assets/login.png'),
-  ),
-  title: Row(
-    children: [
-      Text('$creatorUsername'),
-      SizedBox(width: 4.0),
-      Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
-      SizedBox(width: 4.0),
-      Text('@$creatorUsername', style: TextStyle(fontSize: 12.0)),
-    ],
-  ),
-  subtitle: Text('Topluluk Açıklaması'),
-  trailing: InkWell(
-    onTap: () {
-      // Burada tıklama olayını işleyin
-      print('Trailing ikonuna tıklandı!');
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: widget.pollData, i: 4)));
-    },
-    child: Icon(Icons.arrow_forward),
-  ),
-);
-}
-   Widget _buildPollResults() {
+      leading: CircleAvatar(
+        backgroundImage: AssetImage('assets/login.png'),
+      ),
+      title: Row(
+        children: [
+          Text('$creatorUsername'),
+          SizedBox(width: 4.0),
+          Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
+          SizedBox(width: 4.0),
+          Text('@$creatorUsername', style: TextStyle(fontSize: 12.0)),
+        ],
+      ),
+      subtitle: Text('Topluluk Açıklaması'),
+      trailing: InkWell(
+        onTap: () {
+          // Burada tıklama olayını işleyin
+          print('Trailing ikonuna tıklandı!');
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: widget.pollData, i: 4)));
+        },
+        child: Icon(Icons.arrow_forward),
+      ),
+    );
+  }
+
+  Widget _buildPollResults() {
     return FutureBuilder<List<PollOption>>(
       future: _pollOptions,
       builder: (context, snapshot) {
@@ -209,7 +213,7 @@ class _SurveyPageState extends State<SurveyPage> {
         }
 
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Text('Anket sonuçları bulunamadı');
+          return Text('Anket seçenekleri bulunamadı');
         }
 
         List<PollOption> options = snapshot.data!;
