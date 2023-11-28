@@ -671,15 +671,16 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _showUnansweredSurveyBox = true;
   var followed;
   var followers;
+  String objectId = 'ObjectId Hatası';
   String username = 'Yükleniyor..';
   String name = 'Yükleniyor..';
   String surname = 'Yükleniyor..';
   String createrId = 'Yükleniyor..';
   String biyografi = 'Yükleniyor..';
+  
 
-  List<Map<String, dynamic>>? polls; // Anketleri saklamak için bir liste
-
-   bool _isLoading = true; // Yükleme durumunu takip eden bir değişken ekleyin
+  List<Map<String, dynamic>>? polls;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -696,13 +697,14 @@ class _ProfilePageState extends State<ProfilePage> {
     var fetchedPolls = await database.fetchPolls();
     setState(() {
       polls = fetchedPolls;
-      _isLoading = false; // Veriler yüklendikten sonra yükleme durumunu güncelleyin
+      _isLoading = false;
     });
   }
 
-  void _loadPollData() {
+  Future<void> _loadPollData() async {
+    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
     setState(() {
-      // pollData'dan gelen verileri ayarla
+      objectId = currentUser?.get<String>('objectId') ?? 'ObjectIDDDDDDD';
       username = widget.pollData!['creator']['username'] ?? 'Yükleniyor..';
       name = widget.pollData!['creator']['name'] ?? 'Yükleniyor..';
       surname = widget.pollData!['creator']['surname'] ?? 'Yükleniyor..';
@@ -717,6 +719,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (currentUser != null) {
       setState(() {
         username = currentUser.username!;
+        objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
         name = currentUser.get<String>('name') ?? 'name test';
         surname = currentUser.get<String>('surname') ?? 'Soyad test';
         followed = currentUser.get<dynamic>('followed') ?? '0';
@@ -727,118 +730,123 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   @override
-Widget build(BuildContext context) {
-  final data = widget.pollData ?? {
-    'creator': {
-      'username': username,
-      'name': name,
-      'surname': surname,
-      'followed': followed,
-      'biography': biyografi,
-      'followers': followers,
-    }
-  };
+  Widget build(BuildContext context) {
+    final data = widget.pollData ?? {
+      'creator': {
+        'username': username,
+        'name': name,
+        'surname': surname,
+        'followed': followed,
+        'biography': biyografi,
+        'followers': followers,
+      }
+    };
+    final viewObjectId = widget.pollData?['creator']['objectId'] ?? 'Hata';
+    print('$objectId   GİRİŞ YAPAN KULLANICI OBJECTID ');
+    print('$viewObjectId        GÖRÜNTÜLENEN KULLANICI OBJECTID');
 
-  return DefaultTabController(
-    length: 2,
-    child: Scaffold(
-      body: Column(
-        children: [
-          if (_isLoading) // Yükleme durumu kontrolü
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        body: Column(
+          children: [
+            if (_isLoading)
               CircularProgressIndicator()
             else
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/cover.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 16,
-            left: 16,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ),
-          Positioned(
-            top: 16,
-            right: 16,
-            child: IconButton(
-              icon: Icon(Icons.settings, color: Colors.white),
-              onPressed: () {},
-            ),
-          ),
-          Container(
-            transform: Matrix4.translationValues(0, -50, 0),
-            child: CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/profilepicture.png'),
-            ),
-          ),
-          Text(
-            "${data!['creator']['name'] ?? name} ${data!['creator']['surname'] ?? surname}",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          Text('@$username'),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              '${biyografi ?? ''}',
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildStatColumn('Takip Edilen', '$followed'),
-              _buildStatColumn('Takipçi', '$followers'),
-              _buildStatColumn('Katıldığı Anket', '50'), // Katıldığı anket sayısını sabit olarak veriyorum, gerektiğine göre düzeltebilirsiniz.
-            ],
-          ),
-          Divider(),
-          TabBar(
-            tabs: [
-              Tab(text: 'Katıldıklarım'),
-              Tab(text: 'Oluşturduklarım'),
-            ],
-          ),
-          Expanded(
-                child: TabBarView(
-                  children: [
-                    // Katıldıklarım bölümü
-                    if (polls != null)
-                      ListView.builder(
-                        itemCount: polls!.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          List<Map<String, dynamic>> bos = [{}];
-                          return _buildCardCommunityWithJoinButton(
-                              context, polls ?? bos, index);
-                        },
-                      ),
-                    // Oluşturduklarım bölümü
-                    if (polls != null)
-                      ListView.builder(
-                        itemCount: polls!.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          List<Map<String, dynamic>> bos = [{}];
-                          return _buildCardCommunity(
-                              context, polls ?? bos, index);
-                        },
-                      ),
-                  ],
+              Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/cover.png'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-        ],
+            Positioned(
+              top: 16,
+              left: 16,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+            Positioned(
+              top: 16,
+              right: 16,
+              child: IconButton(
+                icon: Icon(Icons.settings, color: Colors.white),
+                onPressed: () {},
+              ),
+            ),
+            Container(
+              transform: Matrix4.translationValues(0, -50, 0),
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('assets/profilepicture.png'),
+              ),
+            ),
+            Text(
+              "${data!['creator']['name'] ?? name} ${data!['creator']['surname'] ?? surname}",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            Text('@$username'),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                '${biyografi ?? ''}',
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildStatColumn('Takip Edilen', '$followed'),
+                _buildStatColumn('Takipçi', '$followers'),
+                _buildStatColumn('Katıldığı Anket', '50'), // Katıldığı anket sayısını sabit olarak veriyorum, gerektiğine göre düzeltebilirsiniz.
+              ],
+            ),
+            Divider(),
+            TabBar(
+              tabs: [
+                Tab(text: 'Katıldıklarım'),
+                Tab(text: 'Oluşturduklarım'),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  if (polls != null)
+                    ListView.builder(
+                      itemCount: polls!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        List<Map<String, dynamic>> bos = [{}];
+                        return _buildCardCommunityWithJoinButton(
+                            context, polls ?? bos, index);
+                      },
+                    ),
+                  if (polls != null)
+                    ListView.builder(
+                      itemCount: polls!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        List<Map<String, dynamic>> bos = [{}];
+                        return _buildCardCommunity(
+                            context, polls ?? bos, index);
+                      },
+                    ),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerRight, // Sağ ortada
+              child: _buildFollowButton(viewObjectId),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
- Column _buildStatColumn(String label, dynamic number) {
+  Column _buildStatColumn(String label, dynamic number) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -855,6 +863,81 @@ Widget build(BuildContext context) {
       ],
     );
   }
+  Future<void> updateFollowStatus(String currentUserObjectId, String viewedUserObjectId, bool isFollowing) async {
+  // ParseObject olarak kullanıcıları oluştur
+  var currentUser = ParseObject('_User')..objectId = currentUserObjectId;
+  var viewedUser = ParseObject('_User')..objectId = viewedUserObjectId;
+
+  // Kullanıcıları getir
+  await currentUser.fetch();
+  await viewedUser.fetch();
+
+  // Takip edilen ve takipçiler listesini al
+  List<dynamic> currentUserFollowed = currentUser.get<List<dynamic>>('followed') ?? [];
+  List<dynamic> viewedUserFollowers = viewedUser.get<List<dynamic>>('followers') ?? [];
+
+  // Takip etme veya takipten çıkma işlemini gerçekleştir
+  if (isFollowing) {
+    // Eğer zaten takip edilmiyorsa, listeye ekle
+    if (!currentUserFollowed.contains(viewedUserObjectId)) {
+      currentUserFollowed.add(viewedUserObjectId);
+      print('Takip Edildi');
+    }
+    if (!viewedUserFollowers.contains(currentUserObjectId)) {
+      viewedUserFollowers.add(currentUserObjectId);
+    }
+  } else {
+    // Eğer takip ediliyorsa, listeden çıkar
+    currentUserFollowed.remove(viewedUserObjectId);
+    viewedUserFollowers.remove(currentUserObjectId);
+    print('Takipten çıkıld');
+  }
+
+  // Güncellenmiş listeleri set et
+  currentUser.set('followed', currentUserFollowed);
+  viewedUser.set('followers', viewedUserFollowers);
+
+  // Güncellemeleri kaydet
+  await currentUser.save();
+  await viewedUser.save();
+}
+
+
+
+
+  Widget _buildFollowButton(String viewObjectId) {
+  // Initially, we don't know if the user is following or not
+  bool isFollowing = false;
+
+  // Check if the logged-in user is following the displayed user
+  if (followed != null && followed.contains(viewObjectId)) {
+    isFollowing = true;
+  }
+
+  return ConstrainedBox(
+    constraints: BoxConstraints.tightFor(width: 150),
+    child: ElevatedButton(
+      onPressed: () async {
+        // Toggle the follow status
+        await updateFollowStatus(objectId, viewObjectId, !isFollowing);
+        setState(() {
+          // Update the follow status in the UI
+          isFollowing = !isFollowing;
+        });
+      },
+      child: Text(
+        isFollowing ? 'Takibi Bırak' : 'Takip Et',
+        style: TextStyle(color: Colors.white),
+      ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isFollowing ? Colors.red : Colors.blue,
+      ),
+    ),
+  );
+}
+
+
+
 }
 
 
