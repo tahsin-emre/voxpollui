@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/home_page.dart';
+import 'package:voxpollui/script/database.dart';
 
 class SurveyPage extends StatefulWidget {
   final Map<String, dynamic> pollData;
@@ -27,7 +28,7 @@ class _SurveyPageState extends State<SurveyPage> {
   }
 
   Future<void> _checkIfUserVoted() async {
-  bool hasVoted = await _hasUserVoted();
+  bool hasVoted = await Database.hasUserVoted(widget.pollData);
   print("_hasVoted: $hasVoted"); // Debug için yazdırın
   setState(() {
     _hasVoted = hasVoted;
@@ -37,27 +38,6 @@ class _SurveyPageState extends State<SurveyPage> {
     _isLoading = false; // Veriler yüklendiğinde yükleme durumunu güncelleyin
   });
 }
-
-
-  Future<bool> _hasUserVoted() async {
-    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-    String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
-    String pollId = widget.pollData['poll'].objectId;
-
-    QueryBuilder<ParseObject> queryUserPollResponse = QueryBuilder<ParseObject>(ParseObject('PollResponse'))
-      ..whereEqualTo('userId', userId)
-      ..whereEqualTo('pollId', pollId);
-
-    final ParseResponse apiResponse = await queryUserPollResponse.query();
-
-    if (apiResponse.success && apiResponse.results != null && apiResponse.results!.isNotEmpty) {
-      // Kullanıcı bu ankette daha önce oy kullanmış
-      return true;
-    } else {
-      // Kullanıcı bu ankette daha önce oy kullanmamış
-      return false;
-    }
-  }
 
   Future<List<PollOption>> _fetchPollOptions() async {
     var poll = widget.pollData['poll'];

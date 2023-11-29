@@ -677,6 +677,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String surname = 'Yükleniyor..';
   String createrId = 'Yükleniyor..';
   String biyografi = 'Yükleniyor..';
+  bool? isMe;
   
 
   List<Map<String, dynamic>>? polls;
@@ -687,8 +688,10 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     if (widget.pollData == null) {
       _loadCurrentUser();
+      isMe = true;
     } else {
       _loadPollData();
+      isMe = false;
     }
     _loadPolls();
   }
@@ -800,8 +803,8 @@ class _ProfilePageState extends State<ProfilePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildStatColumn('Takip Edilen', '$followed'),
-                _buildStatColumn('Takipçi', '$followers'),
+                _buildStatColumn('Takip Edilen', '${followed.length ?? 0}'),
+                _buildStatColumn('Takipçi', '${followers.length ?? 0}'),
                 _buildStatColumn('Katıldığı Anket', '50'), // Katıldığı anket sayısını sabit olarak veriyorum, gerektiğine göre düzeltebilirsiniz.
               ],
             ),
@@ -836,7 +839,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
-            Align(
+            isMe == true ? Material() : Align(
               alignment: Alignment.centerRight, // Sağ ortada
               child: _buildFollowButton(viewObjectId),
             ),

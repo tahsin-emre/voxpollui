@@ -42,4 +42,24 @@ Future<ParseObject?> fetchCreater(String? createrId) async {
     return null;
   }
 }
+
+static Future<bool> hasUserVoted(var pollData) async {
+    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+    String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
+    String pollId = pollData['poll'].objectId;
+
+    QueryBuilder<ParseObject> queryUserPollResponse = QueryBuilder<ParseObject>(ParseObject('PollResponse'))
+      ..whereEqualTo('userId', userId)
+      ..whereEqualTo('pollId', pollId);
+
+    final ParseResponse apiResponse = await queryUserPollResponse.query();
+
+    if (apiResponse.success && apiResponse.results != null && apiResponse.results!.isNotEmpty) {
+      // Kullanıcı bu ankette daha önce oy kullanmış
+      return true;
+    } else {
+      // Kullanıcı bu ankette daha önce oy kullanmamış
+      return false;
+    }
+  }
 }
