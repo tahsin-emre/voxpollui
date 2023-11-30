@@ -668,6 +668,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  bool isFollowing = false;
   bool _showUnansweredSurveyBox = true;
   var followed;
   var followers;
@@ -678,7 +679,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String createrId = 'Yükleniyor..';
   String biyografi = 'Yükleniyor..';
   bool? isMe;
-  
+  String viewObjectId = ''; // Bu satırı ekleyin
 
   List<Map<String, dynamic>>? polls;
   bool _isLoading = true;
@@ -686,6 +687,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
+    viewObjectId = widget.pollData?['creator']['objectId'] ?? 'Hata';
+    checkIfFollowing(viewObjectId); // Bu fonksiyonu çağırırken viewObjectId'i geçirin
     if (widget.pollData == null) {
       _loadCurrentUser();
       isMe = true;
@@ -849,6 +852,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  
+
   Column _buildStatColumn(String label, dynamic number) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -867,77 +872,79 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
   Future<void> updateFollowStatus(String currentUserObjectId, String viewedUserObjectId, bool isFollowing) async {
-  // ParseObject olarak kullanıcıları oluştur
-  var currentUser = ParseObject('_User')..objectId = currentUserObjectId;
-  var viewedUser = ParseObject('_User')..objectId = viewedUserObjectId;
+  try {
+    // ParseObject olarak kullanıcıları oluştur
+    var currentUser = ParseObject('_User')..objectId = currentUserObjectId;
+    var viewedUser = ParseObject('_User')..objectId = viewedUserObjectId;
 
-  // Kullanıcıları getir
-  await currentUser.fetch();
-  await viewedUser.fetch();
+    // Takip edilen ve takipçiler listesini al
+    List<dynamic> currentUserFollowed = currentUser.get<List<dynamic>>('followed') ?? [];
+    List<dynamic> viewedUserFollowers = viewedUser.get<List<dynamic>>('followers') ?? [];
 
-  // Takip edilen ve takipçiler listesini al
-  List<dynamic> currentUserFollowed = currentUser.get<List<dynamic>>('followed') ?? [];
-  List<dynamic> viewedUserFollowers = viewedUser.get<List<dynamic>>('followers') ?? [];
-
-  // Takip etme veya takipten çıkma işlemini gerçekleştir
-  if (isFollowing) {
-    // Eğer zaten takip edilmiyorsa, listeye ekle
-    if (!currentUserFollowed.contains(viewedUserObjectId)) {
+    // Takip etme veya takipten çıkma işlemini gerçekleştir
+    if (isFollowing) {
       currentUserFollowed.add(viewedUserObjectId);
-      print('Takip Edildi');
-    }
-    if (!viewedUserFollowers.contains(currentUserObjectId)) {
       viewedUserFollowers.add(currentUserObjectId);
+    } else {
+      currentUserFollowed.remove(viewedUserObjectId);
+      viewedUserFollowers.remove(currentUserObjectId);
     }
-  } else {
-    // Eğer takip ediliyorsa, listeden çıkar
-    currentUserFollowed.remove(viewedUserObjectId);
-    viewedUserFollowers.remove(currentUserObjectId);
-    print('Takipten çıkıld');
+
+    // Güncellenmiş listeleri set et
+    currentUser.set('followed', currentUserFollowed);
+    viewedUser.set('followers', viewedUserFollowers);
+
+    // Güncellemeleri kaydet
+    var responseCurrentUser = await currentUser.save();
+    var responseViewedUser = await viewedUser.save();
+
+    if (responseCurrentUser.success && responseViewedUser.success) {
+      print('Takip durumu başarıyla güncellendi');
+    } else {
+      print('Takip durumu güncellenirken hata oluştu');
+    }
+  } catch (e) {
+    print('Bir hata oluştu: $e');
   }
-
-  // Güncellenmiş listeleri set et
-  currentUser.set('followed', currentUserFollowed);
-  viewedUser.set('followers', viewedUserFollowers);
-
-  // Güncellemeleri kaydet
-  await currentUser.save();
-  await viewedUser.save();
 }
 
 
+
+Future<void> checkIfFollowing(String viewObjectId) async {
+  // Giriş yapan kullanıcıyı al
+  ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+  if (currentUser != null) {
+    // Giriş yapan kullanıcının takip ettiği kişilerin listesini al
+    List<dynamic> followedUsers = currentUser.get<List<dynamic>>('followed') ?? [];
+
+    // Görüntülenen kullanıcının objectId'si bu listede var mı diye kontrol et
+    setState(() {
+      isFollowing = followedUsers.contains(viewObjectId);
+    });
+  }
+}
 
 
   Widget _buildFollowButton(String viewObjectId) {
-  // Initially, we don't know if the user is following or not
-  bool isFollowing = false;
-
-  // Check if the logged-in user is following the displayed user
-  if (followed != null && followed.contains(viewObjectId)) {
-    isFollowing = true;
+    return ConstrainedBox(
+      constraints: BoxConstraints.tightFor(width: 150),
+      child: ElevatedButton(
+        onPressed: () async {
+          await updateFollowStatus(objectId, viewObjectId, isFollowing);
+          setState(() {
+            isFollowing = !isFollowing;
+          });
+        },
+        child: Text(
+          isFollowing ? 'Takibi Bırak' : 'Takip Et',
+          style: TextStyle(color: Colors.white),
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isFollowing ? Colors.red : Colors.blue,
+        ),
+      ),
+    );
   }
-
-  return ConstrainedBox(
-    constraints: BoxConstraints.tightFor(width: 150),
-    child: ElevatedButton(
-      onPressed: () async {
-        // Toggle the follow status
-        await updateFollowStatus(objectId, viewObjectId, !isFollowing);
-        setState(() {
-          // Update the follow status in the UI
-          isFollowing = !isFollowing;
-        });
-      },
-      child: Text(
-        isFollowing ? 'Takibi Bırak' : 'Takip Et',
-        style: TextStyle(color: Colors.white),
-      ),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: isFollowing ? Colors.red : Colors.blue,
-      ),
-    ),
-  );
-}
 
 
 
