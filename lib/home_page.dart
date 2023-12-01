@@ -128,7 +128,7 @@ class Page0 extends StatefulWidget {
 
 class _Page0State extends State<Page0> {
   bool _showUnansweredSurveyBox = true;
-  int? followed;
+  var followed;
   String username = 'Yükleniyor..';
   String surname = 'Yükleniyor..';
   String createrId = 'Yükleniyor..';
@@ -154,7 +154,7 @@ class _Page0State extends State<Page0> {
       setState(() {
         username = currentUser.username!;
         surname = currentUser.get<String>('surname') ?? 'Soyad test';
-        followed = currentUser.get<int>('followed') ?? 0;
+        followed = currentUser.get<dynamic>('followed') ?? 0;
 
         //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
       });
@@ -188,7 +188,7 @@ class _Page0State extends State<Page0> {
                               style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              '${followed.toString()}',
+                              '${followed?.length ?? 0}',
                               style: TextStyle(fontSize: 16.0),
                             ),
                           ],
@@ -680,6 +680,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String biyografi = 'Yükleniyor..';
   bool? isMe;
   String viewObjectId = ''; // Bu satırı ekleyin
+  dynamic joinPoll;
 
   List<Map<String, dynamic>>? polls;
   bool _isLoading = true;
@@ -709,7 +710,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _loadPollData() async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+    dynamic _joinPoll = Database.countUserPollResponses(currentUser?.get<String>('objectId') ?? 'ObjectIDDDDDDD');
+    print('${_joinPoll}    JOİN POLL');
     setState(() {
+      joinPoll = _joinPoll;
       objectId = currentUser?.get<String>('objectId') ?? 'ObjectIDDDDDDD';
       username = widget.pollData!['creator']['username'] ?? 'Yükleniyor..';
       name = widget.pollData!['creator']['name'] ?? 'Yükleniyor..';
@@ -806,9 +810,9 @@ class _ProfilePageState extends State<ProfilePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildStatColumn('Takip Edilen', '${followed.length ?? 0}'),
-                _buildStatColumn('Takipçi', '${followers.length ?? 0}'),
-                _buildStatColumn('Katıldığı Anket', '50'), // Katıldığı anket sayısını sabit olarak veriyorum, gerektiğine göre düzeltebilirsiniz.
+                _buildStatColumn('Takip Edilen', '${followed?.length ?? 0}'),
+                _buildStatColumn('Takipçi', '${followers?.length ?? 0}'),
+                _buildStatColumn('Katıldığı Anket', '${joinPoll ?? 7}'), // Katıldığı anket sayısını sabit olarak veriyorum, gerektiğine göre düzeltebilirsiniz.
               ],
             ),
             Divider(),

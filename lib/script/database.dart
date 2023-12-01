@@ -62,4 +62,25 @@ static Future<bool> hasUserVoted(var pollData) async {
       return false;
     }
   }
+
+  static Future<int> countUserPollResponses(String userId) async {
+    try {
+      final ParseCloudFunction function = ParseCloudFunction('countUserPollResponses');
+      final Map<String, dynamic> params = <String, dynamic>{
+        'userId': userId,
+      };
+      final ParseResponse result = await function.execute(parameters: params);
+
+      if (result.success && result.result != null) {
+        print('Başarılı ${result.result}');
+        return result.result as int;
+      } else {
+        print('Cloud fonksiyonu çağrılırken hata oluştu');
+        return 3;
+      }
+    } catch (e) {
+      print('Bir hata oluştu: $e');
+      return 3;
+    }
+  }
 }
