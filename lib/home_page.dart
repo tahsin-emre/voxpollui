@@ -669,7 +669,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool isFollowing = false;
-  bool _showUnansweredSurveyBox = true;
+  //bool _showUnansweredSurveyBox = true;
   var followed;
   var followers;
   String objectId = 'ObjectId Hatası';
@@ -883,11 +883,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
     // Takip etme veya takipten çıkma işlemini gerçekleştir
     if (isFollowing) {
-      currentUserFollowed.add(viewedUserObjectId);
-      viewedUserFollowers.add(currentUserObjectId);
-    } else {
       currentUserFollowed.remove(viewedUserObjectId);
       viewedUserFollowers.remove(currentUserObjectId);
+    } else {
+      currentUserFollowed.add(viewedUserObjectId);
+      viewedUserFollowers.add(currentUserObjectId);
     }
 
     // Güncellenmiş listeleri set et
@@ -901,7 +901,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (responseCurrentUser.success && responseViewedUser.success) {
       print('Takip durumu başarıyla güncellendi');
     } else {
-      print('Takip durumu güncellenirken hata oluştu');
+      print('Takip durumu güncellenirken hata oluştu ${responseCurrentUser.error}');//Not : Else içine giriyor ama veritabanından takip etme ve takipten çıkma işlemini gerçekleştiriyor
     }
   } catch (e) {
     print('Bir hata oluştu: $e');
@@ -921,6 +921,7 @@ Future<void> checkIfFollowing(String viewObjectId) async {
     setState(() {
       isFollowing = followedUsers.contains(viewObjectId);
     });
+    print('${followedUsers.contains(viewObjectId)}   Görüntülenen Takip Ediyo Mu Etmiyo Mu');
   }
 }
 
