@@ -710,7 +710,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _loadPollData() async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-    dynamic _joinPoll = Database.countUserPollResponses(currentUser?.get<String>('objectId') ?? 'ObjectIDDDDDDD');
+    dynamic _joinPoll = await Database.countUserPollResponses(widget.pollData!['creator']['objectId'] ?? 'ObjectIDDDDDDD');
     print('${_joinPoll}    JOİN POLL');
     setState(() {
       joinPoll = _joinPoll;
@@ -726,8 +726,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _loadCurrentUser() async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+    dynamic _joinPoll = await Database.countUserPollResponses(currentUser?.get<String>('objectId') ?? 'ObjectIDDDDDDD');
+    print('${_joinPoll}   _loadCurrentUser JOİN POLL');
     if (currentUser != null) {
       setState(() {
+        joinPoll = _joinPoll;
         username = currentUser.username!;
         objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
         name = currentUser.get<String>('name') ?? 'name test';

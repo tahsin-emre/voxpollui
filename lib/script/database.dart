@@ -73,7 +73,7 @@ static Future<bool> hasUserVoted(var pollData) async {
 
       if (result.success && result.result != null) {
         print('Başarılı ${result.result}');
-        return result.result as int;
+        return result.result;
       } else {
         print('Cloud fonksiyonu çağrılırken hata oluştu');
         return 3;
