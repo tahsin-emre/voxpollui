@@ -331,6 +331,7 @@ class _Page0State extends State<Page0> {
     Map<String, dynamic> data = poll[i];
     ParseObject? creator = data['creator'];
     ParseObject? pollData = data['poll'];
+    var joinPollUsers = data['poll'].get<int>('followed');
     if (pollData == null) {
     // pollData null ise, burada uygun bir işlem yapın
     // Örneğin, bir hata mesajı göstermek veya varsayılan bir değer kullanmak
@@ -362,7 +363,7 @@ class _Page0State extends State<Page0> {
                       creatorUsername,
                       style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
-                    Text('${data['poll'].get<int>('followed') ?? 100} Takipçi'),
+                    Text('${data['creator'].get<dynamic>('followed').length ?? 100} Takipçi'),
                   ],
                 ),
               ],
