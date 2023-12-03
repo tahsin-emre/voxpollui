@@ -154,7 +154,7 @@ class _Page0State extends State<Page0> {
       setState(() {
         username = currentUser.username!;
         surname = currentUser.get<String>('surname') ?? 'Soyad test';
-        followed = currentUser.get<dynamic>('followed') ?? 0;
+        followed = currentUser.get<dynamic>('followed') ?? [];
 
         //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
       });
@@ -188,7 +188,7 @@ class _Page0State extends State<Page0> {
                               style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              '${followed?.length ?? 0}',
+                              '${followed!.length ?? 0}',
                               style: TextStyle(fontSize: 16.0),
                             ),
                           ],
