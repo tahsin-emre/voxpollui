@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/SurveyPage.dart';
+import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/script/database.dart';
 import 'createpoll.dart';
 import 'notifications_page.dart';
@@ -141,6 +142,8 @@ class _Page0State extends State<Page0> {
     _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
   }
 
+
+
     void _loadPolls() async {
     var fetchedPolls = await database.fetchPolls();
     setState(() {
@@ -160,6 +163,8 @@ class _Page0State extends State<Page0> {
       });
     }
   }
+
+  
   
 
   @override
@@ -315,7 +320,7 @@ class _Page0State extends State<Page0> {
                   if (polls == null) {
                     return Center(child: CircularProgressIndicator()); // Yükleme göstergesi
                   }
-                  return _buildCard(polls!, index); // Anket kartını oluştur
+                  return ForWidget.buildCard(polls!, index); // Anket kartını oluştur
                 },
                 childCount: polls?.length ?? 1, // Eğer polls null ise, yükleme göstergesi için 1 eleman göster
               ),
@@ -326,83 +331,6 @@ class _Page0State extends State<Page0> {
       ),
     );
   }
-
-  Widget _buildCard(List<Map<String, dynamic>> poll, int i) {
-    Map<String, dynamic> data = poll[i];
-    ParseObject? creator = data['creator'];
-    ParseObject? pollData = data['poll'];
-    var joinPollUsers = data['poll'].get<int>('followed');
-    if (pollData == null) {
-    // pollData null ise, burada uygun bir işlem yapın
-    // Örneğin, bir hata mesajı göstermek veya varsayılan bir değer kullanmak
-    return SizedBox.shrink(); // Geçici bir çözüm olarak boş bir widget döndür
-  }
-    // 'creator' içindeki 'username' değerini al
-    String creatorUsername = creator?.get<String>('username') ?? 'Bilinmiyor';
-    String pollDataBaslik = pollData?.get<String>('title') ?? 'Bilinmiyor';
-    return Card(
-      color: Colors.white,
-      elevation: 0.0,
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage: AssetImage('assets/login.png'),
-                ),
-                SizedBox(width: 10.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      creatorUsername,
-                      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                    ),
-                    Text('${data['creator'].get<dynamic>('followed').length ?? 100} Takipçi'),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              pollDataBaslik, // Anket başlığını al
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
-            Text('${data['poll'].get<int>('followed') ?? 0} Kişi Katıldı'),
-            SizedBox(height: 10.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SurveyPage(pollData: data)),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF2355FF), // Button background color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0), // Button border radius
-                ),
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0), // Button padding
-                minimumSize: Size(double.infinity, 0), // Butonun en az yükseklik değeri (0 olmalı)
-              ),
-              child: Text(
-                'Katıl',
-                style: TextStyle(
-                  color: Colors.white, // Button text color
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
 }
 
 class SearchPage extends StatefulWidget {
@@ -485,7 +413,7 @@ class _SearchPageState extends State<SearchPage> {
                         // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
                         return Center(child: CircularProgressIndicator());
                       }
-                      return _buildCard(polls!,index); // Anket kartını oluştur
+                      return ForWidget.buildCard(polls!,index); // Anket kartını oluştur
                     },
                     childCount: (polls != null && polls!.isNotEmpty) ? polls!.length : 1,
                   ),
@@ -498,78 +426,6 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
-  Widget _buildCard(List<Map<String, dynamic>> poll, int i) {
-    Map<String, dynamic> data = poll[i];
-    ParseObject? creator = data['creator'];
-    ParseObject? pollData = data['poll'];
-
-  // 'creator' ve 'pollData' objelerinin null olup olmadığını kontrol et
-  String creatorUsername = creator != null ? creator.get<String>('username') ?? 'Bilinmiyor' : 'Bilinmiyor';
-  String pollDataBaslik = pollData != null ? pollData.get<String>('title') ?? 'Bilinmiyor' : 'Bilinmiyor';
-  int followedCount = pollData != null ? pollData.get<int>('followed') ?? 0 : 0;
-    return Card(
-      color: Colors.white,
-      elevation: 0.0,
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage: AssetImage('assets/login.png'),
-                ),
-                SizedBox(width: 10.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      creatorUsername,
-                      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                    ),
-                    Text('${followedCount ?? 100} Takipçi'),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              pollDataBaslik,
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
-            Text('${followedCount ?? 0} Kişi Katıldı'),
-            SizedBox(height: 10.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SurveyPage(pollData: data,)),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF2355FF), // Button background color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0), // Button border radius
-                ),
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0), // Button padding
-                minimumSize: Size(double.infinity, 0), // Butonun en az yükseklik değeri (0 olmalı)
-              ),
-              child: Text(
-                'Katıl',
-                style: TextStyle(
-                  color: Colors.white, // Button text color
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
 }
 
 class CommunityPage extends StatefulWidget {

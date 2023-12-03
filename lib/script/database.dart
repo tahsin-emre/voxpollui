@@ -83,4 +83,18 @@ static Future<bool> hasUserVoted(var pollData) async {
       return 3;
     }
   }
+
+  static Future<int> fetchPollResponseCount(String pollId) async {
+    final ParseCloudFunction function = ParseCloudFunction('countPollResponses');
+    final Map<String, dynamic> params = <String, dynamic>{
+      'pollId': pollId,
+    };
+    final ParseResponse result = await function.execute(parameters: params);
+
+    if (result.success && result.result != null) {
+      return result.result as int;
+    } else {
+      return 0;
+    }
+  }
 }
