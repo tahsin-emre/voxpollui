@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:voxpollui/boarding/boarding_bir.dart';
+import 'package:voxpollui/boarding/boarding_iki.dart';
+import 'package:voxpollui/boarding/boarding_uc.dart';
+import 'package:voxpollui/onboarding_page.dart';
 
 import 'register.dart';
 
@@ -36,7 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: RegisterPage(),
+      home: BoardinBir(),
     );
   }
 }
