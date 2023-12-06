@@ -84,31 +84,6 @@ static Future<bool> hasUserVoted(var pollData) async {
     }
   }
 
-  /*  Future<List<PollOption>> _fetchPollOptions() async {
-    var poll = widget.pollData['poll'];
-    String pollId = poll?.get<String>('objectId') ?? 'Bilinmiyor';
-    QueryBuilder<ParseObject> queryPollOptions = QueryBuilder<ParseObject>(ParseObject('PollOption'))
-      ..whereEqualTo('pollId', pollId);
-
-    final ParseResponse apiResponse = await queryPollOptions.query();
-
-    if (apiResponse.success && apiResponse.results != null) {
-      _pollOptionTitles.clear(); // Listeyi temizleyin
-      return apiResponse.results!.map((e) {
-        String optionId = e.get<String>('objectId') ?? 'Bilinmiyor';
-        String optionTitle = e.get<String>('text') ?? 'Hata';
-        _pollOptionTitles.add(optionTitle); // Başlığı listeye ekleyin
-        return PollOption(
-          id: optionId,
-          title: Text(optionTitle),
-          votes: e.get<int>('votes') ?? 0,
-        );
-      }).toList();
-    } else {
-      return [];
-    }
-  }*/
-
   static Future<int> fetchPollResponseCount(String pollId) async {
     final ParseCloudFunction function = ParseCloudFunction('countPollResponses');
     final Map<String, dynamic> params = <String, dynamic>{
