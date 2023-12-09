@@ -95,6 +95,7 @@ class SmsVerificationPage extends StatelessWidget {
 
 void main() {
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: SmsVerificationPage(),
   ));
 }

@@ -12,6 +12,7 @@ class BoardinBir extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
   width: 428,
@@ -400,7 +401,43 @@ class BoardinBir extends StatelessWidget {
           width: 265,
           height: 54,
           child: Text(
-            'Merak ettiğiniz ankete katılabilir\nveya merak ettiğiniz bir anket \nbaşlatabilirsiniz.',
+            'Merak ettiğiniz ankete katılabilir\n',
+            style: TextStyle(
+              color: Color(0xFF0C0C0C),
+              fontSize: 16,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w400,
+              height: 0.07,
+            ),
+          ),
+        ),
+      ),
+      Positioned(
+        left: 47,
+        top: 690,
+        child: SizedBox(
+          width: 265,
+          height: 54,
+          child: Text(
+            'veya merak ettiğiniz bir anket \n',
+            style: TextStyle(
+              color: Color(0xFF0C0C0C),
+              fontSize: 16,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w400,
+              height: 0.07,
+            ),
+          ),
+        ),
+      ),
+      Positioned(
+        left: 47,
+        top: 710,
+        child: SizedBox(
+          width: 265,
+          height: 54,
+          child: Text(
+            'başlatabilirsiniz.',
             style: TextStyle(
               color: Color(0xFF0C0C0C),
               fontSize: 16,
@@ -501,29 +538,31 @@ class BoardinBir extends StatelessWidget {
       // ),
       Align(
         alignment: Alignment.bottomCenter,
-        child: ElevatedButton(
-  onPressed: () {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => BoardinIki()));
-  },
-  style: ElevatedButton.styleFrom(
-    primary: Color(0xFF2355FF), // Arkaplan rengi
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)), // Kenarlık şekli
-  ),
-  child: Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Text(
-      'İleri',
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 16,
-        fontFamily: 'Gilroy',
-        fontWeight: FontWeight.w700,
-        height: 0,
-      ),
-    ),
-  ),
-)
-      ),
+        child: Container(
+          width: MediaQuery.of(context).size.width, // Ekran genişliği kadar genişlik ayarı
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => BoardinIki()));
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF2355FF), // Arkaplan rengi
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'İleri',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontFamily: 'Gilroy',
+                  fontWeight: FontWeight.w700,
+                  height: 0,
+                ),
+              ),
+            ),
+          ),
+        ),
+      )
     ],
   ),
 )
