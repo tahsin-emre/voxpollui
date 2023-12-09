@@ -11,308 +11,82 @@ class BoardinUc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+      return Scaffold(
+        body: Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: <Widget>[
+    Padding(
+      padding: const EdgeInsets.fromLTRB(25,5,5,15),
+      child: Container(
+        alignment: Alignment.centerLeft,
+        child: Text(
+            'Onay Kodu',
+            style: TextStyle(
+                color: Color(0xFF0C0C0C),
+                fontSize: 40,
+                fontFamily: 'Gilroy',
+                fontWeight: FontWeight.w600,
+                height: 0,
+            ),
+        )
       ),
-      home: Scaffold(
-        body: Container(
-  width: 428,
-  height: 926,
-  clipBehavior: Clip.antiAlias,
-  decoration: ShapeDecoration(
-    color: Colors.white,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(32),
     ),
-  ),
-  child: Stack(
-    children: [
-      Positioned(
-        left: 34,
-        top: 285,
-        child: Text(
-          'Onay Kodu',
-          style: TextStyle(
-            color: Color(0xFF0C0C0C),
-            fontSize: 40,
-            fontFamily: 'Gilroy',
-            fontWeight: FontWeight.w600,
-            height: 0,
-          ),
-        ),
-      ),
-      Positioned(
-        left: 34,
-        top: 370,
-        child: Container(
-          width: 67,
-          height: 67,
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 2, color: Color(0xFF0C0C0C)),
+    Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: List.generate(4, (index) {
+        return Container(
+          width: 60,
+          child: TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              counterText: '',
             ),
+            maxLength: 1,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-        ),
+        );
+      }),
+    ),
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 24.0),
+      child: Text(
+        'Lütfen cep telefonunuza gelen 4 haneli kodu girin.\nEğer SMS gelmediyse tekrar göndermek için buraya tıklayın.',
+        textAlign: TextAlign.center,
       ),
-      Positioned(
-        left: 222,
-        top: 370,
-        child: Container(
-          width: 67,
-          height: 67,
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 2, color: Color(0xFF0C0C0C)),
-            ),
-          ),
-        ),
-      ),
-      Positioned(
-        left: 128,
-        top: 370,
-        child: Container(
-          width: 67,
-          height: 67,
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 2, color: Color(0xFF0C0C0C)),
-            ),
-          ),
-        ),
-      ),
-      Positioned(
-        left: 315,
-        top: 370,
-        child: Container(
-          width: 67,
-          height: 67,
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 2, color: Color(0xFF0C0C0C)),
-            ),
-          ),
-        ),
-      ),
-      Positioned(
-        left: 58,
-        top: 390,
-        child: Text(
-          '4',
-          style: TextStyle(
-            color: Color(0xFF0C0C0C),
-            fontSize: 30,
-            fontFamily: 'Gilroy',
-            fontWeight: FontWeight.w400,
-            height: 0,
-          ),
-        ),
-      ),
-      Positioned(
-        left: 154,
-        top: 390,
-        child: Text(
-          '2',
-          style: TextStyle(
-            color: Color(0xFF0C0C0C),
-            fontSize: 30,
-            fontFamily: 'Gilroy',
-            fontWeight: FontWeight.w400,
-            height: 0,
-          ),
-        ),
-      ),
-      Positioned(
-        left: 249,
-        top: 390,
-        child: Text(
-          '7',
-          style: TextStyle(
-            color: Color(0xFF0C0C0C),
-            fontSize: 30,
-            fontFamily: 'Gilroy',
-            fontWeight: FontWeight.w400,
-            height: 0,
-          ),
-        ),
-      ),
-      Positioned(
-        left: 343,
-        top: 390,
-        child: Text(
-          '1',
-          style: TextStyle(
-            color: Color(0xFF0C0C0C),
-            fontSize: 30,
-            fontFamily: 'Gilroy',
-            fontWeight: FontWeight.w400,
-            height: 0,
-          ),
-        ),
-      ),
-      Positioned(
-        left: 34,
-        top: 451,
-        child: Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: 'Lütfen cep telefonunuza gelen 4 haneli kodu girin.\nEğer SMS gelmediyse tekrar göndermek için ',
-                style: TextStyle(
-                  color: Color(0xFF0C0C0C),
-                  fontSize: 12,
-                  fontFamily: 'Gilroy',
-                  fontWeight: FontWeight.w400,
-                  height: 0,
-                ),
+    ),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => BoardinDort()));
+          },
+          child: Container(
+            alignment: Alignment.bottomCenter,
+            width: double.infinity,
+            height: 49,
+            margin: EdgeInsets.all(31), // Burası ekranın kenar boşluklarını ayarlar
+            decoration: ShapeDecoration(
+              color: Color(0xFF2355FF),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
               ),
-              TextSpan(
-                text: 'buraya',
+            ),
+            child: Center(
+              child: Text(
+                'İleri',
                 style: TextStyle(
-                  color: Color(0xFF0C0C0C),
-                  fontSize: 12,
+                  color: Colors.white,
+                  fontSize: 16,
                   fontFamily: 'Gilroy',
                   fontWeight: FontWeight.w700,
-                  height: 0,
                 ),
               ),
-              TextSpan(
-                text: ' tıklayın.',
-                style: TextStyle(
-                  color: Color(0xFF0C0C0C),
-                  fontSize: 12,
-                  fontFamily: 'Gilroy',
-                  fontWeight: FontWeight.w400,
-                  height: 0,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
-      ),
-      // Positioned(
-      //   left: 0,
-      //   top: 0,
-      //   child: Container(
-      //     width: 428,
-      //     height: 47,
-      //     clipBehavior: Clip.antiAlias,
-      //     decoration: BoxDecoration(),
-      //     child: Stack(
-      //       children: [
-      //         Positioned(
-      //           left: 33,
-      //           top: 14,
-      //           child: Container(
-      //             width: 54,
-      //             height: 21,
-      //             padding: const EdgeInsets.only(top: 1),
-      //             decoration: ShapeDecoration(
-      //               shape: RoundedRectangleBorder(
-      //                 borderRadius: BorderRadius.circular(24),
-      //               ),
-      //             ),
-      //             child: Row(
-      //               mainAxisSize: MainAxisSize.min,
-      //               mainAxisAlignment: MainAxisAlignment.center,
-      //               crossAxisAlignment: CrossAxisAlignment.center,
-      //               children: [
-      //                 SizedBox(
-      //                   width: 54,
-      //                   height: 20,
-      //                   child: Text(
-      //                     '9:41',
-      //                     textAlign: TextAlign.center,
-      //                     style: TextStyle(
-      //                       color: Color(0xFF010101),
-      //                       fontSize: 17,
-      //                       fontFamily: 'SF Pro Text',
-      //                       fontWeight: FontWeight.w600,
-      //                       height: 0.08,
-      //                       letterSpacing: -0.41,
-      //                     ),
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         ),
-      //         Positioned(
-      //           left: 318,
-      //           top: 19,
-      //           child: Container(
-      //             width: 77.40,
-      //             height: 13,
-      //             child: Stack(
-      //               children: [
-      //                 Positioned(
-      //                   left: 50,
-      //                   top: 0,
-      //                   child: Container(
-      //                     width: 27.40,
-      //                     height: 13,
-      //                     child: Stack(children: [
-                          
-      //                     ]),
-      //                   ),
-      //                 ),
-      //                 Positioned(
-      //                   left: 26,
-      //                   top: 1,
-      //                   child: Container(
-      //                     width: 17,
-      //                     height: 12,
-      //                     decoration: BoxDecoration(
-      //                       image: DecorationImage(
-      //                         image: NetworkImage("https://via.placeholder.com/17x12"),
-      //                         fit: BoxFit.fill,
-      //                       ),
-      //                     ),
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: ElevatedButton(
-  onPressed: () {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => BoardinDort()));
-  },
-  style: ElevatedButton.styleFrom(
-    primary: Color(0xFF2355FF), // Arkaplan rengi
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)), // Kenarlık şekli
-  ),
-  child: Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Text(
-      'İleri',
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 16,
-        fontFamily: 'Gilroy',
-        fontWeight: FontWeight.w700,
-        height: 0,
-      ),
-    ),
-  ),
+  ],
 )
-      ),
-    ],
-  ),
-)
-      ),
-    );
+
+      );
   }
 }
 
