@@ -163,10 +163,125 @@ class _Page0State extends State<Page0> {
       });
     }
   }
-  
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      endDrawer: Drawer(
+  child: ListView(
+    padding: EdgeInsets.zero,
+    children: <Widget>[
+      UserAccountsDrawerHeader(
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        accountName: 
+            Text(
+              'İbrahim Yük',
+              style: TextStyle(
+              color: Color(0xFF0C0C0C),
+              fontSize: 20,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w700,
+              height: 0,
+              ),
+            ),
+        
+        accountEmail:
+            Column(
+              children: [
+                Text(
+                  '@ibrahimyuk \n',
+                  style: TextStyle(
+                  color: Color(0xFF646464),
+                  fontSize: 14,
+                  fontFamily: 'Gilroy',
+                  fontWeight: FontWeight.w500,
+                  height: 0,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'Takip Edilen 158',
+                      style: TextStyle(
+                        color: Color(0xFF0C0C0C),
+                        fontSize: 14,
+                        fontFamily: 'Gilroy',
+                        fontWeight: FontWeight.w500,
+                        height: 0,
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Text(
+                      'Takipçi 7.2K',
+                      style: TextStyle(
+                        color: Color(0xFF0C0C0C),
+                        fontSize: 14,
+                        fontFamily: 'Gilroy',
+                        fontWeight: FontWeight.w500,
+                        height: 0,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+        currentAccountPicture:
+            CircleAvatar(
+              backgroundImage: AssetImage("assets/login.png"),
+            ),
+      ),
+      ListTile(
+        leading: Icon(Icons.person),
+        title: Text('Profil'),
+        onTap: () {
+          // Profil sayfasına yönlendirme
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.poll),
+        title: Text('VoxPoll Pro'),
+        onTap: () {
+          // VoxPoll Pro sayfasına yönlendirme
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.interests),
+        title: Text('İlgi Alanları'),
+        onTap: () {
+          // İlgi Alanları sayfasına yönlendirme
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.group),
+        title: Text('Topluluklar'),
+        onTap: () {
+          // Topluluklar sayfasına yönlendirme
+        },
+      ),
+      // Diğer ListTile widget'ları...
+      Divider(),
+      ListTile(
+        leading: Icon(Icons.settings),
+        title: Text('Ayarlar ve Destek'),
+        onTap: () {
+          // Ayarlar ve Destek sayfasına yönlendirme
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.question_answer),
+        title: Text('S.S.S.'),
+        onTap: () {
+          // S.S.S. sayfasına yönlendirme
+        },
+      ),
+      // Alt kısımdaki butonlar için Spacer ve Row widget'ları kullanılabilir
+    ],
+  ),
+),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(16.0),
@@ -205,15 +320,18 @@ class _Page0State extends State<Page0> {
                             );
                           },
                         ),
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundImage: AssetImage('assets/login.png'),
+                        GestureDetector(
+                          onTap: () {
+                            _scaffoldKey.currentState!.openEndDrawer(); // openEndDrawer'ı çağırın
+                          },
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundImage: AssetImage('assets/login.png'),
+                          ),
                         ),
-
                       ],
                     ),
                     SizedBox(height: 10.0),
-
                   ],
                 ),
               ),
