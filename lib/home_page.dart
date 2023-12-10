@@ -170,6 +170,7 @@ class _Page0State extends State<Page0> {
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: Drawer(
+        backgroundColor: Colors.white,
   child: ListView(
     padding: EdgeInsets.zero,
     children: <Widget>[
@@ -235,29 +236,106 @@ class _Page0State extends State<Page0> {
             ),
       ),
       ListTile(
-        leading: Icon(Icons.person),
-        title: Text('Profil'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'Profil',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+              color: Color(0xFF0C0C0C),
+              fontSize: 20,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w700,
+              height: 0.12,
+              ),
+            )
+          ],
+        ),
         onTap: () {
           // Profil sayfasına yönlendirme
         },
       ),
       ListTile(
-        leading: Icon(Icons.poll),
-        title: Text('VoxPoll Pro'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'VoxPoll Pro',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+              color: Color(0xFF2355FF),
+              fontSize: 20,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w700,
+              height: 0.12,
+              ),
+            ),
+          ],
+        ),
         onTap: () {
           // VoxPoll Pro sayfasına yönlendirme
         },
       ),
       ListTile(
-        leading: Icon(Icons.interests),
-        title: Text('İlgi Alanları'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'İlgi Alanları',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+              color: Color(0xFF0C0C0C),
+              fontSize: 20,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w700,
+              height: 0.12,
+              ),
+            )
+          ],
+        ),
         onTap: () {
           // İlgi Alanları sayfasına yönlendirme
         },
       ),
       ListTile(
-        leading: Icon(Icons.group),
-        title: Text('Topluluklar'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'Topluluklar',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+              color: Color(0xFF0C0C0C),
+              fontSize: 20,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w700,
+              height: 0.12,
+              ),
+            )
+          ],
+        ),
+        onTap: () {
+          // Topluluklar sayfasına yönlendirme
+        },
+      ),
+      ListTile(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'Arkadaşlarını Davet Et',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+              color: Color(0xFF0C0C0C),
+              fontSize: 20,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w700,
+              height: 0.12,
+              ),
+            )
+          ],
+        ),
         onTap: () {
           // Topluluklar sayfasına yönlendirme
         },
@@ -265,15 +343,153 @@ class _Page0State extends State<Page0> {
       // Diğer ListTile widget'ları...
       Divider(),
       ListTile(
-        leading: Icon(Icons.settings),
-        title: Text('Ayarlar ve Destek'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'Üretici Araçları',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+              color: Color(0xFF0C0C0C),
+              fontSize: 20,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w700,
+              height: 0.12,
+              ),
+            )
+          ],
+        ),
         onTap: () {
           // Ayarlar ve Destek sayfasına yönlendirme
         },
       ),
       ListTile(
-        leading: Icon(Icons.question_answer),
-        title: Text('S.S.S.'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'Ödemeler',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+              color: Color(0xFF0C0C0C),
+              fontSize: 20,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w700,
+              height: 0.12,
+              ),
+            )
+          ],
+        ),
+        onTap: () {
+          // Ayarlar ve Destek sayfasına yönlendirme
+        },
+      ),
+      ListTile(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'Ayarlar ve Destek',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+              color: Color(0xFF0C0C0C),
+              fontSize: 20,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w700,
+              height: 0.12,
+              ),
+            )
+          ],
+        ),
+        onTap: () {
+          // Ayarlar ve Destek sayfasına yönlendirme
+        },
+      ),
+      ListTile(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'S.S.S',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+              color: Color(0xFF0C0C0C),
+              fontSize: 20,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w700,
+              height: 0.12,
+              ),
+            )
+          ],
+        ),
+        onTap: () {
+          // S.S.S. sayfasına yönlendirme
+        },
+      ),
+      ListTile(
+        trailing: Container(
+    width: 70,
+    height: 20,
+    child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+            Container(
+                width: 70,
+                height: 20,
+                child: Stack(
+                    children: [
+                        Positioned(
+                            left: 1,
+                            top: 1.28,
+                            child: Container(
+                                width: 50,
+                                height: 20,
+                                decoration: ShapeDecoration(
+                                    color: Color(0xFF2355FF),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(11.79),
+                                    ),
+                                ),
+                            ),
+                        ),
+                        Positioned(
+                            left: 10,
+                            top: 0,
+                            child: Transform(
+                                transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(0.79),
+                                child: Container(
+                                    width: 40,
+                                    height: 20,
+                                    child: Stack(
+                                        children: [
+                                            Positioned(
+                                                left: 0,
+                                                top: 0,
+                                                child: Transform(
+                                                    transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(0.79),
+                                                    child: Container(
+                                                        width: 20,
+                                                        height: 20,
+                                                        decoration: ShapeDecoration(
+                                                            color: Colors.white,
+                                                            shape: OvalBorder(),
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ],
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ],
+                ),
+            ),
+        ],
+    ),
+),
         onTap: () {
           // S.S.S. sayfasına yönlendirme
         },
