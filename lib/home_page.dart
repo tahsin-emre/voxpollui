@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
         width: 50,
         height: 50,
         decoration: BoxDecoration(
-          color: Colors.blue,
+          color: Color(0xFF2355FF),
           shape: BoxShape.circle,
         ),
         child: Icon(Icons.add, color: Colors.white),
@@ -649,7 +649,7 @@ class _Page0State extends State<Page0> {
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   if (polls == null) {
-                    return Center(child: CircularProgressIndicator()); // Yükleme göstergesi
+                    return Center(child: CircularProgressIndicator(color: Color(0xFF2355FF),)); // Yükleme göstergesi
                   }
                   return ForWidget.buildCard(polls!, index); // Anket kartını oluştur
                 },
@@ -742,7 +742,7 @@ class _SearchPageState extends State<SearchPage> {
                     (BuildContext context, int index) {
                       if (polls == null || polls!.isEmpty) {
                         // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
-                        return Center(child: CircularProgressIndicator());
+                        return Center(child: CircularProgressIndicator(color: Color(0xFF2355FF),));
                       }
                       return ForWidget.buildCard(polls!,index); // Anket kartını oluştur
                     },
@@ -813,7 +813,7 @@ class _CommunityPageState extends State<CommunityPage> {
               ),
             ),
             Expanded(
-              child: polls == null ? CircularProgressIndicator() : ListView(
+              child: polls == null ? CircularProgressIndicator(color: Color(0xFF2355FF),) : ListView(
                 children: [
                   SizedBox(height: 10.0),
                   Padding(
@@ -967,7 +967,7 @@ class _ProfilePageState extends State<ProfilePage> {
               top: 16,
               left: 16,
               child: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.white),
+                icon: Icon(Icons.arrow_back, color: Colors.black),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
@@ -975,7 +975,7 @@ class _ProfilePageState extends State<ProfilePage> {
               top: 16,
               right: 16,
               child: IconButton(
-                icon: Icon(Icons.settings, color: Colors.white),
+                icon: Icon(Icons.settings, color: Colors.black),
                 onPressed: () {},
               ),
             ),

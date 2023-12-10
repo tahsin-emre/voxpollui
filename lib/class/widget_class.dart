@@ -17,7 +17,7 @@ class ForWidget {
           color: Colors.white,
           elevation: 0.0,
           margin: EdgeInsets.symmetric(vertical: 10.0),
-          child: CircularProgressIndicator(), // Bekleme göstergesi
+          child: CircularProgressIndicator(color: Color(0xFF2355FF),), // Bekleme göstergesi
         );
       } else if (snapshot.hasError) {
         // Hata oluştuğunda ne yapılacağını burada tanımlayabilirsiniz.

@@ -82,7 +82,7 @@ class _SurveyPageState extends State<SurveyPage> {
       body: Container(
         padding: const EdgeInsets.all(20),
         child: _isLoading // Yükleme durumunu kontrol edin
-            ? CircularProgressIndicator() // Yükleme sırasında dönme çemberi göster
+            ? CircularProgressIndicator(color: Color(0xFF2355FF),) // Yükleme sırasında dönme çemberi göster
             : ListView(
                 children: [
                   _buildCardCommunity(),
@@ -92,7 +92,7 @@ class _SurveyPageState extends State<SurveyPage> {
                           future: _pollOptions,
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.waiting) {
-                              return CircularProgressIndicator();
+                              return CircularProgressIndicator(color: Color(0xFF2355FF),);
                             }
 
                             if (snapshot.hasError) {
@@ -185,7 +185,7 @@ class _SurveyPageState extends State<SurveyPage> {
       future: _pollOptions,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return CircularProgressIndicator(color: Color(0xFF2355FF),);
         }
 
         if (snapshot.hasError) {
