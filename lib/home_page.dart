@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/SurveyPage.dart';
+import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/script/database.dart';
 import 'createpoll.dart';
 import 'notifications_page.dart';
 Database database = Database();
+DataManager dataManager = DataManager();
+List<Poll> pollObjects = dataManager.getPolls();
+List<CreatorData> creatorObjects = dataManager.getCreators();
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -145,8 +150,12 @@ class _Page0State extends State<Page0> {
 
 
     void _loadPolls() async {
-    var fetchedPolls = await database.fetchPolls();
+    List<Map<String, dynamic>> fetchedPolls = await database.fetchPolls();
+    dataManager.setCombinedResults(fetchedPolls);
+
     setState(() {
+      pollObjects = dataManager.getPolls();
+      
       polls = fetchedPolls;
     });
   }

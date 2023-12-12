@@ -1,5 +1,6 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
+
 class Database {
   Future<List<Map<String, dynamic>>> fetchPolls() async {
   final queryForPoll = QueryBuilder(ParseObject('Poll'));
