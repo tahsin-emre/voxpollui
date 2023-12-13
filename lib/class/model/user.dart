@@ -19,10 +19,39 @@ class DataManager {
 
   // Ek fonksiyonlar
   List<Poll> getPolls() {
-    return combinedResults.map((result) {
-      return Poll.fromJson(result['poll']);
-    }).toList();
-  }
+  return combinedResults.map((result) {
+    final pollData = result['poll'];
+    
+    if (pollData != null && pollData is Map<String, dynamic>) {
+      return Poll.fromJson(pollData);
+    } else {
+      // Handle null or unexpected data
+      // Örneğin, hata bildirimi yapabilir veya varsayılan bir değer döndürebilirsiniz.
+      return Poll(
+        objectId: 'defaultObjectId',
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        title: 'Default Title',
+        createdBy: 'Default User',
+        creator: CreatorData(
+          objectId: 'defaultCreatorId',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+          username: 'DefaultUsername',
+          name: 'DefaultName',
+          surname: 'DefaultSurname',
+          birthDate: 'DefaultBirthDate',
+          city: 'DefaultCity',
+          district: 'DefaultDistrict',
+          gender: 'DefaultGender',
+          interests: ['DefaultInterest'],
+          biography: 'DefaultBiography',
+          emailVerified: false,
+        ),
+      );
+    }
+  }).toList();
+}
 
   List<CreatorData> getCreators() {
     return combinedResults.map((result) {

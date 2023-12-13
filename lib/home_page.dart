@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-import 'package:voxpollui/SurveyPage.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/script/database.dart';
@@ -155,7 +154,6 @@ class _Page0State extends State<Page0> {
 
     setState(() {
       pollObjects = dataManager.getPolls();
-      
       polls = fetchedPolls;
     });
   }
@@ -655,15 +653,16 @@ class _Page0State extends State<Page0> {
                 ),
               ),
               SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  if (polls == null) {
-                    return Center(child: CircularProgressIndicator(color: Color(0xFF2355FF),)); // Yükleme göstergesi
-                  }
-                  return ForWidget.buildCard(polls!, index); // Anket kartını oluştur
-                },
-                childCount: polls?.length ?? 1, // Eğer polls null ise, yükleme göstergesi için 1 eleman göster
-              ),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      if (dataManager.getCombinedResults().isEmpty) {
+                        // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
+                        return Center(child: CircularProgressIndicator(color: Color(0xFF2355FF),));
+                      }
+                      return ForWidget.buildCard(dataManager.getCombinedResults(), index);
+                    },
+                    childCount: (dataManager.getCombinedResults().isNotEmpty) ? dataManager.getCombinedResults().length : 1,
+                  ),
             ),
             ],
           ),
@@ -749,13 +748,13 @@ class _SearchPageState extends State<SearchPage> {
                   SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                      if (polls == null || polls!.isEmpty) {
+                      if (dataManager.getCombinedResults().isEmpty) {
                         // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
                         return Center(child: CircularProgressIndicator(color: Color(0xFF2355FF),));
                       }
-                      return ForWidget.buildCard(polls!,index); // Anket kartını oluştur
+                      return ForWidget.buildCard(dataManager.getCombinedResults(), index);
                     },
-                    childCount: (polls != null && polls!.isNotEmpty) ? polls!.length : 1,
+                    childCount: (dataManager.getCombinedResults().isNotEmpty) ? dataManager.getCombinedResults().length : 1,
                   ),
                 ),
                 ],
