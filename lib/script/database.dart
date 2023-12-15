@@ -2,29 +2,20 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 
 class Database {
-  Future<List<Map<String, dynamic>>> fetchPolls() async {
-  final queryForPoll = QueryBuilder(ParseObject('Poll'));
-  final responseForPoll = await queryForPoll.query();
+  Future<List<Map<String, dynamic>>> fetchPolls(String pollId, String userId) async {
+    final ParseCloudFunction function = ParseCloudFunction('getPollAndUserDetails');
+    final Map<String, dynamic> params = <String, dynamic>{
+      'pollId': pollId,
+      'userId': userId,
+    };
+    final ParseResponse result = await function.execute(parameters: params);
 
-  if (responseForPoll.success && responseForPoll.results != null) {
-    List<Map<String, dynamic>> combinedResults = [];
-    for (var poll in responseForPoll.results as List<ParseObject>) {
-      var createdBy = poll.get<String>('createdBy');
-      ParseObject? creatorData;
-      if (createdBy != null && createdBy.isNotEmpty) {
-        creatorData = await fetchCreater(createdBy);
-      }
-      combinedResults.add({
-          'poll': poll,
-          'creator': creatorData,
-      });
+    if (result.success && result.result != null) {
+      print('${result.result}  RESULTS RESULTS');
+      return result.results as List<Map<String, dynamic>>;
+    } else {
+      return [{}];
     }
-    print('$combinedResults    COOOMMMBİİİNEEEDDDRESSUUULLLTSSS');
-    return combinedResults;
-  } else {
-    // Hata durumunda işlem
-    return [];
-  }
 }
 
 
@@ -85,18 +76,19 @@ static Future<bool> hasUserVoted(var pollData) async {
     }
   }
 
-  static Future<int> fetchPollResponseCount(String pollId) async {
-    final ParseCloudFunction function = ParseCloudFunction('countPollResponses');
-    final Map<String, dynamic> params = <String, dynamic>{
-      'pollId': pollId,
-    };
-    final ParseResponse result = await function.execute(parameters: params);
+//   static Future<List<Map<String, dynamic>>> fetchPollResponseCount(String pollId, String userId) async {
+//     final ParseCloudFunction function = ParseCloudFunction('getPollAndUserDetails');
+//     final Map<String, dynamic> params = <String, dynamic>{
+//       'pollId': pollId,
+//       'userId': userId,
+//     };
+//     final ParseResponse result = await function.execute(parameters: params);
 
-    if (result.success && result.result != null) {
-      print('${result.result}  RESULTS RESULTS');
-      return result.result as int;
-    } else {
-      return 0;
-    }
-  }
-}
+//     if (result.success && result.result != null) {
+//       print('${result.result}  RESULTS RESULTS');
+//       return result.results as List<Map<String, dynamic>>;
+//     } else {
+//       return [{}];
+//     }
+//   }
+// }
