@@ -138,7 +138,7 @@ class _Page0State extends State<Page0> {
   String surname = 'Yükleniyor..';
   String createrId = 'Yükleniyor..';
 
-  List<Map<String, dynamic>>? polls; // Anketleri saklamak için bir liste
+  Map<String, dynamic>? polls; // Anketleri saklamak için bir liste
   @override
   void initState() {
     super.initState();
@@ -149,7 +149,7 @@ class _Page0State extends State<Page0> {
 
 
     void _loadPolls() async {
-    List<Map<String, dynamic>> fetchedPolls = await database.fetchPolls();
+    Map<String, dynamic> fetchedPolls = await database.fetchPolls();
     dataManager.setCombinedResults(fetchedPolls);
 
     setState(() {
@@ -686,7 +686,7 @@ class _SearchPageState extends State<SearchPage> {
   String username = 'Yükleniyor..';
   String surname = 'Yükleniyor..';
   String createrId = 'Yükleniyor..';
-  List<Map<String, dynamic>>? polls; // Anketleri saklamak için bir liste
+  Map<String, dynamic>? polls; // Anketleri saklamak için bir liste
   Database database = Database();
   @override
   void initState() {
@@ -780,7 +780,7 @@ class _CommunityPageState extends State<CommunityPage> {
   String username = 'Yükleniyor..';
   String surname = 'Yükleniyor..';
   String createrId = 'Yükleniyor..';
-  List<Map<String, dynamic>>? polls; // Anketleri saklamak için bir liste
+  Map<String, dynamic>? polls; // Anketleri saklamak için bir liste
   Database database = Database();
   @override
   void initState() {
@@ -832,7 +832,7 @@ class _CommunityPageState extends State<CommunityPage> {
                     ),
                   ),
                   SizedBox(height: 10.0),
-              ...List.generate(polls!.length, (index) => _buildCardCommunity(context ,polls!, index)),
+              ...List.generate(polls!.length, (index) => _buildCardCommunity(context ,polls![index])),
                   SizedBox(height: 10.0),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -842,7 +842,7 @@ class _CommunityPageState extends State<CommunityPage> {
                     ),
                   ),
                   SizedBox(height: 10.0),
-              ...List.generate(polls!.length, (index) => _buildCardCommunityWithJoinButton(context ,polls!, index)),
+              ...List.generate(polls!.length, (index) => _buildCardCommunityWithJoinButton(context ,polls![index])),
                 ],
               ),
             ),
@@ -878,7 +878,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String viewObjectId = ''; // Bu satırı ekleyin
   dynamic joinPoll;
 
-  List<Map<String, dynamic>>? polls;
+  Map<String, dynamic>? polls;
   bool _isLoading = true;
 
   @override
@@ -1030,7 +1030,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       itemBuilder: (BuildContext context, int index) {
                         List<Map<String, dynamic>> bos = [{}];
                         return _buildCardCommunityWithJoinButton(
-                            context, polls ?? bos, index);
+                            context, polls[index] ?? bos[index]);
                       },
                     ),
                   if (polls != null)
@@ -1039,7 +1039,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       itemBuilder: (BuildContext context, int index) {
                         List<Map<String, dynamic>> bos = [{}];
                         return _buildCardCommunity(
-                            context, polls ?? bos, index);
+                            context, polls?[index] ?? bos[index]);
                       },
                     ),
                 ],
@@ -1155,10 +1155,9 @@ Future<void> checkIfFollowing(String viewObjectId) async {
 }
 
 
-Widget _buildCardCommunityWithJoinButton(BuildContext context , List<Map<String, dynamic>> poll, int i) {
-  Map<String, dynamic> data = poll[i];
-  ParseObject? creator = data['creator'];
-  ParseObject? pollData = data['poll'];
+Widget _buildCardCommunityWithJoinButton(BuildContext context , Map<String, dynamic> poll) {
+  ParseObject? creator = poll['creator'];
+  ParseObject? pollData = poll['poll'];
 
   String creatorUsername = creator != null ? creator.get<String>('username') ?? 'Bilinmiyor' : 'Bilinmiyor';
   String pollDataBaslik = pollData != null ? pollData.get<String>('title') ?? 'Bilinmiyor' : 'Bilinmiyor';
@@ -1179,7 +1178,7 @@ Widget _buildCardCommunityWithJoinButton(BuildContext context , List<Map<String,
     subtitle: Text('Topluluk Açıklaması'),
     trailing: TextButton(
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: data, i: 4)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: poll, i: 4)));
       },
       child: Text('Katıl'),
       style: TextButton.styleFrom(
@@ -1190,10 +1189,9 @@ Widget _buildCardCommunityWithJoinButton(BuildContext context , List<Map<String,
   );
 }
 
-Widget _buildCardCommunity(BuildContext context , List<Map<String, dynamic>> poll, int i) {
-  Map<String, dynamic> data = poll[i];
-  ParseObject? creator = data['creator'];
-  ParseObject? pollData = data['poll'];
+Widget _buildCardCommunity(BuildContext context , Map<String, dynamic> poll) {
+  ParseObject? creator = poll['creator'];
+  ParseObject? pollData = poll['poll'];
 
   String creatorUsername = creator != null ? creator.get<String>('username') ?? 'Bilinmiyor' : 'Bilinmiyor';
   String pollDataBaslik = pollData != null ? pollData.get<String>('title') ?? 'Bilinmiyor' : 'Bilinmiyor';
@@ -1219,7 +1217,7 @@ Widget _buildCardCommunity(BuildContext context , List<Map<String, dynamic>> pol
     onTap: () {
       // Burada tıklama olayını işleyin
       print('Trailing ikonuna tıklandı!');
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: data, i: 4)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: poll, i: 4)));
     },
     child: Icon(Icons.arrow_forward),
   ),
