@@ -13,15 +13,15 @@ class Database {
 
         // İsterseniz burada gelen veriler üzerinde daha fazla işlem yapabilirsiniz
         // Örneğin, kullanıcıların ve anketlerin listesini alabilirsiniz:
-        List<Map<String, dynamic>> allUsersData = List<Map<String, dynamic>>.from(data['users']);
-        List<Map<String, dynamic>> allPollsData = List<Map<String, dynamic>>.from(data['polls']);
+        //   List<Map<String, dynamic>> allUsersData = List<Map<String, dynamic>>.from(data['users']);
+        //   List<Map<String, dynamic>> allPollsData = List<Map<String, dynamic>>.from(data['polls']);
 
-        print('Tüm kullanıcılar: $allUsersData');
-        print('Tüm anketler: $allPollsData');
+        //   print('Tüm kullanıcılar: ${allUsersData[0]['username']}');
+        //  print('Tüm anketler: $allPollsData');
 
         return data;
       } else {
-        return {};
+        throw Exception('Sunucu tarafında bir hata oluştu.');
       }
     } catch (e) {
       print('Bir hata oluştu: $e');

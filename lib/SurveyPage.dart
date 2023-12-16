@@ -5,9 +5,10 @@ import 'package:voxpollui/home_page.dart';
 import 'package:voxpollui/script/database.dart';
 
 class SurveyPage extends StatefulWidget {
-  final Map<String, dynamic> pollData;
+  final List<Map<dynamic, dynamic>> pollData;
+  final int index;
 
-  SurveyPage({Key? key, required this.pollData}) : super(key: key);
+  SurveyPage({Key? key, required this.pollData, required this.index}) : super(key: key);
 
   @override
   _SurveyPageState createState() => _SurveyPageState();
@@ -40,7 +41,7 @@ class _SurveyPageState extends State<SurveyPage> {
 }
 
   Future<List<PollOption>> _fetchPollOptions() async {
-    var poll = widget.pollData['poll'];
+    var poll = widget.pollData[widget.index]['poll'];
     String pollId = poll?.get<String>('objectId') ?? 'Bilinmiyor';
     QueryBuilder<ParseObject> queryPollOptions = QueryBuilder<ParseObject>(ParseObject('PollOption'))
       ..whereEqualTo('pollId', pollId);
@@ -66,7 +67,7 @@ class _SurveyPageState extends State<SurveyPage> {
 
   @override
   Widget build(BuildContext context) {
-    var poll = widget.pollData['poll'];
+    var poll = widget.pollData[widget.index]['poll'];
 
     DateTime? endDate = poll.get<DateTime>('endDate');
     bool pollEnded = endDate != null ? DateTime.now().isAfter(endDate) : false;
@@ -153,7 +154,7 @@ class _SurveyPageState extends State<SurveyPage> {
   }
 
   Widget _buildCardCommunity() {
-    ParseObject? creator = widget.pollData['creator'];
+    ParseObject? creator = widget.pollData[widget.index]['creator'];
     String creatorUsername = creator?.get<String>('username') ?? 'Bilinmiyor';
     return ListTile(
       leading: CircleAvatar(

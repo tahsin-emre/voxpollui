@@ -1,41 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/SurveyPage.dart';
+import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/script/database.dart';
 class ForWidget {
-  static Widget buildCard(List<Map<String, dynamic>> poll, int i) {
-  Map<String, dynamic> data = poll[i];
-  ParseObject? creator = data['creator'];
-  ParseObject? pollData = data['poll'];
+  static Widget buildCard(BuildContext context, List<Map<String, dynamic>> creator, List<Map<String, dynamic>> poll, int index) {
 
-  return FutureBuilder<int>(
-    future: Database.fetchPollResponseCount(pollData!['objectId']),
-    builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        // Veri henüz yüklenmediğinde ne yapılacağını burada tanımlayabilirsiniz.
-        return Card(
-          color: Colors.white,
-          elevation: 0.0,
-          margin: EdgeInsets.symmetric(vertical: 10.0),
-          child: CircularProgressIndicator(color: Color(0xFF2355FF),), // Bekleme göstergesi
-        );
-      } else if (snapshot.hasError) {
-        // Hata oluştuğunda ne yapılacağını burada tanımlayabilirsiniz.
-        return Card(
-          color: Colors.white,
-          elevation: 0.0,
-          margin: EdgeInsets.symmetric(vertical: 10.0),
-          child: Text('Hata: ${snapshot.error}'),
-        );
-      } else {
-        // Veri başarıyla yüklendiğinde ne yapılacağını burada tanımlayabilirsiniz.
-        int joinPollUsers = snapshot.data ?? 0;
+  print('BUİLDCARD creator   $creator');
+  print('BUİLDCARD poll   $poll');
+   
 
-        // 'creator' içindeki 'username' değerini al
-        String creatorUsername = creator?.get<String>('username') ?? 'Bilinmiyor';
-        String pollDataBaslik = pollData?.get<String>('title') ?? 'Bilinmiyor';
-
-        return Card(
+  return Card(
           color: Colors.white,
           elevation: 0.0,
           margin: EdgeInsets.symmetric(vertical: 10.0),
@@ -55,26 +30,26 @@ class ForWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          creatorUsername,
+                          creator[index]['username'] ?? 'Hata',
                           style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                         ),
-                        Text('${data['creator'].get<dynamic>('followed').length ?? 100} Takipçi'),
+                        Text('${creator[index]['username'] ?? 'Hata'} Takipçi'),//DÜZELTİLECEK
                       ],
                     ),
                   ],
                 ),
                 SizedBox(height: 10.0),
                 Text(
-                  pollDataBaslik, // Anket başlığını al
+                  poll[index]['title'] ?? 'Hata', // Anket başlığını al
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
-                Text('$joinPollUsers Kişi Katıldı'),
+                Text('${poll[index]['title'] ?? 'Hata'} Kişi Katıldı'), //DÜZELTİLECEK
                 SizedBox(height: 10.0),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SurveyPage(pollData: data)),
+                      MaterialPageRoute(builder: (context) => SurveyPage(pollData: poll, index: index,)),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -97,7 +72,4 @@ class ForWidget {
           ),
         );
       }
-    },
-  );
-} 
-}
+    }

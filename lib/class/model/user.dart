@@ -7,93 +7,60 @@ class DataManager {
 
   DataManager._internal();
 
-  List<Map<String, dynamic>> combinedResults = [];
+  List<Map<String, dynamic>>? polls;
+  List<Map<String, dynamic>>? creators;
 
-  void setCombinedResults(List<Map<String, dynamic>> results) {
-    combinedResults = results;
-  }
-
-  List<Map<String, dynamic>> getCombinedResults() {
-    return combinedResults;
-  }
-
-  // Ek fonksiyonlar
-  List<Poll> getPolls() {
-  return combinedResults.map((result) {
-    final pollData = result['poll'];
-    
-    if (pollData != null && pollData is Map<String, dynamic>) {
-      return Poll.fromJson(pollData);
-    } else {
-      // Handle null or unexpected data
-      // Örneğin, hata bildirimi yapabilir veya varsayılan bir değer döndürebilirsiniz.
-      return Poll(
-        objectId: 'defaultObjectId',
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        title: 'Default Title',
-        createdBy: 'Default User',
-        creator: CreatorData(
-          objectId: 'defaultCreatorId',
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-          username: 'DefaultUsername',
-          name: 'DefaultName',
-          surname: 'DefaultSurname',
-          birthDate: 'DefaultBirthDate',
-          city: 'DefaultCity',
-          district: 'DefaultDistrict',
-          gender: 'DefaultGender',
-          interests: ['DefaultInterest'],
-          biography: 'DefaultBiography',
-          emailVerified: false,
-        ),
-      );
-    }
-  }).toList();
-}
-
-  List<CreatorData> getCreators() {
-    return combinedResults.map((result) {
-      return CreatorData.fromJson(result['creator']);
-    }).toList();
+Future<void> setCombinedResults(Map<dynamic, dynamic> results) async {
+  print('RESULTS   $results');
+  if (results != null) {
+      polls = List<Map<String, dynamic>>.from(results['polls']);
+      print('POLLS $polls');
+      creators = List<Map<String, dynamic>>.from(results['users']);
+      print('CREATORS $creators');
   }
 }
+
+
+
+
+List<Map<String, dynamic>>? getPolls() {
+  print('GET POLLS POLLS   $polls');
+  return polls;
+}
+
+List<Map<String, dynamic>>? getCreators() {
+  return creators;
+}
+
+}
+
 
 
 class Poll {
   final String objectId;
-  final DateTime createdAt;
-  final DateTime updatedAt;
   final String title;
   final String createdBy;
-  final CreatorData creator;
+  final int totalParticipants;
 
   Poll({
     required this.objectId,
-    required this.createdAt,
-    required this.updatedAt,
     required this.title,
     required this.createdBy,
-    required this.creator,
+    required this.totalParticipants,
   });
 
   factory Poll.fromJson(Map<String, dynamic> json) {
     return Poll(
       objectId: json['objectId'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
       title: json['title'] as String,
       createdBy: json['createdBy'] as String,
-      creator: CreatorData.fromJson(json['creator'] as Map<String, dynamic>),
+      totalParticipants: json['totalParticipants'] as int,
     );
   }
 }
 
 class CreatorData {
   final String objectId;
-  final DateTime createdAt;
-  final DateTime updatedAt;
   final String username;
   final String name;
   final String surname;
@@ -104,11 +71,11 @@ class CreatorData {
   final List<String> interests;
   final String biography;
   final bool emailVerified;
+  final List<String> followed;
+  final List<String> followers;
 
   CreatorData({
     required this.objectId,
-    required this.createdAt,
-    required this.updatedAt,
     required this.username,
     required this.name,
     required this.surname,
@@ -119,13 +86,13 @@ class CreatorData {
     required this.interests,
     required this.biography,
     required this.emailVerified,
+    required this.followed,
+    required this.followers,
   });
 
   factory CreatorData.fromJson(Map<String, dynamic> json) {
     return CreatorData(
       objectId: json['objectId'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
       username: json['username'] as String,
       name: json['name'] as String,
       surname: json['surname'] as String,
@@ -136,6 +103,8 @@ class CreatorData {
       interests: List<String>.from(json['interests'] as List),
       biography: json['biography'] as String,
       emailVerified: json['emailVerified'] as bool,
+      followed: json['followed'] as List<String>,
+      followers: json['followers'] as List<String>,
     );
   }
 }

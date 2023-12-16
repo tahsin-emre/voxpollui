@@ -9,8 +9,9 @@ import 'createpoll.dart';
 import 'notifications_page.dart';
 Database database = Database();
 DataManager dataManager = DataManager();
-List<Poll> pollObjects = dataManager.getPolls();
-List<CreatorData> creatorObjects = dataManager.getCreators();
+
+List<Map<String, dynamic>>? pollObjects;
+List<Map<String, dynamic>>? creatorObjects;
 
 class HomePage extends StatefulWidget {
   @override
@@ -133,7 +134,8 @@ class Page0 extends StatefulWidget {
 
 class _Page0State extends State<Page0> {
   bool _showUnansweredSurveyBox = true;
-  var followed;
+  List<dynamic>? followed;
+  List<dynamic>? followers;
   String username = 'Yükleniyor..';
   String surname = 'Yükleniyor..';
   String createrId = 'Yükleniyor..';
@@ -147,16 +149,17 @@ class _Page0State extends State<Page0> {
   }
 
 
-
-    void _loadPolls() async {
-    Map<String, dynamic> fetchedPolls = await database.fetchPolls();
-    dataManager.setCombinedResults(fetchedPolls);
+  void _loadPolls() async {
+    Map<dynamic, dynamic> fetchedPolls = await database.fetchPolls();
+    print('FETCHEDPOLLS   $fetchedPolls');
+    await dataManager.setCombinedResults(fetchedPolls);
 
     setState(() {
       pollObjects = dataManager.getPolls();
-      polls = fetchedPolls;
+      creatorObjects = dataManager.getCreators();
     });
   }
+
 
     Future<void> _loadCurrentUser() async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
@@ -164,8 +167,8 @@ class _Page0State extends State<Page0> {
       setState(() {
         username = currentUser.username!;
         surname = currentUser.get<String>('surname') ?? 'Soyad test';
-        followed = currentUser.get<dynamic>('followed') ?? [];
-
+        followed = currentUser.get<List<dynamic>>('followed') ?? [];
+        followers = currentUser.get<List<dynamic>>('followers') ?? [];
         //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
       });
     }
@@ -187,7 +190,7 @@ class _Page0State extends State<Page0> {
         ),
         accountName: 
             Text(
-              'İbrahim Yük',
+              '$username $surname',
               style: TextStyle(
               color: Color(0xFF0C0C0C),
               fontSize: 20,
@@ -201,7 +204,7 @@ class _Page0State extends State<Page0> {
             Column(
               children: [
                 Text(
-                  '@ibrahimyuk \n',
+                  '@$username \n',
                   style: TextStyle(
                   color: Color(0xFF646464),
                   fontSize: 14,
@@ -213,7 +216,7 @@ class _Page0State extends State<Page0> {
                 Row(
                   children: [
                     Text(
-                      'Takip Edilen 158',
+                      'Takip Edilen ${followed?.length ?? 0}',
                       style: TextStyle(
                         color: Color(0xFF0C0C0C),
                         fontSize: 14,
@@ -224,7 +227,7 @@ class _Page0State extends State<Page0> {
                     ),
                     SizedBox(width: 10,),
                     Text(
-                      'Takipçi 7.2K',
+                      'Takipçi ${followers?.length ?? 0}',
                       style: TextStyle(
                         color: Color(0xFF0C0C0C),
                         fontSize: 14,
@@ -528,7 +531,7 @@ class _Page0State extends State<Page0> {
                               style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              '${followed!.length ?? 0}',
+                              '${followed?.length ?? 0}',
                               style: TextStyle(fontSize: 16.0),
                             ),
                           ],
@@ -655,13 +658,13 @@ class _Page0State extends State<Page0> {
               SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                      if (dataManager.getCombinedResults().isEmpty) {
+                      if (dataManager.getPolls()?.isEmpty ?? true) {
                         // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
                         return Center(child: CircularProgressIndicator(color: Color(0xFF2355FF),));
                       }
-                      return ForWidget.buildCard(dataManager.getCombinedResults(), index);
+                      return ForWidget.buildCard(context, creatorObjects!, pollObjects!, index);
                     },
-                    childCount: (dataManager.getCombinedResults().isNotEmpty) ? dataManager.getCombinedResults().length : 1,
+                    childCount: (dataManager.getPolls()?.isNotEmpty ?? false) ? dataManager.getPolls()?.length : 1,
                   ),
             ),
             ],
@@ -748,13 +751,13 @@ class _SearchPageState extends State<SearchPage> {
                   SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                      if (dataManager.getCombinedResults().isEmpty) {
+                      if (dataManager.getPolls()?.isEmpty ?? true) {
                         // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
                         return Center(child: CircularProgressIndicator(color: Color(0xFF2355FF),));
                       }
-                      return ForWidget.buildCard(dataManager.getCombinedResults(), index);
+                      return ForWidget.buildCard(context, creatorObjects!, pollObjects!, index);
                     },
-                    childCount: (dataManager.getCombinedResults().isNotEmpty) ? dataManager.getCombinedResults().length : 1,
+                    childCount: (dataManager.getPolls()?.isNotEmpty ?? false) ? dataManager.getPolls()?.length : 1,
                   ),
                 ),
                 ],
@@ -832,7 +835,7 @@ class _CommunityPageState extends State<CommunityPage> {
                     ),
                   ),
                   SizedBox(height: 10.0),
-              ...List.generate(polls!.length, (index) => _buildCardCommunity(context ,polls![index])),
+              ...List.generate(polls!.length, (index) => _buildCardCommunity(context, index)),
                   SizedBox(height: 10.0),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -842,7 +845,7 @@ class _CommunityPageState extends State<CommunityPage> {
                     ),
                   ),
                   SizedBox(height: 10.0),
-              ...List.generate(polls!.length, (index) => _buildCardCommunityWithJoinButton(context ,polls![index])),
+              ...List.generate(polls!.length, (index) => _buildCardCommunityWithJoinButton(context, index)),
                 ],
               ),
             ),
@@ -856,8 +859,9 @@ class _CommunityPageState extends State<CommunityPage> {
 
 // ignore: must_be_immutable
 class ProfilePage extends StatefulWidget {
-  Map<String, dynamic>? pollData;
-  ProfilePage({this.pollData, int? i});
+  List<Map<dynamic, dynamic>>? pollData;
+  int? i;
+  ProfilePage({this.pollData, this.i});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -884,7 +888,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    viewObjectId = widget.pollData?['creator']['objectId'] ?? 'Hata';
+    viewObjectId = widget.pollData?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
     checkIfFollowing(viewObjectId); // Bu fonksiyonu çağırırken viewObjectId'i geçirin
     if (widget.pollData == null) {
       _loadCurrentUser();
@@ -906,17 +910,17 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _loadPollData() async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-    dynamic _joinPoll = await Database.countUserPollResponses(widget.pollData!['creator']['objectId'] ?? 'ObjectIDDDDDDD');
+    dynamic _joinPoll = await Database.countUserPollResponses(widget.pollData![widget.i ?? 0]['creator']['objectId'] ?? 'ObjectIDDDDDDD');
     print('${_joinPoll}    JOİN POLL');
     setState(() {
       joinPoll = _joinPoll;
       objectId = currentUser?.get<String>('objectId') ?? 'ObjectIDDDDDDD';
-      username = widget.pollData!['creator']['username'] ?? 'Yükleniyor..';
-      name = widget.pollData!['creator']['name'] ?? 'Yükleniyor..';
-      surname = widget.pollData!['creator']['surname'] ?? 'Yükleniyor..';
-      followed = widget.pollData!['creator']['followed'] ?? '0';
-      biyografi = widget.pollData!['creator']['biography'] ?? '';
-      followers = widget.pollData!['creator']['followers'] ?? '0';
+      username = widget.pollData![widget.i ?? 0]['creator']['username'] ?? 'Yükleniyor..';
+      name = widget.pollData![widget.i ?? 0]['creator']['name'] ?? 'Yükleniyor..';
+      surname = widget.pollData![widget.i ?? 0]['creator']['surname'] ?? 'Yükleniyor..';
+      followed = widget.pollData![widget.i ?? 0]['creator']['followed'] ?? '0';
+      biyografi = widget.pollData![widget.i ?? 0]['creator']['biography'] ?? '';
+      followers = widget.pollData![widget.i ?? 0]['creator']['followers'] ?? '0';
     });
   }
 
@@ -940,17 +944,17 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final data = widget.pollData ?? {
-      'creator': {
-        'username': username,
-        'name': name,
-        'surname': surname,
-        'followed': followed,
-        'biography': biyografi,
-        'followers': followers,
-      }
-    };
-    final viewObjectId = widget.pollData?['creator']['objectId'] ?? 'Hata';
+    // final data = widget.pollData ?? {
+    //   'creator': {
+    //     'username': username,
+    //     'name': name,
+    //     'surname': surname,
+    //     'followed': followed,
+    //     'biography': biyografi,
+    //     'followers': followers,
+    //   }
+    // };
+    final viewObjectId = widget.pollData?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
     print('$objectId   GİRİŞ YAPAN KULLANICI OBJECTID ');
     print('$viewObjectId        GÖRÜNTÜLENEN KULLANICI OBJECTID');
 
@@ -995,7 +999,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             Text(
-              "${data!['creator']['name'] ?? name} ${data!['creator']['surname'] ?? surname}",
+              "${widget.pollData?[widget.i ?? 0]['creator']['name'] ?? name} ${widget.pollData?[widget.i ?? 0]['surname'] ?? surname}",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Text('@$username'),
@@ -1030,16 +1034,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       itemBuilder: (BuildContext context, int index) {
                         List<Map<String, dynamic>> bos = [{}];
                         return _buildCardCommunityWithJoinButton(
-                            context, polls[index] ?? bos[index]);
+                            context, index);
                       },
                     ),
                   if (polls != null)
                     ListView.builder(
                       itemCount: polls!.length,
                       itemBuilder: (BuildContext context, int index) {
-                        List<Map<String, dynamic>> bos = [{}];
                         return _buildCardCommunity(
-                            context, polls?[index] ?? bos[index]);
+                            context, index);
                       },
                     ),
                 ],
@@ -1155,12 +1158,7 @@ Future<void> checkIfFollowing(String viewObjectId) async {
 }
 
 
-Widget _buildCardCommunityWithJoinButton(BuildContext context , Map<String, dynamic> poll) {
-  ParseObject? creator = poll['creator'];
-  ParseObject? pollData = poll['poll'];
-
-  String creatorUsername = creator != null ? creator.get<String>('username') ?? 'Bilinmiyor' : 'Bilinmiyor';
-  String pollDataBaslik = pollData != null ? pollData.get<String>('title') ?? 'Bilinmiyor' : 'Bilinmiyor';
+Widget _buildCardCommunityWithJoinButton(BuildContext context, int index) {
 
   return ListTile(
     leading: CircleAvatar(
@@ -1172,13 +1170,13 @@ Widget _buildCardCommunityWithJoinButton(BuildContext context , Map<String, dyna
         SizedBox(width: 4.0),
         Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
         SizedBox(width: 4.0),
-        Text('@$creatorUsername', style: TextStyle(fontSize: 12.0)),
+        Text('@${creatorObjects![index]['username']}', style: TextStyle(fontSize: 12.0)),
       ],
     ),
     subtitle: Text('Topluluk Açıklaması'),
     trailing: TextButton(
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: poll, i: 4)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: pollObjects, i: 4)));
       },
       child: Text('Katıl'),
       style: TextButton.styleFrom(
@@ -1189,13 +1187,7 @@ Widget _buildCardCommunityWithJoinButton(BuildContext context , Map<String, dyna
   );
 }
 
-Widget _buildCardCommunity(BuildContext context , Map<String, dynamic> poll) {
-  ParseObject? creator = poll['creator'];
-  ParseObject? pollData = poll['poll'];
-
-  String creatorUsername = creator != null ? creator.get<String>('username') ?? 'Bilinmiyor' : 'Bilinmiyor';
-  String pollDataBaslik = pollData != null ? pollData.get<String>('title') ?? 'Bilinmiyor' : 'Bilinmiyor';
-  String toplulukNameOrnektir = creator != null ? creator.get<String>('name') ?? 'Bilinmiyor' : 'Bilinmiyor';
+Widget _buildCardCommunity(BuildContext context, int index) {
   //String toplulukNameOrnektir = creator != null ? creator.get<String>('name') ?? 'Bilinmiyor' : 'Bilinmiyor';
 
 
@@ -1209,7 +1201,7 @@ Widget _buildCardCommunity(BuildContext context , Map<String, dynamic> poll) {
         SizedBox(width: 4.0),
         Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
         SizedBox(width: 4.0),
-        Text('@$creatorUsername', style: TextStyle(fontSize: 12.0)),
+        Text('@${creatorObjects![index]['username']}', style: TextStyle(fontSize: 12.0)),
       ],
     ),
     subtitle: Text('Topluluk Açıklaması'),
@@ -1217,7 +1209,7 @@ Widget _buildCardCommunity(BuildContext context , Map<String, dynamic> poll) {
     onTap: () {
       // Burada tıklama olayını işleyin
       print('Trailing ikonuna tıklandı!');
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: poll, i: 4)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: creatorObjects, i: 4)));
     },
     child: Icon(Icons.arrow_forward),
   ),
