@@ -48,10 +48,10 @@ Future<ParseObject?> fetchCreater(String? createrId) async {
   }
 }
 
-static Future<bool> hasUserVoted(List<Map<dynamic, String>> pollData, int index) async {
+static Future<bool> hasUserVoted(List<Map<dynamic, dynamic>> pollData, int index) async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
     String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
-    String pollId = pollData[index]['poll']![index];
+    String pollId = pollData[index]['objectId'];
 
     QueryBuilder<ParseObject> queryUserPollResponse = QueryBuilder<ParseObject>(ParseObject('PollResponse'))
       ..whereEqualTo('userId', userId)

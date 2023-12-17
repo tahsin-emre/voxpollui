@@ -131,7 +131,7 @@ class _BoardinIkiState extends State<BoardinIki> {
           checkColor: Colors.white,
           fillColor: MaterialStateProperty.resolveWith(getColor),
           title: Text(
-            'Aydınlatma Metni’ni okudum, Açık Rıza Metni’ni okudum ve onaylıyorum.',
+            'Açık Rıza Metni ve Ticari Elektronik İleti Aydınlatma Metni kapsamında SMS, e-posta ve arama almak istiyorum.',
             style: TextStyle(
               color: Color(0xFF0C0C0C),
               fontSize: 13,
@@ -153,7 +153,7 @@ class _BoardinIkiState extends State<BoardinIki> {
     ),
       Positioned(
         left: 35,
-        top: 791,
+        top: 780,
         child: SizedBox(
           width: 333,
           child: Text.rich(
@@ -208,42 +208,48 @@ class _BoardinIkiState extends State<BoardinIki> {
           ),
         ),
       ),
-      Positioned(
-        left: 31,
-        top: 843,
-        child: Container(
-          width: 366,
-          height: 49,
-          decoration: ShapeDecoration(
-            color: Color(0xFF2355FF),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          ),
-        ),
-      ),
       Align(
         alignment: Alignment.bottomCenter,
-        child: ElevatedButton(
-  onPressed: () {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => BoardinUc()));
-  },
-  style: ElevatedButton.styleFrom(
-    primary: Color(0xFF2355FF), // Arkaplan rengi
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)), // Kenarlık şekli
-  ),
-  child: Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Text(
-      'İleri',
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 16,
-        fontFamily: 'Gilroy',
-        fontWeight: FontWeight.w700,
-        height: 0,
-      ),
-    ),
-  ),
-)
+        child: GestureDetector(
+            onTap: () {
+              if (onayliyorum && emailAlmak) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => BoardinUc()));
+              } else {
+                 showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Hata'),
+                      content: Text('Rıza metinleri kabul edilmelidir'),
+                    );
+                  },
+                );
+              }
+            },
+            child: Container(
+              alignment: Alignment.bottomCenter,
+              width: double.infinity,
+              height: 49,
+              margin: EdgeInsets.all(31), // Burası ekranın kenar boşluklarını ayarlar
+              decoration: ShapeDecoration(
+                color: Color(0xFF2355FF),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  'İleri',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontFamily: 'Gilroy',
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ),
       ),
     ],
   ),
@@ -253,7 +259,8 @@ class _BoardinIkiState extends State<BoardinIki> {
   }
 }
 
-
+//left: 31,
+        //top: 843,
 // class SignUp extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {

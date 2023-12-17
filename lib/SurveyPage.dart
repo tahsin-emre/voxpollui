@@ -29,7 +29,7 @@ class _SurveyPageState extends State<SurveyPage> {
   }
 
   Future<void> _checkIfUserVoted() async {
-  bool hasVoted = await Database.hasUserVoted(widget.pollData);
+  bool hasVoted = await Database.hasUserVoted(widget.pollData, widget.index);
   print("_hasVoted: $hasVoted"); // Debug için yazdırın
   setState(() {
     _hasVoted = hasVoted;
@@ -41,8 +41,8 @@ class _SurveyPageState extends State<SurveyPage> {
 }
 
   Future<List<PollOption>> _fetchPollOptions() async {
-    var poll = widget.pollData[widget.index]['poll'];
-    String pollId = poll?.get<String>('objectId') ?? 'Bilinmiyor';
+    //var poll = widget.pollData[widget.index]['poll'];
+    String pollId = widget.pollData[widget.index]['objectId'];
     QueryBuilder<ParseObject> queryPollOptions = QueryBuilder<ParseObject>(ParseObject('PollOption'))
       ..whereEqualTo('pollId', pollId);
 
@@ -67,8 +67,6 @@ class _SurveyPageState extends State<SurveyPage> {
 
   @override
   Widget build(BuildContext context) {
-    var poll = widget.pollData[widget.index]['poll'];
-
     // DateTime? endDate = poll['createdAt'];
     bool pollEnded = false;
 
@@ -88,7 +86,7 @@ class _SurveyPageState extends State<SurveyPage> {
                 children: [
                   _buildCardCommunity(),
                   _hasVoted
-                      ? _buildPollResults(poll)
+                      ? _buildPollResults(widget.pollData)
                       : FutureBuilder<List<PollOption>>(
                           future: _pollOptions,
                           builder: (context, snapshot) {
@@ -105,16 +103,16 @@ class _SurveyPageState extends State<SurveyPage> {
                             }
 
                             return FlutterPolls(
-                              pollId: poll.objectId,
+                              pollId: widget.pollData[widget.index]['objectId'],
                               onVoted: (PollOption pollOption, int newTotalVotes) async {
                                 ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
                                 String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
                                 String optionId = pollOption.id.toString();
-                                print("Kullanıcı ID: $userId, Anket ID: ${poll.objectId}, Seçenek ID: $optionId");
+                                print("Kullanıcı ID: $userId, Anket ID: ${widget.pollData[widget.index]['objectId']}, Seçenek ID: $optionId");
                                 ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
                                 final Map<String, dynamic> params = <String, dynamic>{
                                   'userId': userId,
-                                  'pollId': poll.objectId,
+                                  'pollId': widget.pollData[widget.index]['objectId'],
                                   'optionId': optionId
                                 };
                                 final ParseResponse result = await function.execute(parameters: params);
@@ -132,7 +130,7 @@ class _SurveyPageState extends State<SurveyPage> {
                               pollTitle: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  poll.get<String>('title'),
+                                  widget.pollData[widget.index]['title'],
                                   style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
@@ -202,16 +200,16 @@ class _SurveyPageState extends State<SurveyPage> {
          bool pollEnded = true;
 //@
         return FlutterPolls(
-                              pollId: poll.objectId,
+                              pollId: poll[widget.index]['objectId'],
                               onVoted: (PollOption pollOption, int newTotalVotes) async {
                                 ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
                                 String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
                                 String optionId = pollOption.id.toString();
-                                print("Kullanıcı ID: $userId, Anket ID: ${poll.objectId}, Seçenek ID: $optionId");
+                                print("Kullanıcı ID: $userId, Anket ID: ${poll[widget.index]['objectId']}, Seçenek ID: $optionId");
                                 ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
                                 final Map<String, dynamic> params = <String, dynamic>{
                                   'userId': userId,
-                                  'pollId': poll.objectId,
+                                  'pollId': poll[widget.index]['objectId'],
                                   'optionId': optionId
                                 };
                                 final ParseResponse result = await function.execute(parameters: params);
@@ -229,7 +227,7 @@ class _SurveyPageState extends State<SurveyPage> {
                               pollTitle: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  poll.get<String>('title'),
+                                  poll[widget.index]['title'],
                                   style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
