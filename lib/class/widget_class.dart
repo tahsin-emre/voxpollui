@@ -33,7 +33,7 @@ class ForWidget {
                           creator[index]['username'] ?? 'Hata',
                           style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                         ),
-                        Text('${creator[index]['username'] ?? 'Hata'} Takipçi'),//DÜZELTİLECEK
+                        Text('${creator[index]['followers'].length ?? 'Hata'} Takipçi'),//DÜZELTİLECEK
                       ],
                     ),
                   ],
@@ -43,7 +43,7 @@ class ForWidget {
                   poll[index]['title'] ?? 'Hata', // Anket başlığını al
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
-                Text('${poll[index]['title'] ?? 'Hata'} Kişi Katıldı'), //DÜZELTİLECEK
+                Text('${poll[index]['totalParticipants'] ?? 'Hata'} Kişi Katıldı'), //DÜZELTİLECEK
                 SizedBox(height: 10.0),
                 ElevatedButton(
                   onPressed: () {

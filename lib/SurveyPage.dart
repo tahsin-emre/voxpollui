@@ -69,8 +69,8 @@ class _SurveyPageState extends State<SurveyPage> {
   Widget build(BuildContext context) {
     var poll = widget.pollData[widget.index]['poll'];
 
-    DateTime? endDate = poll.get<DateTime>('endDate');
-    bool pollEnded = endDate != null ? DateTime.now().isAfter(endDate) : false;
+    // DateTime? endDate = poll['createdAt'];
+    bool pollEnded = false;
 
     return Scaffold(
       appBar: AppBar(
