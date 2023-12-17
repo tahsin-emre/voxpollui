@@ -57,7 +57,7 @@ class BoardinUc extends StatelessWidget {
     ),
         GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => BoardinDort(userId: '',)));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => BoardinDort()));
           },
           child: Container(
             alignment: Alignment.bottomCenter,

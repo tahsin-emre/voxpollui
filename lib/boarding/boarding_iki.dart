@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/boarding/boarding_dort.dart';
 import 'package:voxpollui/boarding/boarding_uc.dart';
 
 void main() {
@@ -76,7 +77,8 @@ class _BoardinIkiState extends State<BoardinIki> {
         keyboardType: TextInputType.phone,
         controller: tel,
         decoration: InputDecoration(
-          hintText: '+90 553 772 30 30', // Hint metni buraya ekleyin
+          hintText: '553 772 30 30', // Sadece telefon numarasını hint olarak ayarlayın
+          prefixText: '+90 ', // +90 kısmını direkt metin olarak ekleyin
           border: InputBorder.none, // TextField çerçevesini gizler
           hintStyle: TextStyle(
             color: Colors.black, // Hint metni rengi (siyah)
@@ -212,19 +214,52 @@ class _BoardinIkiState extends State<BoardinIki> {
         alignment: Alignment.bottomCenter,
         child: GestureDetector(
             onTap: () {
-              if (onayliyorum && emailAlmak) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => BoardinUc()));
-              } else {
-                 showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Hata'),
-                      content: Text('Rıza metinleri kabul edilmelidir'),
-                    );
-                  },
-                );
-              }
+
+  if (onayliyorum && emailAlmak) {
+    // Rıza metinlerini onayladı ve e-posta almak istiyor
+    if (tel.text.isNotEmpty && tel.text.length == 10) {
+      // TextField dolu ve 10 karakter
+      Navigator.push(context, MaterialPageRoute(builder: (context) => BoardinDort()));
+    } else {
+      // TextField boş veya 10 karakterden farklı
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Hata'),
+            content: Text('Lütfen telefon numaranızı 0 olmadan giriniz.'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Butona tıklandığında dialog kapatılır
+                },
+                child: Text('Tamam'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  } else {
+    // Rıza metinlerini onaylamadı veya e-posta almak istemiyor
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Hata'),
+          content: Text('Rıza metinlerini kabul edilmelidir.'),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context); // Butona tıklandığında dialog kapatılır
+              },
+              child: Text('Tamam'),
+            ),
+          ],
+        );
+      },
+    );
+  }
             },
             child: Container(
               alignment: Alignment.bottomCenter,
@@ -258,410 +293,3 @@ class _BoardinIkiState extends State<BoardinIki> {
     );
   }
 }
-
-//left: 31,
-        //top: 843,
-// class SignUp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         Container(
-//           width: 428,
-//           height: 926,
-//           clipBehavior: Clip.antiAlias,
-//           decoration: ShapeDecoration(
-//             color: Colors.white,
-//             shape: RoundedRectangleBorder(
-//               borderRadius: BorderRadius.circular(32),
-//             ),
-//           ),
-//           child: Stack(
-//             children: [
-//               Positioned(
-//                 left: 41,
-//                 top: 283,
-//                 child: Text(
-//                   'Telefon',
-//                   style: TextStyle(
-//                     color: Color(0xFF0C0C0C),
-//                     fontSize: 40,
-//                     fontFamily: 'Gilroy',
-//                     fontWeight: FontWeight.w600,
-//                     height: 0,
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 41,
-//                 top: 328,
-//                 child: Text(
-//                   'Numaranız',
-//                   style: TextStyle(
-//                     color: Color(0xFF0C0C0C),
-//                     fontSize: 40,
-//                     fontFamily: 'Gilroy',
-//                     fontWeight: FontWeight.w600,
-//                     height: 0,
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 35,
-//                 top: 453,
-//                 child: Container(
-//                   width: 332,
-//                   height: 1,
-//                   decoration: BoxDecoration(color: Color(0xFF0C0C0C)),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 35,
-//                 top: 418,
-//                 child: Text.rich(
-//                   TextSpan(
-//                     children: [
-//                       TextSpan(
-//                         text: '+90',
-//                         style: TextStyle(
-//                           color: Color(0xFF0C0C0C),
-//                           fontSize: 24,
-//                           fontFamily: 'Gilroy',
-//                           fontWeight: FontWeight.w600,
-//                           height: 0,
-//                         ),
-//                       ),
-//                       TextSpan(
-//                         text: ' 553 772 30 30 ',
-//                         style: TextStyle(
-//                           color: Color(0xFF0C0C0C),
-//                           fontSize: 24,
-//                           fontFamily: 'Gilroy',
-//                           fontWeight: FontWeight.w300,
-//                           height: 0,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 61,
-//                 top: 487,
-//                 child: SizedBox(
-//                   width: 314,
-//                   height: 29,
-//                   child: Text.rich(
-//                     TextSpan(
-//                       children: [
-//                         TextSpan(
-//                           text: 'Aydınlatma Metni',
-//                           style: TextStyle(
-//                             color: Color(0xFF0C0C0C),
-//                             fontSize: 13,
-//                             fontFamily: 'Gilroy',
-//                             fontWeight: FontWeight.w700,
-//                             height: 0,
-//                           ),
-//                         ),
-//                         TextSpan(
-//                           text: '’ni okudum, ',
-//                           style: TextStyle(
-//                             color: Color(0xFF0C0C0C),
-//                             fontSize: 13,
-//                             fontFamily: 'Gilroy',
-//                             fontWeight: FontWeight.w400,
-//                             height: 0,
-//                           ),
-//                         ),
-//                         TextSpan(
-//                           text: 'Açık Rıza Metni',
-//                           style: TextStyle(
-//                             color: Color(0xFF0C0C0C),
-//                             fontSize: 13,
-//                             fontFamily: 'Gilroy',
-//                             fontWeight: FontWeight.w700,
-//                             height: 0,
-//                           ),
-//                         ),
-//                         TextSpan(
-//                           text: '’ni okudum ve onaylıyorum.',
-//                           style: TextStyle(
-//                             color: Color(0xFF0C0C0C),
-//                             fontSize: 13,
-//                             fontFamily: 'Gilroy',
-//                             fontWeight: FontWeight.w400,
-//                             height: 0,
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 61,
-//                 top: 540,
-//                 child: Text.rich(
-//                   TextSpan(
-//                     children: [
-//                       TextSpan(
-//                         text: 'Açık Rıza Metni ve ',
-//                         style: TextStyle(
-//                           color: Color(0xFF0C0C0C),
-//                           fontSize: 13,
-//                           fontFamily: 'Gilroy',
-//                           fontWeight: FontWeight.w400,
-//                           height: 0,
-//                         ),
-//                       ),
-//                       TextSpan(
-//                         text: 'Ticari Elektronik İleti Aydınlatma\nMetni',
-//                         style: TextStyle(
-//                           color: Color(0xFF0C0C0C),
-//                           fontSize: 13,
-//                           fontFamily: 'Gilroy',
-//                           fontWeight: FontWeight.w700,
-//                           height: 0,
-//                         ),
-//                       ),
-//                       TextSpan(
-//                         text: ' kapsamında SMS, e-posta ve arama almak\nistiyorum.',
-//                         style: TextStyle(
-//                           color: Color(0xFF0C0C0C),
-//                           fontSize: 13,
-//                           fontFamily: 'Gilroy',
-//                           fontWeight: FontWeight.w400,
-//                           height: 0,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 35,
-//                 top: 791,
-//                 child: SizedBox(
-//                   width: 333,
-//                   child: Text.rich(
-//                     TextSpan(
-//                       children: [
-//                         TextSpan(
-//                           text: 'İleri butonuna basarak ',
-//                           style: TextStyle(
-//                             color: Color(0xFF0C0C0C),
-//                             fontSize: 12,
-//                             fontFamily: 'Gilroy',
-//                             fontWeight: FontWeight.w400,
-//                             height: 0,
-//                           ),
-//                         ),
-//                         TextSpan(
-//                           text: 'Kullanıcı Sözleşmesi',
-//                           style: TextStyle(
-//                             color: Color(0xFF0C0C0C),
-//                             fontSize: 12,
-//                             fontFamily: 'Gilroy',
-//                             fontWeight: FontWeight.w700,
-//                             height: 0,
-//                           ),
-//                         ),
-//                         TextSpan(
-//                           text: '’ni kabul etmiş olursunuz.',
-//                           style: TextStyle(
-//                             color: Color(0xFF0C0C0C),
-//                             fontSize: 12,
-//                             fontFamily: 'Gilroy',
-//                             fontWeight: FontWeight.w400,
-//                             height: 0,
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 101,
-//                 top: 56,
-//                 child: Container(
-//                   width: 227,
-//                   height: 227,
-//                   decoration: BoxDecoration(
-//                     image: DecorationImage(
-//                       image: NetworkImage("https://via.placeholder.com/227x227"),
-//                       fit: BoxFit.fill,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 0,
-//                 top: 0,
-//                 child: Container(
-//                   width: 428,
-//                   height: 47,
-//                   clipBehavior: Clip.antiAlias,
-//                   decoration: BoxDecoration(),
-//                   child: Stack(
-//                     children: [
-//                       Positioned(
-//                         left: 33,
-//                         top: 14,
-//                         child: Container(
-//                           width: 54,
-//                           height: 21,
-//                           padding: const EdgeInsets.only(top: 1),
-//                           decoration: ShapeDecoration(
-//                             shape: RoundedRectangleBorder(
-//                               borderRadius: BorderRadius.circular(24),
-//                             ),
-//                           ),
-//                           child: Row(
-//                             mainAxisSize: MainAxisSize.min,
-//                             mainAxisAlignment: MainAxisAlignment.center,
-//                             crossAxisAlignment: CrossAxisAlignment.center,
-//                             children: [
-//                               SizedBox(
-//                                 width: 54,
-//                                 height: 20,
-//                                 child: Text(
-//                                   '9:41',
-//                                   textAlign: TextAlign.center,
-//                                   style: TextStyle(
-//                                     color: Color(0xFF010101),
-//                                     fontSize: 17,
-//                                     fontFamily: 'SF Pro Text',
-//                                     fontWeight: FontWeight.w600,
-//                                     height: 0.08,
-//                                     letterSpacing: -0.41,
-//                                   ),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                       Positioned(
-//                         left: 318,
-//                         top: 19,
-//                         child: Container(
-//                           width: 77.40,
-//                           height: 13,
-//                           child: Stack(
-//                             children: [
-//                               Positioned(
-//                                 left: 50,
-//                                 top: 0,
-//                                 child: Container(
-//                                   width: 27.40,
-//                                   height: 13,
-//                                   child: Stack(children: [
-                                  
-//                                   ]),
-//                                 ),
-//                               ),
-//                               Positioned(
-//                                 left: 26,
-//                                 top: 1,
-//                                 child: Container(
-//                                   width: 17,
-//                                   height: 12,
-//                                   decoration: BoxDecoration(
-//                                     image: DecorationImage(
-//                                       image: NetworkImage("https://via.placeholder.com/17x12"),
-//                                       fit: BoxFit.fill,
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 31,
-//                 top: 843,
-//                 child: Container(
-//                   width: 366,
-//                   height: 49,
-//                   decoration: ShapeDecoration(
-//                     color: Color(0xFF2355FF),
-//                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 202,
-//                 top: 861,
-//                 child: Text(
-//                   'İleri',
-//                   style: TextStyle(
-//                     color: Colors.white,
-//                     fontSize: 16,
-//                     fontFamily: 'Gilroy',
-//                     fontWeight: FontWeight.w700,
-//                     height: 0,
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 31,
-//                 top: 487,
-//                 child: Container(
-//                   width: 20,
-//                   height: 20,
-//                   child: Stack(
-//                     children: [
-//                       Positioned(
-//                         left: 0,
-//                         top: 0,
-//                         child: Container(
-//                           width: 20,
-//                           height: 20,
-//                           decoration: ShapeDecoration(
-//                             color: Color(0xFF2355FF),
-//                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 31,
-//                 top: 541,
-//                 child: Container(
-//                   width: 20,
-//                   height: 20,
-//                   child: Stack(
-//                     children: [
-//                       Positioned(
-//                         left: 0,
-//                         top: 0,
-//                         child: Container(
-//                           width: 20,
-//                           height: 20,
-//                           decoration: ShapeDecoration(
-//                             color: Color(0xFF2355FF),
-//                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
