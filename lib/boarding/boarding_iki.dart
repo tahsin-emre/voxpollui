@@ -204,8 +204,8 @@ class _BoardinIkiState extends State<BoardinIki> {
               height: 227,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
-                      "https://s3-alpha-sig.figma.com/img/89fc/5928/1b8c7b0d8131fbfc2cb5afb07a3bace5?Expires=1702857600&Signature=HkuBuQpYDSMBpikOfuyWF1~yVsJjjBVB6dO3p~MloJxK8eVnjTJYQVAX~sw4ZPulpVM1bMwZBlegY6zEPW38P2y1M16ZDn6roJ153yjAKeGuPpMKKFo-BDjDVCgGbT4qfnQkZMzOmwYgg~PUAtJmjg08isOhAnyYm~EiLYMZflyuKlgnByVJBSDzwHFzosfDAJvMiRDnezQQXmwmg-HJHUSHCmn6l~6P6VlgSbajrnkKuWo6A0M7cZDdUOqOR-~Hx3L4HSpkz~uPVtUvd6aOLjnREWcMSh8M2TnFESpgkXP9GAab4Do8Jy-7suBoF9ZnCknzeyaM65G-zl4tvJFIxg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"),
+                  image: AssetImage(
+                      "assets/login.png"),
                   fit: BoxFit.fill,
                 ),
               ),
