@@ -7,6 +7,7 @@ import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/script/database.dart';
 import 'createpoll.dart';
 import 'notifications_page.dart';
+
 Database database = Database();
 DataManager dataManager = DataManager();
 
@@ -19,7 +20,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
@@ -27,7 +27,9 @@ class _HomePageState extends State<HomePage> {
     SearchPage(1), // Bu satırı değiştirin
     PlaceholderPage(2),
     CommunityPage(3),
-    ProfilePage(i: 4,),
+    ProfilePage(
+      i: 4,
+    ),
   ];
 
   @override
@@ -69,7 +71,10 @@ class _HomePageState extends State<HomePage> {
           children: [
             Align(
               alignment: Alignment.center,
-              child: Icon(icon, color: _currentIndex == index ? Color(0xff2355ff) : Colors.grey, size: 32),
+              child: Icon(icon,
+                  color:
+                      _currentIndex == index ? Color(0xff2355ff) : Colors.grey,
+                  size: 32),
             ),
             if (_currentIndex == index)
               Transform.translate(
@@ -127,7 +132,6 @@ class PlaceholderPage extends StatelessWidget {
 }
 
 class Page0 extends StatefulWidget {
-
   @override
   _Page0State createState() => _Page0State();
 }
@@ -148,7 +152,6 @@ class _Page0State extends State<Page0> {
     _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
   }
 
-
   void _loadPolls() async {
     Map<dynamic, dynamic> fetchedPolls = await database.fetchPolls();
     print('FETCHEDPOLLS   $fetchedPolls');
@@ -160,8 +163,7 @@ class _Page0State extends State<Page0> {
     });
   }
 
-
-    Future<void> _loadCurrentUser() async {
+  Future<void> _loadCurrentUser() async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
     if (currentUser != null) {
       setState(() {
@@ -173,6 +175,7 @@ class _Page0State extends State<Page0> {
       });
     }
   }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -181,333 +184,335 @@ class _Page0State extends State<Page0> {
       key: _scaffoldKey,
       endDrawer: Drawer(
         backgroundColor: Colors.white,
-  child: ListView(
-    padding: EdgeInsets.zero,
-    children: <Widget>[
-      UserAccountsDrawerHeader(
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
-        accountName: 
-            Text(
-              '$username $surname',
-              style: TextStyle(
-              color: Color(0xFF0C0C0C),
-              fontSize: 20,
-              fontFamily: 'Gilroy',
-              fontWeight: FontWeight.w700,
-              height: 0,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              accountName: Text(
+                '$username $surname',
+                style: TextStyle(
+                  color: Color(0xFF0C0C0C),
+                  fontSize: 20,
+                  fontFamily: 'Gilroy',
+                  fontWeight: FontWeight.w700,
+                  height: 0,
+                ),
+              ),
+              accountEmail: Column(
+                children: [
+                  Text(
+                    '@$username \n',
+                    style: TextStyle(
+                      color: Color(0xFF646464),
+                      fontSize: 14,
+                      fontFamily: 'Gilroy',
+                      fontWeight: FontWeight.w500,
+                      height: 0,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Takip Edilen ${followed?.length ?? 0}',
+                        style: TextStyle(
+                          color: Color(0xFF0C0C0C),
+                          fontSize: 14,
+                          fontFamily: 'Gilroy',
+                          fontWeight: FontWeight.w500,
+                          height: 0,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Takipçi ${followers?.length ?? 0}',
+                        style: TextStyle(
+                          color: Color(0xFF0C0C0C),
+                          fontSize: 14,
+                          fontFamily: 'Gilroy',
+                          fontWeight: FontWeight.w500,
+                          height: 0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: AssetImage("assets/login.png"),
               ),
             ),
-        
-        accountEmail:
-            Column(
-              children: [
-                Text(
-                  '@$username \n',
-                  style: TextStyle(
-                  color: Color(0xFF646464),
-                  fontSize: 14,
-                  fontFamily: 'Gilroy',
-                  fontWeight: FontWeight.w500,
-                  height: 0,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Takip Edilen ${followed?.length ?? 0}',
-                      style: TextStyle(
-                        color: Color(0xFF0C0C0C),
-                        fontSize: 14,
-                        fontFamily: 'Gilroy',
-                        fontWeight: FontWeight.w500,
-                        height: 0,
-                      ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Profil',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Color(0xFF0C0C0C),
+                      fontSize: 20,
+                      fontFamily: 'Gilroy',
+                      fontWeight: FontWeight.w700,
+                      height: 0.12,
                     ),
-                    SizedBox(width: 10,),
-                    Text(
-                      'Takipçi ${followers?.length ?? 0}',
-                      style: TextStyle(
-                        color: Color(0xFF0C0C0C),
-                        fontSize: 14,
-                        fontFamily: 'Gilroy',
-                        fontWeight: FontWeight.w500,
-                        height: 0,
+                  )
+                ],
+              ),
+              onTap: () {
+                // Profil sayfasına yönlendirme
+              },
+            ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'VoxPoll Pro',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Color(0xFF2355FF),
+                      fontSize: 20,
+                      fontFamily: 'Gilroy',
+                      fontWeight: FontWeight.w700,
+                      height: 0.12,
+                    ),
+                  ),
+                ],
+              ),
+              onTap: () {
+                // VoxPoll Pro sayfasına yönlendirme
+              },
+            ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'İlgi Alanları',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Color(0xFF0C0C0C),
+                      fontSize: 20,
+                      fontFamily: 'Gilroy',
+                      fontWeight: FontWeight.w700,
+                      height: 0.12,
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                // İlgi Alanları sayfasına yönlendirme
+              },
+            ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Topluluklar',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Color(0xFF0C0C0C),
+                      fontSize: 20,
+                      fontFamily: 'Gilroy',
+                      fontWeight: FontWeight.w700,
+                      height: 0.12,
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                // Topluluklar sayfasına yönlendirme
+              },
+            ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Arkadaşlarını Davet Et',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Color(0xFF0C0C0C),
+                      fontSize: 20,
+                      fontFamily: 'Gilroy',
+                      fontWeight: FontWeight.w700,
+                      height: 0.12,
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                // Topluluklar sayfasına yönlendirme
+              },
+            ),
+            // Diğer ListTile widget'ları...
+            Divider(),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Üretici Araçları',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Color(0xFF0C0C0C),
+                      fontSize: 20,
+                      fontFamily: 'Gilroy',
+                      fontWeight: FontWeight.w700,
+                      height: 0.12,
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                // Ayarlar ve Destek sayfasına yönlendirme
+              },
+            ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Ödemeler',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Color(0xFF0C0C0C),
+                      fontSize: 20,
+                      fontFamily: 'Gilroy',
+                      fontWeight: FontWeight.w700,
+                      height: 0.12,
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                // Ayarlar ve Destek sayfasına yönlendirme
+              },
+            ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Ayarlar ve Destek',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Color(0xFF0C0C0C),
+                      fontSize: 20,
+                      fontFamily: 'Gilroy',
+                      fontWeight: FontWeight.w700,
+                      height: 0.12,
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                // Ayarlar ve Destek sayfasına yönlendirme
+              },
+            ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'S.S.S',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Color(0xFF0C0C0C),
+                      fontSize: 20,
+                      fontFamily: 'Gilroy',
+                      fontWeight: FontWeight.w700,
+                      height: 0.12,
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                // S.S.S. sayfasına yönlendirme
+              },
+            ),
+            ListTile(
+              trailing: Container(
+                width: 70,
+                height: 20,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 70,
+                      height: 20,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 1,
+                            top: 1.28,
+                            child: Container(
+                              width: 50,
+                              height: 20,
+                              decoration: ShapeDecoration(
+                                color: Color(0xFF2355FF),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(11.79),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 10,
+                            top: 0,
+                            child: Transform(
+                              transform: Matrix4.identity()
+                                ..translate(0.0, 0.0)
+                                ..rotateZ(0.79),
+                              child: Container(
+                                width: 40,
+                                height: 20,
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                      left: 0,
+                                      top: 0,
+                                      child: Transform(
+                                        transform: Matrix4.identity()
+                                          ..translate(0.0, 0.0)
+                                          ..rotateZ(0.79),
+                                        child: Container(
+                                          width: 20,
+                                          height: 20,
+                                          decoration: ShapeDecoration(
+                                            color: Colors.white,
+                                            shape: OvalBorder(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-              ],
+              ),
+              onTap: () {
+                // S.S.S. sayfasına yönlendirme
+              },
             ),
-        currentAccountPicture:
-            CircleAvatar(
-              backgroundImage: AssetImage("assets/login.png"),
-            ),
-      ),
-      ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              'Profil',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-              color: Color(0xFF0C0C0C),
-              fontSize: 20,
-              fontFamily: 'Gilroy',
-              fontWeight: FontWeight.w700,
-              height: 0.12,
-              ),
-            )
+            // Alt kısımdaki butonlar için Spacer ve Row widget'ları kullanılabilir
           ],
         ),
-        onTap: () {
-          // Profil sayfasına yönlendirme
-        },
       ),
-      ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              'VoxPoll Pro',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-              color: Color(0xFF2355FF),
-              fontSize: 20,
-              fontFamily: 'Gilroy',
-              fontWeight: FontWeight.w700,
-              height: 0.12,
-              ),
-            ),
-          ],
-        ),
-        onTap: () {
-          // VoxPoll Pro sayfasına yönlendirme
-        },
-      ),
-      ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              'İlgi Alanları',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-              color: Color(0xFF0C0C0C),
-              fontSize: 20,
-              fontFamily: 'Gilroy',
-              fontWeight: FontWeight.w700,
-              height: 0.12,
-              ),
-            )
-          ],
-        ),
-        onTap: () {
-          // İlgi Alanları sayfasına yönlendirme
-        },
-      ),
-      ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              'Topluluklar',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-              color: Color(0xFF0C0C0C),
-              fontSize: 20,
-              fontFamily: 'Gilroy',
-              fontWeight: FontWeight.w700,
-              height: 0.12,
-              ),
-            )
-          ],
-        ),
-        onTap: () {
-          // Topluluklar sayfasına yönlendirme
-        },
-      ),
-      ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              'Arkadaşlarını Davet Et',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-              color: Color(0xFF0C0C0C),
-              fontSize: 20,
-              fontFamily: 'Gilroy',
-              fontWeight: FontWeight.w700,
-              height: 0.12,
-              ),
-            )
-          ],
-        ),
-        onTap: () {
-          // Topluluklar sayfasına yönlendirme
-        },
-      ),
-      // Diğer ListTile widget'ları...
-      Divider(),
-      ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              'Üretici Araçları',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-              color: Color(0xFF0C0C0C),
-              fontSize: 20,
-              fontFamily: 'Gilroy',
-              fontWeight: FontWeight.w700,
-              height: 0.12,
-              ),
-            )
-          ],
-        ),
-        onTap: () {
-          // Ayarlar ve Destek sayfasına yönlendirme
-        },
-      ),
-      ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              'Ödemeler',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-              color: Color(0xFF0C0C0C),
-              fontSize: 20,
-              fontFamily: 'Gilroy',
-              fontWeight: FontWeight.w700,
-              height: 0.12,
-              ),
-            )
-          ],
-        ),
-        onTap: () {
-          // Ayarlar ve Destek sayfasına yönlendirme
-        },
-      ),
-      ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              'Ayarlar ve Destek',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-              color: Color(0xFF0C0C0C),
-              fontSize: 20,
-              fontFamily: 'Gilroy',
-              fontWeight: FontWeight.w700,
-              height: 0.12,
-              ),
-            )
-          ],
-        ),
-        onTap: () {
-          // Ayarlar ve Destek sayfasına yönlendirme
-        },
-      ),
-      ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              'S.S.S',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-              color: Color(0xFF0C0C0C),
-              fontSize: 20,
-              fontFamily: 'Gilroy',
-              fontWeight: FontWeight.w700,
-              height: 0.12,
-              ),
-            )
-          ],
-        ),
-        onTap: () {
-          // S.S.S. sayfasına yönlendirme
-        },
-      ),
-      ListTile(
-        trailing: Container(
-    width: 70,
-    height: 20,
-    child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-            Container(
-                width: 70,
-                height: 20,
-                child: Stack(
-                    children: [
-                        Positioned(
-                            left: 1,
-                            top: 1.28,
-                            child: Container(
-                                width: 50,
-                                height: 20,
-                                decoration: ShapeDecoration(
-                                    color: Color(0xFF2355FF),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(11.79),
-                                    ),
-                                ),
-                            ),
-                        ),
-                        Positioned(
-                            left: 10,
-                            top: 0,
-                            child: Transform(
-                                transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(0.79),
-                                child: Container(
-                                    width: 40,
-                                    height: 20,
-                                    child: Stack(
-                                        children: [
-                                            Positioned(
-                                                left: 0,
-                                                top: 0,
-                                                child: Transform(
-                                                    transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(0.79),
-                                                    child: Container(
-                                                        width: 20,
-                                                        height: 20,
-                                                        decoration: ShapeDecoration(
-                                                            color: Colors.white,
-                                                            shape: OvalBorder(),
-                                                        ),
-                                                    ),
-                                                ),
-                                            ),
-                                        ],
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ],
-                ),
-            ),
-        ],
-    ),
-),
-        onTap: () {
-          // S.S.S. sayfasına yönlendirme
-        },
-      ),
-      // Alt kısımdaki butonlar için Spacer ve Row widget'ları kullanılabilir
-    ],
-  ),
-),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(16.0),
@@ -518,7 +523,8 @@ class _Page0State extends State<Page0> {
                   [
                     Text(
                       'Hoş Geldiniz',
-                      style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 24.0, fontWeight: FontWeight.bold),
                     ),
                     Row(
                       children: [
@@ -528,7 +534,8 @@ class _Page0State extends State<Page0> {
                           children: [
                             Text(
                               '$username $surname',
-                              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 24.0, fontWeight: FontWeight.bold),
                             ),
                             Text(
                               '${followed?.length ?? 0}',
@@ -542,13 +549,15 @@ class _Page0State extends State<Page0> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => NotificationsPage()),
+                              MaterialPageRoute(
+                                  builder: (context) => NotificationsPage()),
                             );
                           },
                         ),
                         GestureDetector(
                           onTap: () {
-                            _scaffoldKey.currentState!.openEndDrawer(); // openEndDrawer'ı çağırın
+                            _scaffoldKey.currentState!
+                                .openEndDrawer(); // openEndDrawer'ı çağırın
                           },
                           child: CircleAvatar(
                             radius: 30,
@@ -569,104 +578,112 @@ class _Page0State extends State<Page0> {
                 flexibleSpace: FlexibleSpaceBar(
                   background: _showUnansweredSurveyBox
                       ? Container(
-                    padding: EdgeInsets.all(16.0),
-                    width: 1000,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      gradient: LinearGradient(
-                        begin: Alignment.bottomRight,
-                        end: Alignment.topLeft,
-                        colors: [
-                          Color(0xff2355ff),
-                          Color(0xff001866),
-                          Color(0xff153cc1),
-                        ],
-                        stops: [0.0, 1.0, 1.0],
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        RichText(
-                          text: TextSpan(
+                          padding: EdgeInsets.all(16.0),
+                          width: 1000,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              end: Alignment.topLeft,
+                              colors: [
+                                Color(0xff2355ff),
+                                Color(0xff001866),
+                                Color(0xff153cc1),
+                              ],
+                              stops: [0.0, 1.0, 1.0],
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              TextSpan(
-                                text: '14',
-                                style: TextStyle(
-                                    fontSize: 30.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: '14',
+                                      style: TextStyle(
+                                          fontSize: 30.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                    TextSpan(
+                                      text: 'Cevaplanmamış Anketiniz Var.',
+                                      style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              TextSpan(
-                                text: 'Cevaplanmamış Anketiniz Var.',
-                                style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                              SizedBox(height: 10.0),
+                              ElevatedButton(
+                                onPressed: () {
+                                  // TODO: Implement view surveys button functionality
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.transparent),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      side: BorderSide(
+                                          width: 2, color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                                child: Container(
+                                  width: double.infinity,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                  ),
+                                  child: Text(
+                                    'Anketleri Görüntüle',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        SizedBox(height: 10.0),
-                        ElevatedButton(
-                          onPressed: () {
-                            // TODO: Implement view surveys button functionality
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                                side: BorderSide(width: 2, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          child: Container(
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.transparent,
-                            ),
-                            child: Text(
-                              'Anketleri Görüntüle',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                        )
                       : SizedBox.shrink(),
                 ),
               ),
-
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
                     SizedBox(height: 10.0),
                     Text(
                       'Takip Ettiklerim',
-                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10.0),
                   ],
                 ),
               ),
               SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      if (dataManager.getPolls()?.isEmpty ?? true) {
-                        // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
-                        return Center(child: CircularProgressIndicator(color: Color(0xFF2355FF),));
-                      }
-                      return ForWidget.buildCard(context, creatorObjects!, pollObjects!, index);
-                    },
-                    childCount: (dataManager.getPolls()?.isNotEmpty ?? false) ? dataManager.getPolls()?.length : 1,
-                  ),
-            ),
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    if (dataManager.getPolls()?.isEmpty ?? true) {
+                      // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: Color(0xFF2355FF),
+                      ));
+                    }
+                    return ForWidget.buildCard(
+                        context, creatorObjects!, pollObjects!, index);
+                  },
+                  childCount: (dataManager.getPolls()?.isNotEmpty ?? false)
+                      ? dataManager.getPolls()?.length
+                      : 1,
+                ),
+              ),
             ],
           ),
         ),
@@ -685,28 +702,13 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  //bool _showUnansweredSurveyBox = true;
-  String username = 'Yükleniyor..';
-  String surname = 'Yükleniyor..';
-  String createrId = 'Yükleniyor..';
-  Map<String, dynamic>? polls; // Anketleri saklamak için bir liste
   Database database = Database();
-  @override
-  void initState() {
-    super.initState();
-    _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
-  }
 
-    void _loadPolls() async {
-    var fetchedPolls = await database.fetchPolls();
-    setState(() {
-      polls = fetchedPolls;
-    });
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea( // İçeriği SafeArea içerisine alın
+      body: SafeArea(
+        // İçeriği SafeArea içerisine alın
         child: Column(
           children: [
             Container(
@@ -741,7 +743,8 @@ class _SearchPageState extends State<SearchPage> {
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
                             'Keşfet',
-                            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
                         ),
                         SizedBox(height: 10.0),
@@ -749,17 +752,23 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ),
                   SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      if (dataManager.getPolls()?.isEmpty ?? true) {
-                        // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
-                        return Center(child: CircularProgressIndicator(color: Color(0xFF2355FF),));
-                      }
-                      return ForWidget.buildCard(context, creatorObjects!, pollObjects!, index);
-                    },
-                    childCount: (dataManager.getPolls()?.isNotEmpty ?? false) ? dataManager.getPolls()?.length : 1,
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        if (dataManager.getPolls()?.isEmpty ?? true) {
+                          // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
+                          return Center(
+                              child: CircularProgressIndicator(
+                            color: Color(0xFF2355FF),
+                          ));
+                        }
+                        return ForWidget.buildCard(
+                            context, creatorObjects!, pollObjects!, index);
+                      },
+                      childCount: (dataManager.getPolls()?.isNotEmpty ?? false)
+                          ? dataManager.getPolls()?.length
+                          : 1,
+                    ),
                   ),
-                ),
                 ],
               ),
             ),
@@ -780,25 +789,10 @@ class CommunityPage extends StatefulWidget {
 }
 
 class _CommunityPageState extends State<CommunityPage> {
-  String username = 'Yükleniyor..';
-  String surname = 'Yükleniyor..';
-  String createrId = 'Yükleniyor..';
-  Map<String, dynamic>? polls; // Anketleri saklamak için bir liste
-  Database database = Database();
-  @override
-  void initState() {
-    super.initState();
-    _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
-  }
 
-    void _loadPolls() async {
-    var fetchedPolls = await database.fetchPolls();
-    setState(() {
-      polls = fetchedPolls;
-    });
-  }
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -824,37 +818,46 @@ class _CommunityPageState extends State<CommunityPage> {
               ),
             ),
             Expanded(
-              child: polls == null ? CircularProgressIndicator(color: Color(0xFF2355FF),) : ListView(
-                children: [
-                  SizedBox(height: 10.0),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      'Topluluklarım',
-                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              child: creatorObjects == null
+                  ? CircularProgressIndicator(
+                      color: Color(0xFF2355FF),
+                    )
+                  : ListView(
+                      children: [
+                        SizedBox(height: 10.0),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Text(
+                            'Topluluklarım',
+                            style: TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        ...List.generate(creatorObjects!.length,
+                            (index) => _buildCardCommunity(context, index)),
+                        SizedBox(height: 10.0),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Text(
+                            'Önerilen Topluluklar',
+                            style: TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        ...List.generate(
+                            creatorObjects!.length,
+                            (index) => _buildCardCommunityWithJoinButton(
+                                context, index)),
+                      ],
                     ),
-                  ),
-                  SizedBox(height: 10.0),
-              ...List.generate(polls!.length, (index) => _buildCardCommunity(context, index)),
-                  SizedBox(height: 10.0),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      'Önerilen Topluluklar',
-                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  SizedBox(height: 10.0),
-              ...List.generate(polls!.length, (index) => _buildCardCommunityWithJoinButton(context, index)),
-                ],
-              ),
             ),
           ],
         ),
       ),
     );
   }
-
 }
 
 // ignore: must_be_immutable
@@ -888,8 +891,10 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    viewObjectId = widget.pollData?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
-    checkIfFollowing(viewObjectId); // Bu fonksiyonu çağırırken viewObjectId'i geçirin
+    viewObjectId =
+        widget.pollData?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
+    checkIfFollowing(
+        viewObjectId); // Bu fonksiyonu çağırırken viewObjectId'i geçirin
     if (widget.pollData == null) {
       _loadCurrentUser();
       isMe = true;
@@ -910,23 +915,30 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _loadPollData() async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-    dynamic _joinPoll = await Database.countUserPollResponses(widget.pollData![widget.i ?? 0]['creator']['objectId'] ?? 'ObjectIDDDDDDD');
+    dynamic _joinPoll = await Database.countUserPollResponses(
+        widget.pollData![widget.i ?? 0]['creator']['objectId'] ??
+            'ObjectIDDDDDDD');
     print('${_joinPoll}    JOİN POLL');
     setState(() {
       joinPoll = _joinPoll;
       objectId = currentUser?.get<String>('objectId') ?? 'ObjectIDDDDDDD';
-      username = widget.pollData![widget.i ?? 0]['creator']['username'] ?? 'Yükleniyor..';
-      name = widget.pollData![widget.i ?? 0]['creator']['name'] ?? 'Yükleniyor..';
-      surname = widget.pollData![widget.i ?? 0]['creator']['surname'] ?? 'Yükleniyor..';
+      username = widget.pollData![widget.i ?? 0]['creator']['username'] ??
+          'Yükleniyor..';
+      name =
+          widget.pollData![widget.i ?? 0]['creator']['name'] ?? 'Yükleniyor..';
+      surname = widget.pollData![widget.i ?? 0]['creator']['surname'] ??
+          'Yükleniyor..';
       followed = widget.pollData![widget.i ?? 0]['creator']['followed'] ?? '0';
       biyografi = widget.pollData![widget.i ?? 0]['creator']['biography'] ?? '';
-      followers = widget.pollData![widget.i ?? 0]['creator']['followers'] ?? '0';
+      followers =
+          widget.pollData![widget.i ?? 0]['creator']['followers'] ?? '0';
     });
   }
 
   Future<void> _loadCurrentUser() async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-    dynamic _joinPoll = await Database.countUserPollResponses(currentUser?.get<String>('objectId') ?? 'ObjectIDDDDDDD');
+    dynamic _joinPoll = await Database.countUserPollResponses(
+        currentUser?.get<String>('objectId') ?? 'ObjectIDDDDDDD');
     print('${_joinPoll}   _loadCurrentUser JOİN POLL');
     if (currentUser != null) {
       setState(() {
@@ -954,7 +966,8 @@ class _ProfilePageState extends State<ProfilePage> {
     //     'followers': followers,
     //   }
     // };
-    final viewObjectId = widget.pollData?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
+    final viewObjectId =
+        widget.pollData?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
     print('$objectId   GİRİŞ YAPAN KULLANICI OBJECTID ');
     print('$viewObjectId        GÖRÜNTÜLENEN KULLANICI OBJECTID');
 
@@ -1015,7 +1028,8 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 _buildStatColumn('Takip Edilen', '${followed?.length ?? 0}'),
                 _buildStatColumn('Takipçi', '${followers?.length ?? 0}'),
-                _buildStatColumn('Katıldığı Anket', '${joinPoll ?? 7}'), // Katıldığı anket sayısını sabit olarak veriyorum, gerektiğine göre düzeltebilirsiniz.
+                _buildStatColumn('Katıldığı Anket',
+                    '${joinPoll ?? 7}'), // Katıldığı anket sayısını sabit olarak veriyorum, gerektiğine göre düzeltebilirsiniz.
               ],
             ),
             Divider(),
@@ -1041,24 +1055,23 @@ class _ProfilePageState extends State<ProfilePage> {
                     ListView.builder(
                       itemCount: polls!.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return _buildCardCommunity(
-                            context, index);
+                        return _buildCardCommunity(context, index);
                       },
                     ),
                 ],
               ),
             ),
-            isMe == true ? Material() : Align(
-              alignment: Alignment.centerRight, // Sağ ortada
-              child: _buildFollowButton(viewObjectId),
-            ),
+            isMe == true
+                ? Material()
+                : Align(
+                    alignment: Alignment.centerRight, // Sağ ortada
+                    child: _buildFollowButton(viewObjectId),
+                  ),
           ],
         ),
       ),
     );
   }
-
-  
 
   Column _buildStatColumn(String label, dynamic number) {
     return Column(
@@ -1077,60 +1090,64 @@ class _ProfilePageState extends State<ProfilePage> {
       ],
     );
   }
-  Future<void> updateFollowStatus(String currentUserObjectId, String viewedUserObjectId, bool isFollowing) async {
-  try {
-    // ParseObject olarak kullanıcıları oluştur
-    var currentUser = ParseObject('_User')..objectId = currentUserObjectId;
-    var viewedUser = ParseObject('_User')..objectId = viewedUserObjectId;
 
-    // Takip edilen ve takipçiler listesini al
-    List<dynamic> currentUserFollowed = currentUser.get<List<dynamic>>('followed') ?? [];
-    List<dynamic> viewedUserFollowers = viewedUser.get<List<dynamic>>('followers') ?? [];
+  Future<void> updateFollowStatus(String currentUserObjectId,
+      String viewedUserObjectId, bool isFollowing) async {
+    try {
+      // ParseObject olarak kullanıcıları oluştur
+      var currentUser = ParseObject('_User')..objectId = currentUserObjectId;
+      var viewedUser = ParseObject('_User')..objectId = viewedUserObjectId;
 
-    // Takip etme veya takipten çıkma işlemini gerçekleştir
-    if (isFollowing) {
-      currentUserFollowed.remove(viewedUserObjectId);
-      viewedUserFollowers.remove(currentUserObjectId);
-    } else {
-      currentUserFollowed.add(viewedUserObjectId);
-      viewedUserFollowers.add(currentUserObjectId);
+      // Takip edilen ve takipçiler listesini al
+      List<dynamic> currentUserFollowed =
+          currentUser.get<List<dynamic>>('followed') ?? [];
+      List<dynamic> viewedUserFollowers =
+          viewedUser.get<List<dynamic>>('followers') ?? [];
+
+      // Takip etme veya takipten çıkma işlemini gerçekleştir
+      if (isFollowing) {
+        currentUserFollowed.remove(viewedUserObjectId);
+        viewedUserFollowers.remove(currentUserObjectId);
+      } else {
+        currentUserFollowed.add(viewedUserObjectId);
+        viewedUserFollowers.add(currentUserObjectId);
+      }
+
+      // Güncellenmiş listeleri set et
+      currentUser.set('followed', currentUserFollowed);
+      viewedUser.set('followers', viewedUserFollowers);
+
+      // Güncellemeleri kaydet
+      var responseCurrentUser = await currentUser.save();
+      var responseViewedUser = await viewedUser.save();
+
+      if (responseCurrentUser.success && responseViewedUser.success) {
+        print('Takip durumu başarıyla güncellendi');
+      } else {
+        print(
+            'Takip durumu güncellenirken hata oluştu ${responseCurrentUser.error}'); //Not : Else içine giriyor ama veritabanından takip etme ve takipten çıkma işlemini gerçekleştiriyor
+      }
+    } catch (e) {
+      print('Bir hata oluştu: $e');
     }
+  }
 
-    // Güncellenmiş listeleri set et
-    currentUser.set('followed', currentUserFollowed);
-    viewedUser.set('followers', viewedUserFollowers);
+  Future<void> checkIfFollowing(String viewObjectId) async {
+    // Giriş yapan kullanıcıyı al
+    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+    if (currentUser != null) {
+      // Giriş yapan kullanıcının takip ettiği kişilerin listesini al
+      List<dynamic> followedUsers =
+          currentUser.get<List<dynamic>>('followed') ?? [];
 
-    // Güncellemeleri kaydet
-    var responseCurrentUser = await currentUser.save();
-    var responseViewedUser = await viewedUser.save();
-
-    if (responseCurrentUser.success && responseViewedUser.success) {
-      print('Takip durumu başarıyla güncellendi');
-    } else {
-      print('Takip durumu güncellenirken hata oluştu ${responseCurrentUser.error}');//Not : Else içine giriyor ama veritabanından takip etme ve takipten çıkma işlemini gerçekleştiriyor
+      // Görüntülenen kullanıcının objectId'si bu listede var mı diye kontrol et
+      setState(() {
+        isFollowing = followedUsers.contains(viewObjectId);
+      });
+      print(
+          '${followedUsers.contains(viewObjectId)}   Görüntülenen Takip Ediyo Mu Etmiyo Mu');
     }
-  } catch (e) {
-    print('Bir hata oluştu: $e');
   }
-}
-
-
-
-Future<void> checkIfFollowing(String viewObjectId) async {
-  // Giriş yapan kullanıcıyı al
-  ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-  if (currentUser != null) {
-    // Giriş yapan kullanıcının takip ettiği kişilerin listesini al
-    List<dynamic> followedUsers = currentUser.get<List<dynamic>>('followed') ?? [];
-
-    // Görüntülenen kullanıcının objectId'si bu listede var mı diye kontrol et
-    setState(() {
-      isFollowing = followedUsers.contains(viewObjectId);
-    });
-    print('${followedUsers.contains(viewObjectId)}   Görüntülenen Takip Ediyo Mu Etmiyo Mu');
-  }
-}
-
 
   Widget _buildFollowButton(String viewObjectId) {
     return ConstrainedBox(
@@ -1152,14 +1169,9 @@ Future<void> checkIfFollowing(String viewObjectId) async {
       ),
     );
   }
-
-
-
 }
 
-
 Widget _buildCardCommunityWithJoinButton(BuildContext context, int index) {
-
   return ListTile(
     leading: CircleAvatar(
       backgroundImage: AssetImage('assets/login.png'),
@@ -1170,13 +1182,18 @@ Widget _buildCardCommunityWithJoinButton(BuildContext context, int index) {
         SizedBox(width: 4.0),
         Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
         SizedBox(width: 4.0),
-        Text('@${creatorObjects![index]['username']}', style: TextStyle(fontSize: 12.0)),
+        Text('@${creatorObjects![index]['username']}',
+            style: TextStyle(fontSize: 12.0)),
       ],
     ),
     subtitle: Text('Topluluk Açıklaması'),
     trailing: TextButton(
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: pollObjects, i: 4)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ProfilePage(pollData: pollObjects, i: 4)));
       },
       child: Text('Katıl'),
       style: TextButton.styleFrom(
@@ -1190,7 +1207,6 @@ Widget _buildCardCommunityWithJoinButton(BuildContext context, int index) {
 Widget _buildCardCommunity(BuildContext context, int index) {
   //String toplulukNameOrnektir = creator != null ? creator.get<String>('name') ?? 'Bilinmiyor' : 'Bilinmiyor';
 
-
   return ListTile(
     leading: CircleAvatar(
       backgroundImage: AssetImage('assets/login.png'),
@@ -1201,18 +1217,22 @@ Widget _buildCardCommunity(BuildContext context, int index) {
         SizedBox(width: 4.0),
         Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
         SizedBox(width: 4.0),
-        Text('@${creatorObjects![index]['username']}', style: TextStyle(fontSize: 12.0)),
+        Text('@${creatorObjects![index]['username']}',
+            style: TextStyle(fontSize: 12.0)),
       ],
     ),
     subtitle: Text('Topluluk Açıklaması'),
     trailing: InkWell(
-    onTap: () {
-      // Burada tıklama olayını işleyin
-      print('Trailing ikonuna tıklandı!');
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: creatorObjects, i: 4)));
-    },
-    child: Icon(Icons.arrow_forward),
-  ),
+      onTap: () {
+        // Burada tıklama olayını işleyin
+        print('Trailing ikonuna tıklandı!');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ProfilePage(pollData: creatorObjects, i: 4)));
+      },
+      child: Icon(Icons.arrow_forward),
+    ),
   );
 }
-
