@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/boarding/boarding_bir.dart';
-import 'package:voxpollui/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +15,7 @@ void main() async {
   await Parse().initialize(keyApplicationId!, keyParseServerUrl!,
       clientKey: keyClientKey, autoSendSessionId: true);
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -25,9 +24,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Kullanıcının oturum durumunu kontrol et
-    //final user = ParseUser.getCurrentUser;
+    // Future<dynamic> sessionToken = await ParseUser.currentUser()?.sessionToken;
+    // print(' UUUUUSSSSSSEEEEEERRRRRR    ${user}');
 
-    Widget homePage;
+    // Widget homePage;
 
     // Eğer oturum açılmışsa home page'e yönlendir
     // if (user != null && user.isAuthenticated) {
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: BoardinBir(),
+      home: const BoardinBir(),
     );
   }
 }
