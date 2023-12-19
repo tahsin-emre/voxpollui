@@ -62,7 +62,13 @@ class _InterestsPageState extends State<InterestsPage> {
             // ... [rest of the UI code remains unchanged]
 
             ElevatedButton(
-              onPressed: _saveInterests,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OnboardingPage()),
+                );
+              },//Şimdilik Eklenmiştir
+              //onPressed: _saveInterests,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF2355FF),
                 shape: RoundedRectangleBorder(

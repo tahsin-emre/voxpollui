@@ -144,7 +144,7 @@ class _StateBoardinDort extends State<BoardinDort> {
                     children: <Widget>[
                       SizedBox(
                         height: 50,
-                      ),
+                      ),//@
                       Text(
                         'Kişisel Bilgiler',
                         style: TextStyle(
@@ -329,7 +329,13 @@ class _StateBoardinDort extends State<BoardinDort> {
                         ),
                     ),
                     GestureDetector(
-                      onTap: _registerUser,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => OnboardingPage()),
+                        );//Şimdilik Eklenmiştir  
+                      },
+                      //onTap: _registerUser,
                       child: Container(
                         alignment: Alignment.bottomCenter,
                         width: double.infinity,
