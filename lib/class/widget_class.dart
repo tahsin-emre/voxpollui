@@ -19,7 +19,7 @@ class ForWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                Row(  
                   children: [
                     CircleAvatar(
                       radius: 20,
