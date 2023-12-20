@@ -49,7 +49,7 @@ class ForWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SurveyPage(pollData: poll, index: index,)),
+                      MaterialPageRoute(builder: (context) => SurveyPage(pollData: poll, index: index, userData: creator,)),
                     );
                   },
                   style: ElevatedButton.styleFrom(
