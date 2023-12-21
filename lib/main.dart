@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/boarding/boarding_bir.dart';
+import 'package:voxpollui/home_page.dart';
 import 'package:voxpollui/idarelik_page.dart';
+import 'package:voxpollui/onboarding_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,21 +26,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Kullanıcının oturum durumunu kontrol et
-    // Future<dynamic> sessionToken = await ParseUser.currentUser()?.sessionToken;
-    // print(' UUUUUSSSSSSEEEEEERRRRRR    ${user}');
-
-    // Widget homePage;
-
-    // Eğer oturum açılmışsa home page'e yönlendir
-    // if (user != null && user.isAuthenticated) {
-    //   homePage =
-    //       HomePage(); // Kullanıcının oturumu açıksa yönlendirilecek sayfa
-    // } else {
-    //   homePage =
-    //       BoardinBir(); // Kullanıcı oturum açmamışsa yönlendirilecek sayfa
-    // }
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Vox Poll',
@@ -48,7 +35,23 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const GirisPage(),
+      home: FutureBuilder<dynamic>(
+        future: ParseUser.currentUser(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError || snapshot.data == null) {
+              // Hata durumu veya kullanıcı daha önce giriş yapmamışsa
+              return const BoardinBir(); // veya başka bir giriş sayfası
+            } else {
+              // Kullanıcı daha önce giriş yapmışsa ana sayfaya yönlendir
+              return HomePage();
+            }
+          } else {
+            // Veri henüz yüklenmediyse, bir yükleniyor ekranı gösterilebilir
+            return CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 }
