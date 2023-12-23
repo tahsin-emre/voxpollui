@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
+import 'package:voxpollui/idarelik_page.dart';
 import 'package:voxpollui/script/database.dart';
 import 'createpoll.dart';
 import 'notifications_page.dart';
@@ -102,7 +103,7 @@ class _HomePageState extends State<HomePage> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => CreatePollPage()),
+          MaterialPageRoute(builder: (context) => CreatePoll()),
         );
       },
       child: Container(
