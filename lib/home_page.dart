@@ -165,6 +165,7 @@ class _Page0State extends State<Page0> {
 
   Future<void> _loadCurrentUser() async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+    currentUser?.fetch();
     if (currentUser != null) {
       setState(() {
         username = currentUser.username!;

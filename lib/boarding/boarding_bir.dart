@@ -42,10 +42,27 @@ class BoardinBir extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Sağa bakan ok
+                  Positioned(
+                    left: 50, // Okun başlangıç noktasının x koordinatı
+                    top: 115, // Okun başlangıç noktasının y koordinatı
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => BoardinIki()));
+                      },
+                      child: Icon(
+                          Icons.arrow_forward,
+                          size: 40, // Okun boyutu
+                          color: Colors.white, // Okun rengi
+                        ),
+                    ),
+                  ),
                 ],
-              ),
+              ),//@
             ),
           ),
+          
           Positioned(
             left: 44,
             top: 94,
