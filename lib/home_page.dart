@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => CreatePoll()),
+          MaterialPageRoute(builder: (context) => CreatePollPage()),
         );
       },
       child: Container(
