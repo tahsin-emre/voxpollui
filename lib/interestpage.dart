@@ -62,12 +62,7 @@ class _InterestsPageState extends State<InterestsPage> {
             // ... [rest of the UI code remains unchanged]
 
             ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => OnboardingPage()),
-                );
-              },//Şimdilik Eklenmiştir
+              onPressed: _saveInterests,
               //onPressed: _saveInterests,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF2355FF),
@@ -83,7 +78,7 @@ class _InterestsPageState extends State<InterestsPage> {
               ),
             ),
           ],
-        ),
+        ),//@
       ),
     );
   }

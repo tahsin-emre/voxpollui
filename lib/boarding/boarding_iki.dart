@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:voxpollui/boarding/boarding_dort.dart';
 
 class BoardinIki extends StatefulWidget {
@@ -68,6 +69,9 @@ class _BoardinIkiState extends State<BoardinIki> {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 child: TextField(
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(10), // Maksimum 10 karakter
+                  ],//@@
                   keyboardType: TextInputType.phone,
                   controller: tel,
                   decoration: InputDecoration(

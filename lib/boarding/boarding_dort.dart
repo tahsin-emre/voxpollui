@@ -108,7 +108,7 @@ class _StateBoardinDort extends State<BoardinDort> {
       ..set('biography', biography ?? '');
 
     var response = await user.signUp();
-
+//@
     if (response.success) {
       // Kayıt başarılı, oturum aç ve Ana Sayfaya yönlendir
       await ParseUser(username, password, email).login();
@@ -117,8 +117,10 @@ class _StateBoardinDort extends State<BoardinDort> {
         MaterialPageRoute(builder: (context) => OnboardingPage()),
       );
     } else {
+      print(response.error); // Hata mesajını yazdır
       _showErrorDialog(response.error?.message ?? 'Bir hata oluştu');
     }
+
   } //@
 
   void _goToNextStep() {
@@ -329,12 +331,7 @@ class _StateBoardinDort extends State<BoardinDort> {
                         ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => OnboardingPage()),
-                        );//Şimdilik Eklenmiştir  
-                      },
+                      onTap: _registerUser,
                       //onTap: _registerUser,
                       child: Container(
                         alignment: Alignment.bottomCenter,

@@ -3,7 +3,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/boarding/boarding_bir.dart';
 import 'package:voxpollui/home_page.dart';
-import 'package:voxpollui/idarelik_page.dart';
 import 'package:voxpollui/onboarding_page.dart';
 
 void main() async {
@@ -35,11 +34,15 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: FutureBuilder<dynamic>(
-        future: ParseUser.currentUser(),
+      home: FutureBuilder<ParseUser?>(
+        // Kullanıcı bilgisini doğrudan çekiyoruz
+        future: ParseUser.currentUser(), // Future<ParseUser> olarak güncellendi
         builder: (context, snapshot) {
+          final currentUser = snapshot.data;
+          print(currentUser);
+
           if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError || snapshot.data == null) {
+            if (snapshot.hasError || currentUser == null) {
               // Hata durumu veya kullanıcı daha önce giriş yapmamışsa
               return const BoardinBir(); // veya başka bir giriş sayfası
             } else {
@@ -48,6 +51,7 @@ class MyApp extends StatelessWidget {
             }
           } else {
             // Veri henüz yüklenmediyse, bir yükleniyor ekranı gösterilebilir
+            print(snapshot.error);
             return CircularProgressIndicator();
           }
         },
@@ -55,3 +59,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

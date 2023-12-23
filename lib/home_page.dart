@@ -173,7 +173,7 @@ class _Page0State extends State<Page0> {
         followed = currentUser.get<List<dynamic>>('followed') ?? [];
         followers = currentUser.get<List<dynamic>>('followers') ?? [];
         //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
-      });
+      });//@
     }
   }
 
