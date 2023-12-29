@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:voxpollui/boarding/boarding_bir.dart';
 import 'package:voxpollui/home_page.dart';
-import 'package:voxpollui/onboarding_page.dart';
+import 'package:voxpollui/notifier/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,23 +19,28 @@ void main() async {
   await Parse().initialize(keyApplicationId!, keyParseServerUrl!,
       clientKey: keyClientKey, autoSendSessionId: true);
 
-  runApp(const MyApp());
+  runApp(await initializeApp());
+}
+
+Future<Widget> initializeApp() async {
+  return MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => ThemeNotifier()), // Burada ThemeNotifier'ı oluşturuyoruz
+    ],
+    child: const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context); // Tema durumunu al
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Vox Poll',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Color(0xFF2355FF),
-        ),
-        useMaterial3: true,
-      ),
+      theme: themeNotifier.currentTheme, // Tema durumunu kullan
       home: FutureBuilder<ParseUser?>(
         // Kullanıcı bilgisini doğrudan çekiyoruz
         future: ParseUser.currentUser(), // Future<ParseUser> olarak güncellendi
@@ -59,4 +66,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

@@ -1,10 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/idarelik_page.dart';
+import 'package:voxpollui/notifier/theme.dart';
 import 'package:voxpollui/script/database.dart';
 import 'createpoll.dart';
 import 'notifications_page.dart';
@@ -177,11 +181,32 @@ class _Page0State extends State<Page0> {
       });//@
     }
   }
-
+    List<Offset> starPositions = [];
+    Random _random = Random();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  double _alignX = -1.3; // Başlangıçta sol butonun altında olacak
+  void generateStarPositions() {
+    starPositions.clear();
+    int rowCount = 5;
+    int colCount = 5;
+    double containerWidth = 80.0;
+    double containerHeight = 30.0;
+
+    double intervalX = containerWidth / (colCount - 1);
+    double intervalY = containerHeight / (rowCount - 1);
+
+    for (int row = 0; row < rowCount; row++) {
+      for (int col = 0; col < colCount; col++) {
+        double left = col * intervalX + _random.nextDouble() * 10 - 5;
+        double top = row * intervalY + _random.nextDouble() * 10 - 5;
+        starPositions.add(Offset(left, top));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeNotifier>(context).isDarkMode;
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: Drawer(
@@ -440,73 +465,75 @@ class _Page0State extends State<Page0> {
               },
             ),
             ListTile(
-              trailing: Container(
-                width: 70,
-                height: 20,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 70,
-                      height: 20,
+              trailing: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isDarkMode = !isDarkMode;
+                        _alignX = isDarkMode ? 1.3 : -1.3;
+                        generateStarPositions(); // Gökyüzü rengini değiştirdiğimizde noktaları yeniden oluştur
+                      });
+                      Provider.of<ThemeNotifier>(context, listen: false)
+                          .toggleTheme();
+                    },
+                    child: Container(
+                      width: 80.0,
+                      height: 30.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: isDarkMode
+                            ? Color.fromARGB(255, 88, 7, 146)
+                            : Colors.blue,
+                      ),
                       child: Stack(
                         children: [
-                          Positioned(
-                            left: 1,
-                            top: 1.28,
-                            child: Container(
-                              width: 50,
-                              height: 20,
-                              decoration: ShapeDecoration(
-                                color: Color(0xFF2355FF),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(11.79),
+                          // Nokta şeklinde yıldızlar
+                          if (isDarkMode) ...[
+                            for (Offset position in starPositions)
+                              Positioned(
+                                left: position.dx,
+                                top: position.dy,
+                                child: Container(
+                                  width: 2.0,
+                                  height: 2.0,
+                                  color: Colors.white, // Nokta rengi
                                 ),
                               ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 10,
-                            top: 0,
-                            child: Transform(
-                              transform: Matrix4.identity()
-                                ..translate(0.0, 0.0)
-                                ..rotateZ(0.79),
-                              child: Container(
-                                width: 40,
-                                height: 20,
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      left: 0,
-                                      top: 0,
-                                      child: Transform(
-                                        transform: Matrix4.identity()
-                                          ..translate(0.0, 0.0)
-                                          ..rotateZ(0.79),
-                                        child: Container(
-                                          width: 20,
-                                          height: 20,
-                                          decoration: ShapeDecoration(
-                                            color: Colors.white,
-                                            shape: OvalBorder(),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                          ] else
+                            for (int i = 0; i < 5; i++)
+                              for (int j = 0; j < 5; j++)
+                                Positioned(
+                                  left: j * 40.0,
+                                  top: i * 40.0,
+                                  child: Icon(
+                                    Icons.cloud,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
                                 ),
+                          AnimatedAlign(
+                            alignment: Alignment(_alignX, 0),
+                            duration: Duration(milliseconds: 200),
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 800),
+                              curve: Curves.easeInOut,
+                              width: 40.0,
+                              height: 40.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: isDarkMode ? Colors.black : Colors.white,
+                              ),
+                              child: Icon(
+                                isDarkMode
+                                    ? Icons.nightlight_round
+                                    : Icons.wb_sunny_rounded,
+                                color: isDarkMode ? Colors.blue : Colors.orange,
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
+                  ),
               onTap: () {
                 // S.S.S. sayfasına yönlendirme
               },

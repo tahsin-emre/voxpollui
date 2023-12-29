@@ -33,6 +33,8 @@ dependencies:
     sdk: flutter
   flutter_polls: ^0.1.3
   flutter_dotenv: ^5.1.0
+  provider: ^6.1.1
+  shared_preferences: ^2.2.2
 
 
   # The following adds the Cupertino Icons font to your application.
