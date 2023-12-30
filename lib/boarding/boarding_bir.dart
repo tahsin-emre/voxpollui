@@ -12,13 +12,13 @@ class BoardinBir extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
+        body: SizedBox(
       child: Stack(
         children: [
           Positioned(
             left: 298,
             top: 493,
-            child: Container(
+            child: SizedBox(
               width: 260,
               height: 260,
               child: Stack(
@@ -34,7 +34,7 @@ class BoardinBir extends StatelessWidget {
                         width: 183.85,
                         height: 183.85,
                         decoration: ShapeDecoration(
-                          color: Color(0xFF2355FF),
+                          color: const Color(0xFF2355FF),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(47),
                           ),
@@ -49,9 +49,9 @@ class BoardinBir extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => BoardinIki()));
+                          MaterialPageRoute(builder: (context) => const BoardinIki()));
                       },
-                      child: Icon(
+                      child: const Icon(
                           Icons.arrow_forward,
                           size: 40, // Okun boyutu
                           color: Colors.white, // Okun rengi
@@ -69,7 +69,7 @@ class BoardinBir extends StatelessWidget {
             child: Container(
               width: 90,
               height: 90,
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/profil_foto1.png"),
                   fit: BoxFit.fill,
@@ -84,7 +84,7 @@ class BoardinBir extends StatelessWidget {
             child: Container(
               width: 69,
               height: 69,
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/profil_foto2.png"),
                   fit: BoxFit.fill,
@@ -99,7 +99,7 @@ class BoardinBir extends StatelessWidget {
             child: Container(
               width: 125,
               height: 125,
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/profil_foto3.png"),
                   fit: BoxFit.fill,
@@ -114,7 +114,7 @@ class BoardinBir extends StatelessWidget {
             child: Container(
               width: 13,
               height: 13,
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 color: Color(0xFFED3434),
                 shape: OvalBorder(),
               ),
@@ -126,7 +126,7 @@ class BoardinBir extends StatelessWidget {
             child: Container(
               width: 18,
               height: 18,
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 color: Color(0xFF8FFF67),
                 shape: OvalBorder(),
               ),
@@ -138,7 +138,7 @@ class BoardinBir extends StatelessWidget {
             child: Container(
               width: 26,
               height: 26,
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 color: Color(0xFFFF19CD),
                 shape: OvalBorder(),
               ),
@@ -151,7 +151,7 @@ class BoardinBir extends StatelessWidget {
               width: 153,
               height: 39,
               decoration: ShapeDecoration(
-                color: Color(0xFF0C0C0C),
+                color: const Color(0xFF0C0C0C),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40),
                 ),
@@ -165,7 +165,7 @@ class BoardinBir extends StatelessWidget {
               width: 101,
               height: 29,
               decoration: ShapeDecoration(
-                color: Color(0xFF0C0C0C),
+                color: const Color(0xFF0C0C0C),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40),
                 ),
@@ -179,7 +179,7 @@ class BoardinBir extends StatelessWidget {
               width: 129,
               height: 37,
               decoration: ShapeDecoration(
-                color: Color(0xFF0C0C0C),
+                color: const Color(0xFF0C0C0C),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40),
                 ),
@@ -192,7 +192,7 @@ class BoardinBir extends StatelessWidget {
             child: Container(
               width: 31,
               height: 31,
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 gradient: LinearGradient(
                   begin: Alignment(0.00, -1.00),
                   end: Alignment(0, 1),
@@ -208,7 +208,7 @@ class BoardinBir extends StatelessWidget {
             child: Container(
               width: 23,
               height: 23,
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 gradient: LinearGradient(
                   begin: Alignment(0.00, -1.00),
                   end: Alignment(0, 1),
@@ -224,7 +224,7 @@ class BoardinBir extends StatelessWidget {
             child: Container(
               width: 29,
               height: 29,
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 gradient: LinearGradient(
                   begin: Alignment(0.00, -1.00),
                   end: Alignment(0, 1),
@@ -240,7 +240,7 @@ class BoardinBir extends StatelessWidget {
             child: Container(
               width: 17,
               height: 17,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
                       "assets/Done.png"),
@@ -255,7 +255,7 @@ class BoardinBir extends StatelessWidget {
             child: Container(
               width: 18,
               height: 18,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
                       "assets/Done.png"),
@@ -270,7 +270,7 @@ class BoardinBir extends StatelessWidget {
             child: Container(
               width: 11,
               height: 11,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
                       "assets/Done.png"),
@@ -286,7 +286,7 @@ class BoardinBir extends StatelessWidget {
               width: 76,
               height: 4,
               decoration: ShapeDecoration(
-                color: Color(0xFF323232),
+                color: const Color(0xFF323232),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -300,7 +300,7 @@ class BoardinBir extends StatelessWidget {
               width: 65,
               height: 3,
               decoration: ShapeDecoration(
-                color: Color(0xFF323232),
+                color: const Color(0xFF323232),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -314,7 +314,7 @@ class BoardinBir extends StatelessWidget {
               width: 38,
               height: 3,
               decoration: ShapeDecoration(
-                color: Color(0xFF323232),
+                color: const Color(0xFF323232),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -328,7 +328,7 @@ class BoardinBir extends StatelessWidget {
               width: 91,
               height: 4,
               decoration: ShapeDecoration(
-                color: Color(0xFF323232),
+                color: const Color(0xFF323232),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -342,7 +342,7 @@ class BoardinBir extends StatelessWidget {
               width: 78,
               height: 3,
               decoration: ShapeDecoration(
-                color: Color(0xFF323232),
+                color: const Color(0xFF323232),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -356,14 +356,14 @@ class BoardinBir extends StatelessWidget {
               width: 46,
               height: 3,
               decoration: ShapeDecoration(
-                color: Color(0xFF323232),
+                color: const Color(0xFF323232),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             left: 47,
             top: 500,
             child: Text(
@@ -377,7 +377,7 @@ class BoardinBir extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             left: 47,
             top: 544,
             child: Text(
@@ -391,7 +391,7 @@ class BoardinBir extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             left: 47,
             top: 588,
             child: Text(
@@ -405,7 +405,7 @@ class BoardinBir extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             left: 47,
             top: 650,
             child: SizedBox(
@@ -423,7 +423,7 @@ class BoardinBir extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             left: 47,
             top: 670,
             child: SizedBox(
@@ -441,7 +441,7 @@ class BoardinBir extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             left: 47,
             top: 690,
             child: SizedBox(
@@ -464,21 +464,21 @@ class BoardinBir extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BoardinIki()));
+                    MaterialPageRoute(builder: (context) => const BoardinIki()));
               },
               child: Container(
                 alignment: Alignment.bottomCenter,
                 width: double.infinity,
                 height: 49,
-                margin: EdgeInsets.all(
+                margin: const EdgeInsets.all(
                     31), // Burası ekranın kenar boşluklarını ayarlar
                 decoration: ShapeDecoration(
-                  color: Color(0xFF2355FF),
+                  color: const Color(0xFF2355FF),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     'İleri',
                     style: TextStyle(

@@ -193,8 +193,8 @@ class _SurveyPageState extends State<SurveyPage> {
           return Text('Anket seçenekleri bulunamadı');
         }
 
-        List<PollOption> options = snapshot.data!;
-        int totalVotes = options.fold(0, (sum, item) => sum + item.votes);
+        // List<PollOption> options = snapshot.data!;
+        // int totalVotes = options.fold(0, (sum, item) => sum + item.votes);
          bool pollEnded = true;
 //@
         return FlutterPolls(

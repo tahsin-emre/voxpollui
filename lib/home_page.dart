@@ -1,13 +1,9 @@
 import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
-import 'package:voxpollui/idarelik_page.dart';
 import 'package:voxpollui/notifier/theme.dart';
 import 'package:voxpollui/script/database.dart';
 import 'createpoll.dart';
@@ -20,18 +16,20 @@ List<Map<String, dynamic>>? pollObjects;
 List<Map<String, dynamic>>? creatorObjects;
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    Page0(),
-    SearchPage(1), // Bu satırı değiştirin
-    PlaceholderPage(2),
-    CommunityPage(3),
+    const Page0(),
+    const SearchPage(1), // Bu satırı değiştirin
+    const PlaceholderPage(2),
+    const CommunityPage(3),
     ProfilePage(
       i: 4,
     ),
@@ -46,7 +44,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildBottomNavigationBar() {
-    return Container(
+    return SizedBox(
       height: 85,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -68,7 +66,7 @@ class _HomePageState extends State<HomePage> {
           _currentIndex = index;
         });
       },
-      child: Container(
+      child: SizedBox(
         width: 36,
         height: 36,
         child: Stack(
@@ -78,19 +76,19 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.center,
               child: Icon(icon,
                   color:
-                      _currentIndex == index ? Color(0xff2355ff) : Colors.grey,
+                      _currentIndex == index ? const Color(0xff2355ff) : Colors.grey,
                   size: 32),
             ),
             if (_currentIndex == index)
               Transform.translate(
-                offset: Offset(0, 45),
+                offset: const Offset(0, 45),
                 child: Transform.rotate(
                   angle: -45 * (3.14159265359 / 180),
                   child: Container(
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
-                      color: Color(0xff2355ff),
+                      color: const Color(0xff2355ff),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -107,17 +105,17 @@ class _HomePageState extends State<HomePage> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => CreatePollPage()),
+          MaterialPageRoute(builder: (context) => const CreatePollPage()),
         );
       },
       child: Container(
         width: 50,
         height: 50,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color(0xFF2355FF),
           shape: BoxShape.circle,
         ),
-        child: Icon(Icons.add, color: Colors.white),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
@@ -126,7 +124,7 @@ class _HomePageState extends State<HomePage> {
 class PlaceholderPage extends StatelessWidget {
   final int pageIndex;
 
-  PlaceholderPage(this.pageIndex);
+  const PlaceholderPage(this.pageIndex, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -137,12 +135,14 @@ class PlaceholderPage extends StatelessWidget {
 }
 
 class Page0 extends StatefulWidget {
+  const Page0({super.key});
+
   @override
-  _Page0State createState() => _Page0State();
+  State<Page0> createState() => _Page0State();
 }
 
 class _Page0State extends State<Page0> {
-  bool _showUnansweredSurveyBox = true;
+  bool showUnansweredSurveyBox = true;
   List<dynamic>? followed;
   List<dynamic>? followers;
   String username = 'Yükleniyor..';
@@ -159,7 +159,7 @@ class _Page0State extends State<Page0> {
 
   void _loadPolls() async {
     Map<dynamic, dynamic> fetchedPolls = await database.fetchPolls();
-    print('FETCHEDPOLLS   $fetchedPolls');
+    // print('FETCHEDPOLLS   $fetchedPolls');
     await dataManager.setCombinedResults(fetchedPolls);
 
     setState(() {
@@ -169,9 +169,8 @@ class _Page0State extends State<Page0> {
   }
 
   Future<void> _loadCurrentUser() async {
-    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-    currentUser?.fetch();
-    if (currentUser != null) {
+    ParseUser? currentUser = await ParseUser.currentUser();
+    currentUser.fetch();
       setState(() {
         username = currentUser.username!;
         surname = currentUser.get<String>('surname') ?? 'Soyad test';
@@ -179,10 +178,9 @@ class _Page0State extends State<Page0> {
         followers = currentUser.get<List<dynamic>>('followers') ?? [];
         //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
       });//@
-    }
   }
     List<Offset> starPositions = [];
-    Random _random = Random();
+    final Random _random = Random();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   double _alignX = -1.3; // Başlangıçta sol butonun altında olacak
   void generateStarPositions() {
@@ -215,12 +213,12 @@ class _Page0State extends State<Page0> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
               ),
               accountName: Text(
                 '$username $surname',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF0C0C0C),
                   fontSize: 20,
                   fontFamily: 'Gilroy',
@@ -232,7 +230,7 @@ class _Page0State extends State<Page0> {
                 children: [
                   Text(
                     '@$username \n',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xFF646464),
                       fontSize: 14,
                       fontFamily: 'Gilroy',
@@ -244,7 +242,7 @@ class _Page0State extends State<Page0> {
                     children: [
                       Text(
                         'Takip Edilen ${followed?.length ?? 0}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color(0xFF0C0C0C),
                           fontSize: 14,
                           fontFamily: 'Gilroy',
@@ -252,12 +250,12 @@ class _Page0State extends State<Page0> {
                           height: 0,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Text(
                         'Takipçi ${followers?.length ?? 0}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color(0xFF0C0C0C),
                           fontSize: 14,
                           fontFamily: 'Gilroy',
@@ -269,12 +267,12 @@ class _Page0State extends State<Page0> {
                   ),
                 ],
               ),
-              currentAccountPicture: CircleAvatar(
+              currentAccountPicture: const CircleAvatar(
                 backgroundImage: AssetImage("assets/login.png"),
               ),
             ),
             ListTile(
-              title: Row(
+              title: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
@@ -295,7 +293,7 @@ class _Page0State extends State<Page0> {
               },
             ),
             ListTile(
-              title: Row(
+              title: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
@@ -316,7 +314,7 @@ class _Page0State extends State<Page0> {
               },
             ),
             ListTile(
-              title: Row(
+              title: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
@@ -337,7 +335,7 @@ class _Page0State extends State<Page0> {
               },
             ),
             ListTile(
-              title: Row(
+              title: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
@@ -358,7 +356,7 @@ class _Page0State extends State<Page0> {
               },
             ),
             ListTile(
-              title: Row(
+              title: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
@@ -379,9 +377,9 @@ class _Page0State extends State<Page0> {
               },
             ),
             // Diğer ListTile widget'ları...
-            Divider(),
+            const Divider(),
             ListTile(
-              title: Row(
+              title: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
@@ -402,7 +400,7 @@ class _Page0State extends State<Page0> {
               },
             ),
             ListTile(
-              title: Row(
+              title: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
@@ -423,7 +421,7 @@ class _Page0State extends State<Page0> {
               },
             ),
             ListTile(
-              title: Row(
+              title: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
@@ -444,7 +442,7 @@ class _Page0State extends State<Page0> {
               },
             ),
             ListTile(
-              title: Row(
+              title: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
@@ -481,7 +479,7 @@ class _Page0State extends State<Page0> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.0),
                         color: isDarkMode
-                            ? Color.fromARGB(255, 88, 7, 146)
+                            ? const Color.fromARGB(255, 88, 7, 146)
                             : Colors.blue,
                       ),
                       child: Stack(
@@ -504,7 +502,7 @@ class _Page0State extends State<Page0> {
                                 Positioned(
                                   left: j * 40.0,
                                   top: i * 40.0,
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.cloud,
                                     color: Colors.white,
                                     size: 30,
@@ -512,9 +510,9 @@ class _Page0State extends State<Page0> {
                                 ),
                           AnimatedAlign(
                             alignment: Alignment(_alignX, 0),
-                            duration: Duration(milliseconds: 200),
+                            duration: const Duration(milliseconds: 200),
                             child: AnimatedContainer(
-                              duration: Duration(milliseconds: 800),
+                              duration: const Duration(milliseconds: 800),
                               curve: Curves.easeInOut,
                               width: 40.0,
                               height: 40.0,
@@ -544,37 +542,37 @@ class _Page0State extends State<Page0> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: CustomScrollView(
             slivers: [
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    Text(
+                    const Text(
                       'Hoş Geldiniz',
                       style: TextStyle(
                           fontSize: 24.0, fontWeight: FontWeight.bold),
                     ),
                     Row(
                       children: [
-                        SizedBox(width: 0.0),
+                        const SizedBox(width: 0.0),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               '$username $surname',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 24.0, fontWeight: FontWeight.bold),
                             ),
                             Text(
                               '${followed?.length ?? 0}',
-                              style: TextStyle(fontSize: 16.0),
+                              style: const TextStyle(fontSize: 16.0),
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         IconButton(
-                          icon: Icon(Icons.notifications),
+                          icon: const Icon(Icons.notifications),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -588,14 +586,14 @@ class _Page0State extends State<Page0> {
                             _scaffoldKey.currentState!
                                 .openEndDrawer(); // openEndDrawer'ı çağırın
                           },
-                          child: CircleAvatar(
+                          child: const CircleAvatar(
                             radius: 30,
                             backgroundImage: AssetImage('assets/login.png'),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                   ],
                 ),
               ),
@@ -603,15 +601,15 @@ class _Page0State extends State<Page0> {
                 pinned: true,
                 floating: true,
                 toolbarHeight: 0.0,
-                expandedHeight: _showUnansweredSurveyBox ? 126.0 : 0.0,
+                expandedHeight: showUnansweredSurveyBox ? 126.0 : 0.0,
                 flexibleSpace: FlexibleSpaceBar(
-                  background: _showUnansweredSurveyBox
+                  background: showUnansweredSurveyBox
                       ? Container(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           width: 1000,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               begin: Alignment.bottomRight,
                               end: Alignment.topLeft,
                               colors: [
@@ -626,7 +624,7 @@ class _Page0State extends State<Page0> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               RichText(
-                                text: TextSpan(
+                                text: const TextSpan(
                                   children: [
                                     TextSpan(
                                       text: '14',
@@ -645,10 +643,10 @@ class _Page0State extends State<Page0> {
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 10.0),
+                              const SizedBox(height: 10.0),
                               ElevatedButton(
                                 onPressed: () {
-                                  // TODO: Implement view surveys button functionality
+                                  //Anketleri görüntüle butonu
                                 },
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
@@ -656,7 +654,7 @@ class _Page0State extends State<Page0> {
                                   shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5.0),
-                                      side: BorderSide(
+                                      side: const BorderSide(
                                           width: 2, color: Colors.white),
                                     ),
                                   ),
@@ -664,10 +662,10 @@ class _Page0State extends State<Page0> {
                                 child: Container(
                                   width: double.infinity,
                                   alignment: Alignment.center,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Colors.transparent,
                                   ),
-                                  child: Text(
+                                  child: const Text(
                                     'Anketleri Görüntüle',
                                     style: TextStyle(
                                         color: Colors.white,
@@ -679,19 +677,19 @@ class _Page0State extends State<Page0> {
                             ],
                           ),
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                 ),
               ),
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    SizedBox(height: 10.0),
-                    Text(
+                    const SizedBox(height: 10.0),
+                    const Text(
                       'Takip Ettiklerim',
                       style: TextStyle(
                           fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                   ],
                 ),
               ),
@@ -700,7 +698,7 @@ class _Page0State extends State<Page0> {
                   (BuildContext context, int index) {
                     if (dataManager.getPolls()?.isEmpty ?? true) {
                       // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
-                      return Center(
+                      return const Center(
                           child: CircularProgressIndicator(
                         color: Color(0xFF2355FF),
                       ));
@@ -724,10 +722,10 @@ class _Page0State extends State<Page0> {
 class SearchPage extends StatefulWidget {
   final int pageIndex;
 
-  SearchPage(this.pageIndex);
+  const SearchPage(this.pageIndex, {super.key});
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
@@ -742,14 +740,14 @@ class _SearchPageState extends State<SearchPage> {
           children: [
             Container(
               height: 40.0, // Yüksekliği 40.0 piksel yapın
-              margin: EdgeInsets.all(16.0),
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              margin: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              child: Row(
+              child: const Row(
                 children: [
                   Icon(Icons.search),
                   SizedBox(width: 8.0),
@@ -767,8 +765,8 @@ class _SearchPageState extends State<SearchPage> {
                   SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        SizedBox(height: 10.0),
-                        Padding(
+                        const SizedBox(height: 10.0),
+                        const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
                             'Keşfet',
@@ -776,7 +774,7 @@ class _SearchPageState extends State<SearchPage> {
                                 fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
                       ],
                     ),
                   ),
@@ -785,7 +783,7 @@ class _SearchPageState extends State<SearchPage> {
                       (BuildContext context, int index) {
                         if (dataManager.getPolls()?.isEmpty ?? true) {
                           // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
-                          return Center(
+                          return const Center(
                               child: CircularProgressIndicator(
                             color: Color(0xFF2355FF),
                           ));
@@ -811,10 +809,10 @@ class _SearchPageState extends State<SearchPage> {
 class CommunityPage extends StatefulWidget {
   final int pageIndex;
 
-  CommunityPage(this.pageIndex);
+  const CommunityPage(this.pageIndex, {super.key});
 
   @override
-  _CommunityPageState createState() => _CommunityPageState();
+  State<CommunityPage> createState() => _CommunityPageState();
 }
 
 class _CommunityPageState extends State<CommunityPage> {
@@ -828,14 +826,14 @@ class _CommunityPageState extends State<CommunityPage> {
           children: [
             Container(
               height: 40.0,
-              margin: EdgeInsets.all(16.0),
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              margin: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              child: Row(
+              child: const Row(
                 children: [
                   Icon(Icons.search),
                   SizedBox(width: 8.0),
@@ -848,13 +846,13 @@ class _CommunityPageState extends State<CommunityPage> {
             ),
             Expanded(
               child: creatorObjects == null
-                  ? CircularProgressIndicator(
+                  ? const CircularProgressIndicator(
                       color: Color(0xFF2355FF),
                     )
                   : ListView(
                       children: [
-                        SizedBox(height: 10.0),
-                        Padding(
+                        const SizedBox(height: 10.0),
+                        const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
                             'Topluluklarım',
@@ -862,11 +860,11 @@ class _CommunityPageState extends State<CommunityPage> {
                                 fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
                         ...List.generate(creatorObjects!.length,
                             (index) => _buildCardCommunity(context, index)),
-                        SizedBox(height: 10.0),
-                        Padding(
+                        const SizedBox(height: 10.0),
+                        const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
                             'Önerilen Topluluklar',
@@ -874,7 +872,7 @@ class _CommunityPageState extends State<CommunityPage> {
                                 fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
                         ...List.generate(
                             creatorObjects!.length,
                             (index) => _buildCardCommunityWithJoinButton(
@@ -893,17 +891,18 @@ class _CommunityPageState extends State<CommunityPage> {
 class ProfilePage extends StatefulWidget {
   List<Map<dynamic, dynamic>>? pollData;
   int? i;
-  ProfilePage({this.pollData, this.i});
+  
+  ProfilePage({super.key, this.pollData, this.i});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   bool isFollowing = false;
   //bool _showUnansweredSurveyBox = true;
-  var followed;
-  var followers;
+  dynamic followed;
+  dynamic followers;
   String objectId = 'ObjectId Hatası';
   String username = 'Yükleniyor..';
   String name = 'Yükleniyor..';
@@ -943,14 +942,14 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _loadPollData() async {
-    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-    dynamic _joinPoll = await Database.countUserPollResponses(
+    ParseUser? currentUser = await ParseUser.currentUser();
+    dynamic joinPoll = await Database.countUserPollResponses(
         widget.pollData![widget.i ?? 0]['creator']['objectId'] ??
             'ObjectIDDDDDDD');
-    print('${_joinPoll}    JOİN POLL');
+    // print('${joinPoll}    JOİN POLL');
     setState(() {
-      joinPoll = _joinPoll;
-      objectId = currentUser?.get<String>('objectId') ?? 'ObjectIDDDDDDD';
+      joinPoll = joinPoll;
+      objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
       username = widget.pollData![widget.i ?? 0]['creator']['username'] ??
           'Yükleniyor..';
       name =
@@ -965,13 +964,12 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _loadCurrentUser() async {
-    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-    dynamic _joinPoll = await Database.countUserPollResponses(
-        currentUser?.get<String>('objectId') ?? 'ObjectIDDDDDDD');
-    print('${_joinPoll}   _loadCurrentUser JOİN POLL');
-    if (currentUser != null) {
+    ParseUser? currentUser = await ParseUser.currentUser();
+    dynamic joinPoll = await Database.countUserPollResponses(
+        currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD');
+    // print('${joinPoll}   _loadCurrentUser JOİN POLL');
       setState(() {
-        joinPoll = _joinPoll;
+        joinPoll = joinPoll;
         username = currentUser.username!;
         objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
         name = currentUser.get<String>('name') ?? 'name test';
@@ -980,7 +978,6 @@ class _ProfilePageState extends State<ProfilePage> {
         biyografi = currentUser.get<String>('biography') ?? '';
         followers = currentUser.get<dynamic>('followers') ?? '0';
       });
-    }
   }
 
   @override
@@ -997,8 +994,8 @@ class _ProfilePageState extends State<ProfilePage> {
     // };
     final viewObjectId =
         widget.pollData?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
-    print('$objectId   GİRİŞ YAPAN KULLANICI OBJECTID ');
-    print('$viewObjectId        GÖRÜNTÜLENEN KULLANICI OBJECTID');
+    // print('$objectId   GİRİŞ YAPAN KULLANICI OBJECTID ');
+    // print('$viewObjectId        GÖRÜNTÜLENEN KULLANICI OBJECTID');
 
     return DefaultTabController(
       length: 2,
@@ -1006,11 +1003,11 @@ class _ProfilePageState extends State<ProfilePage> {
         body: Column(
           children: [
             if (_isLoading)
-              CircularProgressIndicator()
+              const CircularProgressIndicator()
             else
               Container(
                 height: 200,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/cover.png'),
                     fit: BoxFit.cover,
@@ -1021,7 +1018,7 @@ class _ProfilePageState extends State<ProfilePage> {
               top: 16,
               left: 16,
               child: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.black),
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
@@ -1029,26 +1026,26 @@ class _ProfilePageState extends State<ProfilePage> {
               top: 16,
               right: 16,
               child: IconButton(
-                icon: Icon(Icons.settings, color: Colors.black),
+                icon: const Icon(Icons.settings, color: Colors.black),
                 onPressed: () {},
               ),
             ),
             Container(
               transform: Matrix4.translationValues(0, -50, 0),
-              child: CircleAvatar(
+              child: const CircleAvatar(
                 radius: 50,
                 backgroundImage: AssetImage('assets/profilepicture.png'),
               ),
             ),
             Text(
               "${widget.pollData?[widget.i ?? 0]['creator']['name'] ?? name} ${widget.pollData?[widget.i ?? 0]['surname'] ?? surname}",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Text('@$username'),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                '${biyografi ?? ''}',
+                biyografi,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -1061,8 +1058,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     '${joinPoll ?? 7}'), // Katıldığı anket sayısını sabit olarak veriyorum, gerektiğine göre düzeltebilirsiniz.
               ],
             ),
-            Divider(),
-            TabBar(
+            const Divider(),
+            const TabBar(
               tabs: [
                 Tab(text: 'Katıldıklarım'),
                 Tab(text: 'Oluşturduklarım'),
@@ -1075,7 +1072,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ListView.builder(
                       itemCount: polls!.length,
                       itemBuilder: (BuildContext context, int index) {
-                        List<Map<String, dynamic>> bos = [{}];
+                        // List<Map<String, dynamic>> bos = [{}];
                         return _buildCardCommunityWithJoinButton(
                             context, index);
                       },
@@ -1091,7 +1088,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             isMe == true
-                ? Material()
+                ? const Material()
                 : Align(
                     alignment: Alignment.centerRight, // Sağ ortada
                     child: _buildFollowButton(viewObjectId),
@@ -1109,12 +1106,12 @@ class _ProfilePageState extends State<ProfilePage> {
       children: [
         Text(
           number.toString(),
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(
           label,
-          style: TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         ),
       ],
     );
@@ -1151,20 +1148,19 @@ class _ProfilePageState extends State<ProfilePage> {
       var responseViewedUser = await viewedUser.save();
 
       if (responseCurrentUser.success && responseViewedUser.success) {
-        print('Takip durumu başarıyla güncellendi');
+        // print('Takip durumu başarıyla güncellendi');
       } else {
-        print(
-            'Takip durumu güncellenirken hata oluştu ${responseCurrentUser.error}'); //Not : Else içine giriyor ama veritabanından takip etme ve takipten çıkma işlemini gerçekleştiriyor
+        // print('Takip durumu güncellenirken hata oluştu ${responseCurrentUser.error}'); //Not : Else içine giriyor ama veritabanından takip etme ve takipten çıkma işlemini gerçekleştiriyor
       }
     } catch (e) {
-      print('Bir hata oluştu: $e');
+      // print('Bir hata oluştu: $e');
+      throw Exception(e);
     }
   }
 
   Future<void> checkIfFollowing(String viewObjectId) async {
     // Giriş yapan kullanıcıyı al
-    ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-    if (currentUser != null) {
+    ParseUser? currentUser = await ParseUser.currentUser();
       // Giriş yapan kullanıcının takip ettiği kişilerin listesini al
       List<dynamic> followedUsers =
           currentUser.get<List<dynamic>>('followed') ?? [];
@@ -1173,14 +1169,13 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         isFollowing = followedUsers.contains(viewObjectId);
       });
-      print(
-          '${followedUsers.contains(viewObjectId)}   Görüntülenen Takip Ediyo Mu Etmiyo Mu');
-    }
+      // print(
+      //     '${followedUsers.contains(viewObjectId)}   Görüntülenen Takip Ediyo Mu Etmiyo Mu');
   }
 
   Widget _buildFollowButton(String viewObjectId) {
     return ConstrainedBox(
-      constraints: BoxConstraints.tightFor(width: 150),
+      constraints: const BoxConstraints.tightFor(width: 150),
       child: ElevatedButton(
         onPressed: () async {
           await updateFollowStatus(objectId, viewObjectId, isFollowing);
@@ -1190,7 +1185,7 @@ class _ProfilePageState extends State<ProfilePage> {
         },
         child: Text(
           isFollowing ? 'Takibi Bırak' : 'Takip Et',
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         style: ElevatedButton.styleFrom(
           backgroundColor: isFollowing ? Colors.red : Colors.blue,
@@ -1202,20 +1197,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
 Widget _buildCardCommunityWithJoinButton(BuildContext context, int index) {
   return ListTile(
-    leading: CircleAvatar(
+    leading: const CircleAvatar(
       backgroundImage: AssetImage('assets/login.png'),
     ),
     title: Row(
       children: [
-        Text('Topluluk Adı '),
-        SizedBox(width: 4.0),
-        Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
-        SizedBox(width: 4.0),
+        const Text('Topluluk Adı '),
+        const SizedBox(width: 4.0),
+        const Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
+        const SizedBox(width: 4.0),
         Text('@${creatorObjects![index]['username']}',
-            style: TextStyle(fontSize: 12.0)),
+            style: const TextStyle(fontSize: 12.0)),
       ],
     ),
-    subtitle: Text('Topluluk Açıklaması'),
+    subtitle: const Text('Topluluk Açıklaması'),
     trailing: TextButton(
       onPressed: () {
         Navigator.push(
@@ -1224,9 +1219,9 @@ Widget _buildCardCommunityWithJoinButton(BuildContext context, int index) {
                 builder: (context) =>
                     ProfilePage(pollData: pollObjects, i: 4)));
       },
-      child: Text('Katıl'),
+      child: const Text('Katıl'),
       style: TextButton.styleFrom(
-        primary: Colors.blue,
+        foregroundColor : Colors.blue,
         backgroundColor: Colors.transparent,
       ),
     ),
@@ -1237,31 +1232,31 @@ Widget _buildCardCommunity(BuildContext context, int index) {
   //String toplulukNameOrnektir = creator != null ? creator.get<String>('name') ?? 'Bilinmiyor' : 'Bilinmiyor';
 
   return ListTile(
-    leading: CircleAvatar(
+    leading: const CircleAvatar(
       backgroundImage: AssetImage('assets/login.png'),
     ),
     title: Row(
       children: [
-        Text('Topluluk Adı'),
-        SizedBox(width: 4.0),
-        Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
-        SizedBox(width: 4.0),
+        const Text('Topluluk Adı'),
+        const SizedBox(width: 4.0),
+        const Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
+        const SizedBox(width: 4.0),
         Text('@${creatorObjects![index]['username']}',
-            style: TextStyle(fontSize: 12.0)),
+            style: const TextStyle(fontSize: 12.0)),
       ],
     ),
-    subtitle: Text('Topluluk Açıklaması'),
+    subtitle: const Text('Topluluk Açıklaması'),
     trailing: InkWell(
       onTap: () {
         // Burada tıklama olayını işleyin
-        print('Trailing ikonuna tıklandı!');
+        // print('Trailing ikonuna tıklandı!');
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
                     ProfilePage(pollData: creatorObjects, i: 4)));
       },
-      child: Icon(Icons.arrow_forward),
+      child: const Icon(Icons.arrow_forward),
     ),
   );
 }

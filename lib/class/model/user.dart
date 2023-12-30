@@ -11,20 +11,18 @@ class DataManager {
   List<Map<String, dynamic>>? creators;
 
 Future<void> setCombinedResults(Map<dynamic, dynamic> results) async {
-  print('RESULTS   $results');
-  if (results != null) {
+  // print('RESULTS   $results');
       polls = List<Map<String, dynamic>>.from(results['polls']);
-      print('POLLS $polls');
+      // print('POLLS $polls');
       creators = List<Map<String, dynamic>>.from(results['users']);
-      print('CREATORS $creators');
-  }
+      // print('CREATORS $creators');
 }
 
 
 
 
 List<Map<String, dynamic>>? getPolls() {
-  print('GET POLLS POLLS   $polls');
+  // print('GET POLLS POLLS   $polls');
   return polls;
 }
 

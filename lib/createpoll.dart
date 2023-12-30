@@ -3,8 +3,10 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/home_page.dart';
 
 class CreatePollPage extends StatefulWidget {
+  const CreatePollPage({super.key});
+
   @override
-  _CreatePollPageState createState() => _CreatePollPageState();
+  State<CreatePollPage> createState() => _CreatePollPageState();
 }
 
 class _CreatePollPageState extends State<CreatePollPage> {
@@ -21,7 +23,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
     }
 
     // Mevcut kullanıcıyı al
-    final ParseUser currentUser = await ParseUser.currentUser() as ParseUser;
+    final ParseUser currentUser = await ParseUser.currentUser();
 
     final ParseObject poll = ParseObject('Poll')
       ..set('title', title)
@@ -38,7 +40,8 @@ class _CreatePollPageState extends State<CreatePollPage> {
         await pollOption.save();
       }
       // Anket başarıyla kaydedildi mesajı göster ve ana sayfaya yönlendir
-      Navigator.push(context, MaterialPageRoute(builder: ((context) => HomePage())));
+      // ignore: use_build_context_synchronously
+      Navigator.push(context, MaterialPageRoute(builder: ((context) => const HomePage())));
     } else {
       // Hata mesajı göster
     }
@@ -48,24 +51,24 @@ class _CreatePollPageState extends State<CreatePollPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Anket Oluştur'),
+        title: const Text('Anket Oluştur'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
             TextField(
               controller: _titleController,
-              decoration: InputDecoration(hintText: 'Anket Başlığı'),
+              decoration: const InputDecoration(hintText: 'Anket Başlığı'),
             ),
             ..._optionControllers.map((controller) => TextField(
               controller: controller,
-              decoration: InputDecoration(hintText: 'Seçenek'),
+              decoration: const InputDecoration(hintText: 'Seçenek'),
             )),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: _createPoll,
-              child: Text('Anket Oluştur'),
+              child: const Text('Anket Oluştur'),
             ),
           ],
         ),

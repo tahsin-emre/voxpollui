@@ -101,7 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
       ..set('district', district)
       ..set('gender', _gender)
       ..set('interests', selectedInterests) // İlgi alanlarını kullanıcıya ekle
-      ..set('biography', biography ?? '');
+      ..set('biography', biography);
 
     var response = await user.signUp();
 

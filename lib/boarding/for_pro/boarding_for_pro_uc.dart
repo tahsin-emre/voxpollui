@@ -31,7 +31,7 @@ class VoxpollProUc extends StatelessWidget {
       Positioned(
         left: 18.26,
         top: 173,
-        child: Container(
+        child: SizedBox(
           width: 391.48,
           height: 250.86,
           child: Stack(
@@ -43,11 +43,11 @@ class VoxpollProUc extends StatelessWidget {
                   width: 391.48,
                   height: 250.86,
                   decoration: ShapeDecoration(
-                    color: Color(0xFFF6F6F6),
+                    color: const Color(0xFFF6F6F6),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(9.13),
                     ),
-                    shadows: [
+                    shadows: const [
                       BoxShadow(
                         color: Color(0x66000000),
                         blurRadius: 28.53,
@@ -65,11 +65,11 @@ class VoxpollProUc extends StatelessWidget {
                   width: 392.62,
                   height: 250.86,
                   decoration: ShapeDecoration(
-                    color: Color(0xFF2355FF),
+                    color: const Color(0xFF2355FF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(9.13),
                     ),
-                    shadows: [
+                    shadows: const [
                       BoxShadow(
                         color: Color(0x14000000),
                         blurRadius: 28.53,
@@ -88,18 +88,18 @@ class VoxpollProUc extends StatelessWidget {
                   height: 279.90,
                   decoration: ShapeDecoration(
                     gradient: LinearGradient(
-                      begin: Alignment(0.00, -1.00),
-                      end: Alignment(0, 1),
+                      begin: const Alignment(0.00, -1.00),
+                      end: const Alignment(0, 1),
                       colors: [Colors.white, Colors.white.withOpacity(0)],
                     ),
-                    shape: OvalBorder(),
+                    shape: const OvalBorder(),
                   ),
                 ),
               ),
               Positioned(
                 left: 27.39,
                 top: 39.49,
-                child: Container(
+                child: SizedBox(
                   width: 36.52,
                   height: 27.87,
                   child: Stack(
@@ -111,7 +111,7 @@ class VoxpollProUc extends StatelessWidget {
                           width: 36.52,
                           height: 27.87,
                           decoration: ShapeDecoration(
-                            color: Color(0xFFFFBA48),
+                            color: const Color(0xFFFFBA48),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(9.13),
                             ),
@@ -125,7 +125,7 @@ class VoxpollProUc extends StatelessWidget {
                           width: 36.52,
                           height: 27.87,
                           decoration: ShapeDecoration(
-                            color: Color(0xFFFFBA48),
+                            color: const Color(0xFFFFBA48),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(9.13),
                             ),
@@ -140,7 +140,7 @@ class VoxpollProUc extends StatelessWidget {
                           height: 8.13,
                           decoration: ShapeDecoration(
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(
+                              side: const BorderSide(
                                 width: 0.34,
                                 strokeAlign: BorderSide.strokeAlignCenter,
                                 color: Color(0xFFD29633),
@@ -158,7 +158,7 @@ class VoxpollProUc extends StatelessWidget {
                           height: 8.13,
                           decoration: ShapeDecoration(
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(
+                              side: const BorderSide(
                                 width: 0.34,
                                 strokeAlign: BorderSide.strokeAlignCenter,
                                 color: Color(0xFFD29633),
@@ -176,7 +176,7 @@ class VoxpollProUc extends StatelessWidget {
                           height: 8.13,
                           decoration: ShapeDecoration(
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(
+                              side: const BorderSide(
                                 width: 0.34,
                                 strokeAlign: BorderSide.strokeAlignCenter,
                                 color: Color(0xFFD29633),
@@ -194,7 +194,7 @@ class VoxpollProUc extends StatelessWidget {
                           height: 8.13,
                           decoration: ShapeDecoration(
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(
+                              side: const BorderSide(
                                 width: 0.34,
                                 strokeAlign: BorderSide.strokeAlignCenter,
                                 color: Color(0xFFD29633),
@@ -212,7 +212,7 @@ class VoxpollProUc extends StatelessWidget {
                           height: 8.13,
                           decoration: ShapeDecoration(
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(
+                              side: const BorderSide(
                                 width: 0.34,
                                 strokeAlign: BorderSide.strokeAlignCenter,
                                 color: Color(0xFFD29633),
@@ -230,7 +230,7 @@ class VoxpollProUc extends StatelessWidget {
                           height: 8.13,
                           decoration: ShapeDecoration(
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(
+                              side: const BorderSide(
                                 width: 0.34,
                                 strokeAlign: BorderSide.strokeAlignCenter,
                                 color: Color(0xFFD29633),
@@ -254,7 +254,7 @@ class VoxpollProUc extends StatelessWidget {
         child: Container(
           width: 428,
           height: 664,
-          decoration: ShapeDecoration(
+          decoration: const ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -280,7 +280,7 @@ class VoxpollProUc extends StatelessWidget {
           width: 69,
           height: 6,
           decoration: ShapeDecoration(
-            color: Color(0xFFABB4BD),
+            color: const Color(0xFFABB4BD),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(3.42),
             ),
@@ -296,7 +296,7 @@ class VoxpollProUc extends StatelessWidget {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-            shadows: [
+            shadows: const [
               BoxShadow(
                 color: Color(0x19000000),
                 blurRadius: 9.13,
@@ -307,7 +307,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 45,
         top: 475,
         child: SizedBox(
@@ -326,7 +326,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 45,
         top: 453,
         child: SizedBox(
@@ -353,7 +353,7 @@ class VoxpollProUc extends StatelessWidget {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-            shadows: [
+            shadows: const [
               BoxShadow(
                 color: Color(0x19000000),
                 blurRadius: 9.13,
@@ -364,7 +364,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 45,
         top: 572,
         child: SizedBox(
@@ -382,7 +382,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 45,
         top: 548,
         child: SizedBox(
@@ -409,7 +409,7 @@ class VoxpollProUc extends StatelessWidget {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-            shadows: [
+            shadows: const [
               BoxShadow(
                 color: Color(0x19000000),
                 blurRadius: 9.13,
@@ -429,7 +429,7 @@ class VoxpollProUc extends StatelessWidget {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-            shadows: [
+            shadows: const [
               BoxShadow(
                 color: Color(0x19000000),
                 blurRadius: 9.13,
@@ -440,7 +440,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 45,
         top: 666,
         child: SizedBox(
@@ -458,7 +458,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 45,
         top: 760,
         child: Text(
@@ -472,7 +472,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 45,
         top: 642,
         child: SizedBox(
@@ -490,7 +490,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 45,
         top: 738,
         child: Text(
@@ -510,7 +510,7 @@ class VoxpollProUc extends StatelessWidget {
         child: Container(
           width: 20.67,
           height: 20.22,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: NetworkImage("https://via.placeholder.com/21x20"),
               fit: BoxFit.fill,
@@ -527,7 +527,7 @@ class VoxpollProUc extends StatelessWidget {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-            shadows: [
+            shadows: const [
               BoxShadow(
                 color: Color(0x19000000),
                 blurRadius: 9.13,
@@ -538,7 +538,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 45,
         top: 361,
         child: SizedBox(
@@ -556,7 +556,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 170,
         top: 301,
         child: SizedBox(
@@ -574,7 +574,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 56,
         top: 812,
         child: Text(
@@ -595,7 +595,7 @@ class VoxpollProUc extends StatelessWidget {
           width: 428,
           height: 47,
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(),
+          decoration: const BoxDecoration(),
           child: Stack(
             children: [
               Positioned(
@@ -610,7 +610,7 @@ class VoxpollProUc extends StatelessWidget {
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -638,15 +638,15 @@ class VoxpollProUc extends StatelessWidget {
               Positioned(
                 left: 318,
                 top: 19,
-                child: Container(
+                child: SizedBox(
                   width: 77.40,
                   height: 13,
                   child: Stack(
                     children: [
-                      Positioned(
+                      const Positioned(
                         left: 50,
                         top: 0,
-                        child: Container(
+                        child: SizedBox(
                           width: 27.40,
                           height: 13,
                           child: Stack(children: [
@@ -660,7 +660,7 @@ class VoxpollProUc extends StatelessWidget {
                         child: Container(
                           width: 17,
                           height: 12,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: NetworkImage("https://via.placeholder.com/17x12"),
                               fit: BoxFit.fill,
@@ -676,7 +676,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 26,
         top: 127,
         child: Text(
@@ -693,7 +693,7 @@ class VoxpollProUc extends StatelessWidget {
       Positioned(
         left: 26,
         top: 64,
-        child: Container(
+        child: SizedBox(
           width: 40,
           height: 40,
           child: Stack(
@@ -706,7 +706,7 @@ class VoxpollProUc extends StatelessWidget {
                   height: 40,
                   decoration: ShapeDecoration(
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 1, color: Color(0xFFBCBCBC)),
+                      side: const BorderSide(width: 1, color: Color(0xFFBCBCBC)),
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
@@ -723,12 +723,12 @@ class VoxpollProUc extends StatelessWidget {
           width: 366,
           height: 49,
           decoration: ShapeDecoration(
-            color: Color(0xFF2355FF),
+            color: const Color(0xFF2355FF),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 190,
         top: 861,
         child: Text(
@@ -750,13 +750,13 @@ class VoxpollProUc extends StatelessWidget {
           width: 32,
           height: 24,
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(),
-          child: Stack(
+          decoration: const BoxDecoration(),
+          child: const Stack(
             children: [
               Positioned(
                 left: 0,
                 top: 0,
-                child: Container(
+                child: SizedBox(
                   width: 31.97,
                   height: 23.93,
                   child: Stack(children: [
@@ -768,7 +768,7 @@ class VoxpollProUc extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 45,
         top: 383,
         child: SizedBox(
@@ -789,7 +789,7 @@ class VoxpollProUc extends StatelessWidget {
       Positioned(
         left: 31,
         top: 807,
-        child: Container(
+        child: SizedBox(
           width: 20,
           height: 20,
           child: Stack(
@@ -801,7 +801,7 @@ class VoxpollProUc extends StatelessWidget {
                   width: 20,
                   height: 20,
                   decoration: ShapeDecoration(
-                    color: Color(0xFF2355FF),
+                    color: const Color(0xFF2355FF),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                   ),
                 ),
@@ -817,810 +817,3 @@ class VoxpollProUc extends StatelessWidget {
     );
   }
 }
-
-// class VoxpollPro extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         Container(
-//           width: 428,
-//           height: 926,
-//           clipBehavior: Clip.antiAlias,
-//           decoration: ShapeDecoration(
-//             color: Colors.white,
-//             shape: RoundedRectangleBorder(
-//               borderRadius: BorderRadius.circular(32),
-//             ),
-//           ),
-//           child: Stack(
-//             children: [
-//               Positioned(
-//                 left: 18.26,
-//                 top: 173,
-//                 child: Container(
-//                   width: 391.48,
-//                   height: 250.86,
-//                   child: Stack(
-//                     children: [
-//                       Positioned(
-//                         left: 0,
-//                         top: 0,
-//                         child: Container(
-//                           width: 391.48,
-//                           height: 250.86,
-//                           decoration: ShapeDecoration(
-//                             color: Color(0xFFF6F6F6),
-//                             shape: RoundedRectangleBorder(
-//                               borderRadius: BorderRadius.circular(9.13),
-//                             ),
-//                             shadows: [
-//                               BoxShadow(
-//                                 color: Color(0x66000000),
-//                                 blurRadius: 28.53,
-//                                 offset: Offset(0, 1.14),
-//                                 spreadRadius: 0,
-//                               )
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                       Positioned(
-//                         left: 0,
-//                         top: 0,
-//                         child: Container(
-//                           width: 392.62,
-//                           height: 250.86,
-//                           decoration: ShapeDecoration(
-//                             color: Color(0xFF2355FF),
-//                             shape: RoundedRectangleBorder(
-//                               borderRadius: BorderRadius.circular(9.13),
-//                             ),
-//                             shadows: [
-//                               BoxShadow(
-//                                 color: Color(0x14000000),
-//                                 blurRadius: 28.53,
-//                                 offset: Offset(0, 1.14),
-//                                 spreadRadius: 0,
-//                               )
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                       Positioned(
-//                         left: 216.85,
-//                         top: -105.69,
-//                         child: Container(
-//                           width: 275.06,
-//                           height: 279.90,
-//                           decoration: ShapeDecoration(
-//                             gradient: LinearGradient(
-//                               begin: Alignment(0.00, -1.00),
-//                               end: Alignment(0, 1),
-//                               colors: [Colors.white, Colors.white.withOpacity(0)],
-//                             ),
-//                             shape: OvalBorder(),
-//                           ),
-//                         ),
-//                       ),
-//                       Positioned(
-//                         left: 27.39,
-//                         top: 39.49,
-//                         child: Container(
-//                           width: 36.52,
-//                           height: 27.87,
-//                           child: Stack(
-//                             children: [
-//                               Positioned(
-//                                 left: 0,
-//                                 top: 0,
-//                                 child: Container(
-//                                   width: 36.52,
-//                                   height: 27.87,
-//                                   decoration: ShapeDecoration(
-//                                     color: Color(0xFFFFBA48),
-//                                     shape: RoundedRectangleBorder(
-//                                       borderRadius: BorderRadius.circular(9.13),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                               Positioned(
-//                                 left: 0,
-//                                 top: 0,
-//                                 child: Container(
-//                                   width: 36.52,
-//                                   height: 27.87,
-//                                   decoration: ShapeDecoration(
-//                                     color: Color(0xFFFFBA48),
-//                                     shape: RoundedRectangleBorder(
-//                                       borderRadius: BorderRadius.circular(9.13),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                               Positioned(
-//                                 left: -6.85,
-//                                 top: 2.32,
-//                                 child: Container(
-//                                   width: 22.83,
-//                                   height: 8.13,
-//                                   decoration: ShapeDecoration(
-//                                     shape: RoundedRectangleBorder(
-//                                       side: BorderSide(
-//                                         width: 0.34,
-//                                         strokeAlign: BorderSide.strokeAlignCenter,
-//                                         color: Color(0xFFD29633),
-//                                       ),
-//                                       borderRadius: BorderRadius.circular(2.85),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                               Positioned(
-//                                 left: -6.85,
-//                                 top: 10.45,
-//                                 child: Container(
-//                                   width: 22.83,
-//                                   height: 8.13,
-//                                   decoration: ShapeDecoration(
-//                                     shape: RoundedRectangleBorder(
-//                                       side: BorderSide(
-//                                         width: 0.34,
-//                                         strokeAlign: BorderSide.strokeAlignCenter,
-//                                         color: Color(0xFFD29633),
-//                                       ),
-//                                       borderRadius: BorderRadius.circular(2.85),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                               Positioned(
-//                                 left: -6.85,
-//                                 top: 18.58,
-//                                 child: Container(
-//                                   width: 22.83,
-//                                   height: 8.13,
-//                                   decoration: ShapeDecoration(
-//                                     shape: RoundedRectangleBorder(
-//                                       side: BorderSide(
-//                                         width: 0.34,
-//                                         strokeAlign: BorderSide.strokeAlignCenter,
-//                                         color: Color(0xFFD29633),
-//                                       ),
-//                                       borderRadius: BorderRadius.circular(2.85),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                               Positioned(
-//                                 left: 21.69,
-//                                 top: 2.32,
-//                                 child: Container(
-//                                   width: 22.83,
-//                                   height: 8.13,
-//                                   decoration: ShapeDecoration(
-//                                     shape: RoundedRectangleBorder(
-//                                       side: BorderSide(
-//                                         width: 0.34,
-//                                         strokeAlign: BorderSide.strokeAlignCenter,
-//                                         color: Color(0xFFD29633),
-//                                       ),
-//                                       borderRadius: BorderRadius.circular(2.85),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                               Positioned(
-//                                 left: 21.69,
-//                                 top: 10.45,
-//                                 child: Container(
-//                                   width: 22.83,
-//                                   height: 8.13,
-//                                   decoration: ShapeDecoration(
-//                                     shape: RoundedRectangleBorder(
-//                                       side: BorderSide(
-//                                         width: 0.34,
-//                                         strokeAlign: BorderSide.strokeAlignCenter,
-//                                         color: Color(0xFFD29633),
-//                                       ),
-//                                       borderRadius: BorderRadius.circular(2.85),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                               Positioned(
-//                                 left: 21.69,
-//                                 top: 18.58,
-//                                 child: Container(
-//                                   width: 22.83,
-//                                   height: 8.13,
-//                                   decoration: ShapeDecoration(
-//                                     shape: RoundedRectangleBorder(
-//                                       side: BorderSide(
-//                                         width: 0.34,
-//                                         strokeAlign: BorderSide.strokeAlignCenter,
-//                                         color: Color(0xFFD29633),
-//                                       ),
-//                                       borderRadius: BorderRadius.circular(2.85),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 0,
-//                 top: 262,
-//                 child: Container(
-//                   width: 428,
-//                   height: 664,
-//                   decoration: ShapeDecoration(
-//                     color: Colors.white,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.only(
-//                         topLeft: Radius.circular(38.81),
-//                         topRight: Radius.circular(38.81),
-//                       ),
-//                     ),
-//                     shadows: [
-//                       BoxShadow(
-//                         color: Color(0x14000000),
-//                         blurRadius: 34.24,
-//                         offset: Offset(0, -4.57),
-//                         spreadRadius: 0,
-//                       )
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 180,
-//                 top: 279,
-//                 child: Container(
-//                   width: 69,
-//                   height: 6,
-//                   decoration: ShapeDecoration(
-//                     color: Color(0xFFABB4BD),
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(3.42),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 31,
-//                 top: 438,
-//                 child: Container(
-//                   width: 366,
-//                   height: 72,
-//                   decoration: ShapeDecoration(
-//                     color: Colors.white,
-//                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-//                     shadows: [
-//                       BoxShadow(
-//                         color: Color(0x19000000),
-//                         blurRadius: 9.13,
-//                         offset: Offset(0, 1.14),
-//                         spreadRadius: 0,
-//                       )
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 45,
-//                 top: 475,
-//                 child: SizedBox(
-//                   width: 168,
-//                   height: 20,
-//                   child: Text(
-//                     '1234 5678 9012 3456',
-//                     style: TextStyle(
-//                       color: Color(0xFF0C0C0C),
-//                       fontSize: 14,
-//                       fontFamily: 'Gilroy',
-//                       fontWeight: FontWeight.w500,
-//                       height: 0,
-//                       letterSpacing: 0.70,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 45,
-//                 top: 453,
-//                 child: SizedBox(
-//                   width: 101,
-//                   height: 21,
-//                   child: Text(
-//                     'Kart Numarası',
-//                     style: TextStyle(
-//                       color: Color(0xFF646464),
-//                       fontSize: 14,
-//                       fontFamily: 'Gilroy',
-//                       fontWeight: FontWeight.w500,
-//                       height: 0,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 31,
-//                 top: 532,
-//                 child: Container(
-//                   width: 366,
-//                   height: 71,
-//                   decoration: ShapeDecoration(
-//                     color: Colors.white,
-//                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-//                     shadows: [
-//                       BoxShadow(
-//                         color: Color(0x19000000),
-//                         blurRadius: 9.13,
-//                         offset: Offset(0, 1.14),
-//                         spreadRadius: 0,
-//                       )
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 45,
-//                 top: 572,
-//                 child: SizedBox(
-//                   width: 37,
-//                   height: 16,
-//                   child: Text(
-//                     '14/06',
-//                     style: TextStyle(
-//                       color: Color(0xFF0C0C0C),
-//                       fontSize: 14,
-//                       fontFamily: 'Gilroy',
-//                       fontWeight: FontWeight.w500,
-//                       height: 0,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 45,
-//                 top: 548,
-//                 child: SizedBox(
-//                   width: 139,
-//                   height: 21,
-//                   child: Text(
-//                     'Son Kullanma Tarihi',
-//                     style: TextStyle(
-//                       color: Color(0xFF646464),
-//                       fontSize: 14,
-//                       fontFamily: 'Gilroy',
-//                       fontWeight: FontWeight.w500,
-//                       height: 0,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 31,
-//                 top: 626,
-//                 child: Container(
-//                   width: 366,
-//                   height: 71,
-//                   decoration: ShapeDecoration(
-//                     color: Colors.white,
-//                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-//                     shadows: [
-//                       BoxShadow(
-//                         color: Color(0x19000000),
-//                         blurRadius: 9.13,
-//                         offset: Offset(0, 1.14),
-//                         spreadRadius: 0,
-//                       )
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 31,
-//                 top: 720,
-//                 child: Container(
-//                   width: 366,
-//                   height: 71,
-//                   decoration: ShapeDecoration(
-//                     color: Colors.white,
-//                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-//                     shadows: [
-//                       BoxShadow(
-//                         color: Color(0x19000000),
-//                         blurRadius: 9.13,
-//                         offset: Offset(0, 1.14),
-//                         spreadRadius: 0,
-//                       )
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 45,
-//                 top: 666,
-//                 child: SizedBox(
-//                   width: 20,
-//                   height: 16,
-//                   child: Text(
-//                     '197',
-//                     style: TextStyle(
-//                       color: Color(0xFF0C0C0C),
-//                       fontSize: 14,
-//                       fontFamily: 'Gilroy',
-//                       fontWeight: FontWeight.w500,
-//                       height: 0,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 45,
-//                 top: 760,
-//                 child: Text(
-//                   'Bostanlı, Girne Blv No:7/A, 35590 Karşıyaka/İzmir',
-//                   style: TextStyle(
-//                     color: Color(0xFF0C0C0C),
-//                     fontSize: 14,
-//                     fontFamily: 'Gilroy',
-//                     fontWeight: FontWeight.w500,
-//                     height: 0,
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 45,
-//                 top: 642,
-//                 child: SizedBox(
-//                   width: 30,
-//                   height: 21,
-//                   child: Text(
-//                     'CVV',
-//                     style: TextStyle(
-//                       color: Color(0xFF646464),
-//                       fontSize: 14,
-//                       fontFamily: 'Gilroy',
-//                       fontWeight: FontWeight.w500,
-//                       height: 0,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 45,
-//                 top: 738,
-//                 child: Text(
-//                   'Fatura Adresi',
-//                   style: TextStyle(
-//                     color: Color(0xFF646464),
-//                     fontSize: 14,
-//                     fontFamily: 'Gilroy',
-//                     fontWeight: FontWeight.w500,
-//                     height: 0,
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 366.24,
-//                 top: 651.37,
-//                 child: Container(
-//                   width: 20.67,
-//                   height: 20.22,
-//                   decoration: BoxDecoration(
-//                     image: DecorationImage(
-//                       image: NetworkImage("https://via.placeholder.com/21x20"),
-//                       fit: BoxFit.fill,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 31,
-//                 top: 344,
-//                 child: Container(
-//                   width: 366,
-//                   height: 72,
-//                   decoration: ShapeDecoration(
-//                     color: Colors.white,
-//                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-//                     shadows: [
-//                       BoxShadow(
-//                         color: Color(0x19000000),
-//                         blurRadius: 9.13,
-//                         offset: Offset(0, 1.14),
-//                         spreadRadius: 0,
-//                       )
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 45,
-//                 top: 361,
-//                 child: SizedBox(
-//                   width: 75,
-//                   height: 20,
-//                   child: Text(
-//                     'Kart Sahibi',
-//                     style: TextStyle(
-//                       color: Color(0xFF646464),
-//                       fontSize: 14,
-//                       fontFamily: 'Gilroy',
-//                       fontWeight: FontWeight.w500,
-//                       height: 0,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 170,
-//                 top: 301,
-//                 child: SizedBox(
-//                   width: 88,
-//                   height: 27,
-//                   child: Text(
-//                     'Kart Ekle',
-//                     style: TextStyle(
-//                       color: Color(0xFF0C0C0C),
-//                       fontSize: 20,
-//                       fontFamily: 'Gilroy',
-//                       fontWeight: FontWeight.w600,
-//                       height: 0.06,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 56,
-//                 top: 812,
-//                 child: Text(
-//                   ' Varsayılan ödeme yöntemi olarak ayarla.',
-//                   style: TextStyle(
-//                     color: Color(0xFF0C0C0C),
-//                     fontSize: 12,
-//                     fontFamily: 'Gilroy',
-//                     fontWeight: FontWeight.w500,
-//                     height: 0,
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 0,
-//                 top: 0,
-//                 child: Container(
-//                   width: 428,
-//                   height: 47,
-//                   clipBehavior: Clip.antiAlias,
-//                   decoration: BoxDecoration(),
-//                   child: Stack(
-//                     children: [
-//                       Positioned(
-//                         left: 33,
-//                         top: 14,
-//                         child: Container(
-//                           width: 54,
-//                           height: 21,
-//                           padding: const EdgeInsets.only(top: 1),
-//                           decoration: ShapeDecoration(
-//                             shape: RoundedRectangleBorder(
-//                               borderRadius: BorderRadius.circular(24),
-//                             ),
-//                           ),
-//                           child: Row(
-//                             mainAxisSize: MainAxisSize.min,
-//                             mainAxisAlignment: MainAxisAlignment.center,
-//                             crossAxisAlignment: CrossAxisAlignment.center,
-//                             children: [
-//                               SizedBox(
-//                                 width: 54,
-//                                 height: 20,
-//                                 child: Text(
-//                                   '9:41',
-//                                   textAlign: TextAlign.center,
-//                                   style: TextStyle(
-//                                     color: Color(0xFF010101),
-//                                     fontSize: 17,
-//                                     fontFamily: 'SF Pro Text',
-//                                     fontWeight: FontWeight.w600,
-//                                     height: 0.08,
-//                                     letterSpacing: -0.41,
-//                                   ),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                       Positioned(
-//                         left: 318,
-//                         top: 19,
-//                         child: Container(
-//                           width: 77.40,
-//                           height: 13,
-//                           child: Stack(
-//                             children: [
-//                               Positioned(
-//                                 left: 50,
-//                                 top: 0,
-//                                 child: Container(
-//                                   width: 27.40,
-//                                   height: 13,
-//                                   child: Stack(children: [
-//                                   ,
-//                                   ]),
-//                                 ),
-//                               ),
-//                               Positioned(
-//                                 left: 26,
-//                                 top: 1,
-//                                 child: Container(
-//                                   width: 17,
-//                                   height: 12,
-//                                   decoration: BoxDecoration(
-//                                     image: DecorationImage(
-//                                       image: NetworkImage("https://via.placeholder.com/17x12"),
-//                                       fit: BoxFit.fill,
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 26,
-//                 top: 127,
-//                 child: Text(
-//                   'Kart Bilgileri',
-//                   style: TextStyle(
-//                     color: Color(0xFF0C0C0C),
-//                     fontSize: 24,
-//                     fontFamily: 'Gilroy',
-//                     fontWeight: FontWeight.w700,
-//                     height: 0,
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 26,
-//                 top: 64,
-//                 child: Container(
-//                   width: 40,
-//                   height: 40,
-//                   child: Stack(
-//                     children: [
-//                       Positioned(
-//                         left: 0,
-//                         top: 0,
-//                         child: Container(
-//                           width: 40,
-//                           height: 40,
-//                           decoration: ShapeDecoration(
-//                             shape: RoundedRectangleBorder(
-//                               side: BorderSide(width: 1, color: Color(0xFFBCBCBC)),
-//                               borderRadius: BorderRadius.circular(5),
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 31,
-//                 top: 843,
-//                 child: Container(
-//                   width: 366,
-//                   height: 49,
-//                   decoration: ShapeDecoration(
-//                     color: Color(0xFF2355FF),
-//                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 190,
-//                 top: 861,
-//                 child: Text(
-//                   'Kaydet',
-//                   textAlign: TextAlign.center,
-//                   style: TextStyle(
-//                     color: Colors.white,
-//                     fontSize: 16,
-//                     fontFamily: 'Gilroy',
-//                     fontWeight: FontWeight.w700,
-//                     height: 0,
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 355,
-//                 top: 465,
-//                 child: Container(
-//                   width: 32,
-//                   height: 24,
-//                   clipBehavior: Clip.antiAlias,
-//                   decoration: BoxDecoration(),
-//                   child: Stack(
-//                     children: [
-//                       Positioned(
-//                         left: 0,
-//                         top: 0,
-//                         child: Container(
-//                           width: 31.97,
-//                           height: 23.93,
-//                           child: Stack(children: [
-//                           ,
-//                           ]),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 45,
-//                 top: 383,
-//                 child: SizedBox(
-//                   width: 75,
-//                   height: 17,
-//                   child: Text(
-//                     'İbrahim Yük',
-//                     style: TextStyle(
-//                       color: Color(0xFF0C0C0C),
-//                       fontSize: 14,
-//                       fontFamily: 'Gilroy',
-//                       fontWeight: FontWeight.w500,
-//                       height: 0,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: 31,
-//                 top: 807,
-//                 child: Container(
-//                   width: 20,
-//                   height: 20,
-//                   child: Stack(
-//                     children: [
-//                       Positioned(
-//                         left: 0,
-//                         top: 0,
-//                         child: Container(
-//                           width: 20,
-//                           height: 20,
-//                           decoration: ShapeDecoration(
-//                             color: Color(0xFF2355FF),
-//                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }

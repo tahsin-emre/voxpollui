@@ -35,7 +35,7 @@ class VoxpollProBes extends StatelessWidget {
           width: 428,
           height: 47,
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(),
+          decoration: const BoxDecoration(),
           child: Stack(
             children: [
               Positioned(
@@ -50,7 +50,7 @@ class VoxpollProBes extends StatelessWidget {
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,15 +78,15 @@ class VoxpollProBes extends StatelessWidget {
               Positioned(
                 left: 318,
                 top: 19,
-                child: Container(
+                child: SizedBox(
                   width: 77.40,
                   height: 13,
                   child: Stack(
                     children: [
-                      Positioned(
+                      const Positioned(
                         left: 50,
                         top: 0,
-                        child: Container(
+                        child: SizedBox(
                           width: 27.40,
                           height: 13,
                           child: Stack(children: [
@@ -100,7 +100,7 @@ class VoxpollProBes extends StatelessWidget {
                         child: Container(
                           width: 17,
                           height: 12,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: NetworkImage("https://via.placeholder.com/17x12"),
                               fit: BoxFit.fill,
@@ -119,7 +119,7 @@ class VoxpollProBes extends StatelessWidget {
       Positioned(
         left: 26,
         top: 64,
-        child: Container(
+        child: SizedBox(
           width: 40,
           height: 40,
           child: Stack(
@@ -132,7 +132,7 @@ class VoxpollProBes extends StatelessWidget {
                   height: 40,
                   decoration: ShapeDecoration(
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 1, color: Color(0xFFBCBCBC)),
+                      side: const BorderSide(width: 1, color: Color(0xFFBCBCBC)),
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
@@ -149,12 +149,12 @@ class VoxpollProBes extends StatelessWidget {
           width: 366,
           height: 49,
           decoration: ShapeDecoration(
-            color: Color(0xFF2355FF),
+            color: const Color(0xFF2355FF),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 141,
         top: 861,
         child: Text(
@@ -169,7 +169,7 @@ class VoxpollProBes extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 144,
         top: 483,
         child: Text(
@@ -183,7 +183,7 @@ class VoxpollProBes extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
+      const Positioned(
         left: 55,
         top: 533,
         child: Text(
@@ -204,7 +204,7 @@ class VoxpollProBes extends StatelessWidget {
         child: Container(
           width: 317,
           height: 210,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: NetworkImage("https://via.placeholder.com/317x210"),
               fit: BoxFit.contain,

@@ -19,7 +19,7 @@ class BoardinUc extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(25,5,5,15),
       child: Container(
         alignment: Alignment.centerLeft,
-        child: Text(
+        child: const Text(
             'Onay Kodu',
             style: TextStyle(
                 color: Color(0xFF0C0C0C),
@@ -34,7 +34,7 @@ class BoardinUc extends StatelessWidget {
     Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(4, (index) {
-        return Container(
+        return const SizedBox(
           width: 60,
           child: TextField(
             decoration: InputDecoration(
@@ -48,8 +48,8 @@ class BoardinUc extends StatelessWidget {
         );
       }),
     ),
-    Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24.0),
+    const Padding(
+      padding: EdgeInsets.symmetric(vertical: 24.0),
       child: Text(
         'Lütfen cep telefonunuza gelen 4 haneli kodu girin.\nEğer SMS gelmediyse tekrar göndermek için buraya tıklayın.',
         textAlign: TextAlign.center,
@@ -57,20 +57,20 @@ class BoardinUc extends StatelessWidget {
     ),
         GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => BoardinDort()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const BoardinDort()));
           },
           child: Container(
             alignment: Alignment.bottomCenter,
             width: double.infinity,
             height: 49,
-            margin: EdgeInsets.all(31), // Burası ekranın kenar boşluklarını ayarlar
+            margin: const EdgeInsets.all(31), // Burası ekranın kenar boşluklarını ayarlar
             decoration: ShapeDecoration(
-              color: Color(0xFF2355FF),
+              color: const Color(0xFF2355FF),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
               ),
             ),
-            child: Center(
+            child: const Center(
               child: Text(
                 'İleri',
                 style: TextStyle(
