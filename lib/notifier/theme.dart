@@ -1,40 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+ 
 class ThemeNotifier with ChangeNotifier {
   ThemeData currentTheme;
-  bool get isDarkMode => currentTheme.brightness == Brightness.dark;
-
-  ThemeNotifier() : currentTheme = ThemeData.light();
-
+  bool _darkMode; // dark mode durumu için özel değişken
+ 
+  bool get isDarkMode => _darkMode;
+ 
+  ThemeNotifier()
+      : currentTheme = ThemeData.light(),
+        _darkMode = false;
+ 
   void initializeTheme() async {
     final prefs = await SharedPreferences.getInstance();
     bool isDarkMode = prefs.getBool('isDarkMode') ?? false;
     currentTheme = isDarkMode ? ThemeData.dark() : ThemeData.light();
+    _darkMode = isDarkMode; // darkMode değerini güncelle
     notifyListeners();
   }
-
+ 
   void toggleTheme() async {
-    currentTheme = isDarkMode ? ThemeData.light() : ThemeData.dark();
+    _darkMode = !_darkMode;
+    currentTheme = _darkMode ? ThemeData.dark() : ThemeData.light();
     notifyListeners();
-
+ 
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isDarkMode', isDarkMode);
+    await prefs.setBool('isDarkMode', _darkMode);
   }
-
-  // Color get backgroundColor {
-  //   return isDarkMode ? Colors.black : Colors.white;
-  // }
-
-  // Color get textColor {
-  //   return isDarkMode ? Colors.white : Colors.black;
-  // }
-
-  // Color get iconColor {
-  //   return isDarkMode ? Colors.white : Colors.black;
-  // }
-
-  // String get svgIcon {
-  //   return isDarkMode ? 'https://storage.googleapis.com/coinhill/static/coinhill_logo_night.svg' : 'https://storage.googleapis.com/coinhill/static/coinhill_logo_light.svg';
-  // }
-} 
+}

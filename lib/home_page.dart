@@ -202,9 +202,19 @@ class _Page0State extends State<Page0> {
     }
   }
 
+  // Tema değişikliğini işlemek için bir metod tanımlayın
+  void _temayiDegistir(bool isDarkMode) {
+    // setState(() {
+    //   // isDarkMode = !isDarkMode;
+    //   _alignX = isDarkMode ? 1.3 : -1.3;
+    //   generateStarPositions();
+    // });
+    Provider.of<ThemeNotifier>(context, listen: false).toggleTheme();
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Provider.of<ThemeNotifier>(context).isDarkMode;
+    // bool isDarkMode = Provider.of<ThemeNotifier>(context).isDarkMode;
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: Drawer(
@@ -463,75 +473,75 @@ class _Page0State extends State<Page0> {
               },
             ),
             ListTile(
-              trailing: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isDarkMode = !isDarkMode;
-                        _alignX = isDarkMode ? 1.3 : -1.3;
-                        generateStarPositions(); // Gökyüzü rengini değiştirdiğimizde noktaları yeniden oluştur
-                      });
-                      Provider.of<ThemeNotifier>(context, listen: false)
-                          .toggleTheme();
-                    },
-                    child: Container(
-                      width: 80.0,
-                      height: 30.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: isDarkMode
-                            ? const Color.fromARGB(255, 88, 7, 146)
-                            : Colors.blue,
-                      ),
-                      child: Stack(
-                        children: [
-                          // Nokta şeklinde yıldızlar
-                          if (isDarkMode) ...[
-                            for (Offset position in starPositions)
-                              Positioned(
-                                left: position.dx,
-                                top: position.dy,
-                                child: Container(
-                                  width: 2.0,
-                                  height: 2.0,
-                                  color: Colors.white, // Nokta rengi
-                                ),
-                              ),
-                          ] else
-                            for (int i = 0; i < 5; i++)
-                              for (int j = 0; j < 5; j++)
-                                Positioned(
-                                  left: j * 40.0,
-                                  top: i * 40.0,
-                                  child: const Icon(
-                                    Icons.cloud,
-                                    color: Colors.white,
-                                    size: 30,
+              trailing: Consumer<ThemeNotifier>(
+                  builder: (context, themeNotifier, child) {
+                    bool isDarkMode = themeNotifier.isDarkMode;
+                    return GestureDetector(
+                          onTap: () 
+                          { 
+                            _temayiDegistir(isDarkMode);
+                          },
+                          child: Container(
+                            width: 80.0,
+                            height: 30.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: isDarkMode
+                                  ? const Color.fromARGB(255, 88, 7, 146)
+                                  : Colors.blue,
+                            ),
+                            child: Stack(
+                              children: [
+                                // Nokta şeklinde yıldızlar
+                                if (isDarkMode) ...[
+                                  for (Offset position in starPositions)
+                                    Positioned(
+                                      left: position.dx,
+                                      top: position.dy,
+                                      child: Container(
+                                        width: 2.0,
+                                        height: 2.0,
+                                        color: Colors.white, // Nokta rengi
+                                      ),
+                                    ),
+                                ] else
+                                  for (int i = 0; i < 5; i++)
+                                    for (int j = 0; j < 5; j++)
+                                      Positioned(
+                                        left: j * 40.0,
+                                        top: i * 40.0,
+                                        child: const Icon(
+                                          Icons.cloud,
+                                          color: Colors.white,
+                                          size: 30,
+                                        ),
+                                      ),
+                                AnimatedAlign(
+                                  alignment: Alignment(_alignX, 0),
+                                  duration: const Duration(milliseconds: 200),
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 800),
+                                    curve: Curves.easeInOut,
+                                    width: 40.0,
+                                    height: 40.0,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: isDarkMode ? Colors.black : Colors.white,
+                                    ),
+                                    child: Icon(
+                                      isDarkMode
+                                          ? Icons.nightlight_round
+                                          : Icons.wb_sunny_rounded,
+                                      color: isDarkMode ? Colors.blue : Colors.orange,
+                                    ),
                                   ),
                                 ),
-                          AnimatedAlign(
-                            alignment: Alignment(_alignX, 0),
-                            duration: const Duration(milliseconds: 200),
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 800),
-                              curve: Curves.easeInOut,
-                              width: 40.0,
-                              height: 40.0,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: isDarkMode ? Colors.black : Colors.white,
-                              ),
-                              child: Icon(
-                                isDarkMode
-                                    ? Icons.nightlight_round
-                                    : Icons.wb_sunny_rounded,
-                                color: isDarkMode ? Colors.blue : Colors.orange,
-                              ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
+                        );
+                  }
+              ),
               onTap: () {
                 // S.S.S. sayfasına yönlendirme
               },
