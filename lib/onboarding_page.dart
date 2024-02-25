@@ -113,8 +113,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white, // Background color
-                        onPrimary: Colors.black, // Text color
+                        foregroundColor: Colors.black, 
+                        backgroundColor: Colors.white, // Text color
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0), // Border radius
                           side: BorderSide(color: Colors.black, width: 2.0), // Border
