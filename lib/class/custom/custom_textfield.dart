@@ -1,37 +1,49 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
 
 class PollTextField {
-  static Future<void> _openGallery() async {
+  static Future<dynamic> _openGallery() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-    // Kullanıcı bir resim seçtiyse, seçilen resmin dosya yolu pickedImage.path olacak
+
     if (pickedImage != null) {
-      // Seçilen resmi işleyin (örneğin, yükleyin veya görüntüleyin)
+      File imageFile = File(pickedImage.path);
+      return imageFile;
+    } else {
+      return Text('Resim seçilmedi');
     }
   }
-  static TextField pollTextField({
+
+  static Widget pollTextField({
     required TextEditingController controller,
     required BuildContext context,
     required String labelText,
   }) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        suffixIcon: GestureDetector(
-          onTap: () {
-            _openGallery();
-          },
-          child: Icon(Icons.add_box, color: AppColor.nationalColor),
-        ),
-        label: Text(
-          labelText,
-          style: const TextStyle(
-            color: Colors.black,
+    var dosyaYolu;
+    return Row(
+      children: [
+        TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            suffixIcon: GestureDetector(
+              onTap: () {
+                dosyaYolu = _openGallery();
+              },
+              child: Icon(Icons.add_box, color: AppColor.nationalColor),
+            ),
+            label: Text(
+              labelText,
+              style: const TextStyle(
+                color: Colors.black,
+              ),
+            ),
           ),
         ),
-      ),
+        Image.file(dosyaYolu ?? File('null')),
+      ],
     );
   }
 }
