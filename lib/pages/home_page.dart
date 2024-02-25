@@ -735,7 +735,7 @@ class SearchPage extends StatefulWidget {
   const SearchPage(this.pageIndex, {super.key});
 
   @override
-  State<SearchPage> createState() => _SearchPageState();
+  State<SearchPage> createState() => _SearchPageState();  
 }
 
 class _SearchPageState extends State<SearchPage> {
@@ -745,7 +745,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        // İçeriği SafeArea içerisine alın
+        // İçeriği Sa@feArea içerisine alın
         child: Column(
           children: [
             Container(

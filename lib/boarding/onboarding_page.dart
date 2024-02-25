@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:voxpollui/boarding/for_pro/boarding_for_pro.dart';
-
 import '../pages/home_page.dart';
+
 class OnboardingPage extends StatefulWidget {
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
@@ -17,25 +17,25 @@ class _OnboardingPageState extends State<OnboardingPage> {
       image: 'assets/onboard1.png',
       title: 'Artık Anket Zamanı',
       description:
-      'İlgi alanlarınızla veya firmanızla ilgili bütün merak ettiklerinizin cevaplarını öğrenmek artık çok kolay.',
+          'İlgi alanlarınızla veya firmanızla ilgili bütün merak ettiklerinizin cevaplarını öğrenmek artık çok kolay.',
     ),
     OnboardingSlide(
       image: 'assets/onboard2.png',
       title: 'İlgi Alanlarını Belirle',
       description:
-      'Seçtiğiniz ilgi alanlarınıza göre anlık olarak tüm anketleri cevaplayabilir veya sonuçları inceleyebilirsiniz.',
+          'Seçtiğiniz ilgi alanlarınıza göre anlık olarak tüm anketleri cevaplayabilir veya sonuçları inceleyebilirsiniz.',
     ),
     OnboardingSlide(
       image: 'assets/onboard3.png',
       title: 'Sınırsız Ankete Katıl',
       description:
-      'İstediğiniz kadar ankete katılıp dilerseniz VoxPoll Premium abonesi olup anket açıp sonuçları inceyebilirsiniz.',
+          'İstediğiniz kadar ankete katılıp dilerseniz VoxPoll Premium abonesi olup anket açıp sonuçları inceyebilirsiniz.',
     ),
     OnboardingSlide(
       image: 'assets/onboard4.png',
       title: 'Merak Ettiğiniz Cevaplar',
       description:
-      'Aylık 29.99₺\nİsterseniz çalışanlarınız için anket grubu oluşturun. İsterseniz merak ettiğiniz konuda bir anket açın.',
+          'Aylık 29.99₺\nİsterseniz çalışanlarınız için anket grubu oluşturun. İsterseniz merak ettiğiniz konuda bir anket açın.',
       hasButton: true,
     ),
   ];
@@ -89,74 +89,79 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
         ),
       ),
-      
       bottomSheet: _currentPage == slides.length - 1
           ? slides[_currentPage].hasButton
-          ? Container(
-        color: Colors.white,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(30.0, 0.0, 0.0, 0.0), // Left margin
-              child: Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VoxpollPro(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.black, 
-                        backgroundColor: Colors.white, // Text color
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0), // Border radius
-                          side: BorderSide(color: Colors.black, width: 2.0), // Border
+              ? Container(
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                            30.0, 0.0, 0.0, 0.0), // Left margin
+                        child: Row(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => VoxpollPro(),
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.black,
+                                  backgroundColor: Colors.white, // Text color
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        5.0), // Border radius
+                                    side: BorderSide(
+                                        color: Colors.black,
+                                        width: 2.0), // Border
+                                  ),
+                                ),
+                                child: Text('Planlar'),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      child: Text('Planlar'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10.0),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 30.0), // Horizontal margin
-              width: double.infinity, // Full width
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HomePage(),
+                      SizedBox(height: 10.0),
+                      Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 30.0), // Horizontal margin
+                        width: double.infinity, // Full width
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomePage(),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF2355FF),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(5.0), // Border radius
+                            ),
                           ),
-                        );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF2355FF),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0), // Border radius
+                          child: const Text(
+                            'Ana Sayfa', style: TextStyle(color: Colors.white),
+                            // Background color
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 30.0),
+                    ],
                   ),
-                ),
-                child: const Text('Ana Sayfa', style: TextStyle(color: Colors.white),
-               // Background color
-                ),
-              ),
-            ),
-            SizedBox(height: 30.0),
-          ],
-        ),
-      )
-          : SizedBox.shrink()
+                )
+              : SizedBox.shrink()
           : SizedBox.shrink(),
-
     );
   }
 }
@@ -258,7 +263,8 @@ class Login extends StatelessWidget {
                     height: 90,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage("https://via.placeholder.com/90x90"),
+                        image:
+                            NetworkImage("https://via.placeholder.com/90x90"),
                         fit: BoxFit.fill,
                       ),
                       shape: BoxShape.circle,
@@ -273,7 +279,8 @@ class Login extends StatelessWidget {
                     height: 69,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage("https://via.placeholder.com/69x69"),
+                        image:
+                            NetworkImage("https://via.placeholder.com/69x69"),
                         fit: BoxFit.fill,
                       ),
                       shape: BoxShape.circle,
@@ -288,7 +295,8 @@ class Login extends StatelessWidget {
                     height: 125,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage("https://via.placeholder.com/125x125"),
+                        image:
+                            NetworkImage("https://via.placeholder.com/125x125"),
                         fit: BoxFit.fill,
                       ),
                       shape: BoxShape.circle,
@@ -423,7 +431,8 @@ class Login extends StatelessWidget {
                     height: 17,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage("https://via.placeholder.com/17x17"),
+                        image:
+                            NetworkImage("https://via.placeholder.com/17x17"),
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -437,7 +446,8 @@ class Login extends StatelessWidget {
                     height: 18,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage("https://via.placeholder.com/18x18"),
+                        image:
+                            NetworkImage("https://via.placeholder.com/18x18"),
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -451,7 +461,8 @@ class Login extends StatelessWidget {
                     height: 11,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage("https://via.placeholder.com/11x11"),
+                        image:
+                            NetworkImage("https://via.placeholder.com/11x11"),
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -649,9 +660,7 @@ class Login extends StatelessWidget {
                                   child: Container(
                                     width: 27.40,
                                     height: 13,
-                                    child: Stack(children: [
-                                      
-                                    ]),
+                                    child: Stack(children: []),
                                   ),
                                 ),
                                 Positioned(
@@ -662,7 +671,8 @@ class Login extends StatelessWidget {
                                     height: 12,
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
-                                        image: NetworkImage("https://via.placeholder.com/17x12"),
+                                        image: NetworkImage(
+                                            "https://via.placeholder.com/17x12"),
                                         fit: BoxFit.fill,
                                       ),
                                     ),
@@ -678,7 +688,8 @@ class Login extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
                   },
                   child: Positioned(
                     left: 31,
