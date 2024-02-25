@@ -13,7 +13,7 @@ class PollTextField {
       File imageFile = File(pickedImage.path);
       return imageFile;
     } else {
-      return Text('Resim seçilmedi');
+      return const Text('Resim seçilmedi');
     }
   }
 
@@ -22,28 +22,22 @@ class PollTextField {
     required BuildContext context,
     required String labelText,
   }) {
-    var dosyaYolu;
-    return Row(
-      children: [
-        TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            suffixIcon: GestureDetector(
-              onTap: () {
-                dosyaYolu = _openGallery();
-              },
-              child: Icon(Icons.add_box, color: AppColor.nationalColor),
-            ),
-            label: Text(
-              labelText,
-              style: const TextStyle(
-                color: Colors.black,
-              ),
-            ),
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        suffixIcon: GestureDetector(
+          onTap: () {
+            _openGallery();
+          },
+          child: Icon(Icons.add_box, color: AppColor.nationalColor),
+        ),
+        label: Text(
+          labelText,
+          style: const TextStyle(
+            color: Colors.black,
           ),
         ),
-        Image.file(dosyaYolu ?? File('null')),
-      ],
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_textfield.dart';
@@ -14,8 +15,30 @@ class CreatePollPage extends StatefulWidget {
 
 class _CreatePollPageState extends State<CreatePollPage> {
   final TextEditingController _titleController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final List<TextEditingController> _optionControllers =
       List.generate(4, (index) => TextEditingController());
+
+  void _addTextField() {
+    if (_optionControllers.length >= 8) {
+      // Eğer 8'den fazla TextField varsa, kullanıcıya bir mesaj göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('En fazla 8 adet alan ekleyebilirsiniz.'),
+        ),
+      );
+    } else {
+      setState(() {
+        _optionControllers.add(TextEditingController());
+      });
+    }
+  }
+
 
   Future<void> _createPoll() async {
     final String title = _titleController.text.trim();
@@ -60,42 +83,66 @@ class _CreatePollPageState extends State<CreatePollPage> {
       appBar: AppBar(
           // title: const Text('Anket Oluştur'),
           ),
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Anket Oluştur",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ),
-              PollTextField.pollTextField(controller: _titleController, context: context, labelText: "Anket Başlığı"),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(0,10,0,0),
-                child: Align(
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: <Widget>[
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Seçenekler",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    "Anket Oluştur",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
-              ..._optionControllers.map((controller) => PollTextField.pollTextField(
-                    controller: controller,
-                    labelText: "1.",
+                PollTextField.pollTextField(
+                    controller: _titleController,
                     context: context,
-                  )),
-              const SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: _createPoll,
-                child: const Text('Anket Oluştur'),
-              ),
-            ],
+                    labelText: "Anket Başlığı"),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Seçenekler",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                ..._optionControllers
+                    .map((controller) => PollTextField.pollTextField(
+                          controller: controller,
+                          labelText: "1.",
+                          context: context,
+                        )),
+                const SizedBox(height: 20.0),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: _addTextField,
+                        icon: Icon(
+                          Icons.add_box_rounded,
+                          color: AppColor.nationalColor,
+                        ),
+                      ),
+                      Text('Seçenek Ekle', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                
+                const SizedBox(height: 20.0),
+                ElevatedButton(
+                  onPressed: _createPoll,
+                  child: const Text('Anket Oluştur'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
