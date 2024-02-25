@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
-import 'onboarding_page.dart';
+import '../boarding/onboarding_page.dart';
 
 class InterestsPage extends StatefulWidget {
   final String userId;

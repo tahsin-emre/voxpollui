@@ -79,6 +79,8 @@ class _CreatePollPageState extends State<CreatePollPage> {
 
   @override
   Widget build(BuildContext context) {
+    String selectedValue = 'Seçenek 1';
+    List<String> options = ['Seçenek 1', 'Seçenek 2', 'Seçenek 3'];
     return Scaffold(
       appBar: AppBar(
           // title: const Text('Anket Oluştur'),
@@ -135,7 +137,35 @@ class _CreatePollPageState extends State<CreatePollPage> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                
+                Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Kategori', 
+                        style: TextStyle(
+                          color: Colors.black, 
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      )
+                    ),
+                    DropdownButton(
+                      value: selectedValue,
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedValue = newValue!;
+                        });
+                      },
+                      items: options.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: _createPoll,

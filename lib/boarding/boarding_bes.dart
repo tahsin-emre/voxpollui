@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-import 'package:voxpollui/onboarding_page.dart';
+import 'package:voxpollui/boarding/onboarding_page.dart';
 
 class BoardinBes extends StatefulWidget {
   final String userId;

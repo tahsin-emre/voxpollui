@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:voxpollui/personal_information_page.dart';
+import 'package:voxpollui/copluk/personal_information_page.dart';
 
 class SmsVerificationPage extends StatelessWidget {
   @override

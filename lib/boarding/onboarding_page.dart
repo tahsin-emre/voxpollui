@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:voxpollui/boarding/for_pro/boarding_for_pro.dart';
 
-import 'home_page.dart';
+import '../home_page.dart';
 class OnboardingPage extends StatefulWidget {
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
