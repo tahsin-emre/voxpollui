@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:voxpollui/SurveyPage.dart';
+import 'package:voxpollui/pages/SurveyPage.dart';
 class ForWidget {
   static Widget buildCard(BuildContext context, List<Map<String, dynamic>> creator, List<Map<String, dynamic>> poll, int index) {
 

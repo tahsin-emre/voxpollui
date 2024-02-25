@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/boarding/for_pro/boarding_for_pro_iki.dart';
-import 'package:voxpollui/home_page.dart';
+import 'package:voxpollui/pages/home_page.dart';
 
 void main() {
   runApp(const VoxpollPro());

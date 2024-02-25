@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:voxpollui/boarding/boarding_bir.dart';
-import 'package:voxpollui/home_page.dart';
+import 'package:voxpollui/pages/home_page.dart';
 import 'package:voxpollui/notifier/theme.dart';
 
 void main() async {
@@ -32,7 +31,7 @@ Future<Widget> initializeApp() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,20 +45,19 @@ class MyApp extends StatelessWidget {
         future: ParseUser.currentUser(), // Future<ParseUser> olarak güncellendi
         builder: (context, snapshot) {
           final currentUser = snapshot.data;
-          print(currentUser);
-
+          // print(currentUser);
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError || currentUser == null) {
               // Hata durumu veya kullanıcı daha önce giriş yapmamışsa
               return const BoardinBir(); // veya başka bir giriş sayfası
             } else {
               // Kullanıcı daha önce giriş yapmışsa ana sayfaya yönlendir
-              return HomePage();
+              return const HomePage();
             }
           } else {
             // Veri henüz yüklenmediyse, bir yükleniyor ekranı gösterilebilir
-            print(snapshot.error);
-            return CircularProgressIndicator();
+            // print(snapshot.error);
+            return const CircularProgressIndicator();
           }
         },
       ),

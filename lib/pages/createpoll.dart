@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_textfield.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
-import 'package:voxpollui/home_page.dart';
+import 'package:voxpollui/pages/home_page.dart';
 
 class CreatePollPage extends StatefulWidget {
   const CreatePollPage({super.key});
@@ -135,7 +135,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                
+
                 const SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: _createPoll,
