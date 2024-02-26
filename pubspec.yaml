@@ -32,10 +32,11 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_polls: ^0.1.3
-  flutter_dotenv: ^5.1.0
-  provider: ^6.1.1
-  shared_preferences: ^2.2.2
-  image_picker: ^1.0.7
+  flutter_dotenv: ^5.1.0 
+  provider: ^6.1.1 # global veri aktarımı anlık değişimler (dark mode, light mode)
+  shared_preferences: ^2.2.2 # önbellek pakedi
+  image_picker: ^1.0.7 # galeri pakedi 
+  table_calendar: ^3.0.9 # Takvim oluşturucu
 
 
   # The following adds the Cupertino Icons font to your application.

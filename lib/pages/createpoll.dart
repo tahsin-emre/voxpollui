@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:voxpollui/class/custom/custom_textfield.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
+import 'package:voxpollui/class/utils.dart';
 import 'package:voxpollui/pages/home_page.dart';
 
 class CreatePollPage extends StatefulWidget {
@@ -38,7 +38,6 @@ class _CreatePollPageState extends State<CreatePollPage> {
       });
     }
   }
-
 
   Future<void> _createPoll() async {
     final String title = _titleController.text.trim();
@@ -77,21 +76,27 @@ class _CreatePollPageState extends State<CreatePollPage> {
     }
   }
 
+    List<DateTime> _selectedDates = [];
+    CalendarFormat _calendarFormat = CalendarFormat.month;
+    RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn; // Can be toggled on/off by longpressing a date
+    DateTime _focusedDay = DateTime.now();
+    DateTime? _selectedDay;
+    DateTime? _rangeStart;
+    DateTime? _rangeEnd;
+
   @override
   Widget build(BuildContext context) {
     String selectedValue = 'Seçenek 1';
     List<String> options = ['Seçenek 1', 'Seçenek 2', 'Seçenek 3'];
     return Scaffold(
-      appBar: AppBar(
-          // title: const Text('Anket Oluştur'),
-          ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
+            child: ListView(
               children: <Widget>[
                 const Align(
                   alignment: Alignment.centerLeft,
@@ -110,7 +115,8 @@ class _CreatePollPageState extends State<CreatePollPage> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Seçenekler",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -132,38 +138,120 @@ class _CreatePollPageState extends State<CreatePollPage> {
                           color: AppColor.nationalColor,
                         ),
                       ),
-                      Text('Seçenek Ekle', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),),
+                      const Text(
+                        'Seçenek Ekle',
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w500),
+                      ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 20.0),
-
                 Column(
                   children: [
-                    Align(
+                    const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Kategori',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        )),
+                    Center(
+                      child: DropdownMenu<String>(
+                        width: MediaQuery.of(context).size.width - 50,
+                        initialSelection: options.first,
+                        // onSelected: (String? value) {
+                        //   // This is called when the user selects an item.
+                        //   setState(() {
+                        //     selectedValue = value!;
+                        //   });
+                        // },
+                        dropdownMenuEntries: options
+                            .map<DropdownMenuEntry<String>>((String value) {
+                          return DropdownMenuEntry<String>(
+                              value: value, label: value);
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20.0),
+                Column(
+                  children: [
+                    const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Kategori', 
+                        'Anket Başlangıç ve Bitiş Tarihi',
                         style: TextStyle(
-                          color: Colors.black, 
+                          color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
-                      )
+                      ),
                     ),
-                    DropdownButton(
-                      value: selectedValue,
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedValue = newValue!;
-                        });
-                      },
-                      items: options.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                    const SizedBox(height: 20.0),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.white, width: 1.0,style: BorderStyle.solid),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 5, // Gölge bulanıklığı
+                            spreadRadius: 52, // Gölge yayılımı
+                            offset: Offset(0, 0), // Yatay ve dikey ofset 
+                          ),
+                        ],
+                      ),
+                      child: TableCalendar(
+                        firstDay: kFirstDay,
+                        lastDay: kLastDay,
+                        focusedDay: _focusedDay,
+                        selectedDayPredicate: (day) =>
+                            isSameDay(_selectedDay, day),
+                        rangeStartDay: _rangeStart,
+                        rangeEndDay: _rangeEnd,
+                        calendarFormat: _calendarFormat,
+                        rangeSelectionMode: _rangeSelectionMode,
+                        availableCalendarFormats: const {
+                          CalendarFormat.month: '', // Sadece ay görünümü
+                        },
+                        onDaySelected: (selectedDay, focusedDay) {
+                          if (!isSameDay(_selectedDay, selectedDay)) {
+                            setState(() {
+                              _selectedDay = selectedDay;
+                              _focusedDay = focusedDay;
+                              _rangeStart = null; // Important to clean those
+                              _rangeEnd = null;
+                              _rangeSelectionMode = RangeSelectionMode.toggledOff;
+                              // Seçilen tarihi _selectedDates listesine ekleyin
+                              _selectedDates = [selectedDay];
+                            });
+                          }
+                        },
+                        onRangeSelected: (start, end, focusedDay) {
+                          setState(() {
+                            // _selectedDay = null;
+                            _focusedDay = focusedDay;
+                            _rangeStart = start;
+                            _rangeEnd = end;
+                            _rangeSelectionMode = RangeSelectionMode.toggledOn;
+                          });
+                        },
+                        onFormatChanged: (format) {
+                          if (_calendarFormat != format) {
+                            setState(() {
+                              _calendarFormat = format;
+                            });
+                          }
+                        },
+                        onPageChanged: (focusedDay) {
+                          _focusedDay = focusedDay;
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -172,11 +260,28 @@ class _CreatePollPageState extends State<CreatePollPage> {
                   onPressed: _createPoll,
                   child: const Text('Anket Oluştur'),
                 ),
+                const SizedBox(height: 200.0),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+  void _saveSelectedDates() {
+    if (_selectedDates.isNotEmpty) {  
+      // widget.onDatesSelected?.call(_selectedDates);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Seçilen tarihler kaydedildi: $_selectedDates'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Henüz hiçbir tarih seçilmedi!'),
+        ),
+      );
+    }
   }
 }
