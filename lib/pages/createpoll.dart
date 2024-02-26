@@ -22,7 +22,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
   }
 
   final List<TextEditingController> _optionControllers =
-      List.generate(4, (index) => TextEditingController());
+      List.generate(2, (index) => TextEditingController());
 
   void _addTextField() {
     if (_optionControllers.length >= 8) {
@@ -87,7 +87,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
   @override
   Widget build(BuildContext context) {
     // String selectedValue = 'Seçenek 1';
-    List<String> options = ['Seçenek 1', 'Seçenek 2', 'Seçenek 3'];
+    List<String> options = ['Siyaset', 'Ekonomi', 'Oyun'];
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -225,6 +225,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                         availableCalendarFormats: const {
                           CalendarFormat.month: '', // Sadece ay görünümü
                         },
+                        headerStyle: const HeaderStyle(titleCentered: true),
                         onDaySelected: (selectedDay, focusedDay) {
                           if (!isSameDay(_selectedDay, selectedDay)) {
                             setState(() {
@@ -274,20 +275,20 @@ class _CreatePollPageState extends State<CreatePollPage> {
       ),
     );
   }
-  void _saveSelectedDates() {
-    if (_selectedDates.isNotEmpty) {  
-      // widget.onDatesSelected?.call(_selectedDates);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Seçilen tarihler kaydedildi: $_selectedDates'),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Henüz hiçbir tarih seçilmedi!'),
-        ),
-      );
-    }
-  }
+  // void _saveSelectedDates() {
+  //   if (_selectedDates.isNotEmpty) {  
+  //     // widget.onDatesSelected?.call(_selectedDates);
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('Seçilen tarihler kaydedildi: $_selectedDates'),
+  //       ),
+  //     );
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text('Henüz hiçbir tarih seçilmedi!'),
+  //       ),
+  //     );
+  //   }
+  // }
 }

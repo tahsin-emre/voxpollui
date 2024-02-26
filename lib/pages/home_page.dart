@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/notifier/theme.dart';
@@ -75,8 +76,9 @@ class _HomePageState extends State<HomePage> {
             Align(
               alignment: Alignment.center,
               child: Icon(icon,
-                  color:
-                      _currentIndex == index ? const Color(0xff2355ff) : Colors.grey,
+                  color: _currentIndex == index
+                      ? const Color(0xff2355ff)
+                      : Colors.grey,
                   size: 32),
             ),
             if (_currentIndex == index)
@@ -150,11 +152,13 @@ class _Page0State extends State<Page0> {
   String createrId = 'Yükleniyor..';
 
   Map<String, dynamic>? polls; // Anketleri saklamak için bir liste
+  var now = DateTime.now();
   @override
   void initState() {
     super.initState();
     _loadCurrentUser();
     _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
+    now;
   }
 
   void _loadPolls() async {
@@ -171,16 +175,17 @@ class _Page0State extends State<Page0> {
   Future<void> _loadCurrentUser() async {
     ParseUser? currentUser = await ParseUser.currentUser();
     currentUser.fetch();
-      setState(() {
-        username = currentUser.username!;
-        surname = currentUser.get<String>('surname') ?? 'Soyad test';
-        followed = currentUser.get<List<dynamic>>('followed') ?? [];
-        followers = currentUser.get<List<dynamic>>('followers') ?? [];
-        //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
-      });//@
+    setState(() {
+      username = currentUser.username!;
+      surname = currentUser.get<String>('surname') ?? 'Soyad test';
+      followed = currentUser.get<List<dynamic>>('followed') ?? [];
+      followers = currentUser.get<List<dynamic>>('followers') ?? [];
+      //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
+    }); //@
   }
-    List<Offset> starPositions = [];
-    final Random _random = Random();
+
+  List<Offset> starPositions = [];
+  final Random _random = Random();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final double _alignX = -1.3; // Başlangıçta sol butonun altında olacak
   void generateStarPositions() {
@@ -475,73 +480,71 @@ class _Page0State extends State<Page0> {
             ListTile(
               trailing: Consumer<ThemeNotifier>(
                   builder: (context, themeNotifier, child) {
-                    bool isDarkMode = themeNotifier.isDarkMode;
-                    return GestureDetector(
-                          onTap: () 
-                          { 
-                            _temayiDegistir(isDarkMode);
-                          },
-                          child: Container(
-                            width: 80.0,
-                            height: 30.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                              color: isDarkMode
-                                  ? const Color.fromARGB(255, 88, 7, 146)
-                                  : Colors.blue,
+                bool isDarkMode = themeNotifier.isDarkMode;
+                return GestureDetector(
+                  onTap: () {
+                    _temayiDegistir(isDarkMode);
+                  },
+                  child: Container(
+                    width: 80.0,
+                    height: 30.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: isDarkMode
+                          ? const Color.fromARGB(255, 88, 7, 146)
+                          : Colors.blue,
+                    ),
+                    child: Stack(
+                      children: [
+                        // Nokta şeklinde yıldızlar
+                        if (isDarkMode) ...[
+                          for (Offset position in starPositions)
+                            Positioned(
+                              left: position.dx,
+                              top: position.dy,
+                              child: Container(
+                                width: 2.0,
+                                height: 2.0,
+                                color: Colors.white, // Nokta rengi
+                              ),
                             ),
-                            child: Stack(
-                              children: [
-                                // Nokta şeklinde yıldızlar
-                                if (isDarkMode) ...[
-                                  for (Offset position in starPositions)
-                                    Positioned(
-                                      left: position.dx,
-                                      top: position.dy,
-                                      child: Container(
-                                        width: 2.0,
-                                        height: 2.0,
-                                        color: Colors.white, // Nokta rengi
-                                      ),
-                                    ),
-                                ] else
-                                  for (int i = 0; i < 5; i++)
-                                    for (int j = 0; j < 5; j++)
-                                      Positioned(
-                                        left: j * 40.0,
-                                        top: i * 40.0,
-                                        child: const Icon(
-                                          Icons.cloud,
-                                          color: Colors.white,
-                                          size: 30,
-                                        ),
-                                      ),
-                                AnimatedAlign(
-                                  alignment: Alignment(_alignX, 0),
-                                  duration: const Duration(milliseconds: 200),
-                                  child: AnimatedContainer(
-                                    duration: const Duration(milliseconds: 800),
-                                    curve: Curves.easeInOut,
-                                    width: 40.0,
-                                    height: 40.0,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: isDarkMode ? Colors.black : Colors.white,
-                                    ),
-                                    child: Icon(
-                                      isDarkMode
-                                          ? Icons.nightlight_round
-                                          : Icons.wb_sunny_rounded,
-                                      color: isDarkMode ? Colors.blue : Colors.orange,
-                                    ),
-                                  ),
+                        ] else
+                          for (int i = 0; i < 5; i++)
+                            for (int j = 0; j < 5; j++)
+                              Positioned(
+                                left: j * 40.0,
+                                top: i * 40.0,
+                                child: const Icon(
+                                  Icons.cloud,
+                                  color: Colors.white,
+                                  size: 30,
                                 ),
-                              ],
+                              ),
+                        AnimatedAlign(
+                          alignment: Alignment(_alignX, 0),
+                          duration: const Duration(milliseconds: 200),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 800),
+                            curve: Curves.easeInOut,
+                            width: 40.0,
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: isDarkMode ? Colors.black : Colors.white,
+                            ),
+                            child: Icon(
+                              isDarkMode
+                                  ? Icons.nightlight_round
+                                  : Icons.wb_sunny_rounded,
+                              color: isDarkMode ? Colors.blue : Colors.orange,
                             ),
                           ),
-                        );
-                  }
-              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
               onTap: () {
                 // S.S.S. sayfasına yönlendirme
               },
@@ -708,10 +711,16 @@ class _Page0State extends State<Page0> {
                   (BuildContext context, int index) {
                     if (dataManager.getPolls()?.isEmpty ?? true) {
                       // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
-                      return const Center(
-                          child: CircularProgressIndicator(
-                        color: Color(0xFF2355FF),
-                      ));
+                      return Column(children: [
+                        LoadingScreen.loading_screen(text: now.toString()),
+                        Text(DateTime.now().toString()),
+                      ]
+                          // child: CircularProgressIndicator(
+                          //   color: Color(0xFF2355FF),
+                          //   semanticsLabel: "$now",
+                          //   semanticsValue: "$now",
+                          // )
+                          );
                     }
                     return ForWidget.buildCard(
                         context, creatorObjects!, pollObjects!, index);
@@ -735,7 +744,7 @@ class SearchPage extends StatefulWidget {
   const SearchPage(this.pageIndex, {super.key});
 
   @override
-  State<SearchPage> createState() => _SearchPageState();  
+  State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
@@ -826,10 +835,8 @@ class CommunityPage extends StatefulWidget {
 }
 
 class _CommunityPageState extends State<CommunityPage> {
-
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -901,7 +908,7 @@ class _CommunityPageState extends State<CommunityPage> {
 class ProfilePage extends StatefulWidget {
   List<Map<dynamic, dynamic>>? pollData;
   int? i;
-  
+
   ProfilePage({super.key, this.pollData, this.i});
 
   @override
@@ -978,16 +985,16 @@ class _ProfilePageState extends State<ProfilePage> {
     dynamic joinPoll = await Database.countUserPollResponses(
         currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD');
     // print('${joinPoll}   _loadCurrentUser JOİN POLL');
-      setState(() {
-        joinPoll = joinPoll;
-        username = currentUser.username!;
-        objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
-        name = currentUser.get<String>('name') ?? 'name test';
-        surname = currentUser.get<String>('surname') ?? 'Soyad test';
-        followed = currentUser.get<dynamic>('followed') ?? '0';
-        biyografi = currentUser.get<String>('biography') ?? '';
-        followers = currentUser.get<dynamic>('followers') ?? '0';
-      });
+    setState(() {
+      joinPoll = joinPoll;
+      username = currentUser.username!;
+      objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
+      name = currentUser.get<String>('name') ?? 'name test';
+      surname = currentUser.get<String>('surname') ?? 'Soyad test';
+      followed = currentUser.get<dynamic>('followed') ?? '0';
+      biyografi = currentUser.get<String>('biography') ?? '';
+      followers = currentUser.get<dynamic>('followers') ?? '0';
+    });
   }
 
   @override
@@ -1171,16 +1178,16 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> checkIfFollowing(String viewObjectId) async {
     // Giriş yapan kullanıcıyı al
     ParseUser? currentUser = await ParseUser.currentUser();
-      // Giriş yapan kullanıcının takip ettiği kişilerin listesini al
-      List<dynamic> followedUsers =
-          currentUser.get<List<dynamic>>('followed') ?? [];
+    // Giriş yapan kullanıcının takip ettiği kişilerin listesini al
+    List<dynamic> followedUsers =
+        currentUser.get<List<dynamic>>('followed') ?? [];
 
-      // Görüntülenen kullanıcının objectId'si bu listede var mı diye kontrol et
-      setState(() {
-        isFollowing = followedUsers.contains(viewObjectId);
-      });
-      // print(
-      //     '${followedUsers.contains(viewObjectId)}   Görüntülenen Takip Ediyo Mu Etmiyo Mu');
+    // Görüntülenen kullanıcının objectId'si bu listede var mı diye kontrol et
+    setState(() {
+      isFollowing = followedUsers.contains(viewObjectId);
+    });
+    // print(
+    //     '${followedUsers.contains(viewObjectId)}   Görüntülenen Takip Ediyo Mu Etmiyo Mu');
   }
 
   Widget _buildFollowButton(String viewObjectId) {
@@ -1230,7 +1237,7 @@ Widget _buildCardCommunityWithJoinButton(BuildContext context, int index) {
                     ProfilePage(pollData: pollObjects, i: 4)));
       },
       style: TextButton.styleFrom(
-        foregroundColor : Colors.blue,
+        foregroundColor: Colors.blue,
         backgroundColor: Colors.transparent,
       ),
       child: const Text('Katıl'),
