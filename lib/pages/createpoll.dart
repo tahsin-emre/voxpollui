@@ -86,7 +86,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
 
   @override
   Widget build(BuildContext context) {
-    String selectedValue = 'Seçenek 1';
+    // String selectedValue = 'Seçenek 1';
     List<String> options = ['Seçenek 1', 'Seçenek 2', 'Seçenek 3'];
     return Scaffold(
       appBar: AppBar(),
@@ -194,15 +194,21 @@ class _CreatePollPageState extends State<CreatePollPage> {
                     ),
                     const SizedBox(height: 20.0),
                     Container(
+                      width: MediaQuery.of(context).size.width -50,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: Colors.white, width: 1.0,style: BorderStyle.solid),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)
+                        ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 5, // Gölge bulanıklığı
-                            spreadRadius: 52, // Gölge yayılımı
-                            offset: Offset(0, 0), // Yatay ve dikey ofset 
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(3, 3), // changes position of shadow
                           ),
                         ],
                       ),
