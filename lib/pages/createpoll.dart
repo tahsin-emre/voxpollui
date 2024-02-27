@@ -76,20 +76,24 @@ class _CreatePollPageState extends State<CreatePollPage> {
     }
   }
 
-    List<DateTime> _selectedDates = [];
-    CalendarFormat _calendarFormat = CalendarFormat.month;
-    RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn; // Can be toggled on/off by longpressing a date
-    DateTime _focusedDay = DateTime.now();
-    DateTime? _selectedDay;
-    DateTime? _rangeStart;
-    DateTime? _rangeEnd;
+  List<DateTime> _selectedDates = [];
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
+      .toggledOn; // Can be toggled on/off by longpressing a date
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+  DateTime? _rangeStart;
+  DateTime? _rangeEnd;
 
   @override
   Widget build(BuildContext context) {
     // String selectedValue = 'Seçenek 1';
     List<String> options = ['Siyaset', 'Ekonomi', 'Oyun'];
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+      ),
       body: SingleChildScrollView(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -194,21 +198,21 @@ class _CreatePollPageState extends State<CreatePollPage> {
                     ),
                     const SizedBox(height: 20.0),
                     Container(
-                      width: MediaQuery.of(context).size.width -50,
+                      width: MediaQuery.of(context).size.width - 50,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
+                            topLeft: Radius.circular(10),
                             topRight: Radius.circular(10),
                             bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)
-                        ),
+                            bottomRight: Radius.circular(10)),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: const Offset(3, 3), // changes position of shadow
+                            offset: const Offset(
+                                3, 3), // changes position of shadow
                           ),
                         ],
                       ),
@@ -233,7 +237,8 @@ class _CreatePollPageState extends State<CreatePollPage> {
                               _focusedDay = focusedDay;
                               _rangeStart = null; // Important to clean those
                               _rangeEnd = null;
-                              _rangeSelectionMode = RangeSelectionMode.toggledOff;
+                              _rangeSelectionMode =
+                                  RangeSelectionMode.toggledOff;
                               // Seçilen tarihi _selectedDates listesine ekleyin
                               _selectedDates = [selectedDay];
                             });
@@ -267,6 +272,11 @@ class _CreatePollPageState extends State<CreatePollPage> {
                   onPressed: _createPoll,
                   child: const Text('Anket Oluştur'),
                 ),
+                const SizedBox(height: 20.0),
+                ElevatedButton(
+                  onPressed: _createPoll,
+                  child: const Text('Seçilen Tarihler'),
+                ),
                 const SizedBox(height: 200.0),
               ],
             ),
@@ -275,20 +285,21 @@ class _CreatePollPageState extends State<CreatePollPage> {
       ),
     );
   }
-  // void _saveSelectedDates() {
-  //   if (_selectedDates.isNotEmpty) {  
-  //     // widget.onDatesSelected?.call(_selectedDates);
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text('Seçilen tarihler kaydedildi: $_selectedDates'),
-  //       ),
-  //     );
-  //   } else {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text('Henüz hiçbir tarih seçilmedi!'),
-  //       ),
-  //     );
-  //   }
-  // }
+
+  void _saveSelectedDates() {
+    if (_selectedDates.isNotEmpty) {
+      widget.onDatesSelected?.call(_selectedDates);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Seçilen tarihler kaydedildi: $_selectedDates'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Henüz hiçbir tarih seçilmedi!'),
+        ),
+      );
+    }
+  }
 }
