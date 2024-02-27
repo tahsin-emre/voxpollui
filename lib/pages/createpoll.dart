@@ -7,7 +7,8 @@ import 'package:voxpollui/class/utils.dart';
 import 'package:voxpollui/pages/home_page.dart';
 
 class CreatePollPage extends StatefulWidget {
-  const CreatePollPage({super.key});
+  final ValueChanged<List<DateTime>>? onDatesSelected;
+  const CreatePollPage({super.key, this.onDatesSelected});
 
   @override
   State<CreatePollPage> createState() => _CreatePollPageState();
