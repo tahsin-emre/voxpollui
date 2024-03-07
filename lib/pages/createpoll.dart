@@ -7,7 +7,7 @@ import 'package:voxpollui/class/utils.dart';
 import 'package:voxpollui/pages/home_page.dart';
 
 class CreatePollPage extends StatefulWidget {
-  final ValueChanged<List<DateTime>>? onDatesSelected;
+  final ValueChanged<List<String>>? onDatesSelected;
   const CreatePollPage({super.key, this.onDatesSelected});
 
   @override
@@ -40,6 +40,15 @@ class _CreatePollPageState extends State<CreatePollPage> {
     }
   }
 
+  List<String> _selectedDates = [];
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
+      .toggledOn; // Can be toggled on/off by longpressing a date
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+  DateTime? _rangeStart;
+  DateTime? _rangeEnd;
+
   Future<void> _createPoll() async {
     final String title = _titleController.text.trim();
     final List<String> options =
@@ -56,7 +65,8 @@ class _CreatePollPageState extends State<CreatePollPage> {
     final ParseObject poll = ParseObject('Poll')
       ..set('title', title)
       ..set('createdBy',
-          currentUser.objectId); // Kullanıcının objectId'sini kaydet
+          currentUser.objectId) // Kullanıcının objectId'sini kaydet
+      ..set('deletedDate',_rangeEnd.toString().substring(0, 10));
 
     final response = await poll.save();
 
@@ -76,15 +86,6 @@ class _CreatePollPageState extends State<CreatePollPage> {
       // Hata mesajı göster
     }
   }
-
-  List<DateTime> _selectedDates = [];
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
-      .toggledOn; // Can be toggled on/off by longpressing a date
-  DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
-  DateTime? _rangeStart;
-  DateTime? _rangeEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -232,6 +233,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                         },
                         headerStyle: const HeaderStyle(titleCentered: true),
                         onDaySelected: (selectedDay, focusedDay) {
+                          print("Tarihe Tıklandı");
                           if (!isSameDay(_selectedDay, selectedDay)) {
                             setState(() {
                               _selectedDay = selectedDay;
@@ -241,11 +243,14 @@ class _CreatePollPageState extends State<CreatePollPage> {
                               _rangeSelectionMode =
                                   RangeSelectionMode.toggledOff;
                               // Seçilen tarihi _selectedDates listesine ekleyin
-                              _selectedDates = [selectedDay];
+                              _selectedDates = [
+                                selectedDay.toString().substring(0, 10)
+                              ];
                             });
                           }
                         },
                         onRangeSelected: (start, end, focusedDay) {
+                          print("object");
                           setState(() {
                             // _selectedDay = null;
                             _focusedDay = focusedDay;
@@ -255,6 +260,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                           });
                         },
                         onFormatChanged: (format) {
+                          print("dszf");
                           if (_calendarFormat != format) {
                             setState(() {
                               _calendarFormat = format;
@@ -262,6 +268,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                           }
                         },
                         onPageChanged: (focusedDay) {
+                          print("sodkflşds");
                           _focusedDay = focusedDay;
                         },
                       ),
@@ -275,7 +282,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                 ),
                 const SizedBox(height: 20.0),
                 ElevatedButton(
-                  onPressed: _createPoll,
+                  onPressed: _saveSelectedDates,
                   child: const Text('Seçilen Tarihler'),
                 ),
                 const SizedBox(height: 200.0),
@@ -297,8 +304,9 @@ class _CreatePollPageState extends State<CreatePollPage> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Henüz hiçbir tarih seçilmedi!'),
+        SnackBar(
+          content: Text(
+              '${_rangeStart.toString().substring(0, 10)} , ${_rangeEnd.toString().substring(0, 10)}'),
         ),
       );
     }
