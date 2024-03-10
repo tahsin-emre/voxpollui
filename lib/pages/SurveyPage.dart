@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
+import 'package:voxpollui/pages/home/profil_page.dart';
 import 'package:voxpollui/pages/home_page.dart';
 import 'package:voxpollui/script/database.dart';
 

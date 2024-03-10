@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
-import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/pages/SurveyPage.dart';
+import 'package:voxpollui/pages/home/profil_page.dart';
+import 'package:voxpollui/pages/home_page.dart';
 import 'package:voxpollui/script/database.dart';
 class ForWidget {
   static Widget buildCard(BuildContext context, List<Map<String, dynamic>> users, List<Map<String, dynamic>> polls, int index) {
@@ -100,4 +101,71 @@ class ForWidget {
       }
     );
   }
+
+  static Widget buildCardCommunity(BuildContext context, int index) {
+    //String toplulukNameOrnektir = creator != null ? creator.get<String>('name') ?? 'Bilinmiyor' : 'Bilinmiyor';
+
+    return ListTile(
+      leading: const CircleAvatar(
+        backgroundImage: AssetImage('assets/login.png'),
+      ),
+      title: Row(
+        children: [
+          const Text('Topluluk Adı'),
+          const SizedBox(width: 4.0),
+          const Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
+          const SizedBox(width: 4.0),
+          Text('@${usersObjects![index]['username']}',
+              style: const TextStyle(fontSize: 12.0)),
+        ],
+      ),
+      subtitle: const Text('Topluluk Açıklaması'),
+      trailing: InkWell(
+        onTap: () {
+          // Burada tıklama olayını işleyin
+          // print('Trailing ikonuna tıklandı!');
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ProfilePage(pollData: usersObjects, i: 4)));
+        },
+        child: const Icon(Icons.arrow_forward),
+      ),
+    );
+  }
+
+  static Widget buildCardCommunityWithJoinButton(BuildContext context, int index) {
+    return ListTile(
+      leading: const CircleAvatar(
+        backgroundImage: AssetImage('assets/login.png'),
+      ),
+      title: Row(
+        children: [
+          const Text('Topluluk Adı '),
+          const SizedBox(width: 4.0),
+          const Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
+          const SizedBox(width: 4.0),
+          Text('@${usersObjects![index]['username']}',
+              style: const TextStyle(fontSize: 12.0)),
+        ],
+      ),
+      subtitle: const Text('Topluluk Açıklaması'),
+      trailing: TextButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ProfilePage(pollData: pollObjects, i: 4)));
+        },
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.blue,
+          backgroundColor: Colors.transparent,
+        ),
+        child: const Text('Katıl'),
+      ),
+    );
+  }
+
 }
