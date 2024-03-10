@@ -9,7 +9,6 @@ class DataManager {
 
   List<Map<String, dynamic>>? polls;
   List<Map<String, dynamic>>? users;
-  List<Map<String, dynamic>>? creators;
 
 Future<void> setCombinedResults(Map<dynamic, dynamic> results) async {
   // print('RESULTS   $results');
@@ -18,34 +17,6 @@ Future<void> setCombinedResults(Map<dynamic, dynamic> results) async {
       users = List<Map<String, dynamic>>.from(results['users']);
       // print('CREATORS $creators');
 }
-
-/*
-Future<void> setCombinedResults(Map<dynamic, dynamic> results) async {
-  polls = List<Map<String, dynamic>>.from(results['polls']);
-  creators = List<Map<String, dynamic>>.from(results['users']);
-
-  // createdBy alanını kullanarak creators listesini filtreleme
-  List<Map<String, dynamic>> filteredCreators = [];
-  for (var poll in polls!) {
-    String createdBy = poll['createdBy'];
-    // createdBy değeri ile eşleşen CreatorData nesnesini bul
-    CreatorData? creator = creators!.firstWhere(
-      (element) => element['objectId'] == createdBy,
-      orElse: () => null,
-    );
-    // Eğer eşleşen bir CreatorData nesnesi bulunduysa, filteredCreators listesine ekle
-    if (creator != null) {
-      filteredCreators.add(creator);
-    }
-  }
-
-  // filteredCreators listesini creators değişkenine ata
-  creators = filteredCreators;
-}
-
-*/
-
-
 
 
 List<Map<String, dynamic>>? getPolls() {

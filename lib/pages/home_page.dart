@@ -715,7 +715,6 @@ class _Page0State extends State<Page0> {
                         LoadingScreen.loading_screen(text: now.toString()),
                         Text(DateTime.now().toString()),
                       ]
-                          // child: CircularProgressIndicator(
                           //   color: Color(0xFF2355FF),
                           //   semanticsLabel: "$now",
                           //   semanticsValue: "$now",
@@ -802,10 +801,7 @@ class _SearchPageState extends State<SearchPage> {
                       (BuildContext context, int index) {
                         if (dataManager.getPolls()?.isEmpty ?? true) {
                           // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
-                          return const Center(
-                              child: CircularProgressIndicator(
-                            color: Color(0xFF2355FF),
-                          ));
+                          return LoadingScreen.loading_screen(text: "Yükleniyor");
                         }
                         return ForWidget.buildCard(
                             context, usersObjects!, pollObjects!, index);
@@ -863,9 +859,7 @@ class _CommunityPageState extends State<CommunityPage> {
             ),
             Expanded(
               child: usersObjects == null
-                  ? const CircularProgressIndicator(
-                      color: Color(0xFF2355FF),
-                    )
+                  ? LoadingScreen.loading_screen(text: "Yükleniyor")
                   : ListView(
                       children: [
                         const SizedBox(height: 10.0),
@@ -1020,7 +1014,7 @@ class _ProfilePageState extends State<ProfilePage> {
         body: Column(
           children: [
             if (_isLoading)
-              const CircularProgressIndicator()
+              LoadingScreen.loading_screen(text: "Yükleniyor")
             else
               Container(
                 height: 200,

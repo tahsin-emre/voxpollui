@@ -104,7 +104,6 @@ class _StateBoardinDort extends State<BoardinDort> {
         MaterialPageRoute(builder: (context) => OnboardingPage()),
       );
     } else {
-      // print(response.error); // Hata mesajını yazdır
       _showErrorDialog(response.error?.message ?? 'Bir hata oluştu');
     }
 

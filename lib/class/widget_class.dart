@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/pages/SurveyPage.dart';
 import 'package:voxpollui/script/database.dart';
@@ -6,7 +7,7 @@ class ForWidget {
   static Widget buildCard(BuildContext context, List<Map<String, dynamic>> users, List<Map<String, dynamic>> polls, int index) {
 
   Database database = Database();
-  print(polls[index]['createdBy']);
+  // print(polls[index]['createdBy']);
   return FutureBuilder(
     future: database.fetchCreater(polls[index]['createdBy']),
     builder: (context, snapshot) {
@@ -14,11 +15,11 @@ class ForWidget {
         case ConnectionState.none:
           return const Text('Başlatılmadı');
         case ConnectionState.waiting:
-          return const CircularProgressIndicator();
+          return LoadingScreen.loading_screen(text: "Yükleniyor");
         case ConnectionState.active:
         case ConnectionState.done:
           if (snapshot.hasError) {
-            print("${snapshot.error}");
+            // print("${snapshot.error}");
             return Text('Hata23: ${snapshot.error}');
           } else if (snapshot.hasData) {
             final creator = snapshot.data!;

@@ -11,6 +11,20 @@ class Database {
 
       if (result.success && result.result != null) {
         Map<String, dynamic> data = result.result;
+        DateTime now = DateTime.now(); // Mevcut tarih ve saat bilgisini alır
+        print(now.toString().substring(0, 10));
+        String deletedDateString = data["polls"][3]["deletedDate"];
+        DateTime pollDate = DateTime.parse(deletedDateString);
+        print(data["polls"][3]["deletedDate"]);
+
+        
+        if (pollDate.isBefore(now)) {
+          print('$pollDate geçmişte, $now gelecekte.');
+        } else if (pollDate.isAfter(now)) {
+          print('$pollDate gelecekte, $now geçmişte.');
+        } else {
+          print('$pollDate ve $now aynı tarihi gösteriyor.');
+        }
 
         // İsterseniz burada gelen veriler üzerinde daha fazla işlem yapabilirsiniz
         // Örneğin, kullanıcıların ve anketlerin listesini alabilirsiniz:
@@ -34,13 +48,14 @@ class Database {
 
 
 Future<CreatorData?> fetchCreater(String createrId) async {
+  // print()
   try {
     final ParseCloudFunction function = ParseCloudFunction('getUserById');
     final Map<String, dynamic> params = <String, dynamic>{'userId': createrId};
     final ParseResponse result = await function.execute(parameters: params);
     // print(result.success);
     // print(result.error);
-    print(result.result);
+    // print(result.result);
     if (result.success) {
       if (result.result != null) {
         Map<String, dynamic> data = result.result;
@@ -94,7 +109,7 @@ static Future<bool> hasUserVoted(List<Map<dynamic, dynamic>> pollData, int index
       final ParseResponse result = await function.execute(parameters: params);
 
       if (result.success && result.result != null) {
-        print('Başarılı ${result.result}');
+        // print('Başarılı ${result.result}');
         return result.result;
       } else {
         print('Cloud fonksiyonu çağrılırken hata oluştu');

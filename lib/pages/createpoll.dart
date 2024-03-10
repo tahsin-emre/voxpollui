@@ -233,7 +233,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                         },
                         headerStyle: const HeaderStyle(titleCentered: true),
                         onDaySelected: (selectedDay, focusedDay) {
-                          print("Tarihe Tıklandı");
+                          // print("Tarihe Tıklandı");
                           if (!isSameDay(_selectedDay, selectedDay)) {
                             setState(() {
                               _selectedDay = selectedDay;
@@ -250,7 +250,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                           }
                         },
                         onRangeSelected: (start, end, focusedDay) {
-                          print("object");
+                          // print("object");
                           setState(() {
                             // _selectedDay = null;
                             _focusedDay = focusedDay;
@@ -260,7 +260,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                           });
                         },
                         onFormatChanged: (format) {
-                          print("dszf");
+                          // print("dszf");
                           if (_calendarFormat != format) {
                             setState(() {
                               _calendarFormat = format;
@@ -268,7 +268,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                           }
                         },
                         onPageChanged: (focusedDay) {
-                          print("sodkflşds");
+                          // print("sodkflşds");
                           _focusedDay = focusedDay;
                         },
                       ),

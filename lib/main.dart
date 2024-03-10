@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:voxpollui/boarding/boarding_bir.dart';
+import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/pages/home_page.dart';
 import 'package:voxpollui/notifier/theme.dart';
 
@@ -45,7 +46,6 @@ class MyApp extends StatelessWidget {
         future: ParseUser.currentUser(), // Future<ParseUser> olarak güncellendi
         builder: (context, snapshot) {
           final currentUser = snapshot.data;
-          // print(currentUser);
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError || currentUser == null) {
               // Hata durumu veya kullanıcı daha önce giriş yapmamışsa
@@ -56,8 +56,7 @@ class MyApp extends StatelessWidget {
             }
           } else {
             // Veri henüz yüklenmediyse, bir yükleniyor ekranı gösterilebilir
-            // print(snapshot.error);
-            return const CircularProgressIndicator();
+            return LoadingScreen.loading_screen(text: "Yükleniyor");
           }
         },
       ),

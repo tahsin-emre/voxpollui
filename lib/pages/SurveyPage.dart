@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/pages/home_page.dart';
 import 'package:voxpollui/script/database.dart';
 
@@ -31,7 +32,7 @@ class _SurveyPageState extends State<SurveyPage> {
 
   Future<void> _checkIfUserVoted() async {
   bool hasVoted = await Database.hasUserVoted(widget.pollData, widget.index);
-  print("_hasVoted: $hasVoted"); // Debug için yazdırın
+  // print("_hasVoted: $hasVoted"); // Debug için yazdırın
   setState(() {
     _hasVoted = hasVoted;
     if (!_hasVoted) {
@@ -82,7 +83,7 @@ class _SurveyPageState extends State<SurveyPage> {
       body: Container(
         padding: const EdgeInsets.all(20),
         child: _isLoading // Yükleme durumunu kontrol edin
-            ? CircularProgressIndicator(color: Color(0xFF2355FF),) // Yükleme sırasında dönme çemberi göster
+            ? LoadingScreen.loading_screen(text: "Yükleniyor")
             : ListView(
                 children: [
                   _buildCardCommunity(),
@@ -92,7 +93,7 @@ class _SurveyPageState extends State<SurveyPage> {
                           future: _pollOptions,
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.waiting) {
-                              return CircularProgressIndicator(color: Color(0xFF2355FF),);
+                              return LoadingScreen.loading_screen(text: "Yükleniyor");
                             }
 
                             if (snapshot.hasError) {
@@ -108,7 +109,7 @@ class _SurveyPageState extends State<SurveyPage> {
                               onVoted: (PollOption pollOption, int newTotalVotes) async {
                                 String userId = widget.userData[widget.index]['objectId'];
                                 String optionId = pollOption.id.toString();
-                                print("Kullanıcı ID: $userId, Anket ID: ${widget.pollData[widget.index]['objectId']}, Seçenek ID: $optionId");
+                                // print("Kullanıcı ID: $userId, Anket ID: ${widget.pollData[widget.index]['objectId']}, Seçenek ID: $optionId");
                                 ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
                                 final Map<String, dynamic> params = <String, dynamic>{
                                   'userId': userId,
@@ -118,11 +119,11 @@ class _SurveyPageState extends State<SurveyPage> {
                                 final ParseResponse result = await function.execute(parameters: params);
 
                                 if (result.success) {
-                                  print('Oy Başarıyla Kaydedildi');
+                                  // print('Oy Başarıyla Kaydedildi');
                                   // _pollOptions'ı yeniden yüklemeyi burada yapabilirsiniz
                                   return true;
                                 } else {
-                                  print("Anket cevabı kaydedilemedi: ${result.error}");
+                                  // print("Anket cevabı kaydedilemedi: ${result.error}");
                                   return false;
                                 }
                               },
@@ -169,7 +170,7 @@ class _SurveyPageState extends State<SurveyPage> {
       trailing: InkWell(
         onTap: () {
           // Burada tıklama olayını işleyin
-          print('Trailing ikonuna tıklandı!');
+          // print('Trailing ikonuna tıklandı!');
           Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: widget.pollData, i: 4)));
         },
         child: Icon(Icons.arrow_forward),
@@ -182,7 +183,7 @@ class _SurveyPageState extends State<SurveyPage> {
       future: _pollOptions,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator(color: Color(0xFF2355FF),);
+          return LoadingScreen.loading_screen(text: "Yükleniyor");
         }
 
         if (snapshot.hasError) {
@@ -202,7 +203,7 @@ class _SurveyPageState extends State<SurveyPage> {
                               onVoted: (PollOption pollOption, int newTotalVotes) async {
                                 String userId = creator[widget.index]['objectId'];
                                 String optionId = pollOption.id.toString();
-                                print("Kullanıcı ID: $userId, Anket ID: ${poll[widget.index]['objectId']}, Seçenek ID: $optionId");
+                                // print("Kullanıcı ID: $userId, Anket ID: ${poll[widget.index]['objectId']}, Seçenek ID: $optionId");
                                 ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
                                 final Map<String, dynamic> params = <String, dynamic>{
                                   'userId': userId,
@@ -212,11 +213,11 @@ class _SurveyPageState extends State<SurveyPage> {
                                 final ParseResponse result = await function.execute(parameters: params);
 
                                 if (result.success) {
-                                  print('Oy Başarıyla Kaydedildi');
+                                  // print('Oy Başarıyla Kaydedildi');
                                   // _pollOptions'ı yeniden yüklemeyi burada yapabilirsiniz
                                   return true;
                                 } else {
-                                  print("Anket cevabı kaydedilemedi: ${result.error}");
+                                  // print("Anket cevabı kaydedilemedi: ${result.error}");
                                   return false;
                                 }
                               },
