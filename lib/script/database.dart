@@ -1,4 +1,5 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:voxpollui/class/model/user.dart';
 
 
 class Database {
@@ -32,21 +33,37 @@ class Database {
 
 
 
-
-Future<ParseObject?> fetchCreater(String? createrId) async {
-  if (createrId == null) return null;
-
-  final query = QueryBuilder(ParseObject('_User'))
-    ..whereEqualTo('objectId', createrId);
-  final response = await query.query();
-
-  if (response.success && response.results != null) {
-    return response.results?.first as ParseObject?;
-  } else {
-    // Hata durumunda işlem
+Future<CreatorData?> fetchCreater(String createrId) async {
+  try {
+    final ParseCloudFunction function = ParseCloudFunction('getUserById');
+    final Map<String, dynamic> params = <String, dynamic>{'userId': createrId};
+    final ParseResponse result = await function.execute(parameters: params);
+    // print(result.success);
+    // print(result.error);
+    print(result.result);
+    if (result.success) {
+      if (result.result != null) {
+        Map<String, dynamic> data = result.result;
+        CreatorData creator = CreatorData.fromJson(data);
+        return creator;
+      } else {
+        return null; // Sonuç yoksa null döndür
+      }
+    } else {
+      throw Exception(result.error);
+    }
+  } catch (e) {
+    print('Bir hata oluştu: $e');
     return null;
   }
 }
+
+
+
+
+
+
+
 
 static Future<bool> hasUserVoted(List<Map<dynamic, dynamic>> pollData, int index) async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;

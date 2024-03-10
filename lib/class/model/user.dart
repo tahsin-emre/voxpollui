@@ -8,15 +8,42 @@ class DataManager {
   DataManager._internal();
 
   List<Map<String, dynamic>>? polls;
+  List<Map<String, dynamic>>? users;
   List<Map<String, dynamic>>? creators;
 
 Future<void> setCombinedResults(Map<dynamic, dynamic> results) async {
   // print('RESULTS   $results');
       polls = List<Map<String, dynamic>>.from(results['polls']);
       // print('POLLS $polls');
-      creators = List<Map<String, dynamic>>.from(results['users']);
+      users = List<Map<String, dynamic>>.from(results['users']);
       // print('CREATORS $creators');
 }
+
+/*
+Future<void> setCombinedResults(Map<dynamic, dynamic> results) async {
+  polls = List<Map<String, dynamic>>.from(results['polls']);
+  creators = List<Map<String, dynamic>>.from(results['users']);
+
+  // createdBy alanını kullanarak creators listesini filtreleme
+  List<Map<String, dynamic>> filteredCreators = [];
+  for (var poll in polls!) {
+    String createdBy = poll['createdBy'];
+    // createdBy değeri ile eşleşen CreatorData nesnesini bul
+    CreatorData? creator = creators!.firstWhere(
+      (element) => element['objectId'] == createdBy,
+      orElse: () => null,
+    );
+    // Eğer eşleşen bir CreatorData nesnesi bulunduysa, filteredCreators listesine ekle
+    if (creator != null) {
+      filteredCreators.add(creator);
+    }
+  }
+
+  // filteredCreators listesini creators değişkenine ata
+  creators = filteredCreators;
+}
+
+*/
 
 
 
@@ -26,8 +53,8 @@ List<Map<String, dynamic>>? getPolls() {
   return polls;
 }
 
-List<Map<String, dynamic>>? getCreators() {
-  return creators;
+List<Map<String, dynamic>>? getUsers() {
+  return users;
 }
 
 }
@@ -87,22 +114,23 @@ class CreatorData {
     required this.followed,
     required this.followers,
   });
-
+/*
+I/flutter ( 7342): {objectId: Syb4CqazPh, username: qeq@gm.cm, gender: Erkek, city: ewqe, name: berke, birthDate: qweqe, district: eqwe, surname: qweqwe, biography: }*/
   factory CreatorData.fromJson(Map<String, dynamic> json) {
     return CreatorData(
-      objectId: json['objectId'] as String,
-      username: json['username'] as String,
-      name: json['name'] as String,
-      surname: json['surname'] as String,
-      birthDate: json['birthDate'] as String,
-      city: json['city'] as String,
-      district: json['district'] as String,
-      gender: json['gender'] as String,
-      interests: List<String>.from(json['interests'] as List),
-      biography: json['biography'] as String,
-      emailVerified: json['emailVerified'] as bool,
-      followed: json['followed'] as List<String>,
-      followers: json['followers'] as List<String>,
+      objectId: json['objectId'] as String? ?? '', // Null kontrolü ve null değer için varsayılan bir değer belirtme
+      username: json['username'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+      surname: json['surname'] as String? ?? '',
+      birthDate: json['birthDate'] as String? ?? '',
+      city: json['city'] as String? ?? '',
+      district: json['district'] as String? ?? '',
+      gender: json['gender'] as String? ?? '',
+      interests: List<String>.from(json['interests'] as List<String>? ?? []),
+      biography: json['biography'] as String? ?? '',
+      emailVerified: json['emailVerified'] as bool? ?? false,
+      followed: List<String>.from(json['followed'] as List<String>? ?? []),
+      followers: List<String>.from(json['followers'] as List<String>? ?? []),
     );
   }
 }

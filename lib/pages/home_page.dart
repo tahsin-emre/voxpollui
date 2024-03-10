@@ -14,7 +14,7 @@ Database database = Database();
 DataManager dataManager = DataManager();
 
 List<Map<String, dynamic>>? pollObjects;
-List<Map<String, dynamic>>? creatorObjects;
+List<Map<String, dynamic>>? usersObjects;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -168,7 +168,7 @@ class _Page0State extends State<Page0> {
 
     setState(() {
       pollObjects = dataManager.getPolls();
-      creatorObjects = dataManager.getCreators();
+      usersObjects = dataManager.getUsers();
     });
   }
 
@@ -723,7 +723,7 @@ class _Page0State extends State<Page0> {
                           );
                     }
                     return ForWidget.buildCard(
-                        context, creatorObjects!, pollObjects!, index);
+                        context, usersObjects!, pollObjects!, index);
                   },
                   childCount: (dataManager.getPolls()?.isNotEmpty ?? false)
                       ? dataManager.getPolls()?.length
@@ -808,7 +808,7 @@ class _SearchPageState extends State<SearchPage> {
                           ));
                         }
                         return ForWidget.buildCard(
-                            context, creatorObjects!, pollObjects!, index);
+                            context, usersObjects!, pollObjects!, index);
                       },
                       childCount: (dataManager.getPolls()?.isNotEmpty ?? false)
                           ? dataManager.getPolls()?.length
@@ -862,7 +862,7 @@ class _CommunityPageState extends State<CommunityPage> {
               ),
             ),
             Expanded(
-              child: creatorObjects == null
+              child: usersObjects == null
                   ? const CircularProgressIndicator(
                       color: Color(0xFF2355FF),
                     )
@@ -878,7 +878,7 @@ class _CommunityPageState extends State<CommunityPage> {
                           ),
                         ),
                         const SizedBox(height: 10.0),
-                        ...List.generate(creatorObjects!.length,
+                        ...List.generate(usersObjects!.length,
                             (index) => _buildCardCommunity(context, index)),
                         const SizedBox(height: 10.0),
                         const Padding(
@@ -891,7 +891,7 @@ class _CommunityPageState extends State<CommunityPage> {
                         ),
                         const SizedBox(height: 10.0),
                         ...List.generate(
-                            creatorObjects!.length,
+                            usersObjects!.length,
                             (index) => _buildCardCommunityWithJoinButton(
                                 context, index)),
                       ],
@@ -1223,7 +1223,7 @@ Widget _buildCardCommunityWithJoinButton(BuildContext context, int index) {
         const SizedBox(width: 4.0),
         const Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
         const SizedBox(width: 4.0),
-        Text('@${creatorObjects![index]['username']}',
+        Text('@${usersObjects![index]['username']}',
             style: const TextStyle(fontSize: 12.0)),
       ],
     ),
@@ -1258,7 +1258,7 @@ Widget _buildCardCommunity(BuildContext context, int index) {
         const SizedBox(width: 4.0),
         const Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
         const SizedBox(width: 4.0),
-        Text('@${creatorObjects![index]['username']}',
+        Text('@${usersObjects![index]['username']}',
             style: const TextStyle(fontSize: 12.0)),
       ],
     ),
@@ -1271,7 +1271,7 @@ Widget _buildCardCommunity(BuildContext context, int index) {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    ProfilePage(pollData: creatorObjects, i: 4)));
+                    ProfilePage(pollData: usersObjects, i: 4)));
       },
       child: const Icon(Icons.arrow_forward),
     ),
