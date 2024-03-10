@@ -1,7 +1,6 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/model/user.dart';
 
-
 class Database {
   
   Future<Map<String, dynamic>> fetchPolls() async {
@@ -11,20 +10,6 @@ class Database {
 
       if (result.success && result.result != null) {
         Map<String, dynamic> data = result.result;
-        DateTime now = DateTime.now(); // Mevcut tarih ve saat bilgisini alır
-        print(now.toString().substring(0, 10));
-        String deletedDateString = data["polls"][3]["deletedDate"];
-        DateTime pollDate = DateTime.parse(deletedDateString);
-        print(data["polls"][3]["deletedDate"]);
-
-        
-        if (pollDate.isBefore(now)) {
-          print('$pollDate geçmişte, $now gelecekte.');
-        } else if (pollDate.isAfter(now)) {
-          print('$pollDate gelecekte, $now geçmişte.');
-        } else {
-          print('$pollDate ve $now aynı tarihi gösteriyor.');
-        }
 
         // İsterseniz burada gelen veriler üzerinde daha fazla işlem yapabilirsiniz
         // Örneğin, kullanıcıların ve anketlerin listesini alabilirsiniz:

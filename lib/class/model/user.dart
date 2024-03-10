@@ -37,12 +37,14 @@ class Poll {
   final String title;
   final String createdBy;
   final int totalParticipants;
+  final String deletedDate;
 
   Poll({
     required this.objectId,
     required this.title,
     required this.createdBy,
     required this.totalParticipants,
+    required this.deletedDate,
   });
 
   factory Poll.fromJson(Map<String, dynamic> json) {
@@ -51,6 +53,7 @@ class Poll {
       title: json['title'] as String,
       createdBy: json['createdBy'] as String,
       totalParticipants: json['totalParticipants'] as int,
+      deletedDate: json['deletedDate'] as String,
     );
   }
 }
