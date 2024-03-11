@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LoadingScreen {
-  static Widget loading_screen({
+  static Widget loadingScreen({
     required String text,
   }) {
     return Center(

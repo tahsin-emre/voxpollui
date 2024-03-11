@@ -39,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     viewObjectId =
-        widget.pollObjects?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
+        widget.usersObjects?[widget.i ?? 0]['objectId'] ?? 'Hata';
     checkIfFollowing(
         viewObjectId); // Bu fonksiyonu çağırırken viewObjectId'i geçirin
     if (widget.pollObjects == null) {
@@ -68,12 +68,12 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       joinPoll = joinPoll;
       objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
-      username = widget.pollObjects![widget.i ?? 0]['username'] ?? 'Yükleniyor..';
-      name = widget.pollObjects![widget.i ?? 0]['name'] ?? 'Yükleniyor..';
-      surname = widget.pollObjects![widget.i ?? 0]['surname'] ?? 'Yükleniyor..';
-      followed = widget.pollObjects![widget.i ?? 0]['followed'] ?? '0';
-      biyografi = widget.pollObjects![widget.i ?? 0]['biography'] ?? '';
-      followers = widget.pollObjects![widget.i ?? 0]['followers'] ?? '0';
+      username = widget.usersObjects![widget.i ?? 0]['username'] ?? 'Yükleniyor..';
+      name = widget.usersObjects![widget.i ?? 0]['name'] ?? 'Yükleniyor..';
+      surname = widget.usersObjects![widget.i ?? 0]['surname'] ?? 'Yükleniyor..';
+      followed = widget.usersObjects![widget.i ?? 0]['followed'] ?? '0';
+      biyografi = widget.usersObjects![widget.i ?? 0]['biography'] ?? '';
+      followers = widget.usersObjects![widget.i ?? 0]['followers'] ?? '0';
     });
   }
 
@@ -107,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
     //   }
     // };
     final viewObjectId =
-        widget.pollObjects?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
+        widget.usersObjects?[widget.i ?? 0]['objectId'] ?? 'Hata';
     // print('$objectId   GİRİŞ YAPAN KULLANICI OBJECTID ');
     // print('$viewObjectId        GÖRÜNTÜLENEN KULLANICI OBJECTID');
 
@@ -117,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
         body: Column(
           children: [
             if (_isLoading)
-              LoadingScreen.loading_screen(text: "Yükleniyor")
+              LoadingScreen.loadingScreen(text: "Yükleniyor")
             else
               Container(
                 height: 200,
@@ -152,7 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             Text(
-              "${widget.pollObjects?[widget.i ?? 0]['name'] ?? name} ${widget.pollObjects?[widget.i ?? 0]['surname'] ?? surname}",
+              "${widget.usersObjects?[widget.i ?? 0]['name'] ?? name} ${widget.usersObjects?[widget.i ?? 0]['surname'] ?? surname}",
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Text('@$username'),

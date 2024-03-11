@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
             }
           } else {
             // Veri henüz yüklenmediyse, bir yükleniyor ekranı gösterilebilir
-            return LoadingScreen.loading_screen(text: "Yükleniyor");
+            return LoadingScreen.loadingScreen(text: "Yükleniyor");
           }
         },
       ),

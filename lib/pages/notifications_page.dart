@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NotificationsPage extends StatelessWidget {
+  NotificationsPage({super.key});
+  
   final List<Map<String, dynamic>> notifications = [
     // Burada bildirimlerinizin bir listesini oluşturun.
     // Örneğin:
@@ -55,15 +57,16 @@ class NotificationsPage extends StatelessWidget {
     // Diğer bildirimler...
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bildirimler'),
+        title: const Text('Bildirimler'),
       ),
       body: ListView.separated(
         itemCount: notifications.length,
-        separatorBuilder: (context, index) => Divider(),
+        separatorBuilder: (context, index) => const Divider(),
         itemBuilder: (context, index) {
           final notification = notifications[index];
           return ListTile(

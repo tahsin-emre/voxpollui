@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
-import 'package:voxpollui/pages/SurveyPage.dart';
+import 'package:voxpollui/pages/survey_page.dart';
 import 'package:voxpollui/pages/home/profil_page.dart';
 import 'package:voxpollui/script/database.dart';
 class ForWidget {
@@ -16,7 +16,7 @@ class ForWidget {
         case ConnectionState.none:
           return const Text('Başlatılmadı');
         case ConnectionState.waiting:
-          return LoadingScreen.loading_screen(text: "Yükleniyor");
+          return LoadingScreen.loadingScreen(text: "Yükleniyor");
         case ConnectionState.active:
         case ConnectionState.done:
           if (snapshot.hasError) {
@@ -30,7 +30,7 @@ class ForWidget {
               DateTime now = DateTime.now();
               if (pollDate.isBefore(now)) {
                 // Eğer anketin tarihi geçmişteyse, null döndürerek bu anketin gösterilmemesini sağlayın
-                return SizedBox.shrink();
+                return const SizedBox.shrink();
               }
             }
             return Card(
@@ -53,10 +53,10 @@ class ForWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              creator.username ?? 'Hata',
+                              creator.username,
                               style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
-                            Text('${creator.followers.length ?? 'Hata'} Takipçi'),//DÜZELTİLECEK
+                            Text('${creator.followers.length} Takipçi'),//DÜZELTİLECEK
                           ],
                         ),
                       ],
@@ -95,7 +95,7 @@ class ForWidget {
               ),
             );
           } else {
-            return Text('Veri yok');
+            return const Text('Veri yok');
           }
         }
       }

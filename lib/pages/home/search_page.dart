@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
-import 'package:voxpollui/script/database.dart';
 
 // ignore: must_be_immutable
 class SearchPage extends StatefulWidget {
@@ -70,7 +69,7 @@ class _SearchPageState extends State<SearchPage> {
                       (BuildContext context, int index) {
                         if (dataManager.getPolls()?.isEmpty ?? true) {
                           // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
-                          return LoadingScreen.loading_screen(
+                          return LoadingScreen.loadingScreen(
                               text: "Yükleniyor");
                         }
                         return ForWidget.buildCard(context,

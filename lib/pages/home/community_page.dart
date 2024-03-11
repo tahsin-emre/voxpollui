@@ -43,7 +43,7 @@ class _CommunityPageState extends State<CommunityPage> {
             ),
             Expanded(
               child: widget.usersObjects == null
-                  ? LoadingScreen.loading_screen(text: "Yükleniyor")
+                  ? LoadingScreen.loadingScreen(text: "Yükleniyor")
                   : ListView(
                       children: [
                         const SizedBox(height: 10.0),

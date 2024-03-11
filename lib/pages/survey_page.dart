@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
-import 'package:voxpollui/pages/home/profil_page.dart';
 import 'package:voxpollui/script/database.dart';
 
 // ignore: must_be_immutable
@@ -14,7 +13,7 @@ class SurveyPage extends StatefulWidget {
   SurveyPage({Key? key, required this.pollData, required this.index, required this.userData}) : super(key: key);
 
   @override
-  _SurveyPageState createState() => _SurveyPageState();
+  State<SurveyPage> createState() => _SurveyPageState();
 }
 
 class _SurveyPageState extends State<SurveyPage> {
@@ -75,16 +74,16 @@ class _SurveyPageState extends State<SurveyPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Anket Sayfası'),
+        title: const Text('Anket Sayfası'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Container(
         padding: const EdgeInsets.all(20),
         child: _isLoading // Yükleme durumunu kontrol edin
-            ? LoadingScreen.loading_screen(text: "Yükleniyor")
+            ? LoadingScreen.loadingScreen(text: "Yükleniyor")
             : ListView(
                 children: [
                   _buildCardCommunity(),
@@ -94,7 +93,7 @@ class _SurveyPageState extends State<SurveyPage> {
                           future: _pollOptions,
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.waiting) {
-                              return LoadingScreen.loading_screen(text: "Yükleniyor");
+                              return LoadingScreen.loadingScreen(text: "Yükleniyor");
                             }
 
                             if (snapshot.hasError) {
@@ -102,7 +101,7 @@ class _SurveyPageState extends State<SurveyPage> {
                             }
 
                             if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                              return Text('Anket seçenekleri bulunamadı');
+                              return const Text('Anket seçenekleri bulunamadı');
                             }
 
                             return FlutterPolls(
@@ -155,26 +154,26 @@ class _SurveyPageState extends State<SurveyPage> {
 
   Widget _buildCardCommunity() {
     return ListTile(
-      leading: CircleAvatar(
+      leading: const CircleAvatar(
         backgroundImage: AssetImage('assets/login.png'),
       ),
       title: Row(
         children: [
           Text('${widget.userData[widget.index]['name']}'),
-          SizedBox(width: 4.0),
-          Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
-          SizedBox(width: 4.0),
-          Text('@${widget.userData[widget.index]['username']}', style: TextStyle(fontSize: 12.0)),
+          const SizedBox(width: 4.0),
+          const Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
+          const SizedBox(width: 4.0),
+          Text('@${widget.userData[widget.index]['username']}', style: const TextStyle(fontSize: 12.0)),
         ],
       ),
-      subtitle: Text('Topluluk Açıklaması'),
+      subtitle: const Text('Topluluk Açıklaması'),
       trailing: InkWell(
         onTap: () {
           // Burada tıklama olayını işleyin
           // // print('Trailing ikonuna tıklandı!');
           // Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(4, pollObjects: widget.pollData, usersObjects: widget.userData,)));
         },
-        child: Icon(Icons.arrow_forward),
+        child: const Icon(Icons.arrow_forward),
       ),
     );
   }
@@ -184,7 +183,7 @@ class _SurveyPageState extends State<SurveyPage> {
       future: _pollOptions,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return LoadingScreen.loading_screen(text: "Yükleniyor");
+          return LoadingScreen.loadingScreen(text: "Yükleniyor");
         }
 
         if (snapshot.hasError) {
@@ -192,7 +191,7 @@ class _SurveyPageState extends State<SurveyPage> {
         }
 
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Text('Anket seçenekleri bulunamadı');
+          return const Text('Anket seçenekleri bulunamadı');
         }
 
         // List<PollOption> options = snapshot.data!;

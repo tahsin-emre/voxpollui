@@ -24,8 +24,7 @@ class Database {
         throw Exception('Sunucu tarafında bir hata oluştu.');
       }
     } catch (e) {
-      print('Bir hata oluştu: $e');
-      return {};
+      throw Exception('Bir hata oluştu: $e');
     }
   }
 
@@ -53,8 +52,7 @@ Future<CreatorData?> fetchCreater(String createrId) async {
       throw Exception(result.error);
     }
   } catch (e) {
-    print('Bir hata oluştu: $e');
-    return null;
+    throw Exception('Bir hata oluştu: $e');
   }
 }
 
@@ -97,12 +95,10 @@ static Future<bool> hasUserVoted(List<Map<dynamic, dynamic>> pollData, int index
         // print('Başarılı ${result.result}');
         return result.result;
       } else {
-        print('Cloud fonksiyonu çağrılırken hata oluştu');
-        return 3;
+        throw Exception('Cloud fonksiyonu çağrılırken hata oluştu');
       }
     } catch (e) {
-      print('Bir hata oluştu: $e');
-      return 3;
+      throw Exception('Bir hata oluştu: $e');
     }
   }
 

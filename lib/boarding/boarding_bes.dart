@@ -95,7 +95,7 @@ class _BoardinBesState extends State<BoardinBes> {
           ),
           GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardingPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const OnboardingPage()));
           },
           child: Container(
             alignment: Alignment.bottomCenter,
