@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
-import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/model/user.dart';
-import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/pages/home/community_page.dart';
 import 'package:voxpollui/pages/home/page0.dart';
 import 'package:voxpollui/pages/home/place_holder.dart';
@@ -10,12 +8,6 @@ import 'package:voxpollui/pages/home/profil_page.dart';
 import 'package:voxpollui/pages/home/search_page.dart';
 import 'package:voxpollui/script/database.dart';
 import 'createpoll.dart';
-
-Database database = Database();
-DataManager dataManager = DataManager();
-
-List<Map<String, dynamic>>? pollObjects;
-List<Map<String, dynamic>>? usersObjects;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,22 +19,56 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [
-    const Page0(),
-    const SearchPage(1), // Bu satırı değiştirin
-    const PlaceholderPage(2),
-    const CommunityPage(3),
-    ProfilePage(
-      i: 4,
-    ),
-  ];
+  Database database = Database();
+  DataManager dataManager = DataManager();
+
+  late List<Map<String, dynamic>> pollObjects;
+  late List<Map<String, dynamic>> usersObjects;
+
+  bool showUnansweredSurveyBox = true;
+  List<dynamic>? followed;
+  List<dynamic>? followers;
+  String username = 'Yükleniyor..';
+  String surname = 'Yükleniyor..';
+  String createrId = 'Yükleniyor..';
 
   @override
   void initState() {
-    // TODO: SAYFALARI BÖLDÜN HEPSİNE VERİ AKTARIMI GERÇEKLEŞTİR
     super.initState();
-
+    _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
   }
+
+  late List<Widget> _pages;
+  void _loadPolls() async {
+    Map<dynamic, dynamic> fetchedPolls = await database.fetchPolls();
+    // print('FETCHEDPOLLS   $fetchedPolls');
+    await dataManager.setCombinedResults(fetchedPolls);
+
+    setState(() {
+      pollObjects = dataManager.getPolls()!;
+      usersObjects = dataManager.getUsers()!;
+
+      _pages = [
+        Page0(pollObjects: pollObjects, usersObjects: usersObjects,),
+        SearchPage(1,pollObjects: pollObjects, usersObjects: usersObjects,), // Bu satırı değiştirin
+        const PlaceholderPage(2),
+        CommunityPage(3,pollObjects: pollObjects, usersObjects: usersObjects,),
+        ProfilePage(4, pollObjects: pollObjects, usersObjects: usersObjects,),
+      ];
+    });
+  }
+
+  // Future<void> _loadCurrentUser() async {
+  //   ParseUser? currentUser = await ParseUser.currentUser();
+  //   currentUser.fetch();
+  //   setState(() {
+  //     username = currentUser.username!;
+  //     surname = currentUser.get<String>('surname') ?? 'Soyad test';
+  //     followed = currentUser.get<List<dynamic>>('followed') ?? [];
+  //     followers = currentUser.get<List<dynamic>>('followers') ?? [];
+  //     //userObjectId = currentUser.get<String>('objectId') ?? 'Varsayılan ID';
+  //   }); //@
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +156,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-
-
-

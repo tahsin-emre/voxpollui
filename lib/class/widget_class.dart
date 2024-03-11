@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/pages/SurveyPage.dart';
 import 'package:voxpollui/pages/home/profil_page.dart';
-import 'package:voxpollui/pages/home_page.dart';
 import 'package:voxpollui/script/database.dart';
 class ForWidget {
+
   static Widget buildCard(BuildContext context, List<Map<String, dynamic>> users, List<Map<String, dynamic>> polls, int index) {
 
   Database database = Database();
@@ -102,7 +102,8 @@ class ForWidget {
     );
   }
 
-  static Widget buildCardCommunity(BuildContext context, int index) {
+  static Widget buildCardCommunity(BuildContext context, int index, List<Map<String, dynamic>>? pollObjects,
+  List<Map<String, dynamic>>? usersObjects) {
     //String toplulukNameOrnektir = creator != null ? creator.get<String>('name') ?? 'Bilinmiyor' : 'Bilinmiyor';
 
     return ListTile(
@@ -128,14 +129,15 @@ class ForWidget {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      ProfilePage(pollData: usersObjects, i: 4)));
+                      ProfilePage(4, pollObjects: pollObjects, usersObjects: usersObjects,)));
         },
         child: const Icon(Icons.arrow_forward),
       ),
     );
   }
 
-  static Widget buildCardCommunityWithJoinButton(BuildContext context, int index) {
+  static Widget buildCardCommunityWithJoinButton(BuildContext context, int index, List<Map<String, dynamic>>? pollObjects,
+  List<Map<String, dynamic>>? usersObjects) {
     return ListTile(
       leading: const CircleAvatar(
         backgroundImage: AssetImage('assets/login.png'),
@@ -157,7 +159,7 @@ class ForWidget {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      ProfilePage(pollData: pollObjects, i: 4)));
+                      ProfilePage(4, pollObjects: pollObjects, usersObjects: usersObjects,)));
         },
         style: TextButton.styleFrom(
           foregroundColor: Colors.blue,

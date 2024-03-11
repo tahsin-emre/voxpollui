@@ -6,10 +6,11 @@ import 'package:voxpollui/script/database.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatefulWidget {
-  List<Map<dynamic, dynamic>>? pollData;
   int? i;
-
-  ProfilePage({super.key, this.pollData, this.i});
+  List<Map<String, dynamic>>? pollObjects;
+  List<Map<String, dynamic>>? usersObjects;
+  
+  ProfilePage(this.i, {super.key, required this.pollObjects, required this.usersObjects});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -38,10 +39,10 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     viewObjectId =
-        widget.pollData?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
+        widget.pollObjects?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
     checkIfFollowing(
         viewObjectId); // Bu fonksiyonu çağırırken viewObjectId'i geçirin
-    if (widget.pollData == null) {
+    if (widget.pollObjects == null) {
       _loadCurrentUser();
       isMe = true;
     } else {
@@ -62,17 +63,17 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _loadPollData() async {
     ParseUser? currentUser = await ParseUser.currentUser();
     dynamic joinPoll = await Database.countUserPollResponses(
-        widget.pollData![widget.i ?? 0]['objectId'] ?? 'ObjectIDDDDDDD');
+        widget.pollObjects![widget.i ?? 0]['objectId'] ?? 'ObjectIDDDDDDD');
     // print('${joinPoll}    JOİN POLL');
     setState(() {
       joinPoll = joinPoll;
       objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
-      username = widget.pollData![widget.i ?? 0]['username'] ?? 'Yükleniyor..';
-      name = widget.pollData![widget.i ?? 0]['name'] ?? 'Yükleniyor..';
-      surname = widget.pollData![widget.i ?? 0]['surname'] ?? 'Yükleniyor..';
-      followed = widget.pollData![widget.i ?? 0]['followed'] ?? '0';
-      biyografi = widget.pollData![widget.i ?? 0]['biography'] ?? '';
-      followers = widget.pollData![widget.i ?? 0]['followers'] ?? '0';
+      username = widget.pollObjects![widget.i ?? 0]['username'] ?? 'Yükleniyor..';
+      name = widget.pollObjects![widget.i ?? 0]['name'] ?? 'Yükleniyor..';
+      surname = widget.pollObjects![widget.i ?? 0]['surname'] ?? 'Yükleniyor..';
+      followed = widget.pollObjects![widget.i ?? 0]['followed'] ?? '0';
+      biyografi = widget.pollObjects![widget.i ?? 0]['biography'] ?? '';
+      followers = widget.pollObjects![widget.i ?? 0]['followers'] ?? '0';
     });
   }
 
@@ -106,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
     //   }
     // };
     final viewObjectId =
-        widget.pollData?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
+        widget.pollObjects?[widget.i ?? 0]['creator']['objectId'] ?? 'Hata';
     // print('$objectId   GİRİŞ YAPAN KULLANICI OBJECTID ');
     // print('$viewObjectId        GÖRÜNTÜLENEN KULLANICI OBJECTID');
 
@@ -151,7 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             Text(
-              "${widget.pollData?[widget.i ?? 0]['name'] ?? name} ${widget.pollData?[widget.i ?? 0]['surname'] ?? surname}",
+              "${widget.pollObjects?[widget.i ?? 0]['name'] ?? name} ${widget.pollObjects?[widget.i ?? 0]['surname'] ?? surname}",
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Text('@$username'),
@@ -187,14 +188,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       itemBuilder: (BuildContext context, int index) {
                         // List<Map<String, dynamic>> bos = [{}];
                         return ForWidget.buildCardCommunityWithJoinButton(
-                            context, index);
+                            context, index, widget.pollObjects, widget.usersObjects);
                       },
                     ),
                   if (polls != null)
                     ListView.builder(
                       itemCount: polls!.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return ForWidget.buildCardCommunity(context, index);
+                        return ForWidget.buildCardCommunity(context, index, widget.pollObjects, widget.usersObjects);
                       },
                     ),
                 ],

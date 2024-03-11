@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/widget_class.dart';
 
+// ignore: must_be_immutable
 class CommunityPage extends StatefulWidget {
   final int pageIndex;
+  List<Map<String, dynamic>>? pollObjects;
+  List<Map<String, dynamic>>? usersObjects;
 
-  const CommunityPage(this.pageIndex, {super.key});
+  CommunityPage(this.pageIndex, {super.key, required this.pollObjects, required this.usersObjects});
 
   @override
   State<CommunityPage> createState() => _CommunityPageState();
 }
 
 class _CommunityPageState extends State<CommunityPage> {
-  List<Map<String, dynamic>>? usersObjects;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +42,7 @@ class _CommunityPageState extends State<CommunityPage> {
               ),
             ),
             Expanded(
-              child: usersObjects == null
+              child: widget.usersObjects == null
                   ? LoadingScreen.loading_screen(text: "Yükleniyor")
                   : ListView(
                       children: [
@@ -54,8 +56,10 @@ class _CommunityPageState extends State<CommunityPage> {
                           ),
                         ),
                         const SizedBox(height: 10.0),
-                        ...List.generate(usersObjects!.length,
-                            (index) => ForWidget.buildCardCommunity(context, index)),
+                        ...List.generate(
+                            widget.usersObjects!.length,
+                            (index) =>
+                                ForWidget.buildCardCommunity(context, index, widget.pollObjects, widget.usersObjects)),
                         const SizedBox(height: 10.0),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -67,9 +71,10 @@ class _CommunityPageState extends State<CommunityPage> {
                         ),
                         const SizedBox(height: 10.0),
                         ...List.generate(
-                            usersObjects!.length,
-                            (index) => ForWidget.buildCardCommunityWithJoinButton(
-                                context, index)),
+                            widget.usersObjects!.length,
+                            (index) =>
+                                ForWidget.buildCardCommunityWithJoinButton(
+                                    context, index, widget.pollObjects, widget.usersObjects)),
                       ],
                     ),
             ),

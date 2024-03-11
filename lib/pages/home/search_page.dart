@@ -4,22 +4,20 @@ import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/script/database.dart';
 
+// ignore: must_be_immutable
 class SearchPage extends StatefulWidget {
   final int pageIndex;
-
-  const SearchPage(this.pageIndex, {super.key});
+  List<Map<String, dynamic>>? pollObjects;
+  List<Map<String, dynamic>>? usersObjects;
+  SearchPage(this.pageIndex,
+      {super.key, required this.pollObjects, required this.usersObjects});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-  Database database = Database();
   DataManager dataManager = DataManager();
-
-  List<Map<String, dynamic>>? pollObjects;
-  List<Map<String, dynamic>>? usersObjects;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,10 +70,11 @@ class _SearchPageState extends State<SearchPage> {
                       (BuildContext context, int index) {
                         if (dataManager.getPolls()?.isEmpty ?? true) {
                           // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
-                          return LoadingScreen.loading_screen(text: "Yükleniyor");
+                          return LoadingScreen.loading_screen(
+                              text: "Yükleniyor");
                         }
-                        return ForWidget.buildCard(
-                            context, usersObjects!, pollObjects!, index);
+                        return ForWidget.buildCard(context,
+                            widget.usersObjects!, widget.pollObjects!, index);
                       },
                       childCount: (dataManager.getPolls()?.isNotEmpty ?? false)
                           ? dataManager.getPolls()?.length

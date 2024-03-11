@@ -3,12 +3,12 @@ import 'package:flutter_polls/flutter_polls.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/pages/home/profil_page.dart';
-import 'package:voxpollui/pages/home_page.dart';
 import 'package:voxpollui/script/database.dart';
 
+// ignore: must_be_immutable
 class SurveyPage extends StatefulWidget {
-  final List<Map<dynamic, dynamic>> pollData;
-  final List<Map<dynamic, dynamic>> userData;
+  List<Map<dynamic, dynamic>> pollData;
+  List<Map<dynamic, dynamic>> userData;
   final int index;
 
   SurveyPage({Key? key, required this.pollData, required this.index, required this.userData}) : super(key: key);
@@ -171,8 +171,8 @@ class _SurveyPageState extends State<SurveyPage> {
       trailing: InkWell(
         onTap: () {
           // Burada tıklama olayını işleyin
-          // print('Trailing ikonuna tıklandı!');
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(pollData: widget.pollData, i: 4)));
+          // // print('Trailing ikonuna tıklandı!');
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(4, pollObjects: widget.pollData, usersObjects: widget.userData,)));
         },
         child: Icon(Icons.arrow_forward),
       ),

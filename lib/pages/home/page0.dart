@@ -10,8 +10,11 @@ import 'package:voxpollui/notifier/theme.dart';
 import 'package:voxpollui/pages/notifications_page.dart';
 import 'package:voxpollui/script/database.dart';
 
+// ignore: must_be_immutable
 class Page0 extends StatefulWidget {
-  const Page0({super.key});
+  List<Map<String, dynamic>>? pollObjects;
+  List<Map<String, dynamic>>? usersObjects;
+  Page0({super.key, required this.pollObjects, required this.usersObjects});
 
   @override
   State<Page0> createState() => _Page0State();
@@ -21,9 +24,6 @@ class _Page0State extends State<Page0> {
   Database database = Database();
   DataManager dataManager = DataManager();
 
-  List<Map<String, dynamic>>? pollObjects;
-  List<Map<String, dynamic>>? usersObjects;
-
   bool showUnansweredSurveyBox = true;
   List<dynamic>? followed;
   List<dynamic>? followers;
@@ -31,26 +31,12 @@ class _Page0State extends State<Page0> {
   String surname = 'Yükleniyor..';
   String createrId = 'Yükleniyor..';
 
-  Map<String, dynamic>? polls; // Anketleri saklamak için bir liste
-  var now = DateTime.now();
   @override
   void initState() {
     super.initState();
     _loadCurrentUser();
-    _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
-    now;
   }
 
-  void _loadPolls() async {
-    Map<dynamic, dynamic> fetchedPolls = await database.fetchPolls();
-    // print('FETCHEDPOLLS   $fetchedPolls');
-    await dataManager.setCombinedResults(fetchedPolls);
-
-    setState(() {
-      pollObjects = dataManager.getPolls();
-      usersObjects = dataManager.getUsers();
-    });
-  }
 
   Future<void> _loadCurrentUser() async {
     ParseUser? currentUser = await ParseUser.currentUser();
@@ -592,7 +578,7 @@ class _Page0State extends State<Page0> {
                     if (dataManager.getPolls()?.isEmpty ?? true) {
                       // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
                       return Column(children: [
-                        LoadingScreen.loading_screen(text: now.toString()),
+                        LoadingScreen.loading_screen(text: "Yükleniyor"),
                         Text(DateTime.now().toString()),
                       ]
                           //   color: Color(0xFF2355FF),
@@ -602,7 +588,7 @@ class _Page0State extends State<Page0> {
                           );
                     }
                     return ForWidget.buildCard(
-                        context, usersObjects!, pollObjects!, index);
+                        context, widget.usersObjects!, widget.pollObjects!, index);
                   },
                   childCount: (dataManager.getPolls()?.isNotEmpty ?? false)
                       ? dataManager.getPolls()?.length
