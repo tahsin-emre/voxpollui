@@ -24,15 +24,15 @@ class ForWidget {
             return Text('Hata23: ${snapshot.error}');
           } else if (snapshot.hasData) {
             final creator = snapshot.data!;
-            String? deletedDateString = polls[index]["deletedDate"];
-             if (deletedDateString != null) {
-              DateTime pollDate = DateTime.parse(deletedDateString);
-              DateTime now = DateTime.now();
-              if (pollDate.isBefore(now)) {
-                // Eğer anketin tarihi geçmişteyse, null döndürerek bu anketin gösterilmemesini sağlayın
-                return const SizedBox.shrink();
-              }
-            }
+            // String? deletedDateString = polls[index]["deletedDate"];
+            //  if (deletedDateString != null) {
+            //   DateTime pollDate = DateTime.parse(deletedDateString);
+            //   DateTime now = DateTime.now();
+            //   if (pollDate.isBefore(now)) {
+            //     // Eğer anketin tarihi geçmişteyse, null döndürerek bu anketin gösterilmemesini sağlayın
+            //     return const SizedBox.shrink();
+            //   }
+            // }
             return Card(
               color: Colors.white,
               elevation: 0.0,

@@ -71,6 +71,11 @@ class _SurveyPageState extends State<SurveyPage> {
   Widget build(BuildContext context) {
     // DateTime? endDate = poll['createdAt'];
     bool pollEnded = false;
+    String? deletedDateString = widget.pollData[widget.index]["deletedDate"];
+    DateTime pollDate = DateTime.parse(deletedDateString ?? '');
+    DateTime now = DateTime.now();
+
+
 
     return Scaffold(
       appBar: AppBar(
@@ -87,6 +92,7 @@ class _SurveyPageState extends State<SurveyPage> {
             : ListView(
                 children: [
                   _buildCardCommunity(),
+                  pollDate.isBefore(now) ? _buildPollResults(widget.pollData, widget.userData) :
                   _hasVoted
                       ? _buildPollResults(widget.pollData, widget.userData)
                       : FutureBuilder<List<PollOption>>(
