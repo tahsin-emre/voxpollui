@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/pages/home/community_page.dart';
 import 'package:voxpollui/pages/home/page0.dart';
@@ -88,7 +89,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex],
+      body: usersObjects != null ? _pages[_currentIndex] : LoadingScreen.loadingScreen(text: "Yükleniyor"),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }

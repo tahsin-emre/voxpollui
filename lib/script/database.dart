@@ -29,41 +29,35 @@ class Database {
   }
 
 
-
-
-Future<CreatorData?> fetchCreater(String createrId) async {
-  // print()
-  try {
-    final ParseCloudFunction function = ParseCloudFunction('getUserById');
-    final Map<String, dynamic> params = <String, dynamic>{'userId': createrId};
-    final ParseResponse result = await function.execute(parameters: params);
-    // print(result.success);
-    // print(result.error);
-    // print(result.result);
-    if (result.success) {
-      if (result.result != null) {
-        Map<String, dynamic> data = result.result;
-        CreatorData creator = CreatorData.fromJson(data);
-        return creator;
+  Future<CreatorData?> fetchCreater(String createrId) async {
+    // print()
+    try {
+      final ParseCloudFunction function = ParseCloudFunction('getUserById');
+      final Map<String, dynamic> params = <String, dynamic>{'userId': createrId};
+      final ParseResponse result = await function.execute(parameters: params);
+      // print(result.success);
+      // print(result.error);
+      // print(result.result);
+      if (result.success) {
+        if (result.result != null) {
+          Map<String, dynamic> data = result.result;
+          CreatorData creator = CreatorData.fromJson(data);
+          return creator;
+        } else {
+          return null; // Sonuç yoksa null döndür
+        }
       } else {
-        return null; // Sonuç yoksa null döndür
+        throw Exception(result.error);
       }
-    } else {
-      throw Exception(result.error);
+    } catch (e) {
+      throw Exception('Bir hata oluştu: $e');
     }
-  } catch (e) {
-    throw Exception('Bir hata oluştu: $e');
   }
-}
 
 
 
 
-
-
-
-
-static Future<bool> hasUserVoted(List<Map<dynamic, dynamic>> pollData, int index) async {
+  static Future<bool> hasUserVoted(List<Map<dynamic, dynamic>> pollData, int index) async {
     ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
     String userId = currentUser?.objectId ?? "BilinmeyenKullanıcı";
     String pollId = pollData[index]['objectId'];
@@ -101,21 +95,4 @@ static Future<bool> hasUserVoted(List<Map<dynamic, dynamic>> pollData, int index
       throw Exception('Bir hata oluştu: $e');
     }
   }
-
-//   static Future<List<Map<String, dynamic>>> fetchPollResponseCount(String pollId, String userId) async {
-//     final ParseCloudFunction function = ParseCloudFunction('getPollAndUserDetails');
-//     final Map<String, dynamic> params = <String, dynamic>{
-//       'pollId': pollId,
-//       'userId': userId,
-//     };
-//     final ParseResponse result = await function.execute(parameters: params);
-
-//     if (result.success && result.result != null) {
-//       print('${result.result}  RESULTS RESULTS');
-//       return result.results as List<Map<String, dynamic>>;
-//     } else {
-//       return [{}];
-//     }
-//   }
-// }
 }
