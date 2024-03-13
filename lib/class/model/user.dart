@@ -67,11 +67,11 @@ class CreatorData {
   final String city;
   final String district;
   final String gender;
-  final List<String> interests;
+  final List<dynamic> interests;
   final String biography;
   final bool emailVerified;
-  final List<String> followed;
-  final List<String> followers;
+  final List<dynamic> followed;
+  final List<dynamic> followers;
 
   CreatorData({
     required this.objectId,
@@ -100,11 +100,11 @@ I/flutter ( 7342): {objectId: Syb4CqazPh, username: qeq@gm.cm, gender: Erkek, ci
       city: json['city'] as String? ?? '',
       district: json['district'] as String? ?? '',
       gender: json['gender'] as String? ?? '',
-      interests: List<String>.from(json['interests'] as List<String>? ?? []),
+      interests: List<String>.from(json['interests'] as List<dynamic>? ?? []),
       biography: json['biography'] as String? ?? '',
       emailVerified: json['emailVerified'] as bool? ?? false,
-      followed: List<String>.from(json['followed'] as List<String>? ?? []),
-      followers: List<String>.from(json['followers'] as List<String>? ?? []),
+      followed: List<String>.from(json['followed'] as List<dynamic>? ?? []),
+      followers: List<String>.from(json['followers'] as List<dynamic>? ?? []),
     );
   }
 }

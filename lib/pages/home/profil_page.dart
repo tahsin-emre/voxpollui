@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
+import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/script/database.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatefulWidget {
   int? i;
-  List<Map<String, dynamic>>? pollObjects;
-  List<Map<String, dynamic>>? usersObjects;
+  // List<Map<String, dynamic>>? pollObjects;
+  // List<Map<String, dynamic>>? usersObjects;
+  bool isMe;
+  String? viewedUser;
   
-  ProfilePage(this.i, {super.key, required this.pollObjects, required this.usersObjects});
+  ProfilePage(this.i, {super.key, required this.isMe, this.viewedUser});// required this.pollObjects, required this.usersObjects,
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -22,59 +25,60 @@ class _ProfilePageState extends State<ProfilePage> {
   //bool _showUnansweredSurveyBox = true;
   dynamic followed;
   dynamic followers;
-  String objectId = 'ObjectId Hatası';
-  String username = 'Yükleniyor..';
-  String name = 'Yükleniyor..';
-  String surname = 'Yükleniyor..';
-  String createrId = 'Yükleniyor..';
-  String biyografi = 'Yükleniyor..';
-  bool? isMe;
+  String? objectId;
+  String? username;
+  String? name;
+  String? surname;
+  String? createrId;
+  String? biyografi;
   String viewObjectId = ''; // Bu satırı ekleyin
   dynamic joinPoll;
 
   Map<String, dynamic>? polls;
-  bool _isLoading = true;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    viewObjectId =
-        widget.usersObjects?[widget.i ?? 0]['objectId'] ?? 'Hata';
+    // viewObjectId =
+    //     widget.usersObjects?[widget.i ?? 0]['objectId'] ?? 'Hata';
     checkIfFollowing(
         viewObjectId); // Bu fonksiyonu çağırırken viewObjectId'i geçirin
-    if (widget.pollObjects == null) {
+    if (widget.isMe) {
       _loadCurrentUser();
-      isMe = true;
     } else {
       _loadPollData();
-      isMe = false;
     }
-    _loadPolls();
+    //  _loadPolls();
   }
 
-  void _loadPolls() async {
-    var fetchedPolls = await database.fetchPolls();
-    setState(() {
-      polls = fetchedPolls;
-      _isLoading = false;
-    });
-  }
+  //  void _loadPolls() async {
+  //    var fetchedPolls = await database.fetchPolls();
+  //    setState(() {
+  //      polls = fetchedPolls;
+  //    });
+  //  }
 
   Future<void> _loadPollData() async {
+    _isLoading = false;
+    Database database = Database();
     ParseUser? currentUser = await ParseUser.currentUser();
+    print("VİEWED USER ${widget.viewedUser}");
+    final viewUsers = await database.fetchCreater(widget.viewedUser!);
     dynamic joinPoll = await Database.countUserPollResponses(
-        widget.pollObjects![widget.i ?? 0]['objectId'] ?? 'ObjectIDDDDDDD');
-    // print('${joinPoll}    JOİN POLL');
-    setState(() {
-      joinPoll = joinPoll;
-      objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
-      username = widget.usersObjects![widget.i ?? 0]['username'] ?? 'Yükleniyor..';
-      name = widget.usersObjects![widget.i ?? 0]['name'] ?? 'Yükleniyor..';
-      surname = widget.usersObjects![widget.i ?? 0]['surname'] ?? 'Yükleniyor..';
-      followed = widget.usersObjects![widget.i ?? 0]['followed'] ?? '0';
-      biyografi = widget.usersObjects![widget.i ?? 0]['biography'] ?? '';
-      followers = widget.usersObjects![widget.i ?? 0]['followers'] ?? '0';
-    });
+      widget.viewedUser ?? 'ObjectIDDDDDDD');
+      // print('${joinPoll}    JOİN POLL');
+      setState(() {
+        joinPoll = joinPoll;
+        objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
+        username = viewUsers?.username;
+        name = viewUsers?.name;
+        surname = viewUsers?.surname;
+        followed = viewUsers?.followed;
+        biyografi = viewUsers?.biography;
+        followers = viewUsers?.followers;
+      }
+    );
   }
 
   Future<void> _loadCurrentUser() async {
@@ -105,9 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
     //     'biography': biyografi,
     //     'followers': followers,
     //   }
-    // };
-    final viewObjectId =
-        widget.usersObjects?[widget.i ?? 0]['objectId'] ?? 'Hata';
+    // }; objectId;
     // print('$objectId   GİRİŞ YAPAN KULLANICI OBJECTID ');
     // print('$viewObjectId        GÖRÜNTÜLENEN KULLANICI OBJECTID');
 
@@ -152,14 +154,14 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             Text(
-              "${widget.usersObjects?[widget.i ?? 0]['name'] ?? name} ${widget.usersObjects?[widget.i ?? 0]['surname'] ?? surname}",
+              "${name} ${surname}",
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Text('@$username'),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                biyografi,
+                biyografi??'hata',
                 textAlign: TextAlign.center,
               ),
             ),
@@ -169,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 _buildStatColumn('Takip Edilen', '${followed?.length ?? 0}'),
                 _buildStatColumn('Takipçi', '${followers?.length ?? 0}'),
                 _buildStatColumn('Katıldığı Anket',
-                    '${joinPoll ?? 7}'), // Katıldığı anket sayısını sabit olarak veriyorum, gerektiğine göre düzeltebilirsiniz.
+                    '${joinPoll ?? 'x'}'),
               ],
             ),
             const Divider(),
@@ -187,21 +189,21 @@ class _ProfilePageState extends State<ProfilePage> {
                       itemCount: polls!.length,
                       itemBuilder: (BuildContext context, int index) {
                         // List<Map<String, dynamic>> bos = [{}];
-                        return ForWidget.buildCardCommunityWithJoinButton(
-                            context, index, widget.pollObjects, widget.usersObjects);
+                        // return ForWidget.buildCardCommunityWithJoinButton(
+                        //     context, index, widget.pollObjects, widget.usersObjects);
                       },
                     ),
                   if (polls != null)
                     ListView.builder(
                       itemCount: polls!.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return ForWidget.buildCardCommunity(context, index, widget.pollObjects, widget.usersObjects);
+                        // return ForWidget.buildCardCommunity(context, index, widget.pollObjects, widget.usersObjects);
                       },
                     ),
                 ],
               ),
             ),
-            isMe == true
+            widget.isMe == true
                 ? const SizedBox.shrink()
                 : Align(
                     alignment: Alignment.centerRight, // Sağ ortada
@@ -292,7 +294,7 @@ class _ProfilePageState extends State<ProfilePage> {
       constraints: const BoxConstraints.tightFor(width: 150),
       child: ElevatedButton(
         onPressed: () async {
-          await updateFollowStatus(objectId, viewObjectId, isFollowing);
+          await updateFollowStatus(objectId!, viewObjectId, isFollowing);
           setState(() {
             isFollowing = !isFollowing;
           });

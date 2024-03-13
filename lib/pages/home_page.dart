@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   String surname = 'Yükleniyor..';
   String createrId = 'Yükleniyor..';
   late List<Widget> _pages;
+  String userObjectId = 'Yükleniyor..';
 
   @override
   void initState() {
@@ -67,8 +68,9 @@ class _HomePageState extends State<HomePage> {
         ),
         ProfilePage(
           4,
-          pollObjects: pollObjects,
-          usersObjects: usersObjects,
+          // pollObjects: pollObjects,
+          // usersObjects: usersObjects,
+          isMe: true,
         ),
       ];
     });

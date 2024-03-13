@@ -123,13 +123,14 @@ class ForWidget {
       subtitle: const Text('Topluluk Açıklaması'),
       trailing: InkWell(
         onTap: () {
+          print("WİDGET_CLASS ID ${usersObjects[index]['objectId']}");
           // Burada tıklama olayını işleyin
           // print('Trailing ikonuna tıklandı!');
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      ProfilePage(4, pollObjects: pollObjects, usersObjects: usersObjects,)));
+                      ProfilePage(4, isMe: false, viewedUser: usersObjects[index]['objectId'],)));// pollObjects: pollObjects, usersObjects: usersObjects, 
         },
         child: const Icon(Icons.arrow_forward),
       ),
@@ -159,7 +160,7 @@ class ForWidget {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      ProfilePage(4, pollObjects: pollObjects, usersObjects: usersObjects,)));
+                      ProfilePage(4, isMe: false, viewedUser: usersObjects[index]['objectId'],)));// pollObjects: pollObjects, usersObjects: usersObjects, 
         },
         style: TextButton.styleFrom(
           foregroundColor: Colors.blue,
