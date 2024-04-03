@@ -473,7 +473,7 @@ class BoardinBir extends StatelessWidget {
                 decoration: ShapeDecoration(
                   color: const Color(0xFF2355FF),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 child: const Center(

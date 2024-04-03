@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:voxpollui/boarding/boarding_dort.dart';
+import 'package:voxpollui/boarding/kvkk.dart';
 
 class BoardinIki extends StatefulWidget {
   const BoardinIki({super.key});
@@ -12,7 +14,39 @@ class BoardinIki extends StatefulWidget {
 class _BoardinIkiState extends State<BoardinIki> {
   bool onayliyorum = false;
   bool emailAlmak = false;
-  TextEditingController tel = TextEditingController();
+  final TextEditingController tel = TextEditingController(text: '+90 ');
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus && tel.text.isEmpty) {
+        tel.text = '+90 ';
+        tel.selection = TextSelection.fromPosition(
+          TextPosition(offset: tel.text.length),
+        );
+      }
+    });
+    tel.addListener(() {
+      final text = tel.text;
+      if (!text.startsWith('+90 ')) {
+        tel.text = '+90 ${text.replaceAll('+90 ', '')}';
+        tel.selection = TextSelection.fromPosition(
+          TextPosition(offset: tel.text.length),
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    tel.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     Color getColor(Set<MaterialState> states) {
@@ -71,19 +105,18 @@ class _BoardinIkiState extends State<BoardinIki> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: TextField(
                   inputFormatters: [
-                    LengthLimitingTextInputFormatter(10), // Maksimum 10 karakter
-                  ],//@@
+                    LengthLimitingTextInputFormatter(16), // "+90 " için 4 ekstra karakter ekleyin
+                  ],
                   keyboardType: TextInputType.phone,
                   controller: tel,
+                  focusNode: _focusNode,
                   decoration: const InputDecoration(
-                    hintText:
-                        '553 772 30 30', // Sadece telefon numarasını hint olarak ayarlayın
-                    prefixText:
-                        '+90 ', // +90 kısmını direkt metin olarak ekleyin
-                    border: InputBorder.none, // TextField çerçevesini gizler
+                    hintText: '553 772 30 30',
+                    prefixText: '', // Burada prefixText kullanmaya gerek yok, çünkü TextEditingController zaten işimizi görüyor
+                    border: InputBorder.none,
                     hintStyle: TextStyle(
-                      color: Colors.black, // Hint metni rengi (siyah)
-                      fontSize: 28, // Hint metni boyutu
+                      color: Colors.black,
+                      fontSize: 28,
                     ),
                   ),
                   style: const TextStyle(
@@ -158,45 +191,50 @@ class _BoardinIkiState extends State<BoardinIki> {
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             left: 35,
             top: 750,
-            child: SizedBox(
-              width: 333,
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'İleri butonuna basarak ',
-                      style: TextStyle(
-                        color: Color(0xFF0C0C0C),
-                        fontSize: 12,
-                        fontFamily: 'Gilroy',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Kvkk()));
+              },
+              child: const SizedBox(
+                width: 333,
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'İleri butonuna basarak ',
+                        style: TextStyle(
+                          color: Color(0xFF0C0C0C),
+                          fontSize: 12,
+                          fontFamily: 'Gilroy',
+                          fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: 'Kullanıcı Sözleşmesi',
-                      style: TextStyle(
-                        color: Color(0xFF0C0C0C),
-                        fontSize: 12,
-                        fontFamily: 'Gilroy',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
+                      TextSpan(
+                        text: 'Kullanıcı Sözleşmesi',
+                        style: TextStyle(
+                          color: Color(0xFF0C0C0C),
+                          fontSize: 12,
+                          fontFamily: 'Gilroy',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: '’ni kabul etmiş olursunuz.',
-                      style: TextStyle(
-                        color: Color(0xFF0C0C0C),
-                        fontSize: 12,
-                        fontFamily: 'Gilroy',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
+                      TextSpan(
+                        text: '’ni kabul etmiş olursunuz.',
+                        style: TextStyle(
+                          color: Color(0xFF0C0C0C),
+                          fontSize: 12,
+                          fontFamily: 'Gilroy',
+                          fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
