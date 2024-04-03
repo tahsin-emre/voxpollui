@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
-import 'package:voxpollui/class/model/user.dart';
-import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/script/database.dart';
 
 // ignore: must_be_immutable
@@ -191,12 +189,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         // List<Map<String, dynamic>> bos = [{}];
                         // return ForWidget.buildCardCommunityWithJoinButton(
                         //     context, index, widget.pollObjects, widget.usersObjects);
+                        return Container();
                       },
                     ),
                   if (polls != null)
                     ListView.builder(
                       itemCount: polls!.length,
                       itemBuilder: (BuildContext context, int index) {
+                        return Container();
                         // return ForWidget.buildCardCommunity(context, index, widget.pollObjects, widget.usersObjects);
                       },
                     ),
