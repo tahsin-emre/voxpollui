@@ -37,6 +37,7 @@ dependencies:
   shared_preferences: ^2.2.2 # önbellek pakedi
   image_picker: ^1.0.7 # galeri pakedi 
   table_calendar: ^3.0.9 # Takvim oluşturucu
+  shimmer: ^3.0.0 # yükleme ekranı için
 
 
   # The following adds the Cupertino Icons font to your application.
