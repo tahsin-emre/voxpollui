@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:voxpollui/boarding/boarding_dort.dart';
 import 'package:voxpollui/boarding/kvkk.dart';
+import 'package:voxpollui/class/model/national/get_color.dart';
 
 class BoardinIki extends StatefulWidget {
   const BoardinIki({super.key});
@@ -105,14 +106,14 @@ class _BoardinIkiState extends State<BoardinIki> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: TextField(
                   inputFormatters: [
-                    LengthLimitingTextInputFormatter(16), // "+90 " için 4 ekstra karakter ekleyin
+                    LengthLimitingTextInputFormatter(14), // "+90 " için 4 ekstra karakter ekleyin
                   ],
                   keyboardType: TextInputType.phone,
                   controller: tel,
                   focusNode: _focusNode,
                   decoration: const InputDecoration(
                     hintText: '553 772 30 30',
-                    prefixText: '', // Burada prefixText kullanmaya gerek yok, çünkü TextEditingController zaten işimizi görüyor
+                    prefixText: '', // 05302300592 Burada prefixText kullanmaya gerek yok, çünkü TextEditingController zaten işimizi görüyor
                     border: InputBorder.none,
                     hintStyle: TextStyle(
                       color: Colors.black,
@@ -123,6 +124,7 @@ class _BoardinIkiState extends State<BoardinIki> {
                     color: Colors.black,
                     fontSize: 28,
                   ),
+                  cursorColor: AppColor.nationalColor,
                 ),
               ),
             ),
@@ -196,7 +198,7 @@ class _BoardinIkiState extends State<BoardinIki> {
             top: 750,
             child: GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Kvkk()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const Kvkk()));
               },
               child: const SizedBox(
                 width: 333,
@@ -260,7 +262,7 @@ class _BoardinIkiState extends State<BoardinIki> {
               onTap: () {
                 if (onayliyorum && emailAlmak) {
                   // Rıza metinlerini onayladı ve e-posta almak istiyor
-                  if (tel.text.isNotEmpty && tel.text.length == 10) {
+                  if (tel.text.isNotEmpty && tel.text.length == 14) {
                     // TextField dolu ve 10 karakter
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => const BoardinDort()));

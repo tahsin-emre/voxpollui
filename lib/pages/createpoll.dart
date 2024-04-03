@@ -242,7 +242,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                               _rangeEnd = null;
                               _rangeSelectionMode =
                                   RangeSelectionMode.toggledOff;
-                              // Seçilen tarihi _selectedDates listesine ekleyin
+                              // Seçilen tarihi _selected s listesine ekleyin
                               _selectedDates = [
                                 selectedDay.toString().substring(0, 10)
                               ];
