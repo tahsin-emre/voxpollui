@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
+import 'package:voxpollui/class/model/national/get_color.dart';
 import 'package:voxpollui/script/database.dart';
 
 // ignore: must_be_immutable
@@ -173,8 +174,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             const Divider(),
-            const TabBar(
-              tabs: [
+            TabBar(
+              indicatorColor: AppColor.nationalColor,
+              labelColor: AppColor.nationalColor,
+              tabs: const [
                 Tab(text: 'Katıldıklarım'),
                 Tab(text: 'Oluşturduklarım'),
               ],
