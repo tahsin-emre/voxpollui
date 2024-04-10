@@ -1,19 +1,22 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:voxpollui/class/model/national/get_color.dart';
 
 class PollTextField {
-  static Future<dynamic> _openGallery() async {
+  static File? _selectedImage;
+
+  static Future<void> _openGallery(BuildContext context) async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
-      File imageFile = File(pickedImage.path);
-      return imageFile;
+      _selectedImage = File(pickedImage.path);
+      // Ekranı yenilemek için
+      (context as Element).markNeedsBuild();
     } else {
-      return const Text('Resim seçilmedi');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Resim seçilmedi')),
+      );
     }
   }
 
@@ -22,22 +25,21 @@ class PollTextField {
     required BuildContext context,
     required String labelText,
   }) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        suffixIcon: GestureDetector(
-          onTap: () {
-            _openGallery();
-          },
-          child: Icon(Icons.add_box, color: AppColor.nationalColor),
-        ),
-        label: Text(
-          labelText,
-          style: const TextStyle(
-            color: Colors.black,
+    return Column(
+      children: [
+        TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            suffixIcon: GestureDetector(
+              onTap: () => _openGallery(context),
+              child: Icon(Icons.add_photo_alternate, color: Colors.blue),
+            ),
+            label: Text(labelText),
           ),
         ),
-      ),
+        if (_selectedImage != null) // Görseli göster
+          Image.file(_selectedImage!),
+      ],
     );
   }
 }
