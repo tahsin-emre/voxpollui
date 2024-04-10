@@ -578,7 +578,7 @@ class _Page0State extends State<Page0> {
                     if (dataManager.getPolls()?.isEmpty ?? true) {
                       // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
                       return Column(children: [
-                        LoadingScreen.loadingScreen(text: "Yükleniyor"),
+                        LoadingScreen.loadingScreen(),
                         Text(DateTime.now().toString()),
                       ]
                           //   color: Color(0xFF2355FF),

@@ -16,7 +16,7 @@ class ForWidget {
         case ConnectionState.none:
           return const Text('Başlatılmadı');
         case ConnectionState.waiting:
-          return LoadingScreen.loadingScreen(text: "Yükleniyor");
+          return LoadingScreen.loadingScreen();
         case ConnectionState.active:
         case ConnectionState.done:
           if (snapshot.hasError) {

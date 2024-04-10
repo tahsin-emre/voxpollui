@@ -69,8 +69,7 @@ class _SearchPageState extends State<SearchPage> {
                       (BuildContext context, int index) {
                         if (dataManager.getPolls()?.isEmpty ?? true) {
                           // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
-                          return LoadingScreen.loadingScreen(
-                              text: "Yükleniyor");
+                          return LoadingScreen.loadingScreen();
                         }
                         return ForWidget.buildCard(context,
                             widget.usersObjects!, widget.pollObjects!, index);

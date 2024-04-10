@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: usersObjects != null ? _pages[_currentIndex] : LoadingScreen.loadingScreen(text: "Yükleniyor"),
+      body: usersObjects != null ? _pages[_currentIndex] : LoadingScreen.loadingScreen(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }

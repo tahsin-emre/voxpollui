@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LoadingScreen {
-  static Widget loadingScreen({
-    required String text,
-  }) {
+  static Widget loadingScreen() {
     return Shimmer.fromColors(
       baseColor: Colors.grey[300]!, // Shimmer efektinin temel rengi
       highlightColor: Colors.grey[100]!, // Shimmer efektinin parıldayan rengi

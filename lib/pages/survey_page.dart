@@ -88,7 +88,7 @@ class _SurveyPageState extends State<SurveyPage> {
       body: Container(
         padding: const EdgeInsets.all(20),
         child: _isLoading // Yükleme durumunu kontrol edin
-            ? LoadingScreen.loadingScreen(text: "Yükleniyor")
+            ? LoadingScreen.loadingScreen()
             : ListView(
                 children: [
                   _buildCardCommunity(),
@@ -99,7 +99,7 @@ class _SurveyPageState extends State<SurveyPage> {
                           future: _pollOptions,
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.waiting) {
-                              return LoadingScreen.loadingScreen(text: "Yükleniyor");
+                              return LoadingScreen.loadingScreen();
                             }
 
                             if (snapshot.hasError) {
@@ -189,7 +189,7 @@ class _SurveyPageState extends State<SurveyPage> {
       future: _pollOptions,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return LoadingScreen.loadingScreen(text: "Yükleniyor");
+          return LoadingScreen.loadingScreen();
         }
 
         if (snapshot.hasError) {
