@@ -430,7 +430,9 @@ class _Page0State extends State<Page0> {
                     const Text(
                       'Hoş Geldiniz',
                       style: TextStyle(
-                          fontSize: 24.0, fontWeight: FontWeight.bold),
+                          fontSize: 24.0, 
+                          fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Row(
                       children: [

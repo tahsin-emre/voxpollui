@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:voxpollui/class/custom/custom_textfield.dart';
+import 'package:voxpollui/class/model/custom_model/textfield_model.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
 import 'package:voxpollui/class/utils.dart';
 import 'package:voxpollui/pages/home_page.dart';
@@ -22,23 +26,31 @@ class _CreatePollPageState extends State<CreatePollPage> {
     super.initState();
   }
 
-  final List<TextEditingController> _optionControllers =
-      List.generate(2, (index) => TextEditingController());
+  List<FieldOption> _options = [FieldOption(), FieldOption(), FieldOption()];
 
   void _addTextField() {
-    if (_optionControllers.length >= 8) {
-      // Eğer 8'den fazla TextField varsa, kullanıcıya bir mesaj göster
+    if (_options.length >= 8) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('En fazla 8 adet alan ekleyebilirsiniz.'),
-        ),
+        const SnackBar(content: Text('En fazla 8 adet seçenek ekleyebilirsiniz.')),
       );
     } else {
       setState(() {
-        _optionControllers.add(TextEditingController());
+        _options.add(FieldOption());
       });
     }
   }
+
+  Future<void> _pickImage(FieldOption option) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        option.image = File(pickedFile.path);
+      });
+    }
+  }
+
 
   List<String> _selectedDates = [];
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -49,43 +61,64 @@ class _CreatePollPageState extends State<CreatePollPage> {
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
 
+  Future<ParseFileBase?> uploadImageFile(File imageFile) async {
+  final parseFile = ParseFile(imageFile);
+
+  final response = await parseFile.save();
+
+  if (response.success) {
+    return parseFile;
+  } else {
+    // Hata yönetimi
+    print('Dosya yüklenemedi: ${response.error?.message}');
+    return null;
+  }
+}
+
   Future<void> _createPoll() async {
-    final String title = _titleController.text.trim();
-    final List<String> options =
-        _optionControllers.map((controller) => controller.text.trim()).toList();
-
-    if (title.isEmpty || options.any((option) => option.isEmpty)) {
-      // Hata mesajı göster
-      return;
-    }
-
-    // Mevcut kullanıcıyı al
-    final ParseUser currentUser = await ParseUser.currentUser();
-
-    final ParseObject poll = ParseObject('Poll')
-      ..set('title', title)
-      ..set('createdBy',
-          currentUser.objectId) // Kullanıcının objectId'sini kaydet
-      ..set('deletedDate',_rangeEnd.toString().substring(0, 10));
-
-    final response = await poll.save();
-
-    if (response.success && response.result != null) {
-      final pollId = response.result.objectId;
-      for (var option in options) {
-        final ParseObject pollOption = ParseObject('PollOption')
-          ..set('text', option)
-          ..set('pollId', pollId);
-        await pollOption.save();
-      }
-      // Anket başarıyla kaydedildi mesajı göster ve ana sayfaya yönlendir
-      // ignore: use_build_context_synchronously
-      Navigator.push(
-          context, MaterialPageRoute(builder: ((context) => const HomePage())));
+  final String title = _titleController.text.trim();
+  final List<String> options = _options.map((option) => option.controller.text.trim()).toList();
+  
+  if (title.isEmpty || options.any((option) => option.isEmpty)) {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Başlık veya seçenekler boş olamaz')));
+    return;
+  }
+  
+  // Dosyaları asenkron olarak yükle
+  List<ParseFileBase?> uploadedFiles = [];
+  for (var option in _options) {
+    if (option.image != null) {
+      var uploadedFile = await uploadImageFile(option.image!);
+      uploadedFiles.add(uploadedFile);
     } else {
-      // Hata mesajı göster
+      uploadedFiles.add(null); // Eşleşen dosya yoksa null ekle
     }
   }
+
+  // Mevcut kullanıcıyı al
+  final ParseUser currentUser = await ParseUser.currentUser();
+  final ParseObject poll = ParseObject('Poll')
+    ..set('title', title)
+    ..set('createdBy', currentUser.objectId)
+    ..set('deletedDate', _rangeEnd?.toString().substring(0, 10));
+
+  // Burada setState kullanmanıza gerek yok çünkü widget'ın durumuyla ilgili bir değişiklik yok.
+  final response = await poll.save();
+  if (response.success && response.result != null) {
+    final pollId = response.result.objectId;
+    for (var i = 0; i < options.length; i++) {
+      final ParseObject pollOption = ParseObject('PollOption')
+        ..set('text', options[i])
+        ..set('pollId', pollId)
+        ..set('image', uploadedFiles[i]);
+      await pollOption.save();
+    }
+    Navigator.push(context, MaterialPageRoute(builder: ((context) => const HomePage())));
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Anket oluşturulamadı: ${response.error?.message}')));
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -111,10 +144,16 @@ class _CreatePollPageState extends State<CreatePollPage> {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),
-                PollTextField.pollTextField(
-                    controller: _titleController,
-                    context: context,
-                    labelText: "Anket Başlığı"),
+                TextField(
+                  controller: _titleController,
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.image),
+                      onPressed: () => _pickImage(_options.first),
+                    ),
+                    label: Text("Anket Başlığı"),
+                  ),
+                ),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: Align(
@@ -126,12 +165,23 @@ class _CreatePollPageState extends State<CreatePollPage> {
                     ),
                   ),
                 ),
-                ..._optionControllers
-                    .map((controller) => PollTextField.pollTextField(
-                          controller: controller,
-                          labelText: "1.",
-                          context: context,
-                        )),
+                 ..._options.map((option) {
+                return Column(
+                  children: [
+                    TextField(
+                      controller: option.controller,
+                      decoration: InputDecoration(
+                        labelText: 'Option',
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.image),
+                          onPressed: () => _pickImage(option),
+                        ),
+                      ),
+                    ),
+                    if (option.image != null) Image.file(option.image!),
+                  ],
+                );
+              }).toList(),
                 const SizedBox(height: 20.0),
                 Align(
                   alignment: Alignment.centerLeft,
