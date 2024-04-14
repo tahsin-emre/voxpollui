@@ -120,7 +120,7 @@ class ForWidget {
               style: const TextStyle(fontSize: 12.0)),
         ],
       ),
-      subtitle: const Text('ğükdıpor60ırğ0i}¨]}\ü]]}i{}}}}}{i½]Topluluk Açıklaması'),
+      subtitle: const Text('Topluluk Açıklaması'),
       trailing: InkWell(
         onTap: () {
           print("WİDGET_CLASS ID ${usersObjects[index]['objectId']}");

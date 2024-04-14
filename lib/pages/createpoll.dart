@@ -100,6 +100,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
   final ParseObject poll = ParseObject('Poll')
     ..set('title', title)
     ..set('createdBy', currentUser.objectId)
+    ..set("title_image", uploadedFiles[0])
     ..set('deletedDate', _rangeEnd?.toString().substring(0, 10));
 
   // Burada setState kullanmanıza gerek yok çünkü widget'ın durumuyla ilgili bir değişiklik yok.
@@ -109,8 +110,8 @@ class _CreatePollPageState extends State<CreatePollPage> {
     for (var i = 0; i < options.length; i++) {
       final ParseObject pollOption = ParseObject('PollOption')
         ..set('text', options[i])
-        ..set('pollId', pollId)
-        ..set('image', uploadedFiles[i]);
+        ..set('pollId', pollId);
+        // ..set('image', uploadedFiles[i]);
       await pollOption.save();
     }
     Navigator.push(context, MaterialPageRoute(builder: ((context) => const HomePage())));
@@ -154,6 +155,10 @@ class _CreatePollPageState extends State<CreatePollPage> {
                     label: Text("Anket Başlığı"),
                   ),
                 ),
+                ..._options.map((option) {
+                   if (option.image != null) return Image.file(option.image!);
+                   else{return Container();}
+                }),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: Align(
@@ -172,13 +177,12 @@ class _CreatePollPageState extends State<CreatePollPage> {
                       controller: option.controller,
                       decoration: InputDecoration(
                         labelText: 'Option',
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.image),
-                          onPressed: () => _pickImage(option),
-                        ),
+                        // suffixIcon: IconButton(
+                        //   icon: const Icon(Icons.image),
+                        //   onPressed: () => _pickImage(option),
+                        // ),
                       ),
                     ),
-                    if (option.image != null) Image.file(option.image!),
                   ],
                 );
               }).toList(),

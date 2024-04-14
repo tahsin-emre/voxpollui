@@ -94,7 +94,7 @@ class _Page0State extends State<Page0> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              decoration: const BoxDecoration(
+              decoration: const BoxDecoration(  
                 color: Colors.white,
               ),
               accountName: Text(

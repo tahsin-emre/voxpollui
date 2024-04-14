@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_polls/flutter_polls.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
@@ -74,6 +75,11 @@ class _SurveyPageState extends State<SurveyPage> {
     String? deletedDateString = widget.pollData[widget.index]["deletedDate"];
     DateTime pollDate = DateTime.parse(deletedDateString ?? '');
     DateTime now = DateTime.now();
+    ParseUser currentUser = ParseUser.currentUser() as ParseUser;
+    String  currentUserId = currentUser.objectId!;
+
+    // String? img = widget.pollData[widget.index]['title_image'];
+    bool isPollCreator = currentUserId == widget.userData[widget.index]['createdByObjectId'];
 
 
 
@@ -110,45 +116,51 @@ class _SurveyPageState extends State<SurveyPage> {
                               return const Text('Anket seçenekleri bulunamadı');
                             }
 
-                            return FlutterPolls(
-                              pollId: widget.pollData[widget.index]['objectId'],
-                              onVoted: (PollOption pollOption, int newTotalVotes) async {
-                                String userId = widget.userData[widget.index]['objectId'];
-                                String optionId = pollOption.id.toString();
-                                // print("Kullanıcı ID: $userId, Anket ID: ${widget.pollData[widget.index]['objectId']}, Seçenek ID: $optionId");
-                                ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
-                                final Map<String, dynamic> params = <String, dynamic>{
-                                  'userId': userId,
-                                  'pollId': widget.pollData[widget.index]['objectId'],
-                                  'optionId': optionId
-                                };
-                                final ParseResponse result = await function.execute(parameters: params);
-
-                                if (result.success) {
-                                  // print('Oy Başarıyla Kaydedildi');
-                                  // _pollOptions'ı yeniden yüklemeyi burada yapabilirsiniz
-                                  return true;
-                                } else {
-                                  // print("Anket cevabı kaydedilemedi: ${result.error}");
-                                  return false;
-                                }
-                              },
-                              pollEnded: pollEnded,
-                              pollTitle: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  widget.pollData[widget.index]['title'],
-                                  style: const TextStyle(
+                            return Column(
+                              children: [
+                                // Text("${widget.pollData}"),
+                                Image.network(widget.pollData[widget.index]['title_image']["url"] ?? ""),
+                                FlutterPolls(
+                                  pollId: widget.pollData[widget.index]['objectId'],
+                                  onVoted: (PollOption pollOption, int newTotalVotes) async {
+                                    String userId = widget.userData[widget.index]['objectId'];
+                                    String optionId = pollOption.id.toString();
+                                    // print("Kullanıcı ID: $userId, Anket ID: ${widget.pollData[widget.index]['objectId']}, Seçenek ID: $optionId");
+                                    ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
+                                    final Map<String, dynamic> params = <String, dynamic>{
+                                      'userId': userId,
+                                      'pollId': widget.pollData[widget.index]['objectId'],
+                                      'optionId': optionId
+                                    };
+                                    final ParseResponse result = await function.execute(parameters: params);
+                                
+                                    if (result.success) {
+                                      // print('Oy Başarıyla Kaydedildi');
+                                      // _pollOptions'ı yeniden yüklemeyi burada yapabilirsiniz
+                                      return true;
+                                    } else {
+                                      // print("Anket cevabı kaydedilemedi: ${result.error}");
+                                      return false;
+                                    }
+                                  },
+                                  pollEnded: pollEnded,
+                                  pollTitle: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      widget.pollData[widget.index]['title'],
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  pollOptions: snapshot.data!,
+                                  votedPercentageTextStyle: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                              ),
-                              pollOptions: snapshot.data!,
-                              votedPercentageTextStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              ],
                             );
                           },
                         ),
