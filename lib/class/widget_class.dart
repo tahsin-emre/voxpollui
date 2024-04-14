@@ -72,7 +72,7 @@ class ForWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SurveyPage(pollData: polls, index: index, userData: users,)),
+                          MaterialPageRoute(builder: (context) => SurveyPage(pollData: polls, index: index, userData: creator,)),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -112,7 +112,7 @@ class ForWidget {
       ),
       title: Row(
         children: [
-          const Text('Topluluk Adı'),
+          Text('${usersObjects![index]['name']}'),
           const SizedBox(width: 4.0),
           const Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
           const SizedBox(width: 4.0),

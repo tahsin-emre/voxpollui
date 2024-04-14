@@ -445,10 +445,10 @@ class _Page0State extends State<Page0> {
                               style: const TextStyle(
                                   fontSize: 24.0, fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                              '${followed?.length ?? 0}',
-                              style: const TextStyle(fontSize: 16.0),
-                            ),
+                            // Text(
+                            //   '${followed?.length ?? 0}',
+                            //   style: const TextStyle(fontSize: 16.0),
+                            // ),
                           ],
                         ),
                         const Spacer(),
@@ -580,14 +580,9 @@ class _Page0State extends State<Page0> {
                     if (dataManager.getPolls()?.isEmpty ?? true) {
                       // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
                       return Column(children: [
-                        LoadingScreen.loadingScreen(),
-                        Text(DateTime.now().toString()),
-                      ]
-                          //   color: Color(0xFF2355FF),
-                          //   semanticsLabel: "$now",
-                          //   semanticsValue: "$now",
-                          // )
-                          );
+                          LoadingScreen.loadingScreen(),
+                        ]
+                      );
                     }
                     return ForWidget.buildCard(
                         context, widget.usersObjects!, widget.pollObjects!, index);
