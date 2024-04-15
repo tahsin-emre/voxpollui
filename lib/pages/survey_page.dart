@@ -24,6 +24,9 @@ class _SurveyPageState extends State<SurveyPage> {
   bool _hasVoted = false;
   bool _isLoading = true; // Yükleme durumu ekleyin
 
+  bool isPollCreator = false;
+  late ParseUser currentUser;
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +36,7 @@ class _SurveyPageState extends State<SurveyPage> {
   }
 
   Future<void> _checkIfUserVoted() async {
+  await _loadCurrentUser();
   bool hasVoted = await Database.hasUserVoted(widget.pollData, widget.index);
   // print("_hasVoted: $hasVoted"); // Debug için yazdırın
   setState(() {
@@ -54,7 +58,6 @@ class _SurveyPageState extends State<SurveyPage> {
 
     if (apiResponse.success && apiResponse.results != null) {
       _pollOptionTitles.clear(); // Listeyi temizleyin
-      await _loadCurrentUser();
       return apiResponse.results!.map((e) {
         String optionId = e.get<String>('objectId') ?? 'Bilinmiyor';
         String optionTitle = e.get<String>('text') ?? 'Hata';
@@ -69,9 +72,6 @@ class _SurveyPageState extends State<SurveyPage> {
       return [];
     }
   }
-
-  late bool isPollCreator;
-  late ParseUser currentUser;
 
   Future<void> _loadCurrentUser() async {
     ParseUser? _currentUser = await ParseUser.currentUser();
@@ -112,7 +112,7 @@ class _SurveyPageState extends State<SurveyPage> {
         padding: const EdgeInsets.all(20),
         child: _isLoading // Yükleme durumunu kontrol edin
             ? LoadingScreen.loadingScreen()
-            : isPollCreator ? Container(child: Center(child: Text("Bu Sizin Oluşturduğunuz bir anket"),),) : 
+            : //    //  isPollCreator ? const SizedBox(child: Center(child: Text("Bu Sizin Oluşturduğunuz bir anket"),),) : 
             ListView(
                 children: [
                   _buildCardCommunity(),

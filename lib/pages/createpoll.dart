@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:voxpollui/class/custom/custom_button.dart';
 import 'package:voxpollui/class/custom/custom_textfield.dart';
 import 'package:voxpollui/class/model/custom_model/textfield_model.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
@@ -76,49 +77,50 @@ class _CreatePollPageState extends State<CreatePollPage> {
 }
 
   Future<void> _createPoll() async {
-  final String title = _titleController.text.trim();
-  final List<String> options = _options.map((option) => option.controller.text.trim()).toList();
+    final String title = _titleController.text.trim();
+    final List<String> firstTwoOptions = _options.take(2).map((option) => option.controller.text.trim()).toList();
+    final List<String> options = _options.map((option) => option.controller.text.trim()).toList();
+    
+    if (title.isEmpty || firstTwoOptions.any((option) => option.isEmpty)) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Başlık veya ilk iki seçenek boş olamaz')));
+      return;
+    }
   
-  if (title.isEmpty || options.any((option) => option.isEmpty)) {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Başlık veya seçenekler boş olamaz')));
-    return;
-  }
-  
-  // Dosyaları asenkron olarak yükle
-  List<ParseFileBase?> uploadedFiles = [];
-  for (var option in _options) {
-    if (option.image != null) {
-      var uploadedFile = await uploadImageFile(option.image!);
-      uploadedFiles.add(uploadedFile);
+    // Dosyaları asenkron olarak yükle
+    List<ParseFileBase?> uploadedFiles = [];
+    for (var option in _options) {
+      if (option.image != null) {
+        var uploadedFile = await uploadImageFile(option.image!);
+        uploadedFiles.add(uploadedFile);
+      } else {
+        uploadedFiles.add(null); // Eşleşen dosya yoksa null ekle
+      }
+    }
+
+    // Mevcut kullanıcıyı al
+    final ParseUser currentUser = await ParseUser.currentUser();
+    final ParseObject poll = ParseObject('Poll')
+      ..set('title', title)
+      ..set('createdBy', currentUser.objectId)
+      ..set("title_image", uploadedFiles[0])
+      ..set('deletedDate', _rangeEnd?.toString().substring(0, 10));
+
+    // Burada setState kullanmanıza gerek yok çünkü widget'ın durumuyla ilgili bir değişiklik yok.
+    final response = await poll.save();
+    if (response.success && response.result != null) {
+      final pollId = response.result.objectId;
+      for (var i = 0; i < options.length; i++) {
+        final ParseObject pollOption = ParseObject('PollOption')
+          ..set('text', options[i])
+          ..set('pollId', pollId);
+          // ..set('image', uploadedFiles[i]);
+        await pollOption.save();
+      }
+      Navigator.push(context, MaterialPageRoute(builder: ((context) => const HomePage())));
     } else {
-      uploadedFiles.add(null); // Eşleşen dosya yoksa null ekle
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Anket oluşturulamadı: ${response.error?.message}')));
     }
   }
-
-  // Mevcut kullanıcıyı al
-  final ParseUser currentUser = await ParseUser.currentUser();
-  final ParseObject poll = ParseObject('Poll')
-    ..set('title', title)
-    ..set('createdBy', currentUser.objectId)
-    ..set("title_image", uploadedFiles[0])
-    ..set('deletedDate', _rangeEnd?.toString().substring(0, 10));
-
-  // Burada setState kullanmanıza gerek yok çünkü widget'ın durumuyla ilgili bir değişiklik yok.
-  final response = await poll.save();
-  if (response.success && response.result != null) {
-    final pollId = response.result.objectId;
-    for (var i = 0; i < options.length; i++) {
-      final ParseObject pollOption = ParseObject('PollOption')
-        ..set('text', options[i])
-        ..set('pollId', pollId);
-        // ..set('image', uploadedFiles[i]);
-      await pollOption.save();
-    }
-    Navigator.push(context, MaterialPageRoute(builder: ((context) => const HomePage())));
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Anket oluşturulamadı: ${response.error?.message}')));
-  }
-}
 
 
   @override
@@ -149,7 +151,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                   controller: _titleController,
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
-                      icon: const Icon(Icons.image),
+                      icon: Icon(Icons.image, color: AppColor.nationalColor,),
                       onPressed: () => _pickImage(_options.first),
                     ),
                     label: Text("Anket Başlığı"),
@@ -170,22 +172,25 @@ class _CreatePollPageState extends State<CreatePollPage> {
                     ),
                   ),
                 ),
-                 ..._options.map((option) {
-                return Column(
-                  children: [
-                    TextField(
-                      controller: option.controller,
-                      decoration: InputDecoration(
-                        labelText: 'Option',
-                        // suffixIcon: IconButton(
-                        //   icon: const Icon(Icons.image),
-                        //   onPressed: () => _pickImage(option),
-                        // ),
+                ..._options.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final option = entry.value;
+                  return Column(
+                    children: [
+                      TextField(
+                        controller: option.controller,
+                        decoration: InputDecoration(
+                          labelText: '${index + 1}.',
+                          // suffixIcon: IconButton(
+                          //   icon: const Icon(Icons.image),
+                          //   onPressed: () => _pickImage(option),
+                          // ),
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              }).toList(),
+                    ],
+                  );
+                }).toList(),
+
                 const SizedBox(height: 20.0),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -330,15 +335,23 @@ class _CreatePollPageState extends State<CreatePollPage> {
                   ],
                 ),
                 const SizedBox(height: 20.0),
-                ElevatedButton(
+                NationalButton.nationalButton(
+                  text: "Anket Oluştur",
                   onPressed: _createPoll,
-                  child: const Text('Anket Oluştur'),
                 ),
-                const SizedBox(height: 20.0),
-                ElevatedButton(
+                NationalButton.nationalButton(
+                  text: "Seçilen Tarihler",
                   onPressed: _saveSelectedDates,
-                  child: const Text('Seçilen Tarihler'),
                 ),
+                // ElevatedButton(
+                //   onPressed: _createPoll,
+                //   child: const Text('Anket Oluştur'),
+                // ),
+                // const SizedBox(height: 20.0),
+                // ElevatedButton(
+                //   onPressed: _saveSelectedDates,
+                //   child: const Text('Seçilen Tarihler'),
+                // ),
                 const SizedBox(height: 200.0),
               ],
             ),
