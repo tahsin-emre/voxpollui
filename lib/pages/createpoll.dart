@@ -77,50 +77,54 @@ class _CreatePollPageState extends State<CreatePollPage> {
 }
 
   Future<void> _createPoll() async {
-    final String title = _titleController.text.trim();
-    final List<String> firstTwoOptions = _options.take(2).map((option) => option.controller.text.trim()).toList();
-    final List<String> options = _options.map((option) => option.controller.text.trim()).toList();
-    
-    if (title.isEmpty || firstTwoOptions.any((option) => option.isEmpty)) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Başlık veya ilk iki seçenek boş olamaz')));
-      return;
-    }
+  final String title = _titleController.text.trim();
+  final List<String> options = _options.map((option) => option.controller.text.trim()).toList();
   
-    // Dosyaları asenkron olarak yükle
-    List<ParseFileBase?> uploadedFiles = [];
-    for (var option in _options) {
-      if (option.image != null) {
-        var uploadedFile = await uploadImageFile(option.image!);
-        uploadedFiles.add(uploadedFile);
-      } else {
-        uploadedFiles.add(null); // Eşleşen dosya yoksa null ekle
-      }
-    }
+  // Başlık boş ise veya seçeneklerin tamamı boş ise uyarı ver ve işlemi sonlandır
+  if (title.isEmpty || options.every((option) => option.isEmpty)) {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Başlık veya seçenekler boş olamaz')));
+    return;
+  }
 
-    // Mevcut kullanıcıyı al
-    final ParseUser currentUser = await ParseUser.currentUser();
-    final ParseObject poll = ParseObject('Poll')
-      ..set('title', title)
-      ..set('createdBy', currentUser.objectId)
-      ..set("title_image", uploadedFiles[0])
-      ..set('deletedDate', _rangeEnd?.toString().substring(0, 10));
+  // Sadece boş olmayan seçenekleri işleme al
+  final List<String> nonEmptyOptions = options.where((option) => option.isNotEmpty).toList();
 
-    // Burada setState kullanmanıza gerek yok çünkü widget'ın durumuyla ilgili bir değişiklik yok.
-    final response = await poll.save();
-    if (response.success && response.result != null) {
-      final pollId = response.result.objectId;
-      for (var i = 0; i < options.length; i++) {
-        final ParseObject pollOption = ParseObject('PollOption')
-          ..set('text', options[i])
-          ..set('pollId', pollId);
-          // ..set('image', uploadedFiles[i]);
-        await pollOption.save();
-      }
-      Navigator.push(context, MaterialPageRoute(builder: ((context) => const HomePage())));
+  // Dosyaları asenkron olarak yükle
+  List<ParseFileBase?> uploadedFiles = [];
+  for (var option in _options) {
+    if (option.image != null) {
+      var uploadedFile = await uploadImageFile(option.image!);
+      uploadedFiles.add(uploadedFile);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Anket oluşturulamadı: ${response.error?.message}')));
+      uploadedFiles.add(null); // Eşleşen dosya yoksa null ekle
     }
   }
+
+  // Mevcut kullanıcıyı al
+  final ParseUser currentUser = await ParseUser.currentUser();
+  final ParseObject poll = ParseObject('Poll')
+    ..set('title', title)
+    ..set('createdBy', currentUser.objectId)
+    ..set("title_image", uploadedFiles[0])
+    ..set('deletedDate', _rangeEnd?.toString().substring(0, 10));
+
+  // Burada setState kullanmanıza gerek yok çünkü widget'ın durumuyla ilgili bir değişiklik yok.
+  final response = await poll.save();
+  if (response.success && response.result != null) {
+    final pollId = response.result.objectId;
+    for (var i = 0; i < nonEmptyOptions.length; i++) {
+      final ParseObject pollOption = ParseObject('PollOption')
+        ..set('text', nonEmptyOptions[i])
+        ..set('pollId', pollId);
+        // ..set('image', uploadedFiles[i]);
+      await pollOption.save();
+    }
+    Navigator.push(context, MaterialPageRoute(builder: ((context) => const HomePage())));
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Anket oluşturulamadı: ${response.error?.message}')));
+  }
+}
+
 
 
   @override

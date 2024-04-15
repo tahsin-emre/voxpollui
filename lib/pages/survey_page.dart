@@ -112,7 +112,8 @@ class _SurveyPageState extends State<SurveyPage> {
         padding: const EdgeInsets.all(20),
         child: _isLoading // Yükleme durumunu kontrol edin
             ? LoadingScreen.loadingScreen()
-            : //    //  isPollCreator ? const SizedBox(child: Center(child: Text("Bu Sizin Oluşturduğunuz bir anket"),),) : 
+            :  //! Anketleri Test Edebilmek için şimdilik Devre dışı 🠗🠗🠗🠗🠗🠗
+              /*isPollCreator ? const SizedBox(child: Center(child: Text("Bu Sizin Oluşturduğunuz bir anket"),),) : */
             ListView(
                 children: [
                   _buildCardCommunity(),
