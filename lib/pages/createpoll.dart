@@ -63,18 +63,18 @@ class _CreatePollPageState extends State<CreatePollPage> {
   DateTime? _rangeEnd;
 
   Future<ParseFileBase?> uploadImageFile(File imageFile) async {
-  final parseFile = ParseFile(imageFile);
+    final parseFile = ParseFile(imageFile);
 
-  final response = await parseFile.save();
+    final response = await parseFile.save();
 
-  if (response.success) {
-    return parseFile;
-  } else {
-    // Hata yönetimi
-    print('Dosya yüklenemedi: ${response.error?.message}');
-    return null;
+    if (response.success) {
+      return parseFile;
+    } else {
+      // Hata yönetimi
+      print('Dosya yüklenemedi: ${response.error?.message}');
+      return null;
+    }
   }
-}
 
   Future<void> _createPoll() async {
   final String title = _titleController.text.trim();
@@ -102,6 +102,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
 
   // Mevcut kullanıcıyı al
   final ParseUser currentUser = await ParseUser.currentUser();
+  
   final ParseObject poll = ParseObject('Poll')
     ..set('title', title)
     ..set('createdBy', currentUser.objectId)

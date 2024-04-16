@@ -136,7 +136,11 @@ class _StateBoardinDort extends State<BoardinDort> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Builder(builder: (BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: const SizedBox(),
+      ),
+      body: Builder(builder: (BuildContext context) {
       return GestureDetector(
         onTap: () {
           // Klavye açıkken tıklanırsa klavyeyi kapat@
@@ -166,7 +170,7 @@ class _StateBoardinDort extends State<BoardinDort> {
                         height: 20,
                       ),
                       const Text(
-                        '*Bazı bilgiler sonradan değiştirilemez. Doğru girdiğinizden emin olun.',
+                        '*Bazı bilgiler sonradan değiştirilemez. \n Doğru girdiğinizden emin olun.',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,

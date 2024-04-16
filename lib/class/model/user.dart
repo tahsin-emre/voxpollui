@@ -72,6 +72,7 @@ class CreatorData {
   final bool emailVerified;
   final List<dynamic> followed;
   final List<dynamic> followers;
+  final String profileImageUrl;
 
   CreatorData({
     required this.objectId,
@@ -87,6 +88,7 @@ class CreatorData {
     required this.emailVerified,
     required this.followed,
     required this.followers,
+    required this.profileImageUrl,
   });
 /*
 I/flutter ( 7342): {objectId: Syb4CqazPh, username: qeq@gm.cm, gender: Erkek, city: ewqe, name: berke, birthDate: qweqe, district: eqwe, surname: qweqwe, biography: }*/
@@ -105,6 +107,7 @@ I/flutter ( 7342): {objectId: Syb4CqazPh, username: qeq@gm.cm, gender: Erkek, ci
       emailVerified: json['emailVerified'] as bool? ?? false,
       followed: List<String>.from(json['followed'] as List<dynamic>? ?? []),
       followers: List<String>.from(json['followers'] as List<dynamic>? ?? []),
+      profileImageUrl: json['profile_photo'] as String? ?? 'https://parsefiles.back4app.com/WRA6Rjonj88lwnpOJU1jTLt7pZXl0dFRNVIyMCqH/2e730d269c30302bd4d5ce48826f0073_default_profile_foto.png',
     );
   }
 }

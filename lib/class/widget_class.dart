@@ -44,9 +44,10 @@ class ForWidget {
                   children: [
                     Row(  
                       children: [
-                        const CircleAvatar(
+                        CircleAvatar(
                           radius: 20,
-                          backgroundImage: AssetImage('assets/login.png'),
+                          backgroundImage: NetworkImage(creator.profileImageUrl) 
+                          //AssetImage('assets/login.png'),
                         ),
                         const SizedBox(width: 10.0),
                         Column(
