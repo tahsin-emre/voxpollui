@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:voxpollui/boarding/for_pro/boarding_for_pro.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
@@ -28,6 +29,7 @@ class _Page0State extends State<Page0> {
   List<dynamic>? followed;
   List<dynamic>? followers;
   String username = 'Yükleniyor..';
+  String name = 'Yükleniyor..';
   String surname = 'Yükleniyor..';
   String createrId = 'Yükleniyor..';
 
@@ -43,6 +45,7 @@ class _Page0State extends State<Page0> {
     currentUser.fetch();
     setState(() {
       username = currentUser.username!;
+      name = currentUser.get<String>('name') ?? 'Ad test';
       surname = currentUser.get<String>('surname') ?? 'Soyad test';
       followed = currentUser.get<List<dynamic>>('followed') ?? [];
       followers = currentUser.get<List<dynamic>>('followers') ?? [];
@@ -98,7 +101,7 @@ class _Page0State extends State<Page0> {
                 color: Colors.white,
               ),
               accountName: Text(
-                '$username $surname',
+                '$name $surname',
                 style: const TextStyle(
                   color: Color(0xFF0C0C0C),
                   fontSize: 20,
@@ -192,6 +195,12 @@ class _Page0State extends State<Page0> {
               ),
               onTap: () {
                 // VoxPoll Pro sayfasına yönlendirme
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const VoxpollPro(),
+                  ),
+                );
               },
             ),
             ListTile(
