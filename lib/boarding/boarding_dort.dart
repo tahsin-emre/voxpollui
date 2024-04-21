@@ -111,7 +111,7 @@ class _StateBoardinDort extends State<BoardinDort> {
           selectedInterests) // İlgi alanlarını kullanıcıya ekle
       ..set('biography', biography);
 
-    var response = await user.signUp();
+    var response = await user.signUp(); 
 //@
     if (response.success) {
       // Kayıt başarılı, oturum aç ve Ana Sayfaya yönlendir
@@ -276,6 +276,9 @@ class _StateBoardinDort extends State<BoardinDort> {
                           ),
                         ),cursorColor: AppColor.nationalColor,
                       ),
+
+                      
+
                       DropdownButton<String>(
                         value: _gender,
                         onChanged: (String? newValue) {
