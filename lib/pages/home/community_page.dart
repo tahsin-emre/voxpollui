@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/class/custom/custom_button.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/widget_class.dart';
 
@@ -21,24 +22,26 @@ class _CommunityPageState extends State<CommunityPage> {
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              height: 40.0,
-              margin: const EdgeInsets.all(16.0),
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: const Row(
-                children: [
-                  Icon(Icons.search),
-                  SizedBox(width: 8.0),
-                  Text(
-                    'Ara',
-                    style: TextStyle(fontSize: 14.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(vertical: 0.0),
+                  hintText: 'Ara',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(color: Colors.black),
                   ),
-                ],
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(color: Colors.black),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(color: Colors.black),
+                  ),
+                ),
               ),
             ),
             Expanded(
@@ -46,6 +49,12 @@ class _CommunityPageState extends State<CommunityPage> {
                   ? LoadingScreen.loadingScreen()
                   : ListView(
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: NationalButton.nationalButton(text: "Topluluk Oluştur", onPressed: () {
+                            print("Sayfaya gidicek");
+                          }),
+                        ),
                         const SizedBox(height: 10.0),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
