@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
@@ -39,6 +40,64 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                       borderSide: BorderSide(color: AppColor.nationalColor)
                     ),
                   ),cursorColor: AppColor.nationalColor,
+                ),
+                const SizedBox(height: 20,),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                        'Kategori',
+                        style: TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.bold),
+                      ),
+                ),
+                const SizedBox(height: 20,),
+                TextField(
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                    hintText: 'Politika',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20,),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                        'İnsanları Davet Edin',
+                        style: TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.bold),
+                      ),
+                ),
+                const SizedBox(height: 20,),
+                TextField(
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                    hintText: 'Kullanıcı Adı',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                  ),
                 ),
               ],
             ),

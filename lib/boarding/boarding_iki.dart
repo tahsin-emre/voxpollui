@@ -72,7 +72,7 @@ class _BoardinIkiState extends State<BoardinIki> {
           child: Container(
             width: double.infinity,
             padding: EdgeInsets.all(0),
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height + 50,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
