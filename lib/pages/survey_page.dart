@@ -110,9 +110,7 @@ class _SurveyPageState extends State<SurveyPage> {
       ),
       body: Container(
         padding: const EdgeInsets.all(20),
-        child: _isLoading // Yükleme durumunu kontrol edin
-            ? LoadingScreen.loadingScreen()
-            :  //! Anketleri Test Edebilmek için şimdilik Devre dışı 🠗🠗🠗🠗🠗🠗
+        child: 
               /*isPollCreator ? const SizedBox(child: Center(child: Text("Bu Sizin Oluşturduğunuz bir anket"),),) : */
             ListView(
                 children: [
@@ -226,7 +224,7 @@ class _SurveyPageState extends State<SurveyPage> {
       future: _pollOptions,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return LoadingScreen.loadingScreen();
+          // return LoadingScreen.loadingScreen();
         }
 
         if (snapshot.hasError) {

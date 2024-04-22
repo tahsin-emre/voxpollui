@@ -91,7 +91,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: usersObjects != null ? _pages[_currentIndex] : LoadingScreen.loadingScreen(),
+      body: usersObjects != null ? _pages[_currentIndex] : Page0(
+          pollObjects: pollObjects,
+          usersObjects: usersObjects,
+        ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }

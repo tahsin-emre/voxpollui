@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/class/custom/custom_button.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/widget_class.dart';
+import 'package:voxpollui/pages/communitys.dart';
 
 // ignore: must_be_immutable
 class CommunityPage extends StatefulWidget {
@@ -52,7 +53,7 @@ class _CommunityPageState extends State<CommunityPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: NationalButton.nationalButton(text: "Topluluk Oluştur", onPressed: () {
-                            print("Sayfaya gidicek");
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCommunityPage()));
                           }),
                         ),
                         const SizedBox(height: 10.0),
