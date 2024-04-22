@@ -152,7 +152,7 @@ class _Page0State extends State<Page0> {
                 ],
               ),
               currentAccountPicture: const CircleAvatar(
-                backgroundImage: AssetImage("assets/login.png"),
+                backgroundImage: AssetImage("assets/image/login.png"),
               ),
             ),
             ListTile(
@@ -478,7 +478,7 @@ class _Page0State extends State<Page0> {
                           },
                           child: const CircleAvatar(
                             radius: 30,
-                            backgroundImage: AssetImage('assets/login.png'),
+                            backgroundImage: AssetImage('assets/image/login.png'),
                           ),
                         ),
                       ],

@@ -19,26 +19,29 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Container(
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Topluluk Oluştur")
-              ),
-              TextField(
-                controller: community_name,
-                decoration: InputDecoration(
-                  labelText: 'Topluluk Adı',
-                  border: UnderlineInputBorder(),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColor.nationalColor)
-                  ),
-                ),cursorColor: AppColor.nationalColor,
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Topluluk Oluştur")
+                ),
+                TextField(                
+                  controller: community_name,
+                  decoration: InputDecoration(
+                    labelText: 'Topluluk Adı',
+                    border: UnderlineInputBorder(),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: AppColor.nationalColor)
+                    ),
+                  ),cursorColor: AppColor.nationalColor,
+                ),
+              ],
+            ),
           ),
         ),
       ),

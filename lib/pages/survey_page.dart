@@ -195,7 +195,7 @@ class _SurveyPageState extends State<SurveyPage> {
   Widget _buildCardCommunity() {
     return ListTile(
       leading: const CircleAvatar(
-        backgroundImage: AssetImage('assets/login.png'),
+        backgroundImage: AssetImage('assets/image/login.png'),
       ),
       title: Row(
         children: [

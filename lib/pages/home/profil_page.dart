@@ -124,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 200,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/cover.png'),
+                    image: AssetImage('assets/image/cover.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -149,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
               transform: Matrix4.translationValues(0, -50, 0),
               child: const CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/profilepicture.png'),
+                backgroundImage: AssetImage('assets/image/profilepicture.png'),
               ),
             ),
             Text(

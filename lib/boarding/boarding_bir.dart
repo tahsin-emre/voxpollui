@@ -69,7 +69,7 @@ class BoardinBir extends StatelessWidget {
               height: 90,
               decoration: const ShapeDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/profil_foto1.png"),
+                  image: AssetImage("assets/image/profil_foto1.png"),
                   fit: BoxFit.fill,
                 ),
                 shape: OvalBorder(),
@@ -84,7 +84,7 @@ class BoardinBir extends StatelessWidget {
               height: 69,
               decoration: const ShapeDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/profil_foto2.png"),
+                  image: AssetImage("assets/image/profil_foto2.png"),
                   fit: BoxFit.fill,
                 ),
                 shape: OvalBorder(),
@@ -99,7 +99,7 @@ class BoardinBir extends StatelessWidget {
               height: 125,
               decoration: const ShapeDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/profil_foto3.png"),
+                  image: AssetImage("assets/image/profil_foto3.png"),
                   fit: BoxFit.fill,
                 ),
                 shape: OvalBorder(),
@@ -241,7 +241,7 @@ class BoardinBir extends StatelessWidget {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                      "assets/Done.png"),
+                      "assets/image/Done.png"),
                   fit: BoxFit.contain,
                 ),
               ),
@@ -256,7 +256,7 @@ class BoardinBir extends StatelessWidget {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                      "assets/Done.png"),
+                      "assets/image/Done.png"),
                   fit: BoxFit.contain,
                 ),
               ),
@@ -271,7 +271,7 @@ class BoardinBir extends StatelessWidget {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                      "assets/Done.png"),
+                      "assets/image/Done.png"),
                   fit: BoxFit.contain,
                 ),
               ),

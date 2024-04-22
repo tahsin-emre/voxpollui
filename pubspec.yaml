@@ -69,17 +69,17 @@ flutter:
 
   assets:
     - .env.sample
-    - assets/login.png
-    - assets/onboard1.png
-    - assets/onboard2.png
-    - assets/onboard3.png
-    - assets/onboard4.png
-    - assets/cover.png
-    - assets/profilepicture.png
-    - assets/profil_foto1.png
-    - assets/profil_foto2.png
-    - assets/profil_foto3.png
-    - assets/Done.png
+    - assets/image/login.png
+    - assets/image/onboard1.png
+    - assets/image/onboard2.png
+    - assets/image/onboard3.png
+    - assets/image/onboard4.png
+    - assets/image/cover.png
+    - assets/image/profilepicture.png
+    - assets/image/profil_foto1.png
+    - assets/image/profil_foto2.png
+    - assets/image/profil_foto3.png
+    - assets/image/Done.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -93,16 +93,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Schyler
-    fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+   - family: Gilroy
+     fonts:
+       - asset: assets/fonts/Gilroy-Black.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

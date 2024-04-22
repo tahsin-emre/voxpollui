@@ -15,25 +15,25 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   final List<OnboardingSlide> slides = [
     const OnboardingSlide(
-      image: 'assets/onboard1.png',
+      image: 'assets/image/onboard1.png',
       title: 'Artık Anket Zamanı',
       description:
           'İlgi alanlarınızla veya firmanızla ilgili bütün merak ettiklerinizin cevaplarını öğrenmek artık çok kolay.',
     ),
     const OnboardingSlide(
-      image: 'assets/onboard2.png',
+      image: 'assets/image/onboard2.png',
       title: 'İlgi Alanlarını Belirle',
       description:
           'Seçtiğiniz ilgi alanlarınıza göre anlık olarak tüm anketleri cevaplayabilir veya sonuçları inceleyebilirsiniz.',
     ),
     const OnboardingSlide(
-      image: 'assets/onboard3.png',
+      image: 'assets/image/onboard3.png',
       title: 'Sınırsız Ankete Katıl',
       description:
           'İstediğiniz kadar ankete katılıp dilerseniz VoxPoll Premium abonesi olup anket açıp sonuçları inceyebilirsiniz.',
     ),
     const OnboardingSlide(
-      image: 'assets/onboard4.png',
+      image: 'assets/image/onboard4.png',
       title: 'Merak Ettiğiniz Cevaplar',
       description:
           'Aylık 29.99₺\nİsterseniz çalışanlarınız için anket grubu oluşturun. İsterseniz merak ettiğiniz konuda bir anket açın.',

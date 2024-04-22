@@ -76,7 +76,7 @@ class _BoardinIkiState extends State<BoardinIki> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(child: Image.asset("assets/login.png")),
+                  Center(child: Image.asset("assets/image/login.png")),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(35, 30, 0, 0),
                     child: Text(
