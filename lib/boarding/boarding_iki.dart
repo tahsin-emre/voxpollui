@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -72,7 +74,7 @@ class _BoardinIkiState extends State<BoardinIki> {
           child: Container(
             width: double.infinity,
             padding: EdgeInsets.all(0),
-            height: MediaQuery.of(context).size.height + 50,
+            height: MediaQuery.of(context).size.height + 0,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

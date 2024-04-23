@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:voxpollui/class/custom/custom_button.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
 
 class CreateCommunityPage extends StatefulWidget {
@@ -13,6 +14,9 @@ class CreateCommunityPage extends StatefulWidget {
 class _CreateCommunityPageState extends State<CreateCommunityPage> {
 
   TextEditingController community_name = TextEditingController();
+  bool switchValue = false;
+  String publicPrivate = "Herkese Açık";
+
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +102,41 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                       borderSide: BorderSide(color: Colors.black),
                     ),
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Text(
+                          publicPrivate,
+                          style: TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.bold),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Switch(
+                              value: switchValue,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  switchValue = newValue;
+                                  newValue ? publicPrivate = "Sadece Takipçiler" : publicPrivate = "Herkese Açık";
+                                });
+                              },
+                              activeColor: Colors.green,
+                              inactiveTrackColor: Colors.red,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 40,
+                  child: NationalButton.nationalButton(text: "Topluluk Oluştur", onPressed: () {})
                 ),
               ],
             ),
