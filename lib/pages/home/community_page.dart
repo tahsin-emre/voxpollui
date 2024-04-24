@@ -53,7 +53,7 @@ class _CommunityPageState extends State<CommunityPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: NationalButton.nationalButton(text: "Topluluk Oluştur", onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCommunityPage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCommunityPage(usersObjects: widget.usersObjects, pollObjects: widget.pollObjects,)));
                           }),
                         ),
                         const SizedBox(height: 10.0),
