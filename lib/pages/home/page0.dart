@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:voxpollui/boarding/for_pro/boarding_for_pro.dart';
@@ -96,65 +98,88 @@ class _Page0State extends State<Page0> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            UserAccountsDrawerHeader(
-              decoration: const BoxDecoration(  
-                color: Colors.white,
-              ),
-              accountName: Text(
-                '$name $surname',
-                style: const TextStyle(
-                  color: Color(0xFF0C0C0C),
-                  fontSize: 20,
-                  fontFamily: 'Gilroy',
-                  fontWeight: FontWeight.w700,
-                  height: 0,
-                ),
-              ),
-              accountEmail: Column(
+            SizedBox(height: 20,),
+            ListTile(
+              title: Column(
+                mainAxisAlignment : MainAxisAlignment.end,
                 children: [
-                  Text(
-                    '@$username \n',
-                    style: const TextStyle(
-                      color: Color(0xFF646464),
-                      fontSize: 14,
-                      fontFamily: 'Gilroy',
-                      fontWeight: FontWeight.w500,
-                      height: 0,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Takip Edilen ${followed?.length ?? 0}',
-                        style: const TextStyle(
-                          color: Color(0xFF0C0C0C),
-                          fontSize: 14,
-                          fontFamily: 'Gilroy',
-                          fontWeight: FontWeight.w500,
-                          height: 0,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Takipçi ${followers?.length ?? 0}',
-                        style: const TextStyle(
-                          color: Color(0xFF0C0C0C),
-                          fontSize: 14,
-                          fontFamily: 'Gilroy',
-                          fontWeight: FontWeight.w500,
-                          height: 0,
-                        ),
-                      ),
-                    ],
-                  ),
+                  Align(alignment: Alignment.centerRight, child: CircleAvatar(backgroundImage: AssetImage("assets/image/login.png"),)),// child: Image.asset("assets/image/login.png", height: 100,)
+                  Align(alignment: Alignment.centerRight, child: Text("$surname $name",style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),)),
+                  // Text(name, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),),
+                  Align(alignment: Alignment.centerRight, child: Text("@$username",)),
+
+                  Align(alignment: Alignment.centerRight, child: Text("Takip Edilen ${followed?.length ?? -0} Takipçi ${followers?.length ?? -0}",)),
+                  //
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     Text("dşfçssfs"),
+                  //     Text("dkslfdsşf"),
+                  //   ],
+                  // )
                 ],
               ),
-              currentAccountPicture: const CircleAvatar(
-                backgroundImage: AssetImage("assets/image/login.png"),
-              ),
             ),
+            const Divider(),
+            // UserAccountsDrawerHeader(
+            //   decoration: const BoxDecoration(  
+            //     color: Colors.white,
+            //   ),
+            //   currentAccountPicture: const CircleAvatar(
+            //     backgroundImage: AssetImage("assets/image/login.png"),
+            //   ),
+            //   accountName: Text(
+            //     '$name $surname',
+            //     style: const TextStyle(
+            //       color: Color(0xFF0C0C0C),
+            //       fontSize: 20,
+            //       fontFamily: 'Gilroy',
+            //       fontWeight: FontWeight.w700,
+            //       height: 0,
+            //     ),
+            //   ),
+            //   accountEmail: Column(
+            //     children: [
+            //       Text(
+            //         '@$username \n',
+            //         style: const TextStyle(
+            //           color: Color(0xFF646464),
+            //           fontSize: 14,
+            //           fontFamily: 'Gilroy',
+            //           fontWeight: FontWeight.w500,
+            //           height: 0,
+            //         ),
+            //       ),
+            //       Row(
+            //         children: [
+            //           Text(
+            //             'Takip Edilen ${followed?.length ?? 0}',
+            //             style: const TextStyle(
+            //               color: Color(0xFF0C0C0C),
+            //               fontSize: 14,
+            //               fontFamily: 'Gilroy',
+            //               fontWeight: FontWeight.w500,
+            //               height: 0,
+            //             ),
+            //           ),
+            //           const SizedBox(
+            //             width: 10,
+            //           ),
+            //           Text(
+            //             'Takipçi ${followers?.length ?? 0}',
+            //             style: const TextStyle(
+            //               color: Color(0xFF0C0C0C),
+            //               fontSize: 14,
+            //               fontFamily: 'Gilroy',
+            //               fontWeight: FontWeight.w500,
+            //               height: 0,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
             ListTile(
               title: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
