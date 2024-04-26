@@ -41,10 +41,9 @@ class _Page0State extends State<Page0> {
     _loadCurrentUser();
   }
 
-
   Future<void> _loadCurrentUser() async {
     ParseUser? currentUser = await ParseUser.currentUser();
-    currentUser.fetch();
+    currentUser!.fetch();
     setState(() {
       username = currentUser.username!;
       name = currentUser.get<String>('name') ?? 'Ad test';
@@ -98,17 +97,39 @@ class _Page0State extends State<Page0> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             ListTile(
               title: Column(
-                mainAxisAlignment : MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Align(alignment: Alignment.centerRight, child: CircleAvatar(backgroundImage: AssetImage("assets/image/login.png"),)),// child: Image.asset("assets/image/login.png", height: 100,)
-                  Align(alignment: Alignment.centerRight, child: Text("$surname $name",style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),)),
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage("assets/image/login.png"),
+                      )), // child: Image.asset("assets/image/login.png", height: 100,)
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        "$surname $name",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      )),
                   // Text(name, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),),
-                  Align(alignment: Alignment.centerRight, child: Text("@$username",)),
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        "@$username",
+                      )),
 
-                  Align(alignment: Alignment.centerRight, child: Text("Takip Edilen ${followed?.length ?? -0} Takipçi ${followers?.length ?? -0}",)),
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        "Takip Edilen ${followed?.length ?? -0} Takipçi ${followers?.length ?? -0}",
+                      )),
                   //
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.end,
@@ -122,7 +143,7 @@ class _Page0State extends State<Page0> {
             ),
             const Divider(),
             // UserAccountsDrawerHeader(
-            //   decoration: const BoxDecoration(  
+            //   decoration: const BoxDecoration(
             //     color: Colors.white,
             //   ),
             //   currentAccountPicture: const CircleAvatar(
@@ -464,8 +485,8 @@ class _Page0State extends State<Page0> {
                     const Text(
                       'Hoş Geldiniz',
                       style: TextStyle(
-                          fontSize: 24.0, 
-                          fontWeight: FontWeight.bold,
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     Row(
@@ -503,7 +524,8 @@ class _Page0State extends State<Page0> {
                           },
                           child: const CircleAvatar(
                             radius: 30,
-                            backgroundImage: AssetImage('assets/image/login.png'),
+                            backgroundImage:
+                                AssetImage('assets/image/login.png'),
                           ),
                         ),
                       ],
@@ -614,12 +636,11 @@ class _Page0State extends State<Page0> {
                     if (dataManager.getPolls()?.isEmpty ?? true) {
                       // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
                       return Column(children: [
-                          LoadingScreen.loadingScreen(),
-                        ]
-                      );
+                        LoadingScreen.loadingScreen(),
+                      ]);
                     }
-                    return ForWidget.buildCard(
-                        context, widget.usersObjects!, widget.pollObjects!, index);
+                    return ForWidget.buildCard(context, widget.usersObjects!,
+                        widget.pollObjects!, index);
                   },
                   childCount: (dataManager.getPolls()?.isNotEmpty ?? false)
                       ? dataManager.getPolls()?.length

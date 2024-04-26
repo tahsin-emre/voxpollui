@@ -25,7 +25,9 @@ void main() async {
 Future<Widget> initializeApp() async {
   return MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (context) => ThemeNotifier()), // Burada ThemeNotifier'ı oluşturuyoruz
+      ChangeNotifierProvider(
+          create: (context) =>
+              ThemeNotifier()), // Burada ThemeNotifier'ı oluşturuyoruz
     ],
     child: const MyApp(),
   );
@@ -36,12 +38,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeNotifier = Provider.of<ThemeNotifier>(context); // Tema durumunu al
+    final themeNotifier =
+        Provider.of<ThemeNotifier>(context); // Tema durumunu al
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Vox Poll',
       theme: themeNotifier.currentTheme, // Tema durumunu kullan
-      home: FutureBuilder<ParseUser?>(
+      home: FutureBuilder<dynamic>(
         // Kullanıcı bilgisini doğrudan çekiyoruz
         future: ParseUser.currentUser(), // Future<ParseUser> olarak güncellendi
         builder: (context, snapshot) {

@@ -11,8 +11,11 @@ class ProfilePage extends StatefulWidget {
   // List<Map<String, dynamic>>? usersObjects;
   bool isMe;
   String? viewedUser;
-  
-  ProfilePage(this.i, {super.key, required this.isMe, this.viewedUser});// required this.pollObjects, required this.usersObjects,
+
+  ProfilePage(this.i,
+      {super.key,
+      required this.isMe,
+      this.viewedUser}); // required this.pollObjects, required this.usersObjects,
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -65,25 +68,24 @@ class _ProfilePageState extends State<ProfilePage> {
     print("VİEWED USER ${widget.viewedUser}");
     final viewUsers = await database.fetchCreater(widget.viewedUser!);
     dynamic joinPoll = await Database.countUserPollResponses(
-      widget.viewedUser ?? 'ObjectIDDDDDDD');
-      // print('${joinPoll}    JOİN POLL');
-      setState(() {
-        joinPoll = joinPoll;
-        objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
-        username = viewUsers?.username;
-        name = viewUsers?.name;
-        surname = viewUsers?.surname;
-        followed = viewUsers?.followed;
-        biyografi = viewUsers?.biography;
-        followers = viewUsers?.followers;
-      }
-    );
+        widget.viewedUser ?? 'ObjectIDDDDDDD');
+    // print('${joinPoll}    JOİN POLL');
+    setState(() {
+      joinPoll = joinPoll;
+      objectId = currentUser!.get<String>('objectId') ?? 'ObjectIDDDDDDD';
+      username = viewUsers?.username;
+      name = viewUsers?.name;
+      surname = viewUsers?.surname;
+      followed = viewUsers?.followed;
+      biyografi = viewUsers?.biography;
+      followers = viewUsers?.followers;
+    });
   }
 
   Future<void> _loadCurrentUser() async {
     ParseUser? currentUser = await ParseUser.currentUser();
     dynamic joinPoll = await Database.countUserPollResponses(
-        currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD');
+        currentUser!.get<String>('objectId') ?? 'ObjectIDDDDDDD');
     // print('${joinPoll}   _loadCurrentUser JOİN POLL');
     setState(() {
       joinPoll = joinPoll;
@@ -160,7 +162,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                biyografi??'hata',
+                biyografi ?? 'hata',
                 textAlign: TextAlign.center,
               ),
             ),
@@ -169,8 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 _buildStatColumn('Takip Edilen', '${followed?.length ?? 0}'),
                 _buildStatColumn('Takipçi', '${followers?.length ?? 0}'),
-                _buildStatColumn('Katıldığı Anket',
-                    '${joinPoll ?? 'x'}'),
+                _buildStatColumn('Katıldığı Anket', '${joinPoll ?? 'x'}'),
               ],
             ),
             const Divider(),
@@ -282,7 +283,7 @@ class _ProfilePageState extends State<ProfilePage> {
     ParseUser? currentUser = await ParseUser.currentUser();
     // Giriş yapan kullanıcının takip ettiği kişilerin listesini al
     List<dynamic> followedUsers =
-        currentUser.get<List<dynamic>>('followed') ?? [];
+        currentUser!.get<List<dynamic>>('followed') ?? [];
 
     // Görüntülenen kullanıcının objectId'si bu listede var mı diye kontrol et
     setState(() {

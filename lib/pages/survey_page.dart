@@ -12,7 +12,12 @@ class SurveyPage extends StatefulWidget {
   CreatorData userData;
   final int index;
 
-  SurveyPage({Key? key, required this.pollData, required this.index, required this.userData}) : super(key: key);
+  SurveyPage(
+      {Key? key,
+      required this.pollData,
+      required this.index,
+      required this.userData})
+      : super(key: key);
 
   @override
   State<SurveyPage> createState() => _SurveyPageState();
@@ -36,23 +41,24 @@ class _SurveyPageState extends State<SurveyPage> {
   }
 
   Future<void> _checkIfUserVoted() async {
-  await _loadCurrentUser();
-  bool hasVoted = await Database.hasUserVoted(widget.pollData, widget.index);
-  // print("_hasVoted: $hasVoted"); // Debug için yazdırın
-  setState(() {
-    _hasVoted = hasVoted;
-    if (!_hasVoted) {
-      _pollOptions = _fetchPollOptions();
-    }
-    _isLoading = false; // Veriler yüklendiğinde yükleme durumunu güncelleyin
-  });
-}
+    await _loadCurrentUser();
+    bool hasVoted = await Database.hasUserVoted(widget.pollData, widget.index);
+    // print("_hasVoted: $hasVoted"); // Debug için yazdırın
+    setState(() {
+      _hasVoted = hasVoted;
+      if (!_hasVoted) {
+        _pollOptions = _fetchPollOptions();
+      }
+      _isLoading = false; // Veriler yüklendiğinde yükleme durumunu güncelleyin
+    });
+  }
 
   Future<List<PollOption>> _fetchPollOptions() async {
     //var poll = widget.pollData[widget.index]['poll'];
     String pollId = widget.pollData[widget.index]['objectId'];
-    QueryBuilder<ParseObject> queryPollOptions = QueryBuilder<ParseObject>(ParseObject('PollOption'))
-      ..whereEqualTo('pollId', pollId);
+    QueryBuilder<ParseObject> queryPollOptions =
+        QueryBuilder<ParseObject>(ParseObject('PollOption'))
+          ..whereEqualTo('pollId', pollId);
 
     final ParseResponse apiResponse = await queryPollOptions.query();
 
@@ -75,10 +81,11 @@ class _SurveyPageState extends State<SurveyPage> {
 
   Future<void> _loadCurrentUser() async {
     ParseUser? _currentUser = await ParseUser.currentUser();
-    String  currentUserId = _currentUser.objectId!;
+    String currentUserId = _currentUser!.objectId!;
     setState(() {
       currentUser = _currentUser;
-      isPollCreator = currentUserId == widget.pollData[widget.index]['createdBy'];
+      isPollCreator =
+          currentUserId == widget.pollData[widget.index]['createdBy'];
     });
   }
 
@@ -94,7 +101,7 @@ class _SurveyPageState extends State<SurveyPage> {
       });
     } else {
       setState(() {
-        pollDate = DateTime(3000,12,12);
+        pollDate = DateTime(3000, 12, 12);
       });
     }
 
@@ -110,84 +117,92 @@ class _SurveyPageState extends State<SurveyPage> {
       ),
       body: Container(
         padding: const EdgeInsets.all(20),
-        child: 
-              /*isPollCreator ? const SizedBox(child: Center(child: Text("Bu Sizin Oluşturduğunuz bir anket"),),) : */
+        child:
+            /*isPollCreator ? const SizedBox(child: Center(child: Text("Bu Sizin Oluşturduğunuz bir anket"),),) : */
             ListView(
-                children: [
-                  _buildCardCommunity(),
-                  pollDate.isBefore(now) ? _buildPollResults(widget.pollData, widget.userData) :
-                  _hasVoted
-                      ? _buildPollResults(widget.pollData, widget.userData)
-                      : FutureBuilder<List<PollOption>>(
-                          future: _pollOptions,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return LoadingScreen.loadingScreen();
-                            }
+          children: [
+            _buildCardCommunity(),
+            pollDate.isBefore(now)
+                ? _buildPollResults(widget.pollData, widget.userData)
+                : _hasVoted
+                    ? _buildPollResults(widget.pollData, widget.userData)
+                    : FutureBuilder<List<PollOption>>(
+                        future: _pollOptions,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return LoadingScreen.loadingScreen();
+                          }
 
-                            if (snapshot.hasError) {
-                              return Text('Hata: ${snapshot.error}');
-                            }
+                          if (snapshot.hasError) {
+                            return Text('Hata: ${snapshot.error}');
+                          }
 
-                            if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                              return const Text('Anket seçenekleri bulunamadı');
-                            }
-                            return Column(
-                              children: [
-                                // Text("${widget.pollData}"),
-                                // title_image var mı yok mu kontrol edin
-                                widget.pollData[widget.index]['title_image'] != null ? 
-                                  Image.network(widget.pollData[widget.index]['title_image']["url"]) :
-                                  SizedBox(),
-                                
+                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                            return const Text('Anket seçenekleri bulunamadı');
+                          }
+                          return Column(
+                            children: [
+                              // Text("${widget.pollData}"),
+                              // title_image var mı yok mu kontrol edin
+                              widget.pollData[widget.index]['title_image'] !=
+                                      null
+                                  ? Image.network(widget.pollData[widget.index]
+                                      ['title_image']["url"])
+                                  : SizedBox(),
 
-                                                                
-                                FlutterPolls(
-                                  pollId: widget.pollData[widget.index]['objectId'],
-                                  onVoted: (PollOption pollOption, int newTotalVotes) async {
-                                    // String userId = widget.userData.objectId;
-                                    String optionId = pollOption.id.toString();
-                                    // print("Kullanıcı ID: $userId, Anket ID: ${widget.pollData[widget.index]['objectId']}, Seçenek ID: $optionId");
-                                    ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
-                                    final Map<String, dynamic> params = <String, dynamic>{
-                                      'userId': currentUser.objectId,
-                                      'pollId': widget.pollData[widget.index]['objectId'],
-                                      'optionId': optionId
-                                    };
-                                    final ParseResponse result = await function.execute(parameters: params);
-                                
-                                    if (result.success) {
-                                      // print('Oy Başarıyla Kaydedildi');
-                                      // _pollOptions'ı yeniden yüklemeyi burada yapabilirsiniz
-                                      return true;
-                                    } else {
-                                      // print("Anket cevabı kaydedilemedi: ${result.error}");
-                                      return false;
-                                    }
-                                  },
-                                  pollEnded: pollEnded,
-                                  pollTitle: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      widget.pollData[widget.index]['title'],
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                              FlutterPolls(
+                                pollId: widget.pollData[widget.index]
+                                    ['objectId'],
+                                onVoted: (PollOption pollOption,
+                                    int newTotalVotes) async {
+                                  // String userId = widget.userData.objectId;
+                                  String optionId = pollOption.id.toString();
+                                  // print("Kullanıcı ID: $userId, Anket ID: ${widget.pollData[widget.index]['objectId']}, Seçenek ID: $optionId");
+                                  ParseCloudFunction function =
+                                      ParseCloudFunction('recordPollResponse');
+                                  final Map<String, dynamic> params =
+                                      <String, dynamic>{
+                                    'userId': currentUser.objectId,
+                                    'pollId': widget.pollData[widget.index]
+                                        ['objectId'],
+                                    'optionId': optionId
+                                  };
+                                  final ParseResponse result = await function
+                                      .execute(parameters: params);
+
+                                  if (result.success) {
+                                    // print('Oy Başarıyla Kaydedildi');
+                                    // _pollOptions'ı yeniden yüklemeyi burada yapabilirsiniz
+                                    return true;
+                                  } else {
+                                    // print("Anket cevabı kaydedilemedi: ${result.error}");
+                                    return false;
+                                  }
+                                },
+                                pollEnded: pollEnded,
+                                pollTitle: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    widget.pollData[widget.index]['title'],
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  pollOptions: snapshot.data!,
-                                  votedPercentageTextStyle: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
                                 ),
-                              ],
-                            );
-                          },
-                        ),
-                ],
-              ),
+                                pollOptions: snapshot.data!,
+                                votedPercentageTextStyle: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+          ],
+        ),
       ),
     );
   }
@@ -203,7 +218,8 @@ class _SurveyPageState extends State<SurveyPage> {
           const SizedBox(width: 4.0),
           const Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
           const SizedBox(width: 4.0),
-          Text('@${widget.userData.username}', style: const TextStyle(fontSize: 12.0)),
+          Text('@${widget.userData.username}',
+              style: const TextStyle(fontSize: 12.0)),
         ],
       ),
       subtitle: const Text('Topluluk Açıklaması'),
@@ -219,7 +235,8 @@ class _SurveyPageState extends State<SurveyPage> {
     );
   }
 
-  Widget _buildPollResults(List<Map<dynamic, dynamic>> poll, CreatorData creator) {
+  Widget _buildPollResults(
+      List<Map<dynamic, dynamic>> poll, CreatorData creator) {
     return FutureBuilder<List<PollOption>>(
       future: _pollOptions,
       builder: (context, snapshot) {
@@ -237,81 +254,85 @@ class _SurveyPageState extends State<SurveyPage> {
 
         // List<PollOption> options = snapshot.data!;
         // int totalVotes = options.fold(0, (sum, item) => sum + item.votes);
-         bool pollEnded = true;
+        bool pollEnded = true;
         return FlutterPolls(
-                              pollId: poll[widget.index]['objectId'],
-                              onVoted: (PollOption pollOption, int newTotalVotes) async {
-                                String userId = creator.objectId;
-                                String optionId = pollOption.id.toString();
-                                 print("Kullanıcı ID: $userId, Anket ID: ${poll[widget.index]['objectId']}, Seçenek ID: $optionId");
-                                ParseCloudFunction function = ParseCloudFunction('recordPollResponse');
-                                final Map<String, dynamic> params = <String, dynamic>{
-                                  'userId': userId,
-                                  'pollId': poll[widget.index]['objectId'],
-                                  'optionId': optionId
-                                };
-                                final ParseResponse result = await function.execute(parameters: params);
+          pollId: poll[widget.index]['objectId'],
+          onVoted: (PollOption pollOption, int newTotalVotes) async {
+            String userId = creator.objectId;
+            String optionId = pollOption.id.toString();
+            print(
+                "Kullanıcı ID: $userId, Anket ID: ${poll[widget.index]['objectId']}, Seçenek ID: $optionId");
+            ParseCloudFunction function =
+                ParseCloudFunction('recordPollResponse');
+            final Map<String, dynamic> params = <String, dynamic>{
+              'userId': userId,
+              'pollId': poll[widget.index]['objectId'],
+              'optionId': optionId
+            };
+            final ParseResponse result =
+                await function.execute(parameters: params);
 
-                                if (result.success) {
-                                  //print('Oy Başarıyla Kaydedildi');
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text("Hata"),
-                                        content: Text("${userId + poll[widget.index]['objectid'] + optionId}"),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: Text("Tamam"),
-                                            onPressed: () {
-                                              Navigator.of(context).pop(); // Dialog'u kapat
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  return true;
-                                } else {
-                                  // print("Anket cevabı kaydedilemedi: ${result.error}");
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text("Hata"),
-                                        content: Text("Anket cevabı kaydedilemedi: ${result.error}"),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: Text("Tamam"),
-                                            onPressed: () {
-                                              Navigator.of(context).pop(); // Dialog'u kapat
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  return false;
-                                }
-
-                              },
-                              pollEnded: pollEnded,
-                              pollTitle: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  poll[widget.index]['title'],
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              pollOptions: snapshot.data!,
-                              votedPercentageTextStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            );
+            if (result.success) {
+              //print('Oy Başarıyla Kaydedildi');
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Hata"),
+                    content: Text(
+                        "${userId + poll[widget.index]['objectid'] + optionId}"),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text("Tamam"),
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Dialog'u kapat
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+              return true;
+            } else {
+              // print("Anket cevabı kaydedilemedi: ${result.error}");
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Hata"),
+                    content:
+                        Text("Anket cevabı kaydedilemedi: ${result.error}"),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text("Tamam"),
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Dialog'u kapat
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+              return false;
+            }
+          },
+          pollEnded: pollEnded,
+          pollTitle: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              poll[widget.index]['title'],
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          pollOptions: snapshot.data!,
+          votedPercentageTextStyle: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        );
       },
     );
   }
