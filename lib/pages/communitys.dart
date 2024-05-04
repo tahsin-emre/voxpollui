@@ -22,12 +22,52 @@ class CreateCommunityPage extends StatefulWidget {
 class _CreateCommunityPageState extends State<CreateCommunityPage> {
 
   TextEditingController community_name = TextEditingController();
-  bool switchValue = false;
+  bool switchValue = true;
   String publicPrivate = "Herkese Açık";
 
   String? selectedCategory;
 
-  List<String> categories = ['Kategori 1', 'Kategori 2', 'Kategori 3']; // Var olan kategoriler
+  List<String> categories = ['Ekonomi', 'Siyaset', 'Oyun']; // Var olan kategoriler
+  
+  
+  String username = '';
+
+
+  
+  final TextEditingController call_users = TextEditingController();
+  // final FocusNode _focusNode = FocusNode();
+
+  void addCallUsers() {
+    if (call_users.text.isEmpty) {
+      call_users.text = "";
+    } else {
+      call_users.text = username;
+    }
+  }
+
+
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _focusNode.addListener(() {
+  //     if (_focusNode.hasFocus && call_users.text.isEmpty) {
+  //       call_users.text = '+90 ';
+  //       call_users.selection = TextSelection.fromPosition(
+  //         TextPosition(offset: call_users.text.length),
+  //       );
+  //     }
+  //   });
+  //   call_users.addListener(() {
+  //     final text = call_users.text;
+  //     if (!text.startsWith('+90 ')) {
+  //       call_users.text = '+90 ${text.replaceAll('+90 ', '')}';
+  //       call_users.selection = TextSelection.fromPosition(
+  //         TextPosition(offset: call_users.text.length),
+  //       );
+  //     }
+  //   });
+  // }
 
 
   @override
@@ -116,23 +156,34 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                 ),
                 const SizedBox(height: 20,),
                 TextField(
+                  controller: call_users,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
                     hintText: 'Kullanıcı Adı',
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.black),
+                      borderSide: const BorderSide(color: Colors.black),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.black),
+                      borderSide: const BorderSide(color: Colors.black),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.black),
+                      borderSide: const BorderSide(color: Colors.black),
                     ),
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      username = value;
+                    });
+                  },
+                  onSubmitted: (value) {
+                    setState(() {
+                      call_users.text = username;
+                    });
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
