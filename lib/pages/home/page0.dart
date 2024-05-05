@@ -12,6 +12,7 @@ import 'package:voxpollui/notifier/theme.dart';
 import 'package:voxpollui/pages/notifications_page.dart';
 import 'package:voxpollui/script/database.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:voxpollui/script/search.dart';
 
 import '../../boarding/boarding_bir.dart';
 
@@ -605,7 +606,9 @@ class _Page0State extends State<Page0> {
                               const SizedBox(height: 10.0),
                               ElevatedButton(
                                 onPressed: () {
-                                  //Anketleri görüntüle butonu
+                                  
+                                  //! SEARCH KODUDUR YERİ BURASI DEĞİL 
+                                  SearchClass.searchData("searchText", columnName: "columnName",);
                                 },
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(

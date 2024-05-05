@@ -44,6 +44,9 @@ class _CommunityPageState extends State<CommunityPage> {
                     borderSide: BorderSide(color: Colors.black),
                   ),
                 ),
+                onSubmitted: (value) {
+                  
+                },
               ),
             ),
             Expanded(
