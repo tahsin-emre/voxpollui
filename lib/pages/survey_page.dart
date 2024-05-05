@@ -131,7 +131,7 @@ class _SurveyPageState extends State<SurveyPage> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return LoadingScreen.loadingScreen();
+                            return LoadingScreen.loadingScreen(text: '');
                           }
 
                           if (snapshot.hasError) {

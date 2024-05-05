@@ -48,7 +48,7 @@ class _CommunityPageState extends State<CommunityPage> {
             ),
             Expanded(
               child: widget.usersObjects == null
-                  ? LoadingScreen.loadingScreen()
+                  ? LoadingScreen.loadingScreen(text: '')
                   : ListView(
                       children: [
                         Padding(

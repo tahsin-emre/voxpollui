@@ -120,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
         body: Column(
           children: [
             if (_isLoading)
-              LoadingScreen.loadingScreen()
+              LoadingScreen.loadingScreen(text: '')
             else
               Container(
                 height: 200,

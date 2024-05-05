@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:voxpollui/boarding/for_pro/boarding_for_pro.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
@@ -12,6 +11,9 @@ import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/notifier/theme.dart';
 import 'package:voxpollui/pages/notifications_page.dart';
 import 'package:voxpollui/script/database.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+
+import '../../boarding/boarding_bir.dart';
 
 // ignore: must_be_immutable
 class Page0 extends StatefulWidget {
@@ -314,27 +316,7 @@ class _Page0State extends State<Page0> {
             ),
             // Diğer ListTile widget'ları...
             const Divider(),
-            ListTile(
-              title: const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Üretici Araçları',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: Color(0xFF0C0C0C),
-                      fontSize: 20,
-                      fontFamily: 'Gilroy',
-                      fontWeight: FontWeight.w700,
-                      height: 0.12,
-                    ),
-                  )
-                ],
-              ),
-              onTap: () {
-                // Ayarlar ve Destek sayfasına yönlendirme
-              },
-            ),
+
             ListTile(
               title: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -396,6 +378,46 @@ class _Page0State extends State<Page0> {
               ),
               onTap: () {
                 // S.S.S. sayfasına yönlendirme
+              },
+            ),
+            ListTile(
+              title: const Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Çıkış Yap',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Color(0xFF0C0C0C),
+                      fontSize: 20,
+                      fontFamily: 'Gilroy',
+                      fontWeight: FontWeight.w700,
+                      height: 0.12,
+                    ),
+                  )
+                ],
+              ),
+              onTap: () async {
+                // Çıkış yap
+                try {
+                  ParseUser? currentUser = await ParseUser.currentUser();
+                  await currentUser?.logout();
+                  // Başlangıç sayfasına git
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => BoardinBir()),
+                  );
+                } catch (e) {
+                  // Çıkış sırasında bir hata oluştu
+                  print('Çıkış yapılırken bir hata oluştu: $e');
+                  // Hata durumunda kullanıcıya bir uyarı gösterebilirsiniz
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Çıkış yapılırken bir hata oluştu.'),
+                    ),
+                  );
+                }
               },
             ),
             ListTile(
@@ -636,7 +658,7 @@ class _Page0State extends State<Page0> {
                     if (dataManager.getPolls()?.isEmpty ?? true) {
                       // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
                       return Column(children: [
-                        LoadingScreen.loadingScreen(),
+                        LoadingScreen.loadingScreen(text: ''),
                       ]);
                     }
                     return ForWidget.buildCard(context, widget.usersObjects!,

@@ -36,6 +36,10 @@ Future<Widget> initializeApp() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  Future<ParseUser?> getCurrentUser() async {
+    return await ParseUser.currentUser(); // Dönüş türünü açıkça belirtiyoruz
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeNotifier =
@@ -45,21 +49,17 @@ class MyApp extends StatelessWidget {
       title: 'Vox Poll',
       theme: themeNotifier.currentTheme, // Tema durumunu kullan
       home: FutureBuilder<dynamic>(
-        // Kullanıcı bilgisini doğrudan çekiyoruz
-        future: ParseUser.currentUser(), // Future<ParseUser> olarak güncellendi
+        future: getCurrentUser(), // Asenkron fonksiyonu kullanın
         builder: (context, snapshot) {
-          final currentUser = snapshot.data;
           if (snapshot.connectionState == ConnectionState.done) {
+            final currentUser = snapshot.data; // null güvenliğini kontrol et
             if (snapshot.hasError || currentUser == null) {
-              // Hata durumu veya kullanıcı daha önce giriş yapmamışsa
-              return const BoardinBir(); // veya başka bir giriş sayfası
+              return const BoardinBir(); // Hata durumu veya giriş yapılmamışsa
             } else {
-              // Kullanıcı daha önce giriş yapmışsa ana sayfaya yönlendir
-              return const HomePage();
+              return const HomePage(); // Giriş yapılmışsa ana sayfa
             }
           } else {
-            // Veri henüz yüklenmediyse, bir yükleniyor ekranı gösterilebilir
-            return LoadingScreen.loadingScreen();
+            return LoadingScreen.loadingScreen(text: "Yükleniyor"); // Veri yükleniyor
           }
         },
       ),
