@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:voxpollui/boarding/boarding_dort.dart';
@@ -65,10 +66,7 @@ class _BoardinIkiState extends State<BoardinIki> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text('Boardin Iki'),
-      ),
-      body: SingleChildScrollView(
+      body: Container(
         child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: Container(
@@ -78,11 +76,18 @@ class _BoardinIkiState extends State<BoardinIki> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(child: Image.asset("assets/image/login.png")),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(35, 30, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0,40,0,0),
+                    child: Center(child: Image.asset(
+                      "assets/image/login.png",
+                      height: 200,
+                      width: 200,
+                    )),
+                  ),
+                  const Padding(
+                    padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
                     child: Text(
-                      'Telefon \n Numaranız',
+                      'Telefon\nNumaranız',
                       style: TextStyle(
                         color: const Color(0xFF0C0C0C),
                         fontSize: 40,
@@ -158,6 +163,7 @@ class _BoardinIkiState extends State<BoardinIki> {
                         },
                         controlAffinity: ListTileControlAffinity.leading,
                         visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
+                        side: BorderSide.none,
                       ),
                     ),
                   ),
@@ -186,6 +192,7 @@ class _BoardinIkiState extends State<BoardinIki> {
                         },
                         controlAffinity: ListTileControlAffinity.leading,
                         visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
+                        side: BorderSide.none,
                       ),
                     ),
                   ),
@@ -198,7 +205,7 @@ class _BoardinIkiState extends State<BoardinIki> {
                           MaterialPageRoute(builder: (context) => const Kvkk()),
                         );
                       },
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 333,
                         child: Text.rich(
                           TextSpan(

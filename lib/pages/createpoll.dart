@@ -344,10 +344,10 @@ class _CreatePollPageState extends State<CreatePollPage> {
                   text: "Anket Oluştur",
                   onPressed: _createPoll,
                 ),
-                NationalButton.nationalButton(
-                  text: "Seçilen Tarihler",
-                  onPressed: _saveSelectedDates,
-                ),
+                // NationalButton.nationalButton(
+                //   text: "Seçilen Tarihler",
+                //   onPressed: _saveSelectedDates,
+                // ),
                 // ElevatedButton(
                 //   onPressed: _createPoll,
                 //   child: const Text('Anket Oluştur'),

@@ -65,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
     _isLoading = false;
     Database database = Database();
     ParseUser? currentUser = await ParseUser.currentUser();
-    print("VİEWED USER ${widget.viewedUser}");
+    // print("VİEWED USER ${widget.viewedUser}");
     final viewUsers = await database.fetchCreater(widget.viewedUser!);
     dynamic joinPoll = await Database.countUserPollResponses(
         widget.viewedUser ?? 'ObjectIDDDDDDD');
@@ -91,10 +91,10 @@ class _ProfilePageState extends State<ProfilePage> {
       joinPoll = joinPoll;
       username = currentUser.username!;
       objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
-      name = currentUser.get<String>('name') ?? 'name test';
-      surname = currentUser.get<String>('surname') ?? 'Soyad test';
+      name = currentUser.get<String>('name') ?? 'name';
+      surname = currentUser.get<String>('surname') ?? 'surname';
       followed = currentUser.get<dynamic>('followed') ?? '0';
-      biyografi = currentUser.get<String>('biography') ?? '';
+      biyografi = currentUser.get<String>('biography') ?? 'biography';
       followers = currentUser.get<dynamic>('followers') ?? '0';
     });
   }
@@ -155,14 +155,14 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             Text(
-              "${name} ${surname}",
+              "${name ?? "name"} ${surname ?? "surname"}",
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            Text('@$username'),
+            Text('@${username ?? "username"}'),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                biyografi ?? 'hata',
+                biyografi ?? "biyografi",
                 textAlign: TextAlign.center,
               ),
             ),
@@ -171,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 _buildStatColumn('Takip Edilen', '${followed?.length ?? 0}'),
                 _buildStatColumn('Takipçi', '${followers?.length ?? 0}'),
-                _buildStatColumn('Katıldığı Anket', '${joinPoll ?? 'x'}'),
+                _buildStatColumn('Katıldığı Anket', '${joinPoll ?? 0}'),
               ],
             ),
             const Divider(),

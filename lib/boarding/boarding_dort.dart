@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
@@ -43,11 +44,12 @@ class _StateBoardinDort extends State<BoardinDort> {
   List<String> selectedInterests = [];
   List<String> interestsList =
       []; // Veritabanından çekilecek ilgi alanları listesi
-  String _gender = 'Erkek'; // Varsayılan cinsiyet
+  String _gender = 'Cinsiyet'; // Varsayılan cinsiyet
 
   List<String> interests = [];
 
   List<bool> isSelected = List.generate(18, (_) => false);
+  int selectedStep = 0;
 
   @override
   void initState() {
@@ -137,9 +139,6 @@ class _StateBoardinDort extends State<BoardinDort> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const SizedBox(),
-      ),
       body: Builder(builder: (BuildContext context) {
       return GestureDetector(
         onTap: () {
@@ -154,7 +153,7 @@ class _StateBoardinDort extends State<BoardinDort> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       const SizedBox(
-                        height: 50,
+                        height: 30,
                       ),//@
                       const Text(
                         'Kişisel Bilgiler',
@@ -167,7 +166,7 @@ class _StateBoardinDort extends State<BoardinDort> {
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       const Text(
                         '*Bazı bilgiler sonradan değiştirilemez. \n Doğru girdiğinizden emin olun.',
@@ -176,7 +175,7 @@ class _StateBoardinDort extends State<BoardinDort> {
                           fontSize: 14,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 10),
                       TextField(
                         controller: _nameController,
                         decoration: InputDecoration(
@@ -278,21 +277,31 @@ class _StateBoardinDort extends State<BoardinDort> {
                       ),
 
                       
-
-                      DropdownButton<String>(
-                        value: _gender,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _gender = newValue!;
-                          });
-                        }, //@
-                        items: <String>['Erkek', 'Kadın', 'Diğer']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                      SizedBox(height: 5,),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.black, // Alt sınırın rengi
+                              //width: 2.0,  Alt sınırın kalınlığı
+                            ),
+                          ),
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        child: DropdownButton<String>(
+                          value: _gender,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _gender = newValue!;
+                            });
+                          },
+                          items: <String>['Cinsiyet','Erkek', 'Kadın'].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
                       ),
                       const SizedBox(height: 16),
                       GestureDetector(
@@ -331,29 +340,42 @@ class _StateBoardinDort extends State<BoardinDort> {
                     const SizedBox(
                       height: 50,
                     ),
-                    const Text(
-                      'İlgi Alanları',
-                      style: TextStyle(
-                        color: Color(0xFF0C0C0C),
-                        fontSize: 40,
-                        fontFamily: 'Gilroy',
-                        fontWeight: FontWeight.w600,
-                        height: 0,
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'İlgi Alanları',
+                          style: TextStyle(
+                            color: Color(0xFF0C0C0C),
+                            fontSize: 40,
+                            fontFamily: 'Gilroy',
+                            fontWeight: FontWeight.w600,
+                            height: 0,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    const Text(
-                      '5 adet seçebilir ve profilinizden güncelleyebilirsiniz.',
-                      style: TextStyle(
-                        color: Color(0xFF0C0C0C),
-                        fontSize: 13,
-                        fontFamily: 'Gilroy',
-                        fontWeight: FontWeight.w400,
-                        height: 0.08,
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '5 adet seçebilir ve profilinizden güncelleyebilirsiniz.',
+                          style: TextStyle(
+                            color: Color(0xFF0C0C0C),
+                            fontSize: 13,
+                            fontFamily: 'Gilroy',
+                            fontWeight: FontWeight.w400,
+                            height: 0.08,
+                          ),
+                        ),
                       ),
                     ),
+                    SizedBox(height: 20,),
                     Expanded(
                       child: GridView.builder(
                           padding: const EdgeInsets.all(8),
@@ -368,7 +390,29 @@ class _StateBoardinDort extends State<BoardinDort> {
                             return GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  isSelected[index] = !isSelected[index];
+                                  if (selectedStep < 5) {
+                                    isSelected[index] = !isSelected[index];
+                                    selectedStep++;
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text('Dikkat'),
+                                          content: Text('5 adetten fazla ilgi alanı seçemezsiniz'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () {
+                                                // Onay işlemini gerçekleştir
+                                                Navigator.of(context).pop(); // Diyalogu kapat
+                                              },
+                                              child: Text('Onayla'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }
                                 });
                               },
                               child: Container(
