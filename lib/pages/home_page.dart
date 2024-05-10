@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   List<Map<String, dynamic>>? pollObjects;
   List<Map<String, dynamic>>? usersObjects;
+  List<Map<String, dynamic>>? commObjects;
 
   bool showUnansweredSurveyBox = true;
   List<dynamic>? followed;
@@ -49,6 +50,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       pollObjects = dataManager.getPolls()!;
       usersObjects = dataManager.getUsers()!;
+      commObjects = dataManager.getComm()!;
 
       _pages = [
         Page0(
@@ -65,6 +67,7 @@ class _HomePageState extends State<HomePage> {
           3,
           pollObjects: pollObjects,
           usersObjects: usersObjects,
+          commObjects: commObjects,
         ),
         ProfilePage(
           4,

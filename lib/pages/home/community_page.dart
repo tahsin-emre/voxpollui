@@ -9,8 +9,9 @@ class CommunityPage extends StatefulWidget {
   final int pageIndex;
   List<Map<String, dynamic>>? pollObjects;
   List<Map<String, dynamic>>? usersObjects;
+  List<Map<String, dynamic>>? commObjects;
 
-  CommunityPage(this.pageIndex, {super.key, required this.pollObjects, required this.usersObjects});
+  CommunityPage(this.pageIndex, {super.key, required this.pollObjects, required this.usersObjects, required this.commObjects});
 
   @override
   State<CommunityPage> createState() => _CommunityPageState();
@@ -73,7 +74,7 @@ class _CommunityPageState extends State<CommunityPage> {
                         ...List.generate(
                             widget.usersObjects!.length,
                             (index) =>
-                                ForWidget.buildCardCommunity(context, index, widget.pollObjects, widget.usersObjects)),
+                                ForWidget.buildCardCommunity(context, index, widget.pollObjects, widget.usersObjects,)),
                         const SizedBox(height: 10.0),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),

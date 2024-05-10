@@ -9,6 +9,7 @@ class DataManager {
 
   List<Map<String, dynamic>>? polls;
   List<Map<String, dynamic>>? users;
+  List<Map<String, dynamic>>? comm;
 
 Future<void> setCombinedResults(Map<dynamic, dynamic> results) async {
   // print('RESULTS   $results');
@@ -16,6 +17,7 @@ Future<void> setCombinedResults(Map<dynamic, dynamic> results) async {
       // print('POLLS $polls');
       users = List<Map<String, dynamic>>.from(results['users']);
       // print('CREATORS $creators');
+      comm = List<Map<String, dynamic>>.from(results['comm']);
 }
 
 
@@ -26,6 +28,10 @@ List<Map<String, dynamic>>? getPolls() {
 
 List<Map<String, dynamic>>? getUsers() {
   return users;
+}
+
+List<Map<String, dynamic>>? getComm() {
+  return comm;
 }
 
 }
@@ -90,11 +96,9 @@ class CreatorData {
     required this.followers,
     required this.profileImageUrl,
   });
-/*
-I/flutter ( 7342): {objectId: Syb4CqazPh, username: qeq@gm.cm, gender: Erkek, city: ewqe, name: berke, birthDate: qweqe, district: eqwe, surname: qweqwe, biography: }*/
   factory CreatorData.fromJson(Map<String, dynamic> json) {
     return CreatorData(
-      objectId: json['objectId'] as String? ?? '', // Null kontrolü ve null değer için varsayılan bir değer belirtme
+      objectId: json['objectId'] as String? ?? '',
       username: json['username'] as String? ?? '',
       name: json['name'] as String? ?? '',
       surname: json['surname'] as String? ?? '',

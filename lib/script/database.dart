@@ -5,7 +5,7 @@ class Database {
   
   Future<Map<String, dynamic>> fetchPolls() async {
     try {
-      final ParseCloudFunction function = ParseCloudFunction('getPollAndUserDetails');
+      final ParseCloudFunction function = ParseCloudFunction('getAll');
       final ParseResponse result = await function.execute();
 
       if (result.success && result.result != null) {
