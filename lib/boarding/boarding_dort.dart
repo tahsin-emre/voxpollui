@@ -283,24 +283,38 @@ class _StateBoardinDort extends State<BoardinDort> {
                           border: Border(
                             bottom: BorderSide(
                               color: Colors.black, // Alt sınırın rengi
-                              //width: 2.0,  Alt sınırın kalınlığı
+                              width: 2.0, // Alt sınırın kalınlığı
                             ),
                           ),
                         ),
                         width: MediaQuery.of(context).size.width,
-                        child: DropdownButton<String>(
-                          value: _gender,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _gender = newValue!;
-                            });
-                          },
-                          items: <String>['Cinsiyet','Erkek', 'Kadın'].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: _gender,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                _gender = newValue!;
+                              });
+                            },
+                            icon: Icon(Icons.arrow_drop_down, color: Colors.black), // İkonun rengi
+                            dropdownColor: Colors.white, // Dropdown menüsünün arka plan rengi
+                            style: TextStyle(
+                              color: Colors.black, // Yazı rengi
+                              fontSize: 18, // Yazı boyutu
+                            ),
+                            items: <String>['Cinsiyet', 'Erkek', 'Kadın']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(
+                                    color: value == 'Cinsiyet' ? Colors.grey : Colors.black, // Placeholder ve diğer seçeneklerin renkleri
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 16),

@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:voxpollui/boarding/for_pro/boarding_for_pro.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
+import 'package:voxpollui/class/model/national/get_color.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/notifier/theme.dart';
@@ -569,16 +570,7 @@ class _Page0State extends State<Page0> {
                           width: 1000,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            gradient: const LinearGradient(
-                              begin: Alignment.bottomRight,
-                              end: Alignment.topLeft,
-                              colors: [
-                                Color(0xff2355ff),
-                                Color(0xff001866),
-                                Color(0xff153cc1),
-                              ],
-                              stops: [0.0, 1.0, 1.0],
-                            ),
+                            color: AppColor.nationalColor,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

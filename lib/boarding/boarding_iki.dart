@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:voxpollui/boarding/boarding_dort.dart';
 import 'package:voxpollui/boarding/kvkk.dart';
+import 'package:voxpollui/class/model/formatter.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
 
 class BoardinIki extends StatefulWidget {
@@ -18,29 +19,29 @@ class BoardinIki extends StatefulWidget {
 class _BoardinIkiState extends State<BoardinIki> {
   bool onayliyorum = false;
   bool emailAlmak = false;
-  final TextEditingController tel = TextEditingController(text: '+90 ');
+  final TextEditingController tel = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _focusNode.addListener(() {
-      if (_focusNode.hasFocus && tel.text.isEmpty) {
-        tel.text = '+90 ';
-        tel.selection = TextSelection.fromPosition(
-          TextPosition(offset: tel.text.length),
-        );
-      }
-    });
-    tel.addListener(() {
-      final text = tel.text;
-      if (!text.startsWith('+90 ')) {
-        tel.text = '+90 ${text.replaceAll('+90 ', '')}';
-        tel.selection = TextSelection.fromPosition(
-          TextPosition(offset: tel.text.length),
-        );
-      }
-    });
+    // _focusNode.addListener(() {
+    //   if (_focusNode.hasFocus && tel.text.isEmpty) {
+    //     tel.text = '+90 ';
+    //     tel.selection = TextSelection.fromPosition(
+    //       TextPosition(offset: tel.text.length),
+    //     );
+    //   }
+    // });
+    // tel.addListener(() {
+    //   final text = tel.text;
+    //   if (!text.startsWith('+90 ')) {
+    //     tel.text = '+90 ${text.replaceAll('+90 ', '')}';
+    //     tel.selection = TextSelection.fromPosition(
+    //       TextPosition(offset: tel.text.length),
+    //     );
+    //   }
+    // });
   }
 
   @override
@@ -116,6 +117,7 @@ class _BoardinIkiState extends State<BoardinIki> {
                         child: TextField(
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(14),
+                            PhoneNumberFormatter(),
                           ],
                           keyboardType: TextInputType.phone,
                           controller: tel,
@@ -132,6 +134,8 @@ class _BoardinIkiState extends State<BoardinIki> {
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 28,
+                            fontFamily:AutofillHints.telephoneNumber,
+                            fontWeight: FontWeight.normal,
                           ),
                           cursorColor: Colors.blue,
                         ),
@@ -145,14 +149,40 @@ class _BoardinIkiState extends State<BoardinIki> {
                       child: CheckboxListTile(
                         checkColor: Colors.white,
                         fillColor: MaterialStateProperty.resolveWith(getColor),
-                        title: const Text(
-                          'Aydınlatma Metni’ni okudum, Açık Rıza Metni’ni okudum ve onaylıyorum.',
-                          style: TextStyle(
-                            color: Color(0xFF0C0C0C),
-                            fontSize: 13,
-                            fontFamily: 'Gilroy',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
+                        title: const Text.rich(
+                          TextSpan(
+                            text: 'Aydınlatma Metni',
+                            style: TextStyle(
+                              color: Color(0xFF0C0C0C),
+                              fontSize: 13,
+                              fontFamily: 'Gilroy',
+                              fontWeight: FontWeight.bold,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: '’ni okudum,',
+                                style: TextStyle(
+                                  color: Color(0xFF0C0C0C),
+                                  fontFamily: 'Gilroy',
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Açık Rıza Metni',
+                                style: TextStyle(
+                                  color: Color(0xFF0C0C0C),
+                                  fontSize: 13,
+                                  fontFamily: 'Gilroy',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextSpan(
+                                text: '’ni okudum ve onaylıyorum.',
+                                style: TextStyle(
+                                  color: Color(0xFF0C0C0C),
+                                  fontFamily: 'Gilroy',
+                                ),
+                              ),
+                            ]
                           ),
                         ),
                         value: onayliyorum,
