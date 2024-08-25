@@ -6,7 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:voxpollui/boarding/boarding_dort.dart';
 import 'package:voxpollui/boarding/kvkk.dart';
-import 'package:voxpollui/class/model/formatter.dart';
+import 'package:voxpollui/class/custom/custom_phone_textfield.dart';
+import 'package:voxpollui/bos/formatter.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
 
 class BoardinIki extends StatefulWidget {
@@ -51,11 +52,11 @@ class _BoardinIkiState extends State<BoardinIki> {
     super.dispose();
   }
 
-  Color getColor(Set<MaterialState> states) {
-    const Set<MaterialState> interactiveStates = <MaterialState>{
-      MaterialState.pressed,
-      MaterialState.hovered,
-      MaterialState.focused,
+  Color getColor(Set<WidgetState> states) {
+    const Set<WidgetState> interactiveStates = <WidgetState>{
+      WidgetState.pressed,
+      WidgetState.hovered,
+      WidgetState.focused,
     };
     if (states.any(interactiveStates.contains)) {
       return Colors.white;
@@ -114,30 +115,10 @@ class _BoardinIkiState extends State<BoardinIki> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: TextField(
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(14),
-                            PhoneNumberFormatter(),
-                          ],
-                          keyboardType: TextInputType.phone,
+                        child: PhoneTextField(
                           controller: tel,
                           focusNode: _focusNode,
-                          decoration: const InputDecoration(
-                            hintText: '553 772 30 30',
-                            prefixText: '',
-                            border: InputBorder.none,
-                            hintStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 28,
-                            ),
-                          ),
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 28,
-                            fontFamily:AutofillHints.telephoneNumber,
-                            fontWeight: FontWeight.normal,
-                          ),
-                          cursorColor: Colors.blue,
+                          hintText: '555 123 45 67', // Özel hint text
                         ),
                       ),
                     ),
@@ -148,7 +129,7 @@ class _BoardinIkiState extends State<BoardinIki> {
                       width: MediaQuery.of(context).size.width,
                       child: CheckboxListTile(
                         checkColor: Colors.white,
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
+                        fillColor: WidgetStateProperty.resolveWith(getColor),
                         title: const Text.rich(
                           TextSpan(
                             text: 'Aydınlatma Metni',
@@ -280,30 +261,10 @@ class _BoardinIkiState extends State<BoardinIki> {
                   GestureDetector(
                     onTap: () {
                       if (onayliyorum && emailAlmak) {
-                        if (tel.text.isNotEmpty && tel.text.length == 14) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const BoardinDort()),
-                          );
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('Hata'),
-                                content: const Text('Lütfen telefon numaranızı 0 olmadan giriniz.'),
-                                actions: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Tamam'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const BoardinDort()),
+                        );
                       } else {
                         showDialog(
                           context: context,
