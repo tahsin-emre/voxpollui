@@ -144,8 +144,8 @@ Future<void> _fetchIl() async {
 
     // Kişisel bilgileri al
     final birthDate = _birthDateController.text.trim();
-    final city = _cityController.text.trim();
-    final district = _districtController.text.trim();
+    final city = _selectedIl.trim();
+    final district = _selectedIl.trim();
     final biography = _biographyController.text.trim();
 
     if (username.isEmpty ||
@@ -296,6 +296,7 @@ Future<void> _fetchIl() async {
                               print("Seçilen Tarih: ${selectedDate.toLocal()}");
                             }
                           },
+                          birthDateController: _birthDateController,
                         ),
                       ),
                       Container(

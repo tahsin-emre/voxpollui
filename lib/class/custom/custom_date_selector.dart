@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
 
+// ignore: must_be_immutable
 class BirthDateSelector extends StatefulWidget {
   final Function(DateTime?)? onDateSelected;
   final DateTime? initialDate;
+  late TextEditingController? birthDateController;
   final String hintText;
 
   BirthDateSelector({
     Key? key,
     this.onDateSelected,
     this.initialDate,
+    this.birthDateController,
     this.hintText = 'Doğum Tarihi',
   }) : super(key: key);
 
@@ -18,22 +21,21 @@ class BirthDateSelector extends StatefulWidget {
 }
 
 class _BirthDateSelectorState extends State<BirthDateSelector> {
-  late TextEditingController _birthDateController;
   DateTime? _selectedDate;
 
   @override
   void initState() {
     super.initState();
-    _birthDateController = TextEditingController();
+    widget.birthDateController = TextEditingController();
     if (widget.initialDate != null) {
       _selectedDate = widget.initialDate;
-      _birthDateController.text = _formatDate(_selectedDate!);
+      widget.birthDateController!.text = _formatDate(_selectedDate!);
     }
   }
 
   @override
   void dispose() {
-    _birthDateController.dispose();
+    widget.birthDateController!.dispose();
     super.dispose();
   }
 
@@ -62,7 +64,7 @@ class _BirthDateSelectorState extends State<BirthDateSelector> {
     if (pickedDate != null) {
       setState(() {
         _selectedDate = pickedDate;
-        _birthDateController.text = _formatDate(pickedDate);
+        widget.birthDateController!.text = _formatDate(pickedDate);
         if (widget.onDateSelected != null) {
           widget.onDateSelected!(pickedDate);
         }
@@ -89,9 +91,9 @@ class _BirthDateSelectorState extends State<BirthDateSelector> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              _birthDateController.text.isEmpty ? widget.hintText : _birthDateController.text,
+              widget.birthDateController!.text.isEmpty ? widget.hintText : widget.birthDateController!.text,
               style: TextStyle(
-                color: _birthDateController.text.isEmpty ? Colors.grey : Colors.black,
+                color: widget.birthDateController!.text.isEmpty ? Colors.grey : Colors.black,
                 fontSize: 16,
               ),
             ),
