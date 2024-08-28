@@ -56,10 +56,10 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasError || currentUser == null) {
               return const BoardinBir(); // Hata durumu veya giriş yapılmamışsa
             } else {
-              return const HomePage(); // Giriş yapılmışsa ana sayfa
+              return const HomePage();
             }
           } else {
-            return LoadingScreen.loadingScreen(text: "Yükleniyor"); // Veri yükleniyor
+            return LoadingScreen.loadingScreen(text: "Yükleniyor");
           }
         },
       ),
