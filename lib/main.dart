@@ -11,7 +11,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env.sample");
 
-  // Use the environment variables
   final keyApplicationId = dotenv.env['APPLICATION_ID'];
   final keyClientKey = dotenv.env['CLIENT_KEY'];
   final keyParseServerUrl = dotenv.env['PARSE_SERVER_URL'];
@@ -27,7 +26,7 @@ Future<Widget> initializeApp() async {
     providers: [
       ChangeNotifierProvider(
           create: (context) =>
-              ThemeNotifier()), // Burada ThemeNotifier'ı oluşturuyoruz
+              ThemeNotifier()),
     ],
     child: const MyApp(),
   );
@@ -37,24 +36,24 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   Future<ParseUser?> getCurrentUser() async {
-    return await ParseUser.currentUser(); // Dönüş türünü açıkça belirtiyoruz
+    return await ParseUser.currentUser();
   }
 
   @override
   Widget build(BuildContext context) {
     final themeNotifier =
-        Provider.of<ThemeNotifier>(context); // Tema durumunu al
+        Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Vox Poll',
-      theme: themeNotifier.currentTheme, // Tema durumunu kullan
+      theme: themeNotifier.currentTheme,
       home: FutureBuilder<dynamic>(
-        future: getCurrentUser(), // Asenkron fonksiyonu kullanın
+        future: getCurrentUser(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            final currentUser = snapshot.data; // null güvenliğini kontrol et
+            final currentUser = snapshot.data;
             if (snapshot.hasError || currentUser == null) {
-              return const BoardinBir(); // Hata durumu veya giriş yapılmamışsa
+              return const BoardinBir();
             } else {
               return const HomePage();
             }
