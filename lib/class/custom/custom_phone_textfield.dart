@@ -25,7 +25,8 @@ class PhoneTextField extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: TextField(
           inputFormatters: [
-            LengthLimitingTextInputFormatter(13), // Max length adjusted for formatted number
+            LengthLimitingTextInputFormatter(
+                13), // Max length adjusted for formatted number
             FilteringTextInputFormatter.digitsOnly, // Only digits allowed
             _phoneNumberFormatter, // Custom phone number formatter
           ],
@@ -34,11 +35,34 @@ class PhoneTextField extends StatelessWidget {
           focusNode: focusNode,
           decoration: InputDecoration(
             hintText: hintText,
-            prefixText: '',
+            prefix: RichText(
+              text: const TextSpan(
+                children: [
+                  TextSpan(
+                    text: '+90 ',
+                    style: TextStyle(
+                      fontFamily: "Gilroy-medium",
+                      color: Colors.black,
+                      fontSize: 28,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            enabledBorder: const UnderlineInputBorder(
+              borderSide:
+                  BorderSide(width: 1.0), // Alt çizgi rengi ve kalınlığı
+            ),
+            focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.0), // Odaklanıldığında alt çizgi rengi ve kalınlığı
+            ),
             border: InputBorder.none,
             hintStyle: const TextStyle(
               color: Colors.black,
               fontSize: 28,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w400,
             ),
           ),
           style: const TextStyle(
@@ -58,11 +82,13 @@ class PhoneNumberFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    final digitsOnly = newValue.text.replaceAll(RegExp(r'[^\d]'), ''); // Only digits
+    final digitsOnly =
+        newValue.text.replaceAll(RegExp(r'[^\d]'), ''); // Only digits
     final formattedText = _formatAsPhoneNumber(digitsOnly);
     return TextEditingValue(
       text: formattedText,
-      selection: TextSelection.collapsed(offset: formattedText.length), // Cursor at the end
+      selection: TextSelection.collapsed(
+          offset: formattedText.length), // Cursor at the end
     );
   }
 
