@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CustomCheckbox extends StatefulWidget {
   Widget? child;
-  CustomCheckbox({super.key, this.child});
+  bool isChecked = false;
+  final ValueChanged<bool>? onChanged; // Yeni onChanged parametresi
+  CustomCheckbox({
+    super.key,
+    this.child,
+    required this.isChecked,
+    this.onChanged,
+  });
 
   @override
   State<CustomCheckbox> createState() => _CustomCheckboxState();
@@ -11,7 +18,6 @@ class CustomCheckbox extends StatefulWidget {
 
 class _CustomCheckboxState extends State<CustomCheckbox>
     with SingleTickerProviderStateMixin {
-  bool _isChecked = false;
   late AnimationController _animationController;
   late Animation<double> _sizeAnimation;
   late Animation<Color?> _colorAnimation;
@@ -37,11 +43,15 @@ class _CustomCheckboxState extends State<CustomCheckbox>
 
   void _toggleCheckbox() {
     setState(() {
-      _isChecked = !_isChecked;
-      if (_isChecked) {
+      widget.isChecked = !widget.isChecked;
+      if (widget.isChecked) {
         _animationController.forward();
       } else {
         _animationController.reverse();
+      }
+      if (widget.onChanged != null) {
+        widget.onChanged!(
+            widget.isChecked); // Checkbox durumunu dışarıya bildirin
       }
     });
   }
@@ -59,14 +69,14 @@ class _CustomCheckboxState extends State<CustomCheckbox>
                 width: _sizeAnimation.value,
                 height: _sizeAnimation.value,
                 decoration: BoxDecoration(
-                  color: _isChecked
+                  color: widget.isChecked
                       ? const Color.fromARGB(255, 35, 86, 255)
                       : Colors.transparent,
-                  borderRadius: _isChecked
+                  borderRadius: widget.isChecked
                       ? BorderRadius.circular(4.0)
                       : BorderRadius.circular(0.0),
                   border: Border.all(
-                    color: _isChecked
+                    color: widget.isChecked
                         ? const Color.fromARGB(255, 35, 86, 255)
                         : Colors.black,
                     width: 0.9,
@@ -94,75 +104,3 @@ class _CustomCheckboxState extends State<CustomCheckbox>
     );
   }
 }
-
-
-
-/*
-
-const Text.rich(
-              TextSpan(
-                  text: 'Aydınlatma Metni',
-                  style: TextStyle(
-                      color: Color(0xFF0C0C0C),
-                      fontSize: 13,
-                      fontFamily: 'Gilroy-medium',
-                      fontWeight: FontWeight.bold),
-                  children: [
-                    TextSpan(
-                      text: '’ni okudum,',
-                      style: TextStyle(
-                          color: Color(0xFF0C0C0C),
-                          fontFamily: 'Gilroy',
-                          fontWeight: FontWeight.w400),
-                    ),
-                    TextSpan(
-                      text: 'Açık Rıza Metni',
-                      style: TextStyle(
-                          color: Color(0xFF0C0C0C),
-                          fontSize: 13,
-                          fontFamily: 'Gilroy-medium',
-                          fontWeight: FontWeight.bold),
-                    ),
-                    TextSpan(
-                      text: '’ni okudum ve onaylıyorum.',
-                      style: TextStyle(
-                          color: Color(0xFF0C0C0C),
-                          fontFamily: 'Gilroy',
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ]),
-            ),
-
-
-
-
-
- const Text.rich(
-                        TextSpan(
-                            text: 'Açık Rıza Metni ve ',
-                            style: TextStyle(
-                                color: Color(0xFF0C0C0C),
-                                fontSize: 13,
-                                fontFamily: 'Gilroy',
-                                fontWeight: FontWeight.w400),
-                            children: [
-                              TextSpan(
-                                text:
-                                    'Ticari Elektronik İleti Aydınlatma Metni ',
-                                style: TextStyle(
-                                    color: Color(0xFF0C0C0C),
-                                    fontFamily: 'Gilroy-medium',
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text:
-                                    'Kapsamında SMS, e-posta ve arama almak istiyorum.',
-                                style: TextStyle(
-                                    color: Color(0xFF0C0C0C),
-                                    fontSize: 13,
-                                    fontFamily: 'Gilroy',
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ]),
-                      ),
-*/

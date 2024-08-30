@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:voxpollui/boarding/boarding_dort.dart';
+import 'package:voxpollui/boarding/boarding_uc.dart';
 import 'package:voxpollui/boarding/kvkk.dart';
 import 'package:voxpollui/class/custom/custom_checkbox.dart';
 import 'package:voxpollui/class/custom/custom_phone_textfield.dart';
@@ -136,6 +137,12 @@ class _BoardinIkiState extends State<BoardinIki> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: CustomCheckbox(
+                      isChecked: onayliyorum,
+                      onChanged: (bool value) {
+                        setState(() {
+                          onayliyorum = value;
+                        });
+                      },
                       child: const Text.rich(
                         TextSpan(
                             text: 'Aydınlatma Metni',
@@ -177,6 +184,12 @@ class _BoardinIkiState extends State<BoardinIki> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: CustomCheckbox(
+                      isChecked: emailAlmak,
+                      onChanged: (bool value) {
+                        setState(() {
+                          emailAlmak = value;
+                        });
+                      },
                       child: const Text.rich(
                         TextSpan(
                             text: 'Açık Rıza Metni ve ',
@@ -260,10 +273,17 @@ class _BoardinIkiState extends State<BoardinIki> {
                   GestureDetector(
                     onTap: () {
                       if (onayliyorum && emailAlmak) {
+                        /*
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const BoardinDort()),
+                          );
+                        */
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const BoardinDort()),
+                              builder: (context) => const BoardinUc()),
                         );
                       } else {
                         showDialog(
