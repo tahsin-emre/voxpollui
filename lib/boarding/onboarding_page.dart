@@ -54,6 +54,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: Column(
@@ -173,7 +174,8 @@ class OnboardingSlide extends StatelessWidget {
   final String description;
   final bool hasButton;
 
-  const OnboardingSlide({super.key, 
+  const OnboardingSlide({
+    super.key,
     required this.image,
     required this.title,
     required this.description,
@@ -197,7 +199,12 @@ class OnboardingSlide extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: title
                 .split(' ')
-                .map((word) => Text(word, style: const TextStyle(fontSize: 48.0)))
+                .map((word) => Text(word,
+                    style: const TextStyle(
+                      fontSize: 48.0,
+                      fontFamily: "Gilroy-medium",
+                      fontWeight: FontWeight.w500,
+                    )))
                 .toList(),
           ),
           Text(
@@ -690,8 +697,10 @@ class Login extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const HomePage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()));
                   },
                   child: Positioned(
                     left: 31,

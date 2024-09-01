@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:voxpollui/boarding/for_pro/boarding_for_pro.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
@@ -95,6 +96,7 @@ class _Page0State extends State<Page0> {
   Widget build(BuildContext context) {
     // bool isDarkMode = Provider.of<ThemeNotifier>(context).isDarkMode;
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _scaffoldKey,
       endDrawer: Drawer(
         backgroundColor: Colors.white,
@@ -407,8 +409,7 @@ class _Page0State extends State<Page0> {
                   // Başlangıç sayfasına git
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => BoardinBir()),
+                    MaterialPageRoute(builder: (context) => BoardinBir()),
                   );
                 } catch (e) {
                   // Çıkış sırasında bir hata oluştu
@@ -531,15 +532,19 @@ class _Page0State extends State<Page0> {
                           ],
                         ),
                         const Spacer(),
-                        IconButton(
-                          icon: const Icon(Icons.notifications),
-                          onPressed: () {
+                        GestureDetector(
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => NotificationsPage()),
                             );
                           },
+                          child: SvgPicture.asset(
+                            'assets/image/cal.svg',
+                            width: 24,
+                            height: 24,
+                          ),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -567,7 +572,7 @@ class _Page0State extends State<Page0> {
                   background: showUnansweredSurveyBox
                       ? Container(
                           padding: const EdgeInsets.all(16.0),
-                          width: 1000,
+                          width: MediaQuery.of(context).size.width - 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             color: AppColor.nationalColor,
@@ -595,12 +600,15 @@ class _Page0State extends State<Page0> {
                                   ],
                                 ),
                               ),
+                              /* 
                               const SizedBox(height: 10.0),
                               ElevatedButton(
                                 onPressed: () {
-                                  
-                                  //! SEARCH KODUDUR YERİ BURASI DEĞİL 
-                                  SearchClass.searchData("searchText", columnName: "columnName",);
+                                  //! SEARCH KODUDUR YERİ BURASI DEĞİL
+                                  SearchClass.searchData(
+                                    "searchText",
+                                    columnName: "columnName",
+                                  );
                                 },
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
@@ -628,6 +636,7 @@ class _Page0State extends State<Page0> {
                                   ),
                                 ),
                               ),
+                              */
                             ],
                           ),
                         )

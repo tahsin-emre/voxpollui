@@ -66,23 +66,27 @@ class _BoardinUcState extends State<BoardinUc> {
                           maxLength: 1,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
+                              fontSize: 24,
+                              fontFamily: "Gilroy",
+                              fontWeight: FontWeight.w400),
                           cursorColor: Colors.blue,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
+                              gapPadding: 10.0,
+                              borderRadius: BorderRadius.zero,
                               borderSide: BorderSide(
                                 color: Colors.black, // Normal durumdaki sınır
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.zero,
                               borderSide: BorderSide(
                                 color: Colors
                                     .black, // Focus durumu için siyah sınır
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.zero,
                               borderSide: BorderSide(
                                 color: Colors
                                     .black, // Enabled durumu için siyah sınır

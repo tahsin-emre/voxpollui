@@ -200,8 +200,7 @@ class _StateBoardinDort extends State<BoardinDort> {
             },
             child: currentStep == 0
                 ? Stack(children: [
-                    SingleChildScrollView(
-                        child: Padding(
+                    Padding(
                       padding:
                           const EdgeInsets.fromLTRB(16.0, 32.0, 16.0, 16.0),
                       child: Column(
@@ -231,7 +230,7 @@ class _StateBoardinDort extends State<BoardinDort> {
                               fontSize: 14,
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 20),
                           TextField(
                             controller: _nameController,
                             decoration: InputDecoration(
@@ -243,12 +242,17 @@ class _StateBoardinDort extends State<BoardinDort> {
                               focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                       color: AppColor.nationalColor)),
+                              contentPadding:
+                                  const EdgeInsets.only(bottom: -10),
                             ),
                             cursorColor: AppColor.nationalColor,
                           ),
+                          const SizedBox(height: 20),
                           TextField(
                             controller: _surnameController,
                             decoration: InputDecoration(
+                              contentPadding:
+                                  const EdgeInsets.only(bottom: -10),
                               labelText: 'Soyisim',
                               border: const UnderlineInputBorder(),
                               enabledBorder: const UnderlineInputBorder(
@@ -259,9 +263,12 @@ class _StateBoardinDort extends State<BoardinDort> {
                             ),
                             cursorColor: AppColor.nationalColor,
                           ),
+                          const SizedBox(height: 20),
                           TextField(
                             controller: _usernameController,
                             decoration: InputDecoration(
+                              contentPadding:
+                                  const EdgeInsets.only(bottom: -10),
                               labelText: 'Kullanıcı Adı',
                               border: const UnderlineInputBorder(),
                               enabledBorder: const UnderlineInputBorder(
@@ -272,10 +279,13 @@ class _StateBoardinDort extends State<BoardinDort> {
                             ),
                             cursorColor: AppColor.nationalColor,
                           ),
+                          const SizedBox(height: 20),
                           TextField(
                             controller: _mailController,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
+                              contentPadding:
+                                  const EdgeInsets.only(bottom: -10),
                               labelText: 'E-Mail',
                               border: const UnderlineInputBorder(),
                               enabledBorder: const UnderlineInputBorder(
@@ -286,6 +296,7 @@ class _StateBoardinDort extends State<BoardinDort> {
                             ),
                             cursorColor: AppColor.nationalColor,
                           ),
+                          const SizedBox(height: 20),
                           GestureDetector(
                             onTap: () => _selectDate(context),
                             child: BirthDateSelector(
@@ -298,6 +309,7 @@ class _StateBoardinDort extends State<BoardinDort> {
                               birthDateController: _birthDateController,
                             ),
                           ),
+                          const SizedBox(height: 20),
                           Container(
                             decoration: const BoxDecoration(
                               border: Border(
@@ -347,8 +359,9 @@ class _StateBoardinDort extends State<BoardinDort> {
                               ),
                             ),
                           ),
+                          const SizedBox(height: 20),
                           Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               border: Border(
                                 bottom: BorderSide(
                                   color: Colors.black, // Alt sınırın rengi
@@ -391,12 +404,11 @@ class _StateBoardinDort extends State<BoardinDort> {
                               ),
                             ),
                           ),
-
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               border: Border(
                                 bottom: BorderSide(
                                   color: Colors.black, // Alt sınırın rengi
@@ -413,11 +425,11 @@ class _StateBoardinDort extends State<BoardinDort> {
                                     _gender = newValue!;
                                   });
                                 },
-                                icon: Icon(Icons.arrow_drop_down,
+                                icon: const Icon(Icons.arrow_drop_down,
                                     color: Colors.black), // İkonun rengi
                                 dropdownColor: Colors
                                     .white, // Dropdown menüsünün arka plan rengi
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.black, // Yazı rengi
                                   fontSize: 18, // Yazı boyutu
                                 ),
@@ -443,6 +455,7 @@ class _StateBoardinDort extends State<BoardinDort> {
                             ),
                           ),
                           const SizedBox(height: 16),
+                          const Spacer(),
                           GestureDetector(
                             onTap: _goToNextStep,
                             child: Container(
@@ -472,143 +485,147 @@ class _StateBoardinDort extends State<BoardinDort> {
                           ),
                         ],
                       ),
-                    )),
+                    ),
                   ])
-                : Column(
-                    children: [
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'İlgi Alanları',
-                            style: TextStyle(
-                              color: Color(0xFF0C0C0C),
-                              fontSize: 40,
-                              fontFamily: 'Gilroy',
-                              fontWeight: FontWeight.w600,
-                              height: 0,
-                            ),
-                          ),
+                : Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 50,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '5 adet seçebilir ve profilinizden güncelleyebilirsiniz.',
-                            style: TextStyle(
-                              color: Color(0xFF0C0C0C),
-                              fontSize: 13,
-                              fontFamily: 'Gilroy',
-                              fontWeight: FontWeight.w400,
-                              height: 0.08,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Expanded(
-                        child: GridView.builder(
-                          padding: const EdgeInsets.all(8),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: 3,
-                          ),
-                          itemCount: interests.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  if (selectedStep < 5) {
-                                    isSelected[index] = !isSelected[index];
-                                    selectedStep++;
-                                  } else {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text('Dikkat'),
-                                          content: Text(
-                                              '5 adetten fazla ilgi alanı seçemezsiniz'),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () {
-                                                // Onay işlemini gerçekleştir
-                                                Navigator.of(context)
-                                                    .pop(); // Diyalogu kapat
-                                              },
-                                              child: Text('Onayla'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  }
-                                });
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: isSelected[index]
-                                      ? const Color(0xFF2355FF)
-                                      : Colors.white,
-                                  border: Border.all(color: Colors.black54),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  interests[index],
-                                  style: TextStyle(
-                                      color: isSelected[index]
-                                          ? Colors.white
-                                          : Colors.black),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: _registerUser,
-                        //onTap: _registerUser,
-                        child: Container(
-                          alignment: Alignment.bottomCenter,
-                          width: double.infinity,
-                          height: 49,
-                          margin: const EdgeInsets.all(
-                              31), // Burası ekranın kenar boşluklarını ayarlar
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF2355FF),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                          child: const Center(
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
                             child: Text(
-                              'İleri',
+                              'İlgi Alanları',
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontFamily: 'Gilroy',
-                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF0C0C0C),
+                                fontSize: 40,
+                                fontFamily: 'Gilroy-medium',
+                                fontWeight: FontWeight.w500,
+                                height: 0,
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '5 adet seçebilir ve profilinizden güncelleyebilirsiniz.',
+                              style: TextStyle(
+                                color: Color(0xFF0C0C0C),
+                                fontSize: 13,
+                                fontFamily: 'Gilroy',
+                                fontWeight: FontWeight.w400,
+                                height: 0.08,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Expanded(
+                          child: GridView.builder(
+                            padding: const EdgeInsets.all(8),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: 3,
+                            ),
+                            itemCount: interests.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    if (selectedStep < 5) {
+                                      isSelected[index] = !isSelected[index];
+                                      selectedStep++;
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('Dikkat'),
+                                            content: const Text(
+                                                '5 adetten fazla ilgi alanı seçemezsiniz'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  // Onay işlemini gerçekleştir
+                                                  Navigator.of(context)
+                                                      .pop(); // Diyalogu kapat
+                                                },
+                                                child: const Text('Onayla'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: isSelected[index]
+                                        ? const Color(0xFF2355FF)
+                                        : Colors.white,
+                                    border: Border.all(color: Colors.black),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    interests[index],
+                                    style: TextStyle(
+                                        color: isSelected[index]
+                                            ? Colors.white
+                                            : Colors.black),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: _registerUser,
+                          //onTap: _registerUser,
+                          child: Container(
+                            alignment: Alignment.bottomCenter,
+                            width: double.infinity,
+                            height: 49,
+                            margin: const EdgeInsets.all(
+                                31), // Burası ekranın kenar boşluklarını ayarlar
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFF2355FF),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'İleri',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'Gilroy',
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
           );
         }));

@@ -50,7 +50,8 @@ class _BirthDateSelectorState extends State<BirthDateSelector> {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light(
-              primary: AppColor.nationalColor, // Ana renk olarak nationalColor kullanılır
+              primary: AppColor
+                  .nationalColor, // Ana renk olarak nationalColor kullanılır
               onPrimary: Colors.white, // Başlık yazısı rengi
               onSurface: Colors.black, // Seçilebilir öğelerin yazı rengi
             ),
@@ -91,15 +92,15 @@ class _BirthDateSelectorState extends State<BirthDateSelector> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.birthDateController!.text.isEmpty ? widget.hintText : widget.birthDateController!.text,
+              widget.birthDateController!.text.isEmpty
+                  ? widget.hintText
+                  : widget.birthDateController!.text,
               style: TextStyle(
-                color: widget.birthDateController!.text.isEmpty ? Colors.grey : Colors.black,
+                color: widget.birthDateController!.text.isEmpty
+                    ? Colors.black
+                    : Colors.black,
                 fontSize: 16,
               ),
-            ),
-            Icon(
-              Icons.calendar_today,
-              color: AppColor.nationalColor,
             ),
           ],
         ),
