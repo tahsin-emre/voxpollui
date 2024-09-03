@@ -250,8 +250,8 @@ class _BoardinIkiState extends State<BoardinIki> {
                               style: TextStyle(
                                 color: Color(0xFF0C0C0C),
                                 fontSize: 12,
-                                fontFamily: 'Gilroy',
-                                fontWeight: FontWeight.w700,
+                                fontFamily: 'Gilroy-medium',
+                                fontWeight: FontWeight.bold,
                                 height: 0,
                               ),
                             ),

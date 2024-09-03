@@ -34,18 +34,17 @@ class _StateBoardinDort extends State<BoardinDort> {
     }
   }
 
-  //final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _biographyController = TextEditingController();
   List<String> selectedInterests = [];
   List<String> interestsList = [];
   String _gender = 'Cinsiyet';
-  List<String> ilList = [];
-  List<String> ilIdList = [];
-  List<String> ilceList = [];
-  String? _ilce;
+  List<String> ilList = ["İl"];
+  List<String> ilIdList = [""];
+  List<String> ilceList = ["İlçe"];
+  String? _ilce = "İlçe";
 
   String _selectedIlId = "";
-  String _selectedIl = "İzmir";
+  String _selectedIl = "İl";
 
   List<String> interests = [];
 
@@ -63,18 +62,14 @@ class _StateBoardinDort extends State<BoardinDort> {
     final ParseResponse response = await ParseObject('Interest').getAll();
     if (response.success && response.results != null) {
       setState(() {
-        // List<dynamic> türündeki değeri List<String> türüne dönüştürme
         interestsList = response.results!
             .map((e) => e.get<String>('name') as String)
             .toList();
-
-        // İlgi alanları listesini ilgi alanları seçimi için kullanılan
-        // isSelected listesi ile eşleştir
         interests = List<String>.from(interestsList);
         isSelected = List.generate(interests.length, (_) => false);
       });
     } else {
-      // Hata durumunda işlem@
+      // Hata durumunda işlem
     }
   }
 
@@ -86,18 +81,14 @@ class _StateBoardinDort extends State<BoardinDort> {
       if (result.success && result.result != null) {
         final responseData = result.result as List<dynamic>;
         setState(() {
-          ilList = responseData
-              .map<String>((item) => item['il_adi'] as String)
-              .toList();
-          ilIdList = responseData
-              .map<String>((item) => item['il_id'] as String)
-              .toList();
-          // Varsayılan olarak ilk ili seçili yap
-          if (ilList.isNotEmpty) {
-            _selectedIl = ilList[0];
-            _selectedIlId = ilIdList[0];
-            _fetchIlce(); // İlk ili seçtiğinde ilçeleri çek
-          }
+          ilList = ["İl"] +
+              responseData
+                  .map<String>((item) => item['il_adi'] as String)
+                  .toList();
+          ilIdList = [""] +
+              responseData
+                  .map<String>((item) => item['il_id'] as String)
+                  .toList();
         });
       } else {
         throw Exception('Sunucu tarafında bir hata oluştu.');
@@ -109,18 +100,22 @@ class _StateBoardinDort extends State<BoardinDort> {
 
   Future<void> _fetchIlce() async {
     try {
+      if (_selectedIlId.isEmpty) return;
+
       final ParseCloudFunction function = ParseCloudFunction('getIlce');
       final Map<String, dynamic> params = <String, dynamic>{
         'ilId': _selectedIlId
-      }; // ID kullan
+      };
       final ParseResponse result = await function.execute(parameters: params);
 
       if (result.success && result.result != null) {
         final responseData = result.result as List<dynamic>;
         setState(() {
-          ilceList = responseData
-              .map<String>((item) => item['ilce_adi'] as String)
-              .toList();
+          ilceList = ["İlçe"] +
+              responseData
+                  .map<String>((item) => item['ilce_adi'] as String)
+                  .toList();
+          _ilce = "İlçe"; // Varsayılan değeri sıfırla
         });
       } else {
         throw Exception('Sunucu tarafında bir hata oluştu.');
@@ -135,14 +130,11 @@ class _StateBoardinDort extends State<BoardinDort> {
     final email = _mailController.text.trim();
     String password = '123';
 
-    // Kişisel bilgileri ve ilgi alanlarını al
     final name = _nameController.text.trim();
     final surname = _surnameController.text.trim();
-
-    // Kişisel bilgileri al
     final birthDate = _birthDateController.text.trim();
     final city = _selectedIl.trim();
-    final district = _selectedIl.trim();
+    final district = _ilce!.trim();
     final biography = _biographyController.text.trim();
 
     if (username.isEmpty ||
@@ -151,8 +143,10 @@ class _StateBoardinDort extends State<BoardinDort> {
         surname.isEmpty ||
         birthDate.isEmpty ||
         city.isEmpty ||
-        district.isEmpty) {
-      _showErrorDialog('h' 'Bir hata oluştu');
+        district.isEmpty ||
+        city == "İl" ||
+        district == "İlçe") {
+      _showErrorDialog('Bir hata oluştu');
       return;
     }
 
@@ -163,24 +157,20 @@ class _StateBoardinDort extends State<BoardinDort> {
       ..set('city', city)
       ..set('district', district)
       ..set('gender', _gender)
-      ..set('interests', selectedInterests) // İlgi alanlarını kullanıcıya ekle
+      ..set('interests', selectedInterests)
       ..set('biography', biography);
 
     var response = await user.signUp();
-//@
     if (response.success) {
-      // Kayıt başarılı, oturum aç ve Ana Sayfaya yönlendir
       await ParseUser(username, password, email).login();
-      // ignore: use_build_context_synchronously
       Navigator.push(
-        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => const OnboardingPage()),
       );
     } else {
       _showErrorDialog(response.error?.message ?? 'Bir hata oluştu');
     }
-  } //@
+  }
 
   void _goToNextStep() {
     setState(() {
@@ -191,36 +181,33 @@ class _StateBoardinDort extends State<BoardinDort> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Builder(builder: (BuildContext context) {
-          return GestureDetector(
-            onTap: () {
-              // Klavye açıkken tıklanırsa klavyeyi kapat@
-              FocusScope.of(context).unfocus();
-            },
-            child: currentStep == 0
-                ? Stack(children: [
+      backgroundColor: Colors.white,
+      body: Builder(builder: (BuildContext context) {
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: currentStep == 0
+              ? Stack(
+                  children: [
                     Padding(
                       padding:
                           const EdgeInsets.fromLTRB(16.0, 32.0, 16.0, 16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          const SizedBox(
-                            height: 30,
-                          ), //@
+                          const SizedBox(height: 30),
                           const Text(
                             'Kişisel Bilgiler',
                             style: TextStyle(
                               color: Color(0xFF0C0C0C),
                               fontSize: 40,
                               fontFamily: 'Gilroy-medium',
+                              fontWeight: FontWeight.w400,
                               height: 0,
                             ),
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          const SizedBox(height: 10),
                           const Text(
                             '*Bazı bilgiler sonradan değiştirilemez. \n Doğru girdiğinizden emin olun.',
                             style: TextStyle(
@@ -314,48 +301,45 @@ class _StateBoardinDort extends State<BoardinDort> {
                             decoration: const BoxDecoration(
                               border: Border(
                                 bottom: BorderSide(
-                                  color: Colors.black, // Alt sınırın rengi
-                                  width: 2.0, // Alt sınırın kalınlığı
+                                  color: Colors.black,
+                                  width: 1.0,
                                 ),
                               ),
                             ),
                             width: MediaQuery.of(context).size.width,
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
+                                iconSize: 0.0,
                                 value: _selectedIl,
                                 onChanged: (String? newValue) {
-                                  setState(() {
-                                    _selectedIl = newValue!;
-                                    _selectedIlId = ilIdList[ilList.indexOf(
-                                        _selectedIl)]; // ID'yi güncelle
-                                    _fetchIlce(); // İl seçildiğinde ilçeleri çek
-                                  });
+                                  if (newValue != "İl") {
+                                    setState(() {
+                                      _selectedIl = newValue!;
+                                      _selectedIlId =
+                                          ilIdList[ilList.indexOf(_selectedIl)];
+                                      _fetchIlce();
+                                    });
+                                  }
                                 },
-                                icon: const Icon(Icons.arrow_drop_down,
-                                    color: Colors.black), // İkonun rengi
-                                dropdownColor: Colors
-                                    .white, // Dropdown menüsünün arka plan rengi
+                                dropdownColor: Colors.white,
                                 style: const TextStyle(
-                                  color: Colors.black, // Yazı rengi
-                                  fontSize: 18, // Yazı boyutu
+                                  color: Colors.black,
+                                  fontSize: 18,
                                 ),
-                                items: ilList.isEmpty
-                                    ? []
-                                    : ilList.map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(
-                                            value,
-                                            style: TextStyle(
-                                              color: value == 'bos'
-                                                  ? Colors.grey
-                                                  : Colors
-                                                      .black, // Placeholder ve diğer seçeneklerin renkleri
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
+                                items: ilList.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(
+                                        color: value == 'İl'
+                                            ? Colors.black
+                                            : Colors.black,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
                               ),
                             ),
                           ),
@@ -364,74 +348,69 @@ class _StateBoardinDort extends State<BoardinDort> {
                             decoration: const BoxDecoration(
                               border: Border(
                                 bottom: BorderSide(
-                                  color: Colors.black, // Alt sınırın rengi
-                                  width: 2.0, // Alt sınırın kalınlığı
+                                  color: Colors.black,
+                                  width: 1.0,
                                 ),
                               ),
                             ),
                             width: MediaQuery.of(context).size.width,
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
+                                iconSize: 0.0,
                                 value: _ilce,
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    _ilce = newValue!;
-                                  });
-                                },
-                                icon: const Icon(Icons.arrow_drop_down,
-                                    color: Colors.black), // İkonun rengi
-                                dropdownColor: Colors
-                                    .white, // Dropdown menüsünün arka plan rengi
+                                onChanged: _selectedIl != "İl"
+                                    ? (String? newValue) {
+                                        setState(() {
+                                          _ilce = newValue!;
+                                        });
+                                      }
+                                    : null,
+                                dropdownColor: Colors.white,
                                 style: const TextStyle(
-                                  color: Colors.black, // Yazı rengi
-                                  fontSize: 18, // Yazı boyutu
+                                  color: Colors.black,
+                                  fontSize: 18,
                                 ),
-                                items: ilceList.isEmpty
-                                    ? []
-                                    : ilceList.map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(
-                                            value,
-                                            style: const TextStyle(
-                                              color: Colors
-                                                  .black, // İlçelerin renkleri
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
+                                items: ilceList.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(
+                                        color: value == 'İlçe'
+                                            ? Colors.black
+                                            : Colors.black,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          const SizedBox(height: 5),
                           Container(
                             decoration: const BoxDecoration(
                               border: Border(
                                 bottom: BorderSide(
-                                  color: Colors.black, // Alt sınırın rengi
-                                  width: 2.0, // Alt sınırın kalınlığı
+                                  color: Colors.black,
+                                  width: 1.0,
                                 ),
                               ),
                             ),
                             width: MediaQuery.of(context).size.width,
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
+                                iconSize: 0.0,
                                 value: _gender,
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     _gender = newValue!;
                                   });
                                 },
-                                icon: const Icon(Icons.arrow_drop_down,
-                                    color: Colors.black), // İkonun rengi
-                                dropdownColor: Colors
-                                    .white, // Dropdown menüsünün arka plan rengi
+                                dropdownColor: Colors.white,
                                 style: const TextStyle(
-                                  color: Colors.black, // Yazı rengi
-                                  fontSize: 18, // Yazı boyutu
+                                  color: Colors.black,
+                                  fontSize: 18,
                                 ),
                                 items: <String>[
                                   'Cinsiyet',
@@ -444,9 +423,8 @@ class _StateBoardinDort extends State<BoardinDort> {
                                       value,
                                       style: TextStyle(
                                         color: value == 'Cinsiyet'
-                                            ? Colors.grey
-                                            : Colors
-                                                .black, // Placeholder ve diğer seçeneklerin renkleri
+                                            ? Colors.black
+                                            : Colors.black,
                                       ),
                                     ),
                                   );
@@ -462,8 +440,7 @@ class _StateBoardinDort extends State<BoardinDort> {
                               alignment: Alignment.bottomCenter,
                               width: double.infinity,
                               height: 49,
-                              margin: const EdgeInsets.all(
-                                  31), // Burası ekranın kenar boşluklarını ayarlar
+                              margin: const EdgeInsets.all(31),
                               decoration: ShapeDecoration(
                                 color: const Color(0xFF2355FF),
                                 shape: RoundedRectangleBorder(
@@ -486,69 +463,76 @@ class _StateBoardinDort extends State<BoardinDort> {
                         ],
                       ),
                     ),
-                  ])
-                : Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'İlgi Alanları',
-                              style: TextStyle(
-                                color: Color(0xFF0C0C0C),
-                                fontSize: 40,
-                                fontFamily: 'Gilroy-medium',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
-                              ),
+                  ],
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'İlgi Alanları',
+                            style: TextStyle(
+                              color: Color(0xFF0C0C0C),
+                              fontSize: 40,
+                              fontFamily: 'Gilroy-medium',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              '5 adet seçebilir ve profilinizden güncelleyebilirsiniz.',
-                              style: TextStyle(
-                                color: Color(0xFF0C0C0C),
-                                fontSize: 13,
-                                fontFamily: 'Gilroy',
-                                fontWeight: FontWeight.w400,
-                                height: 0.08,
-                              ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '5 adet seçebilir ve profilinizden güncelleyebilirsiniz.',
+                            style: TextStyle(
+                              color: Color(0xFF0C0C0C),
+                              fontSize: 13,
+                              fontFamily: 'Gilroy',
+                              fontWeight: FontWeight.w400,
+                              height: 0.08,
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Expanded(
-                          child: GridView.builder(
-                            padding: const EdgeInsets.all(8),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                              childAspectRatio: 3,
-                            ),
-                            itemCount: interests.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Expanded(
+                        child: GridView.builder(
+                          padding: const EdgeInsets.all(8),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            childAspectRatio: 3,
+                          ),
+                          itemCount: interests.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelected[index]) {
+                                    // Eğer kullanıcı zaten seçili bir alana tıklarsa, seçim iptal edilsin
+                                    isSelected[index] = false;
+                                    selectedStep--;
+                                  } else {
+                                    // Eğer kullanıcı henüz seçilmemiş bir alana tıklarsa, seçim yapılsın
                                     if (selectedStep < 5) {
-                                      isSelected[index] = !isSelected[index];
+                                      isSelected[index] = true;
                                       selectedStep++;
                                     } else {
                                       showDialog(
@@ -561,9 +545,7 @@ class _StateBoardinDort extends State<BoardinDort> {
                                             actions: <Widget>[
                                               TextButton(
                                                 onPressed: () {
-                                                  // Onay işlemini gerçekleştir
-                                                  Navigator.of(context)
-                                                      .pop(); // Diyalogu kapat
+                                                  Navigator.of(context).pop();
                                                 },
                                                 child: const Text('Onayla'),
                                               ),
@@ -572,63 +554,64 @@ class _StateBoardinDort extends State<BoardinDort> {
                                         },
                                       );
                                     }
-                                  });
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
+                                  }
+                                });
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: isSelected[index]
+                                      ? const Color(0xFF2355FF)
+                                      : Colors.white,
+                                  border: Border.all(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  interests[index],
+                                  style: TextStyle(
                                     color: isSelected[index]
-                                        ? const Color(0xFF2355FF)
-                                        : Colors.white,
-                                    border: Border.all(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Text(
-                                    interests[index],
-                                    style: TextStyle(
-                                        color: isSelected[index]
-                                            ? Colors.white
-                                            : Colors.black),
+                                        ? Colors.white
+                                        : Colors.black,
                                   ),
                                 ),
-                              );
-                            },
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: _registerUser,
-                          //onTap: _registerUser,
-                          child: Container(
-                            alignment: Alignment.bottomCenter,
-                            width: double.infinity,
-                            height: 49,
-                            margin: const EdgeInsets.all(
-                                31), // Burası ekranın kenar boşluklarını ayarlar
-                            decoration: ShapeDecoration(
-                              color: const Color(0xFF2355FF),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
                               ),
+                            );
+                          },
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: _registerUser,
+                        child: Container(
+                          alignment: Alignment.bottomCenter,
+                          width: double.infinity,
+                          height: 49,
+                          margin: const EdgeInsets.all(31),
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFF2355FF),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
                             ),
-                            child: const Center(
-                              child: Text(
-                                'İleri',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: 'Gilroy',
-                                  fontWeight: FontWeight.w700,
-                                ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'İleri',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontFamily: 'Gilroy',
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-          );
-        }));
+                ),
+        );
+      }),
+    );
   }
 
   void _showErrorDialog(String message) {

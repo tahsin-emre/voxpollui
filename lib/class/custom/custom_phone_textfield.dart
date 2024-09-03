@@ -68,8 +68,8 @@ class PhoneTextField extends StatelessWidget {
           style: const TextStyle(
             color: Colors.black,
             fontSize: 28,
-            fontFamily: AutofillHints.telephoneNumber,
-            fontWeight: FontWeight.normal,
+            fontFamily: 'Gilroy',
+            fontWeight: FontWeight.w400,
           ),
           cursorColor: Colors.blue,
         ),

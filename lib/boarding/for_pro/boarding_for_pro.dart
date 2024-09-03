@@ -13,35 +13,47 @@ class VoxpollPro extends StatefulWidget {
   State<VoxpollPro> createState() => _VoxpollProState();
 }
 
-class _VoxpollProState extends State<VoxpollPro> with SingleTickerProviderStateMixin {
+class _VoxpollProState extends State<VoxpollPro> with TickerProviderStateMixin {
   late TabController _tabController;
+  late TabController _subTabController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _subTabController = TabController(length: 2, vsync: this);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _subTabController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
             decoration: BoxDecoration(
-              border: Border.all(color: const Color(0xFFBCBCBC), width: 1), // Burada sınırın rengini ve genişliğini ayarlayabilirsiniz
-              borderRadius: BorderRadius.circular(5), // Sınırın yuvarlak köşelerini ayarlamak için
+              border: Border.all(
+                  color: const Color(0xFFBCBCBC),
+                  width: 1), // Sınırın rengini ve genişliğini ayarlar
+              borderRadius: BorderRadius.circular(
+                  5), // Sınırın yuvarlak köşelerini ayarlar
             ),
             child: IconButton(
-              icon: const Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back,
+                  color: Colors.black), // Geri ok simgesinin rengi
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const HomePage()));
               },
             ),
           ),
@@ -54,131 +66,192 @@ class _VoxpollProState extends State<VoxpollPro> with SingleTickerProviderStateM
           children: [
             const Text(
               'Planlar',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: "Gilroy-medium",
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
             ),
+            const SizedBox(
+                height: 16), // Planlar başlığı ile TabBar arasına boşluk ekler
             Container(
               decoration: ShapeDecoration(
                 color: const Color(0xFFD9D9D9),
                 shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
               child: TabBar(
                 controller: _tabController,
                 indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), // Gerekirse kenarlık yuvarlaklığı ekleyebilirsiniz
-                  color: Colors.white, // Seçili Tab'ın arka plan rengi beyaz
+                  borderRadius: BorderRadius.circular(
+                      10), // Seçili Tab'ın kenarlarını yuvarlatır
+                  color: Colors
+                      .white, // Seçili Tab'ın arka plan rengini beyaz yapar
                 ),
-                labelColor: Colors.black, // Seçili Tab'ın metin rengi siyah
-                unselectedLabelColor: Colors.grey, // Seçilmemiş Tab'ın metin rengi gri
-                tabs: [
-                  Tab(text: text('Kurumsal')),
-                  Tab(text: text('Bireysel')),
+                labelColor:
+                    Colors.black, // Seçili Tab'ın metin rengini siyah yapar
+                unselectedLabelColor: Colors
+                    .grey, // Seçili olmayan Tab'ların metin rengini gri yapar
+                tabs: const [
+                  Tab(text: 'Kurumsal'),
+                  Tab(text: 'Bireysel'),
                 ],
-                indicatorPadding: const EdgeInsets.all(5), // Seçili tab göstergesinin padding'i
-                indicatorSize: TabBarIndicatorSize.tab, // Gösterge boyutu tab ile aynı olacak
-                indicatorWeight: 3, // Gösterge kalınlığı
+                indicatorPadding: const EdgeInsets.all(
+                    5), // Seçili Tab göstergesinin padding'i
+                indicatorSize: TabBarIndicatorSize
+                    .tab, // Gösterge boyutunu tab ile aynı yapar
+                indicatorWeight: 3, // Gösterge kalınlığını ayarlar
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 20),
             Container(
               decoration: ShapeDecoration(
                 color: const Color(0xFFD9D9D9),
                 shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
               child: TabBar(
-                controller: _tabController,
+                controller: _subTabController,
                 indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), // Gerekirse kenarlık yuvarlaklığı ekleyebilirsiniz
-                  color: Colors.white, // Seçili Tab'ın arka plan rengi beyaz
+                  borderRadius: BorderRadius.circular(
+                      10), // Seçili Tab'ın kenarlarını yuvarlatır
+                  color: Colors
+                      .white, // Seçili Tab'ın arka plan rengini beyaz yapar
                 ),
-                labelColor: Colors.black, // Seçili Tab'ın metin rengi siyah
-                unselectedLabelColor: Colors.grey, // Seçilmemiş Tab'ın metin rengi gri
-                tabs: [
-                  Tab(text: text('Aylık')),
-                  Tab(text: text('Yıllık')),
+                labelColor:
+                    Colors.black, // Seçili Tab'ın metin rengini siyah yapar
+                unselectedLabelColor: Colors
+                    .grey, // Seçili olmayan Tab'ların metin rengini gri yapar
+                tabs: const [
+                  Tab(text: 'Aylık'),
+                  Tab(text: 'Yıllık'),
                 ],
-                indicatorPadding: const EdgeInsets.all(5), // Seçili tab göstergesinin padding'i
-                indicatorSize: TabBarIndicatorSize.tab, // Gösterge boyutu tab ile aynı olacak
-                indicatorWeight: 3, // Gösterge kalınlığı
+                indicatorPadding: const EdgeInsets.all(
+                    5), // Seçili Tab göstergesinin padding'i
+                indicatorSize: TabBarIndicatorSize
+                    .tab, // Gösterge boyutunu tab ile aynı yapar
+                indicatorWeight: 3, // Gösterge kalınlığını ayarlar
               ),
             ),
-            // Toggle buttons for Kurumsal/Bireysel, Aylık/Yıllık would go here
+            const SizedBox(height: 20),
             Expanded(
-              child: ListView(
+              child: TabBarView(
+                controller: _tabController,
                 children: [
-                  planCard('Premium', 'Aylık 1000 adet anket çözebilir ve 1.000.000 kişiye kadar katılım sağlayabilirsiniz.', '1000 TL'),
-                  planCard('VoxPoll Pro', 'İstediğiniz özellikleri alabilmek için lütfen bizimle info@voxpoll.app adresinden iletişime geçin.', ''),
+                  // Kurumsal Tab Content
+                  TabBarView(
+                    controller: _subTabController,
+                    children: [
+                      // Kurumsal - Aylık
+                      ListView(
+                        children: [
+                          planCard('Kurumsal - Aylık Premium',
+                              'Aylık 1000 adet anket açabilir ve 1.000.000 kişiye kadar katılım sağlayabilirsiniz.'),
+                          planCard('Kurumsal - Aylık VoxPoll Pro',
+                              'İstediğiniz özellikleri alabilmek için lütfen bizimle info@voxpoll.app adresinden iletişime geçin.'),
+                        ],
+                      ),
+                      // Kurumsal - Yıllık
+                      ListView(
+                        children: [
+                          planCard('Kurumsal - Yıllık Premium',
+                              'Yıllık 12.000 adet anket açabilir ve 1.000.000 kişiye kadar katılım sağlayabilirsiniz.'),
+                          planCard('Kurumsal - Yıllık VoxPoll Pro',
+                              'İstediğiniz özellikleri alabilmek için lütfen bizimle info@voxpoll.app adresinden iletişime geçin.'),
+                        ],
+                      ),
+                    ],
+                  ),
+                  // Bireysel Tab Content
+                  TabBarView(
+                    controller: _subTabController,
+                    children: [
+                      // Bireysel - Aylık
+                      ListView(
+                        children: [
+                          planCard('Bireysel - Aylık Premium',
+                              'Aylık 100 adet anket açabilir ve 10.000 kişiye kadar katılım sağlayabilirsiniz.'),
+                          planCard('Bireysel - Aylık VoxPoll Pro',
+                              'İstediğiniz özellikleri alabilmek için lütfen bizimle info@voxpoll.app adresinden iletişime geçin.'),
+                        ],
+                      ),
+                      // Bireysel - Yıllık
+                      ListView(
+                        children: [
+                          planCard('Bireysel - Yıllık Premium',
+                              'Yıllık 1.200 adet anket açabilir ve 10.000 kişiye kadar katılım sağlayabilirsiniz.'),
+                          planCard('Bireysel - Yıllık VoxPoll Pro',
+                              'İstediğiniz özellikleri alabilmek için lütfen bizimle info@voxpoll.app adresinden iletişime geçin.'),
+                        ],
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
-             SizedBox(
-           width: MediaQuery.of(context).size.width,
-           height: 49,
-         child: Stack(
-            children: [
-               Align(
-         alignment: Alignment.bottomCenter,
-         child: ElevatedButton(
-   onPressed: () {
-     Navigator.push(context, MaterialPageRoute(builder: (context) => const VoxpollProIki()));
-   },
-  style: ElevatedButton.styleFrom(
-    backgroundColor : const Color(0xFF2355FF), // Arkaplan rengi
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)), // Kenarlık şekli
-   ),
-   child: const Padding(
-    padding: EdgeInsets.all(8.0),
-    child: Text(
-      'İleri',
-     style: TextStyle(
-        color: Colors.white,
-       fontSize: 16,
-        fontFamily: 'Gilroy',
-        fontWeight: FontWeight.w700,
-        height: 0,
-     ),
-    ),
- ),)
-      ),
-            ],
-         ),      ), 
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 49,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const VoxpollProIki()));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF2355FF), // Arkaplan rengi
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)), // Kenarlık şekli
+                ),
+                child: const Text(
+                  'İleri',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontFamily: 'Gilroy',
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget planCard(String title, String subtitle, String price) {
+  Widget planCard(String title, String subtitle) {
     return Card(
-      child: ListTile(
-        title: Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+      surfaceTintColor: Colors.white,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+          color: Colors.grey.withOpacity(0.5), // Kenarlık rengi
+          width: 1,
         ),
-        subtitle: Text(subtitle),
-        trailing: price.isNotEmpty ? Text(
-          price,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ) : null,
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 8), // Kartlar arası boşluk
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            const SizedBox(height: 8), // Başlık ile alt başlık arasına boşluk
+            Text(
+              subtitle,
+              style: const TextStyle(fontSize: 14),
+            ),
+          ],
+        ),
       ),
     );
   }
-}
-
-String text(String deger) {
-  Text text = Text(
-    deger,
-    textAlign: TextAlign.center,
-    style: const TextStyle(
-    color: Color(0xFF0C0C0C),
-    fontSize: 14,
-    fontFamily: 'Gilroy',
-    fontWeight: FontWeight.w600,
-    height: 0,
-    ),
-  );
-  return text.data ?? 'null';
 }

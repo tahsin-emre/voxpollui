@@ -24,9 +24,7 @@ void main() async {
 Future<Widget> initializeApp() async {
   return MultiProvider(
     providers: [
-      ChangeNotifierProvider(
-          create: (context) =>
-              ThemeNotifier()),
+      ChangeNotifierProvider(create: (context) => ThemeNotifier()),
     ],
     child: const MyApp(),
   );
@@ -41,8 +39,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeNotifier =
-        Provider.of<ThemeNotifier>(context);
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Vox Poll',
