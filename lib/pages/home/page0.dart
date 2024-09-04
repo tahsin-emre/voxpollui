@@ -508,11 +508,11 @@ class _Page0State extends State<Page0> {
                 delegate: SliverChildListDelegate(
                   [
                     const Text(
-                      'Hoş Geldiniz',
+                      'Merhaba,',
                       style: TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Gilroy"),
                     ),
                     Row(
                       children: [
@@ -520,10 +520,14 @@ class _Page0State extends State<Page0> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              '$username $surname',
-                              style: const TextStyle(
-                                  fontSize: 24.0, fontWeight: FontWeight.bold),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width - 200,
+                              child: Text(
+                                '$name $surname',
+                                style: const TextStyle(
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                             // Text(
                             //   '${followed?.length ?? 0}',
@@ -532,18 +536,21 @@ class _Page0State extends State<Page0> {
                           ],
                         ),
                         const Spacer(),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NotificationsPage()),
-                            );
-                          },
-                          child: SvgPicture.asset(
-                            'assets/image/cal.svg',
-                            width: 24,
-                            height: 24,
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NotificationsPage()),
+                              );
+                            },
+                            child: SvgPicture.asset(
+                              'assets/image/cal.svg',
+                              width: 32,
+                              height: 32,
+                            ),
                           ),
                         ),
                         GestureDetector(
@@ -554,7 +561,7 @@ class _Page0State extends State<Page0> {
                           child: const CircleAvatar(
                             radius: 30,
                             backgroundImage:
-                                AssetImage('assets/image/login.png'),
+                                AssetImage('assets/image/ibrahim.png'),
                           ),
                         ),
                       ],
@@ -567,77 +574,44 @@ class _Page0State extends State<Page0> {
                 pinned: true,
                 floating: true,
                 toolbarHeight: 0.0,
-                expandedHeight: showUnansweredSurveyBox ? 126.0 : 0.0,
+                expandedHeight: showUnansweredSurveyBox ? 60.0 : 0.0,
                 flexibleSpace: FlexibleSpaceBar(
                   background: showUnansweredSurveyBox
-                      ? Container(
-                          padding: const EdgeInsets.all(16.0),
-                          width: MediaQuery.of(context).size.width - 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: AppColor.nationalColor,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RichText(
-                                text: const TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: '14',
-                                      style: TextStyle(
-                                          fontSize: 30.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                    TextSpan(
-                                      text: 'Cevaplanmamış Anketiniz Var.',
-                                      style: TextStyle(
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              /* 
-                              const SizedBox(height: 10.0),
-                              ElevatedButton(
-                                onPressed: () {
-                                  //! SEARCH KODUDUR YERİ BURASI DEĞİL
-                                  SearchClass.searchData(
-                                    "searchText",
-                                    columnName: "columnName",
-                                  );
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Colors.transparent),
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
-                                      side: const BorderSide(
-                                          width: 2, color: Colors.white),
-                                    ),
-                                  ),
-                                ),
-                                child: Container(
-                                  width: double.infinity,
-                                  alignment: Alignment.center,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.transparent,
-                                  ),
-                                  child: const Text(
-                                    'Anketleri Görüntüle',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
+                      ? GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColor.nationalColor,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                              child: Center(
+                                child: RichText(
+                                  text: const TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: '14 ',
+                                        style: TextStyle(
+                                            fontSize: 30.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontFamily: "Gilroy-medium"),
+                                      ),
+                                      TextSpan(
+                                        text: 'Cevaplanmamış Anketiniz Var.',
+                                        style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                              */
-                            ],
+                            ),
                           ),
                         )
                       : const SizedBox.shrink(),
@@ -648,9 +622,11 @@ class _Page0State extends State<Page0> {
                   [
                     const SizedBox(height: 10.0),
                     const Text(
-                      'Takip Ettiklerim',
+                      'Takip Ettikleriniz',
                       style: TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold),
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Gilroy-medium"),
                     ),
                     const SizedBox(height: 10.0),
                   ],
@@ -660,7 +636,6 @@ class _Page0State extends State<Page0> {
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     if (dataManager.getPolls()?.isEmpty ?? true) {
-                      // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
                       return Column(children: [
                         LoadingScreen.loadingScreen(text: ''),
                       ]);

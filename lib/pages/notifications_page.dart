@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NotificationsPage extends StatelessWidget {
   NotificationsPage({super.key});
-  
+
   final List<Map<String, dynamic>> notifications = [
     // Burada bildirimlerinizin bir listesini oluşturun.
     // Örneğin:
@@ -10,57 +10,65 @@ class NotificationsPage extends StatelessWidget {
       'title': 'Karen Group',
       'handle': '@karengroup',
       'time': '1 saat önce',
-      'content': 'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
+      'content':
+          'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
     },
-        {
+    {
       'title': 'Karen Group',
       'handle': '@karengroup',
       'time': '1 saat önce',
-      'content': 'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
+      'content':
+          'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
     },
-        {
+    {
       'title': 'Karen Group',
       'handle': '@karengroup',
       'time': '1 saat önce',
-      'content': 'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
+      'content':
+          'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
     },
-        {
+    {
       'title': 'Karen Group',
       'handle': '@karengroup',
       'time': '1 saat önce',
-      'content': 'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
+      'content':
+          'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
     },
-        {
+    {
       'title': 'Karen Group',
       'handle': '@karengroup',
       'time': '1 saat önce',
-      'content': 'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
+      'content':
+          'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
     },
-        {
+    {
       'title': 'Karen Group',
       'handle': '@karengroup',
       'time': '1 saat önce',
-      'content': 'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
+      'content':
+          'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
     },
-        {
+    {
       'title': 'Karen Group',
       'handle': '@karengroup',
       'time': '1 saat önce',
-      'content': 'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
+      'content':
+          'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
     },
-        {
+    {
       'title': 'Karen Group',
       'handle': '@karengroup',
       'time': '1 saat önce',
-      'content': 'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
+      'content':
+          'Karen Group yeni bir anket başlattı. Ankete katılmak için buraya tıklayın.'
     },
     // Diğer bildirimler...
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Bildirimler'),
       ),

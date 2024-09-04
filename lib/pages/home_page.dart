@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _loadPolls(); // Anketleri yüklemek için fonksiyonu çağırın
+    _loadPolls();
     _pages = [];
   }
 
@@ -112,9 +112,9 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildNavBarItem(Icons.home, 0),
-          _buildNavBarItem(Icons.search, 1),
+          _buildNavBarItem(Icons.grid_view, 1),
           _buildAddButton(),
-          _buildNavBarItem(Icons.notifications, 3),
+          _buildNavBarItem(Icons.groups, 3),
           _buildNavBarItem(Icons.person, 4),
         ],
       ),
