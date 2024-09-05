@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:voxpollui/boarding/for_pro/boarding_for_pro.dart';
 import '../pages/home_page.dart';
 
@@ -12,7 +12,7 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   final PageController _pageController = PageController();
-  int _currentPage = 0;
+  int _currentPage = 0; 
 
   final List<OnboardingSlide> slides = [
     const OnboardingSlide(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/class/custom/custom_appbar.dart';
 
 class NotificationsPage extends StatelessWidget {
   NotificationsPage({super.key});
@@ -69,9 +70,7 @@ class NotificationsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text('Bildirimler'),
-      ),
+      appBar: CustomAppBar.customAppBar(context, "Bildirimler"),
       body: ListView.separated(
         itemCount: notifications.length,
         separatorBuilder: (context, index) => const Divider(),

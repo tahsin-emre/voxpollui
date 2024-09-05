@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
+import 'package:voxpollui/pages/home_page.dart';
 
 // ignore: must_be_immutable
 class SearchPage extends StatefulWidget {
@@ -20,31 +21,35 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
-        // İçeriği Sa@feArea içerisine alın
         child: Column(
           children: [
-            Container(
-              height: 40.0, // Yüksekliği 40.0 piksel yapın
-              margin: const EdgeInsets.all(16.0),
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: const Row(
-                children: [
-                  Icon(Icons.search),
-                  SizedBox(width: 8.0),
-                  Text(
-                    'Ara',
-                    style: TextStyle(fontSize: 14.0),
-                  ),
-                ],
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+              },
+              child: Container(
+                height: 40.0,
+                margin: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: const Row(
+                  children: [
+                    Icon(Icons.search),
+                    SizedBox(width: 8.0),
+                    Text(
+                      'Ara',
+                      style: TextStyle(fontSize: 14.0),
+                    ),
+                  ],
+                ),
               ),
             ),
-            // Diğer widget'larınız burada
             Expanded(
               child: CustomScrollView(
                 slivers: [
@@ -57,7 +62,7 @@ class _SearchPageState extends State<SearchPage> {
                           child: Text(
                             'Keşfet',
                             style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
+                                fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Gilroy-medium"),
                           ),
                         ),
                         const SizedBox(height: 10.0),
@@ -68,7 +73,6 @@ class _SearchPageState extends State<SearchPage> {
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                         if (dataManager.getPolls()?.isEmpty ?? true) {
-                          // Eğer polls null veya boş ise, yükleme göstergesi veya mesaj göster
                           return LoadingScreen.loadingScreen(text: '');
                         }
                         return ForWidget.buildCard(context,
