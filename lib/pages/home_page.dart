@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/pages/home/community_page.dart';
@@ -111,6 +112,122 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          _buildNavBarItem('assets/image/bottom_navigation/home_png.png',
+              'assets/image/bottom_navigation/home_selected_png.png', 0),
+          _buildNavBarItem('assets/image/bottom_navigation/community.svg',
+              'assets/image/bottom_navigation/community_selected.svg', 1),
+          _buildAddButton(),
+          _buildNavBarItem('assets/image/bottom_navigation/groups.svg',
+              'assets/image/bottom_navigation/group_selected.svg', 3),
+          _buildNavBarItem('assets/image/bottom_navigation/person_png.png',
+              'assets/image/bottom_navigation/person_selected_png.png', 4),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNavBarItem(String iconPath, String selectedIconPath, int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _currentIndex = index;
+        });
+      },
+      child: SizedBox(
+        width: 36,
+        height: 36,
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: index == 0 || index == 4
+                  ? Image.asset(
+                      _currentIndex == index ? selectedIconPath : iconPath,
+                      color: _currentIndex == index
+                          ? const Color(0xff2355ff)
+                          : Colors.grey,
+                      width: 32,
+                      height: 32,
+                    )
+                  : SvgPicture.asset(
+                      _currentIndex == index ? selectedIconPath : iconPath,
+                      color: _currentIndex == index
+                          ? const Color(0xff2355ff)
+                          : Colors.grey,
+                      width: 32,
+                      height: 32,
+                    ),
+            ),
+            if (_currentIndex == index)
+              Transform.translate(
+                offset: const Offset(0, 45),
+                child: Transform.rotate(
+                  angle: -45 * (3.14159265359 / 180),
+                  child: Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: const Color(0xff2355ff),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAddButton() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CreatePollPage()),
+        );
+      },
+      child: Container(
+        width: 50,
+        height: 50,
+        decoration: const BoxDecoration(
+          color: Color(0xFF2355FF),
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
+    );
+  }
+}
+
+
+
+
+
+/*
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: usersObjects != null
+          ? _pages[_currentIndex]
+          : Page0(
+              pollObjects: pollObjects,
+              usersObjects: usersObjects,
+            ),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  Widget _buildBottomNavigationBar() {
+    return SizedBox(
+      height: 85,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
           _buildNavBarItem(Icons.home, 0),
           _buildNavBarItem(Icons.grid_view, 1),
           _buildAddButton(),
@@ -183,3 +300,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+
+*/

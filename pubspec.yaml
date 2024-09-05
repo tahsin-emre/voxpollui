@@ -90,6 +90,19 @@ flutter:
     - assets/image/setting.svg
     - assets/image/ibrahim.png
 
+    - assets/image/bottom_navigation/community.svg
+    - assets/image/bottom_navigation/community_selected.svg
+    - assets/image/bottom_navigation/groups.svg
+    - assets/image/bottom_navigation/group_selected.svg
+    - assets/image/bottom_navigation/home_selected.svg
+    - assets/image/bottom_navigation/home.svg
+    - assets/image/bottom_navigation/person.svg
+    - assets/image/bottom_navigation/person_selected.svg
+    - assets/image/bottom_navigation/home_png.png
+    - assets/image/bottom_navigation/home_selected_png.png
+    - assets/image/bottom_navigation/person_png.png
+    - assets/image/bottom_navigation/person_selected_png.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
