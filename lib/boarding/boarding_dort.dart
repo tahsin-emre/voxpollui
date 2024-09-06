@@ -538,18 +538,82 @@ class _StateBoardinDort extends State<BoardinDort> {
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: const Text('Dikkat'),
-                                            content: const Text(
-                                                '5 adetten fazla ilgi alanı seçemezsiniz'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('Onayla'),
+                                          return Dialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                            elevation: 10,
+                                            backgroundColor: Colors.white,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(20.0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  const Text(
+                                                    'Dikkat',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 22.0,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 20),
+                                                  Text(
+                                                    '5 adetten fazla ilgi alanı seçemezsiniz',
+                                                    style: TextStyle(
+                                                      fontSize: 16.0,
+                                                      color: Colors.grey[700],
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  const SizedBox(height: 20),
+                                                  Divider(
+                                                    color: Colors.grey[300],
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    child: TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      style:
+                                                          TextButton.styleFrom(
+                                                        backgroundColor:
+                                                            AppColor
+                                                                .nationalColor,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal:
+                                                                    16.0,
+                                                                vertical: 10.0),
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  10.0), // Buton kenarları yuvarlatılmış
+                                                        ),
+                                                      ),
+                                                      child: const Text(
+                                                        'Onayla',
+                                                        style: TextStyle(
+                                                          color: Colors
+                                                              .white, // Buton yazı rengi
+                                                          fontSize: 16.0,
+                                                          fontWeight: FontWeight
+                                                              .bold, // Yazı kalınlığı
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
+                                            ),
                                           );
                                         },
                                       );
@@ -618,17 +682,66 @@ class _StateBoardinDort extends State<BoardinDort> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Kayıt Başarısız'),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Tamam'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          elevation: 10,
+          backgroundColor: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const Text(
+                  'Dikkat',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22.0,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Kayıt Başarısız',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.grey[700],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                Divider(
+                  color: Colors.grey[300],
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColor.nationalColor,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 10.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            10.0), // Buton kenarları yuvarlatılmış
+                      ),
+                    ),
+                    child: const Text(
+                      'Tamam',
+                      style: TextStyle(
+                        color: Colors.white, // Buton yazı rengi
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold, // Yazı kalınlığı
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         );
       },
     );

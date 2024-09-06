@@ -8,6 +8,7 @@ import 'package:voxpollui/boarding/boarding_uc.dart';
 import 'package:voxpollui/boarding/kvkk.dart';
 import 'package:voxpollui/class/custom/custom_checkbox.dart';
 import 'package:voxpollui/class/custom/custom_phone_textfield.dart';
+import 'package:voxpollui/class/model/national/get_color.dart';
 
 class BoardinIki extends StatefulWidget {
   const BoardinIki({Key? key}) : super(key: key);
@@ -289,18 +290,69 @@ class _BoardinIkiState extends State<BoardinIki> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Hata'),
-                              content: const Text(
-                                  'Rıza metinlerini kabul edilmelidir.'),
-                              actions: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('Tamam'),
+                            return Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              elevation: 10,
+                              backgroundColor: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    const Text(
+                                      'Dikkat',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22.0,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      'Rıza Metinleri Kabul Edilmelidir',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.grey[700],
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Divider(
+                                      color: Colors.grey[300],
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        style: TextButton.styleFrom(
+                                          backgroundColor:
+                                              AppColor.nationalColor,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0, vertical: 10.0),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10.0), // Buton kenarları yuvarlatılmış
+                                          ),
+                                        ),
+                                        child: const Text(
+                                          'Tamam',
+                                          style: TextStyle(
+                                            color: Colors
+                                                .white, // Buton yazı rengi
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight
+                                                .bold, // Yazı kalınlığı
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             );
                           },
                         );
