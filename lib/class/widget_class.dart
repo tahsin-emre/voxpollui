@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/class/custom/custom_bottom_sheet_menu.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
+import 'package:voxpollui/class/model/national/get_font.dart';
 import 'package:voxpollui/pages/survey_page.dart';
 import 'package:voxpollui/pages/home/profil_page.dart';
 import 'package:voxpollui/script/database.dart';
@@ -57,10 +59,10 @@ class ForWidget {
                                   children: [
                                     Text(
                                       creator.name,
-                                      style: const TextStyle(
-                                        fontFamily: "Gilroy-medium",
+                                      style: TextStyle(
+                                        fontFamily: GetFont.GILROY_MEDIUM,
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                     const SizedBox(width: 5),
@@ -72,29 +74,57 @@ class ForWidget {
                                     const SizedBox(width: 5),
                                     Text(
                                       '@${creator.username.toLowerCase()}',
-                                      style: const TextStyle(
-                                        fontSize: 14.0,
-                                        color: Colors.grey,
-                                      ),
+                                      style: TextStyle(
+                                          fontSize: 14.0,
+                                          color: const Color.fromARGB(
+                                              255, 101, 101, 101),
+                                          fontFamily: GetFont.GILROY_MEDIUM,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(height: 4.0),
                                 Text(
-                                  '${creator.followers.length} Takipçi', // 1.8M gibi takma değer ekledim
-                                  style: const TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.grey,
-                                  ),
+                                  '${creator.followers.length} Takipçi',
+                                  style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: GetFont.GILROY_MEDIUM),
                                 ),
                               ],
                             ),
                           ),
                           GestureDetector(
-                              onTap: () {
-                                print("Üç Nokta");
-                              },
-                              child: const Icon(Icons.more_vert)),
+                            onTap: () {
+                              showModalBottomSheet(
+                                backgroundColor: Colors.transparent,
+                                barrierColor: Colors.white38,
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: const BorderRadius.vertical(
+                                          top: Radius.circular(50)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.15),
+                                          spreadRadius: 5,
+                                          blurRadius: 15,
+                                          offset: const Offset(0, -5),
+                                        ),
+                                      ],
+                                    ),
+                                    child:
+                                        BottomSheetCustom.buildBottomSheetMenu(
+                                            context, creator.username),
+                                  );
+                                },
+                              );
+                            },
+                            child: const Icon(Icons.more_vert),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 10.0),
@@ -107,11 +137,12 @@ class ForWidget {
                       ),
                       const SizedBox(height: 5.0),
                       Text(
-                        '${polls[index]['totalParticipants'] ?? 'Hata'} Kişi Katıldı',
-                        style: const TextStyle(
-                          fontSize: 14.0,
-                          color: Colors.black,
-                        ),
+                        '${polls[index]['totalParticipants'] ?? 'Hata'} kişi katıldı',
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: GetFont.GILROY_LIGHT),
                       ),
                       const SizedBox(height: 10.0),
                       ElevatedButton(
@@ -138,13 +169,12 @@ class ForWidget {
                           ),
                           minimumSize: const Size(double.infinity, 0),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Katıl',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
                               fontSize: 16.0,
-                              fontFamily: "Gilroy-medium"),
+                              fontFamily: GetFont.GILROY_BOLD),
                         ),
                       ),
                     ],
