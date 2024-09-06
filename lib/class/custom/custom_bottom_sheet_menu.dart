@@ -5,31 +5,29 @@ import 'package:voxpollui/class/model/national/get_image.dart';
 class BottomSheetCustom {
   static Widget buildBottomSheetMenu(BuildContext context, String username) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 16.0, vertical: 8.0), // Görseldeki boşlukları ayarladık
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
-            leading: Image.asset(GetImage.bottomSheetPaylas,
-                width: 24, height: 24), // İkon boyutlarını ayarladık
+            leading:
+                Image.asset(GetImage.bottomSheetPaylas, width: 24, height: 24),
             title: Text(
               'Anketi paylaş',
               style: TextStyle(
                 fontFamily: GetFont.GILROY_MEDIUM,
                 fontWeight: FontWeight.bold,
-                fontSize: 16.0, // Yazı boyutunu ayarladık
+                fontSize: 16.0,
               ),
             ),
             onTap: () {
               Navigator.pop(context);
-              // Anket paylaşma fonksiyonu buraya eklenecek
             },
           ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 4.0),
-            child: Divider(height: 1), // Divider'ı görseldeki gibi ayarladık
+            child: Divider(height: 1),
           ),
           ListTile(
             leading: Image.asset(GetImage.bottomSheetTakipBirak,
@@ -44,7 +42,6 @@ class BottomSheetCustom {
             ),
             onTap: () {
               Navigator.pop(context);
-              // Takip bırakma fonksiyonu buraya eklenecek
             },
           ),
           ListTile(
@@ -60,7 +57,6 @@ class BottomSheetCustom {
             ),
             onTap: () {
               Navigator.pop(context);
-              // Engelleme fonksiyonu buraya eklenecek
             },
           ),
           ListTile(
@@ -76,7 +72,6 @@ class BottomSheetCustom {
             ),
             onTap: () {
               Navigator.pop(context);
-              // Şikayet etme fonksiyonu buraya eklenecek
             },
           ),
           ListTile(
@@ -92,7 +87,6 @@ class BottomSheetCustom {
             ),
             onTap: () {
               Navigator.pop(context);
-              // Sessize alma fonksiyonu buraya eklenecek
             },
           ),
           const Padding(

@@ -13,14 +13,20 @@ class CreatePollPage extends StatefulWidget {
 
 class _CreatePollPageState extends State<CreatePollPage> {
   final TextEditingController _titleController = TextEditingController();
-   final TextEditingController firstOptionController = TextEditingController();
-  List<FieldOption> _options = [FieldOption(), FieldOption(), FieldOption(), FieldOption()];
+  final TextEditingController firstOptionController = TextEditingController();
+  List<FieldOption> _options = [
+    FieldOption(),
+    FieldOption(),
+    FieldOption(),
+    FieldOption()
+  ];
   bool isFollowersOnly = false; // For the switch button
 
   void _addTextField() {
     if (_options.length >= 8) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('En fazla 8 adet seçenek ekleyebilirsiniz.')),
+        const SnackBar(
+            content: Text('En fazla 8 adet seçenek ekleyebilirsiniz.')),
       );
     } else {
       setState(() {
@@ -32,7 +38,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
   @override
   Widget build(BuildContext context) {
     List<String> options = ['Siyaset', 'Ekonomi', 'Oyun'];
-    
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -72,7 +78,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              
+
               // Seçenekler
               const Text(
                 "Seçenekler",
@@ -82,16 +88,17 @@ class _CreatePollPageState extends State<CreatePollPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              
-              
+
               Column(
                 children: _options.asMap().entries.map((entry) {
                   final index = entry.key;
-                  final option = entry.value;
-                  return 
-                  Padding(
+                  //final option = entry.value;
+                  return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: CustomTextField(label: '${index + 1}.',controller: firstOptionController,),
+                    child: CustomTextField(
+                      label: '${index + 1}.',
+                      controller: firstOptionController,
+                    ),
                   );
                 }).toList(),
               ),
@@ -107,7 +114,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                     ),
               */
               const SizedBox(height: 10),
-              
+
               // Seçenek Ekle Button
               Row(
                 children: [
@@ -128,7 +135,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                 ],
               ),
               const SizedBox(height: 20),
-              
+
               // Kategori Dropdown
               const Text(
                 'Kategori',
@@ -161,7 +168,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                 }).toList(),
               ),
               const SizedBox(height: 20),
-              
+
               // Anket Süresi (Gün, Saat, Dakika)
               const Text(
                 'Anket Süresi',
@@ -181,7 +188,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                 ],
               ),
               const SizedBox(height: 20),
-              
+
               // Takipçilere Özel Switch
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -202,7 +209,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                 ],
               ),
               const SizedBox(height: 30),
-              
+
               // Yayınla Button
               Center(
                 child: ElevatedButton(

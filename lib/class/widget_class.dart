@@ -206,14 +206,14 @@ class ForWidget {
           const SizedBox(width: 4.0),
           const Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
           const SizedBox(width: 4.0),
-          Text('@${usersObjects![index]['username']}',
+          Text('@${usersObjects[index]['username']}',
               style: const TextStyle(fontSize: 12.0)),
         ],
       ),
       subtitle: const Text('Topluluk Açıklaması'),
       trailing: InkWell(
         onTap: () {
-          print("WİDGET_CLASS ID ${usersObjects[index]['objectId']}");
+          // print("WİDGET_CLASS ID ${usersObjects[index]['objectId']}");
           // Burada tıklama olayını işleyin
           // print('Trailing ikonuna tıklandı!');
           Navigator.push(

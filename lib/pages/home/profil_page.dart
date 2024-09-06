@@ -72,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
     // print('${joinPoll}    JOİN POLL');
     setState(() {
       joinPoll = joinPoll;
-      objectId = currentUser!.get<String>('objectId') ?? 'ObjectIDDDDDDD';
+      objectId = currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD';
       username = viewUsers?.username;
       name = viewUsers?.name;
       surname = viewUsers?.surname;
@@ -85,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _loadCurrentUser() async {
     ParseUser? currentUser = await ParseUser.currentUser();
     dynamic joinPoll = await Database.countUserPollResponses(
-        currentUser!.get<String>('objectId') ?? 'ObjectIDDDDDDD');
+        currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD');
     // print('${joinPoll}   _loadCurrentUser JOİN POLL');
     setState(() {
       joinPoll = joinPoll;
@@ -283,7 +283,7 @@ class _ProfilePageState extends State<ProfilePage> {
     ParseUser? currentUser = await ParseUser.currentUser();
     // Giriş yapan kullanıcının takip ettiği kişilerin listesini al
     List<dynamic> followedUsers =
-        currentUser!.get<List<dynamic>>('followed') ?? [];
+        currentUser.get<List<dynamic>>('followed') ?? [];
 
     // Görüntülenen kullanıcının objectId'si bu listede var mı diye kontrol et
     setState(() {

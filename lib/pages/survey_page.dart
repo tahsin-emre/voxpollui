@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_polls/flutter_polls.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
@@ -27,7 +26,7 @@ class _SurveyPageState extends State<SurveyPage> {
   late Future<List<PollOption>> _pollOptions;
   List<String> _pollOptionTitles = []; // Bu yeni listeyi ekleyin
   bool _hasVoted = false;
-  bool _isLoading = true; // Yükleme durumu ekleyin
+  bool isLoading = true; // Yükleme durumu ekleyin
 
   bool isPollCreator = false;
   late ParseUser currentUser;
@@ -35,7 +34,7 @@ class _SurveyPageState extends State<SurveyPage> {
   @override
   void initState() {
     super.initState();
-    _isLoading = true; // İlk başta yükleniyor olarak ayarlayın
+    isLoading = true; // İlk başta yükleniyor olarak ayarlayın
     _pollOptions = _fetchPollOptions(); // _pollOptions'ı başlatın
     _checkIfUserVoted(); // Sonra _hasUserVoted'ı çağırın
   }
@@ -49,7 +48,7 @@ class _SurveyPageState extends State<SurveyPage> {
       if (!_hasVoted) {
         _pollOptions = _fetchPollOptions();
       }
-      _isLoading = false; // Veriler yüklendiğinde yükleme durumunu güncelleyin
+      isLoading = false; // Veriler yüklendiğinde yükleme durumunu güncelleyin
     });
   }
 
@@ -81,7 +80,7 @@ class _SurveyPageState extends State<SurveyPage> {
 
   Future<void> _loadCurrentUser() async {
     ParseUser? _currentUser = await ParseUser.currentUser();
-    String currentUserId = _currentUser!.objectId!;
+    String currentUserId = _currentUser.objectId!;
     setState(() {
       currentUser = _currentUser;
       isPollCreator =

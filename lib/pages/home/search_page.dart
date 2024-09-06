@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
-import 'package:voxpollui/pages/home_page.dart';
+import 'package:voxpollui/pages/search.dart';
 
 // ignore: must_be_immutable
 class SearchPage extends StatefulWidget {
@@ -27,7 +27,14 @@ class _SearchPageState extends State<SearchPage> {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Search(
+                              1,
+                              pollObjects: widget.pollObjects,
+                              usersObjects: widget.usersObjects,
+                            )));
               },
               child: Container(
                 height: 40.0,
@@ -62,7 +69,9 @@ class _SearchPageState extends State<SearchPage> {
                           child: Text(
                             'Keşfet',
                             style: TextStyle(
-                                fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: "Gilroy-medium"),
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Gilroy-medium"),
                           ),
                         ),
                         const SizedBox(height: 10.0),
