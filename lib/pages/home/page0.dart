@@ -83,7 +83,7 @@ class _Page0State extends State<Page0> {
   // Tema değişikliğini işlemek için bir metod tanımlayın
   void _temayiDegistir(bool isDarkMode) {
     // setState(() {
-    //   // isDarkMode = !isDarkMode;
+    //    isDarkMode = !isDarkMode;
     //   _alignX = isDarkMode ? 1.3 : -1.3;
     //   generateStarPositions();
     // });
@@ -397,14 +397,32 @@ class _Page0State extends State<Page0> {
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
+                    /*
                     Text(
-                      'Merhaba,',
+                      'Merhaba,MerhabaMerhabaMerhabaMerhaba',
                       style: TextStyle(
-                          fontSize: 24.0, fontFamily: GetFont.GILROY_LIGHT),
+                        fontSize: 24.0,
+                        fontFamily: GetFont.GILROY_LIGHT,
+                      ),
                     ),
+                    */
                     Row(
                       children: [
-                        const SizedBox(width: 0.0),
+                        Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(text: "Merhaba, \n",style: TextStyle(
+                            fontSize: 24.0,
+                            fontFamily: GetFont.GILROY_LIGHT,
+                          )),
+                          TextSpan(text: '$name $surname',style: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                          )),
+                        ]
+                      ),
+                    ),
+                        /*
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -413,16 +431,14 @@ class _Page0State extends State<Page0> {
                               child: Text(
                                 '$name $surname',
                                 style: const TextStyle(
-                                    fontSize: 24.0,
-                                    fontWeight: FontWeight.bold),
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                            // Text(
-                            //   '${followed?.length ?? 0}',
-                            //   style: const TextStyle(fontSize: 16.0),
-                            // ),
                           ],
                         ),
+                        */
                         const Spacer(),
                         Padding(
                           padding: const EdgeInsets.all(18.0),
