@@ -408,20 +408,29 @@ class _Page0State extends State<Page0> {
                     */
                     Row(
                       children: [
-                        Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(text: "Merhaba, \n",style: TextStyle(
-                            fontSize: 24.0,
-                            fontFamily: GetFont.GILROY_LIGHT,
-                          )),
-                          TextSpan(text: '$name $surname',style: TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
-                          )),
-                        ]
-                      ),
-                    ),
+                        Container(
+                          width: MediaQuery.of(context).size.width - 200,
+                          child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Merhaba, \n",
+                                    style: TextStyle(
+                                      fontSize: 24.0,
+                                      fontFamily: GetFont.GILROY_LIGHT,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '$name $surname',
+                                    style: TextStyle(
+                                      fontSize: 24.0,
+                                      fontFamily: GetFont.GILROY_BOLD
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ),
                         /*
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -478,7 +487,7 @@ class _Page0State extends State<Page0> {
                 pinned: true,
                 floating: true,
                 toolbarHeight: 0.0,
-                expandedHeight: showUnansweredSurveyBox ? 60.0 : 0.0,
+                expandedHeight: showUnansweredSurveyBox ? 50.0 : 0.0,
                 flexibleSpace: FlexibleSpaceBar(
                   background: showUnansweredSurveyBox
                       ? GestureDetector(
@@ -492,13 +501,13 @@ class _Page0State extends State<Page0> {
                           },
                           child: Container(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                                const EdgeInsets.symmetric(horizontal: 0.0),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(5),
                               color: AppColor.nationalColor,
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                               child: Center(
                                 child: RichText(
                                   text: const TextSpan(

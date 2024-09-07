@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:voxpollui/class/custom/custom_createpoll.dart';
 import 'package:voxpollui/class/model/custom_model/textfield_model.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
@@ -45,8 +46,25 @@ class _CreatePollPageState extends State<CreatePollPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.black, // İkon rengi
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          style: ButtonStyle(
+            backgroundColor:
+                WidgetStateProperty.all(Colors.white),
+            shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(
+                side: const BorderSide(
+                  color: Color.fromARGB(
+                      255, 188, 188, 188),
+                ),
+                borderRadius:
+                    BorderRadius.circular(4.0),
+              ),
+            ),
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -68,15 +86,29 @@ class _CreatePollPageState extends State<CreatePollPage> {
                 controller: _titleController,
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.image, color: AppColor.nationalColor),
+                    icon: SvgPicture.asset('assets/image/add_image.svg'),
                     onPressed: () {},
                   ),
-                  label: Text("Anket Başlığı"),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+                  labelText: "Anket Başlığı",
+                  labelStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                  ),
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                      width: 1.5,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColor.nationalColor,
+                      width: 2.0,
+                    ),
                   ),
                 ),
               ),
+
               const SizedBox(height: 20),
 
               // Seçenekler

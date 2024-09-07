@@ -54,6 +54,7 @@ flutter:
     - assets/image/settings_image.svg
     - assets/image/setting.svg
     - assets/image/ibrahim.png
+    - assets/image/add_image.svg
 
     - assets/image/bottom_navigation/community.svg
     - assets/image/bottom_navigation/community_selected.svg
