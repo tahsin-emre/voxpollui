@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/boarding/boarding_iki.dart';
+import 'package:voxpollui/class/model/national/get_font.dart';
 
 void main() {
   runApp(const BoardinBir());
@@ -361,29 +362,29 @@ class BoardinBir extends StatelessWidget {
                   ),
                 ),
               ),
-              const Positioned(
+              Positioned(
                 left: 47,
                 top: 500,
                 child: Text(
                   'Bütün merak',
                   style: TextStyle(
-                    color: Color(0xFF0C0C0C),
+                    color: const Color(0xFF0C0C0C),
                     fontSize: 40,
-                    fontFamily: 'Gilroy',
+                    fontFamily: GetFont.GILROY_BOLD,
                     fontWeight: FontWeight.w300,
                     height: 0,
                   ),
                 ),
               ),
-              const Positioned(
+              Positioned(
                 left: 47,
                 top: 544,
                 child: Text(
                   'ettiğiniz',
                   style: TextStyle(
-                    color: Color(0xFF0C0C0C),
+                    color: const Color(0xFF0C0C0C),
                     fontSize: 40,
-                    fontFamily: 'Gilroy',
+                    fontFamily: GetFont.GILROY_BOLD,
                     fontWeight: FontWeight.w300,
                     height: 0,
                   ),
@@ -403,7 +404,7 @@ class BoardinBir extends StatelessWidget {
                   ),
                 ),
               ),
-              const Positioned(
+              Positioned(
                 left: 47,
                 top: 650,
                 child: SizedBox(
@@ -412,16 +413,15 @@ class BoardinBir extends StatelessWidget {
                   child: Text(
                     'Merak ettiğiniz ankete katılabilir\n',
                     style: TextStyle(
-                      color: Color(0xFF0C0C0C),
+                      color: const Color(0xFF0C0C0C),
                       fontSize: 16,
-                      fontFamily: 'Gilroy',
-                      fontWeight: FontWeight.w400,
+                      fontFamily: GetFont.GILROY_MEDIUM,
                       height: 0.07,
                     ),
                   ),
                 ),
               ),
-              const Positioned(
+              Positioned(
                 left: 47,
                 top: 670,
                 child: SizedBox(
@@ -430,16 +430,16 @@ class BoardinBir extends StatelessWidget {
                   child: Text(
                     'veya merak ettiğiniz bir anket \n',
                     style: TextStyle(
-                      color: Color(0xFF0C0C0C),
+                      color: const Color(0xFF0C0C0C),
                       fontSize: 16,
-                      fontFamily: 'Gilroy',
+                      fontFamily: GetFont.GILROY_MEDIUM,
                       fontWeight: FontWeight.w400,
                       height: 0.07,
                     ),
                   ),
                 ),
               ),
-              const Positioned(
+              Positioned(
                 left: 47,
                 top: 690,
                 child: SizedBox(
@@ -448,9 +448,9 @@ class BoardinBir extends StatelessWidget {
                   child: Text(
                     'başlatabilirsiniz.',
                     style: TextStyle(
-                      color: Color(0xFF0C0C0C),
+                      color: const Color(0xFF0C0C0C),
                       fontSize: 16,
-                      fontFamily: 'Gilroy',
+                      fontFamily: GetFont.GILROY_MEDIUM,
                       fontWeight: FontWeight.w400,
                       height: 0.07,
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/class/model/national/get_color.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -16,33 +17,33 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: const TextStyle(
-          color: Colors.blue, // Set label color to blue
-          fontWeight: FontWeight.bold, // Make label bold
+        labelStyle: TextStyle(
+          color: AppColor.nationalColor,
+          fontWeight: FontWeight.bold,
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Colors.blue, // Border color is blue
-            width: 1.5, // Border width
+          borderSide: BorderSide(
+            color: AppColor.ince_nationalColor,
+            width: 1.5,
           ),
-          borderRadius: BorderRadius.circular(8.0), // Rounded corners
+          borderRadius: BorderRadius.circular(8.0),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Colors.blue, // Border color when focused
-            width: 2.0, // Slightly thicker when focused
+          borderSide: BorderSide(
+            color: AppColor.nationalColor,
+            width: 2.0,
           ),
           borderRadius: BorderRadius.circular(8.0),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16.0,
-          vertical: 8.0, // Adjust padding for better appearance
+          vertical: 8.0,
         ),
       ),
-      cursorColor: Colors.blue, // Cursor color to blue
+      cursorColor: AppColor.nationalColor,
       style: const TextStyle(
-        color: Colors.black, // Text color
-        fontSize: 16.0, // Font size of the input text
+        color: Colors.black,
+        fontSize: 16.0,
       ),
     );
   }

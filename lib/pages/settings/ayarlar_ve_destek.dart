@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
+import 'package:voxpollui/boarding/boarding_bir.dart';
 import 'package:voxpollui/class/custom/custom_appbar.dart';
 import 'package:voxpollui/class/model/national/get_font.dart';
 
@@ -48,6 +50,9 @@ class AyarlarVeDestek extends StatelessWidget {
             _buildSection(
               title: 'Çıkış Yap',
               description: '',
+              onTap: () async {
+                await _logout(context);
+              },
             ),
           ],
         ),
@@ -55,25 +60,66 @@ class AyarlarVeDestek extends StatelessWidget {
     );
   }
 
-  Widget _buildSection({required String title, required String description}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(fontSize: 18, fontFamily: GetFont.GILROY_BOLD),
-        ),
-        const SizedBox(height: 8),
-        if (description.isNotEmpty)
+  Widget _buildSection(
+      {required String title, required String description, Function()? onTap}) {
+    return GestureDetector(
+      onTap: onTap, // onTap ile tıklama olayını ekledik
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Text(
-            description,
-            style: TextStyle(
-                fontSize: 14,
-                color: const Color.fromARGB(255, 101, 101, 101),
-                height: 1.5,
-                fontFamily: GetFont.GILROY_MEDIUM),
+            title,
+            style: TextStyle(fontSize: 18, fontFamily: GetFont.GILROY_BOLD),
           ),
-      ],
+          const SizedBox(height: 8),
+          if (description.isNotEmpty)
+            Text(
+              description,
+              style: TextStyle(
+                  fontSize: 14,
+                  color: const Color.fromARGB(255, 101, 101, 101),
+                  height: 1.5,
+                  fontFamily: GetFont.GILROY_MEDIUM),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _logout(BuildContext context) async {
+    try {
+      final user = await ParseUser.currentUser() as ParseUser?;
+      var response = await user?.logout();
+      if (response?.success == true) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const BoardinBir()),
+        );
+      } else {
+        _showErrorDialog(context, 'Çıkış yapılamadı. Lütfen tekrar deneyin.');
+      }
+    } catch (e) {
+      _showErrorDialog(context, 'Bir hata oluştu: $e');
+    }
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Hata'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Tamam'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

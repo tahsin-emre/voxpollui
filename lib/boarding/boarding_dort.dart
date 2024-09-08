@@ -3,7 +3,9 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/boarding/onboarding_page.dart';
 import 'package:intl/intl.dart';
 import 'package:voxpollui/class/custom/custom_date_selector.dart';
+import 'package:voxpollui/class/custom/custom_textfield.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
+import 'package:voxpollui/class/model/national/get_font.dart';
 
 class BoardinDort extends StatefulWidget {
   const BoardinDort({Key? key}) : super(key: key);
@@ -197,100 +199,50 @@ class _StateBoardinDort extends State<BoardinDort> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           const SizedBox(height: 30),
-                          const Text(
+                          Text(
                             'Kişisel Bilgiler',
                             style: TextStyle(
-                              color: Color(0xFF0C0C0C),
+                              color: const Color(0xFF0C0C0C),
                               fontSize: 40,
-                              fontFamily: 'Gilroy-medium',
+                              fontFamily: GetFont.GILROY_MEDIUM,
                               fontWeight: FontWeight.w400,
                               height: 0,
                             ),
                           ),
                           const SizedBox(height: 10),
-                          const Text(
+                          Text(
                             '*Bazı bilgiler sonradan değiştirilemez. \n Doğru girdiğinizden emin olun.',
                             style: TextStyle(
                               color: Colors.black,
-                              fontFamily: "Gilroy-medium",
+                              fontFamily: GetFont.GILROY_MEDIUM,
                               fontWeight: FontWeight.w100,
                               fontSize: 14,
                             ),
                           ),
                           const SizedBox(height: 20),
-                          TextField(
-                            controller: _nameController,
-                            decoration: InputDecoration(
-                              labelText: 'İsim',
-                              border: const UnderlineInputBorder(),
-                              hoverColor: AppColor.nationalColor,
-                              enabledBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: AppColor.nationalColor)),
-                              contentPadding:
-                                  const EdgeInsets.only(bottom: -10),
-                            ),
-                            cursorColor: AppColor.nationalColor,
-                          ),
+                          PollTextField.signupTextField(
+                              controller: _nameController, labelText: "İsim"),
                           const SizedBox(height: 20),
-                          TextField(
-                            controller: _surnameController,
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.only(bottom: -10),
-                              labelText: 'Soyisim',
-                              border: const UnderlineInputBorder(),
-                              enabledBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: AppColor.nationalColor)),
-                            ),
-                            cursorColor: AppColor.nationalColor,
-                          ),
+                          PollTextField.signupTextField(
+                              controller: _surnameController,
+                              labelText: "Soyisim"),
                           const SizedBox(height: 20),
-                          TextField(
-                            controller: _usernameController,
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.only(bottom: -10),
-                              labelText: 'Kullanıcı Adı',
-                              border: const UnderlineInputBorder(),
-                              enabledBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: AppColor.nationalColor)),
-                            ),
-                            cursorColor: AppColor.nationalColor,
-                          ),
+                          PollTextField.signupTextField(
+                              controller: _usernameController,
+                              labelText: "Kullanıcı Adı"),
                           const SizedBox(height: 20),
-                          TextField(
-                            controller: _mailController,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.only(bottom: -10),
-                              labelText: 'E-Mail',
-                              border: const UnderlineInputBorder(),
-                              enabledBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: AppColor.nationalColor)),
-                            ),
-                            cursorColor: AppColor.nationalColor,
-                          ),
+                          PollTextField.signupTextField(
+                              controller: _mailController, labelText: "E-Mail"),
                           const SizedBox(height: 20),
                           GestureDetector(
                             onTap: () => _selectDate(context),
                             child: BirthDateSelector(
                               onDateSelected: (selectedDate) {
                                 if (selectedDate != null) {
+                                  /*
                                   print(
                                       "Seçilen Tarih: ${selectedDate.toLocal()}");
+                                      */
                                 }
                               },
                               birthDateController: _birthDateController,
@@ -472,16 +424,16 @@ class _StateBoardinDort extends State<BoardinDort> {
                       const SizedBox(
                         height: 50,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'İlgi Alanları',
                             style: TextStyle(
-                              color: Color(0xFF0C0C0C),
+                              color: const Color(0xFF0C0C0C),
                               fontSize: 40,
-                              fontFamily: 'Gilroy-medium',
+                              fontFamily: GetFont.GILROY_MEDIUM,
                               fontWeight: FontWeight.w500,
                               height: 0,
                             ),
@@ -491,16 +443,16 @@ class _StateBoardinDort extends State<BoardinDort> {
                       const SizedBox(
                         height: 5,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             '5 adet seçebilir ve profilinizden güncelleyebilirsiniz.',
                             style: TextStyle(
-                              color: Color(0xFF0C0C0C),
+                              color: const Color(0xFF0C0C0C),
                               fontSize: 13,
-                              fontFamily: 'Gilroy',
+                              fontFamily: GetFont.GILROY_MEDIUM,
                               fontWeight: FontWeight.w400,
                               height: 0.08,
                             ),

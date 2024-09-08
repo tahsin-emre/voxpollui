@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:voxpollui/class/model/national/get_color.dart';
 
 class PollTextField {
   static File? _selectedImage;
@@ -40,6 +41,27 @@ class PollTextField {
         if (_selectedImage != null) // Görseli göster
           Image.file(_selectedImage!),
       ],
+    );
+  }
+
+  static Widget signupTextField({
+    required TextEditingController controller,
+    required String labelText,
+  }) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: labelText,
+        labelStyle: const TextStyle(color: Colors.black),
+        border: const UnderlineInputBorder(),
+        hoverColor: AppColor.nationalColor,
+        enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.black)),
+        focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: AppColor.nationalColor)),
+        contentPadding: const EdgeInsets.only(bottom: -10),
+      ),
+      cursorColor: AppColor.nationalColor,
     );
   }
 }

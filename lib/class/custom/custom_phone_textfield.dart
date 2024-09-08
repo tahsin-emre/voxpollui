@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:voxpollui/class/model/national/get_font.dart';
 
 class PhoneTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -9,7 +10,7 @@ class PhoneTextField extends StatelessWidget {
   // Custom formatter for phone number
   static final _phoneNumberFormatter = PhoneNumberFormatter();
 
-  PhoneTextField({
+  const PhoneTextField({
     Key? key,
     required this.controller,
     this.focusNode,
@@ -18,17 +19,16 @@ class PhoneTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 332,
       height: 48,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: TextField(
           inputFormatters: [
-            LengthLimitingTextInputFormatter(
-                13), // Max length adjusted for formatted number
-            FilteringTextInputFormatter.digitsOnly, // Only digits allowed
-            _phoneNumberFormatter, // Custom phone number formatter
+            LengthLimitingTextInputFormatter(13),
+            FilteringTextInputFormatter.digitsOnly,
+            _phoneNumberFormatter,
           ],
           keyboardType: TextInputType.phone,
           controller: controller,
@@ -36,12 +36,12 @@ class PhoneTextField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hintText,
             prefix: RichText(
-              text: const TextSpan(
+              text: TextSpan(
                 children: [
                   TextSpan(
                     text: '+90 ',
                     style: TextStyle(
-                      fontFamily: "Gilroy-medium",
+                      fontFamily: GetFont.GILROY_MEDIUM,
                       color: Colors.black,
                       fontSize: 28,
                     ),
@@ -50,25 +50,23 @@ class PhoneTextField extends StatelessWidget {
               ),
             ),
             enabledBorder: const UnderlineInputBorder(
-              borderSide:
-                  BorderSide(width: 1.0), // Alt çizgi rengi ve kalınlığı
+              borderSide: BorderSide(width: 1.0),
             ),
             focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(
-                  width: 1.0), // Odaklanıldığında alt çizgi rengi ve kalınlığı
+              borderSide: BorderSide(width: 1.0),
             ),
             border: InputBorder.none,
-            hintStyle: const TextStyle(
+            hintStyle: TextStyle(
               color: Colors.black,
               fontSize: 28,
-              fontFamily: 'Gilroy',
+              fontFamily: GetFont.GILROY_LIGHT,
               fontWeight: FontWeight.w400,
             ),
           ),
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.black,
             fontSize: 28,
-            fontFamily: 'Gilroy',
+            fontFamily: GetFont.GILROY_LIGHT,
             fontWeight: FontWeight.w400,
           ),
           cursorColor: Colors.blue,

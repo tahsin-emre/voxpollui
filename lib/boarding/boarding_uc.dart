@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:voxpollui/boarding/boarding_dort.dart';
+import 'package:voxpollui/class/model/national/get_font.dart';
 
 class BoardinUc extends StatefulWidget {
   const BoardinUc({Key? key}) : super(key: key);
@@ -39,12 +40,12 @@ class _BoardinUcState extends State<BoardinUc> {
                   padding: const EdgeInsets.fromLTRB(25, 5, 5, 15),
                   child: Container(
                       alignment: Alignment.centerLeft,
-                      child: const Text(
+                      child: Text(
                         'Onay Kodu',
                         style: TextStyle(
-                          color: Color(0xFF0C0C0C),
+                          color: const Color(0xFF0C0C0C),
                           fontSize: 40,
-                          fontFamily: 'Gilroy-medium',
+                          fontFamily: GetFont.GILROY_MEDIUM,
                           height: 0,
                         ),
                       )),
@@ -65,10 +66,10 @@ class _BoardinUcState extends State<BoardinUc> {
                           focusNode: _focusNodes[index],
                           maxLength: 1,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 24,
-                              fontFamily: "Gilroy",
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontFamily: GetFont.GILROY_LIGHT,
+                          ),
                           cursorColor: Colors.blue,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
@@ -115,31 +116,32 @@ class _BoardinUcState extends State<BoardinUc> {
                   }),
                 ),
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: const Padding(
-                    padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
                     child: Text.rich(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 11,
                       ),
                       TextSpan(
                         text:
                             ' Lütfen cep telefonunuza gelen 4 haneli kodu girin. Eğer SMS gelmediyse tekrar göndermek için',
                         style: TextStyle(
-                            fontFamily: 'Gilroy', fontWeight: FontWeight.w400),
+                          fontFamily: GetFont.GILROY_LIGHT,
+                        ),
                         children: [
                           TextSpan(
                             text: ' buraya',
                             style: TextStyle(
-                                color: Color(0xFF0C0C0C),
-                                fontFamily: 'Gilroy-medium',
+                                color: const Color(0xFF0C0C0C),
+                                fontFamily: GetFont.GILROY_MEDIUM,
                                 fontWeight: FontWeight.bold),
                           ),
                           TextSpan(
                             text: ' tıklayın',
                             style: TextStyle(
-                                color: Color(0xFF0C0C0C),
-                                fontFamily: 'Gilroy',
+                                color: const Color(0xFF0C0C0C),
+                                fontFamily: GetFont.GILROY_LIGHT,
                                 fontWeight: FontWeight.w400),
                           ),
                         ],

@@ -84,6 +84,23 @@ flutter:
     - assets/image/bottom_sheet_menu/sikayet.svg
 
 
+    - assets/image/profile_community/1453.png
+    - assets/image/profile_community/baydoner.png
+    - assets/image/profile_community/beymen.png
+    - assets/image/profile_community/cinema.png
+    - assets/image/profile_community/gofrette_profile.png
+    - assets/image/profile_community/karen.png
+    - assets/image/profile_community/backk.png
+
+
+    - assets/image/profile_community/1453.svg
+    - assets/image/profile_community/baydoner.svg
+    - assets/image/profile_community/beymen.svg
+    - assets/image/profile_community/cinema.svg
+    - assets/image/profile_community/gofrette.svg
+    - assets/image/profile_community/karen.svg
+
+
 
   fonts:
    - family: Gilroy

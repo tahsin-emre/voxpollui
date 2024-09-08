@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:voxpollui/boarding/boarding_dort.dart';
 import 'package:voxpollui/boarding/boarding_uc.dart';
 import 'package:voxpollui/boarding/kvkk.dart';
 import 'package:voxpollui/class/custom/custom_checkbox.dart';
 import 'package:voxpollui/class/custom/custom_phone_textfield.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
+import 'package:voxpollui/class/model/national/get_font.dart';
 
 class BoardinIki extends StatefulWidget {
   const BoardinIki({Key? key}) : super(key: key);
@@ -30,23 +27,6 @@ class _BoardinIkiState extends State<BoardinIki> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _focusNode.requestFocus();
     });
-    // _focusNode.addListener(() {
-    //   if (_focusNode.hasFocus && tel.text.isEmpty) {
-    //     tel.text = '+90 ';
-    //     tel.selection = TextSelection.fromPosition(
-    //       TextPosition(offset: tel.text.length),
-    //     );
-    //   }
-    // });
-    // tel.addListener(() {
-    //   final text = tel.text;
-    //   if (!text.startsWith('+90 ')) {
-    //     tel.text = '+90 ${text.replaceAll('+90 ', '')}';
-    //     tel.selection = TextSelection.fromPosition(
-    //       TextPosition(offset: tel.text.length),
-    //     );
-    //   }
-    // });
   }
 
   @override
@@ -91,7 +71,7 @@ class _BoardinIkiState extends State<BoardinIki> {
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
           child: Container(
             width: double.infinity,
-            padding: EdgeInsets.all(0),
+            padding: const EdgeInsets.all(0),
             height: MediaQuery.of(context).size.height + 0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,13 +100,13 @@ class _BoardinIkiState extends State<BoardinIki> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(35, 30, 0, 0),
-                  child: Container(
+                  child: SizedBox(
                     width: 332,
                     height: 48,
                     child: PhoneTextField(
                       controller: tel,
                       focusNode: _focusNode,
-                      hintText: '555 123 45 67', // Özel hint text
+                      hintText: '555 123 45 67',
                     ),
                   ),
                 ),
@@ -144,38 +124,54 @@ class _BoardinIkiState extends State<BoardinIki> {
                           onayliyorum = value;
                         });
                       },
-                      child: const Text.rich(
+                      child: Text.rich(
                         TextSpan(
-                            text: 'Aydınlatma Metni',
-                            style: TextStyle(
-                                color: Color(0xFF0C0C0C),
-                                fontSize: 13,
-                                fontFamily: 'Gilroy-medium',
-                                fontWeight: FontWeight.bold),
-                            children: [
-                              TextSpan(
-                                text: '’ni okudum,',
-                                style: TextStyle(
-                                    color: Color(0xFF0C0C0C),
-                                    fontFamily: 'Gilroy',
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              TextSpan(
-                                text: 'Açık Rıza Metni',
-                                style: TextStyle(
-                                    color: Color(0xFF0C0C0C),
-                                    fontSize: 13,
-                                    fontFamily: 'Gilroy-medium',
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text: '’ni okudum ve onaylıyorum.',
-                                style: TextStyle(
-                                    color: Color(0xFF0C0C0C),
-                                    fontFamily: 'Gilroy',
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ]),
+                          text: 'Aydınlatma Metni',
+                          style: TextStyle(
+                              color: const Color(0xFF0C0C0C),
+                              fontSize: 13,
+                              fontFamily: GetFont.GILROY_MEDIUM,
+                              fontWeight: FontWeight.bold),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) => const Kvkk())));
+                            },
+                          children: [
+                            TextSpan(
+                              text: '’ni okudum,',
+                              style: TextStyle(
+                                  color: const Color(0xFF0C0C0C),
+                                  fontFamily: GetFont.GILROY_MEDIUM,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            TextSpan(
+                              text: 'Açık Rıza Metni',
+                              style: TextStyle(
+                                  color: const Color(0xFF0C0C0C),
+                                  fontSize: 13,
+                                  fontFamily: GetFont.GILROY_MEDIUM,
+                                  fontWeight: FontWeight.bold),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) =>
+                                              const Kvkk())));
+                                },
+                            ),
+                            TextSpan(
+                              text: '’ni okudum ve onaylıyorum.',
+                              style: TextStyle(
+                                  color: const Color(0xFF0C0C0C),
+                                  fontFamily: GetFont.GILROY_MEDIUM,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -191,33 +187,56 @@ class _BoardinIkiState extends State<BoardinIki> {
                           emailAlmak = value;
                         });
                       },
-                      child: const Text.rich(
+                      child: Text.rich(
                         TextSpan(
-                            text: 'Açık Rıza Metni ve ',
-                            style: TextStyle(
-                                color: Color(0xFF0C0C0C),
-                                fontSize: 13,
-                                fontFamily: 'Gilroy',
-                                fontWeight: FontWeight.w400),
-                            children: [
-                              TextSpan(
-                                text:
-                                    'Ticari Elektronik İleti Aydınlatma Metni ',
-                                style: TextStyle(
-                                    color: Color(0xFF0C0C0C),
-                                    fontFamily: 'Gilroy-medium',
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text:
-                                    'Kapsamında SMS, e-posta ve arama almak istiyorum.',
-                                style: TextStyle(
-                                    color: Color(0xFF0C0C0C),
-                                    fontSize: 13,
-                                    fontFamily: 'Gilroy',
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ]),
+                          text: 'Açık Rıza Metni ve ',
+                          style: TextStyle(
+                              color: const Color(0xFF0C0C0C),
+                              fontSize: 13,
+                              fontFamily: GetFont.GILROY_MEDIUM,
+                              fontWeight: FontWeight.w400),
+                          children: [
+                            TextSpan(
+                              text: 'Ticari Elektronik İleti Aydınlatma Metni ',
+                              style: TextStyle(
+                                  color: const Color(0xFF0C0C0C),
+                                  fontFamily: GetFont.GILROY_MEDIUM,
+                                  fontWeight: FontWeight.bold),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) =>
+                                              const Kvkk())));
+                                },
+                            ),
+                            TextSpan(
+                              text:
+                                  'Kapsamında SMS, e-posta ve arama almak istiyorum.',
+                              style: TextStyle(
+                                  color: const Color(0xFF0C0C0C),
+                                  fontSize: 13,
+                                  fontFamily: GetFont.GILROY_MEDIUM,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            TextSpan(
+                              text: 'Açık Rıza Metni',
+                              style: TextStyle(
+                                  color: const Color(0xFF0C0C0C),
+                                  fontFamily: GetFont.GILROY_MEDIUM,
+                                  fontWeight: FontWeight.bold),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) =>
+                                              const Kvkk())));
+                                },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -231,7 +250,7 @@ class _BoardinIkiState extends State<BoardinIki> {
                         MaterialPageRoute(builder: (context) => const Kvkk()),
                       );
                     },
-                    child: const SizedBox(
+                    child: SizedBox(
                       width: 333,
                       child: Text.rich(
                         TextSpan(
@@ -239,9 +258,9 @@ class _BoardinIkiState extends State<BoardinIki> {
                             TextSpan(
                               text: 'İleri butonuna basarak ',
                               style: TextStyle(
-                                color: Color(0xFF0C0C0C),
+                                color: const Color(0xFF0C0C0C),
                                 fontSize: 12,
-                                fontFamily: 'Gilroy',
+                                fontFamily: GetFont.GILROY_MEDIUM,
                                 fontWeight: FontWeight.w400,
                                 height: 0,
                               ),
@@ -249,9 +268,9 @@ class _BoardinIkiState extends State<BoardinIki> {
                             TextSpan(
                               text: 'Kullanıcı Sözleşmesi',
                               style: TextStyle(
-                                color: Color(0xFF0C0C0C),
+                                color: const Color(0xFF0C0C0C),
                                 fontSize: 12,
-                                fontFamily: 'Gilroy-medium',
+                                fontFamily: GetFont.GILROY_MEDIUM,
                                 fontWeight: FontWeight.bold,
                                 height: 0,
                               ),
@@ -259,9 +278,9 @@ class _BoardinIkiState extends State<BoardinIki> {
                             TextSpan(
                               text: '’ni kabul etmiş olursunuz.',
                               style: TextStyle(
-                                color: Color(0xFF0C0C0C),
+                                color: const Color(0xFF0C0C0C),
                                 fontSize: 12,
-                                fontFamily: 'Gilroy',
+                                fontFamily: GetFont.GILROY_MEDIUM,
                                 fontWeight: FontWeight.w400,
                                 height: 0,
                               ),
@@ -274,13 +293,6 @@ class _BoardinIkiState extends State<BoardinIki> {
                   GestureDetector(
                     onTap: () {
                       if (onayliyorum && emailAlmak) {
-                        /*
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const BoardinDort()),
-                          );
-                        */
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -334,18 +346,16 @@ class _BoardinIkiState extends State<BoardinIki> {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 16.0, vertical: 10.0),
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10.0), // Buton kenarları yuvarlatılmış
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
                                           ),
                                         ),
                                         child: const Text(
                                           'Tamam',
                                           style: TextStyle(
-                                            color: Colors
-                                                .white, // Buton yazı rengi
+                                            color: Colors.white,
                                             fontSize: 16.0,
-                                            fontWeight: FontWeight
-                                                .bold, // Yazı kalınlığı
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
@@ -369,13 +379,13 @@ class _BoardinIkiState extends State<BoardinIki> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
                           'İleri',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
-                            fontFamily: 'Gilroy',
+                            fontFamily: GetFont.GILROY_MEDIUM,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

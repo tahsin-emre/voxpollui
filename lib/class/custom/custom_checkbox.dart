@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CustomCheckbox extends StatefulWidget {
-  Widget? child;
+  Widget child;
   bool isChecked = false;
   final ValueChanged<bool>? onChanged; // Yeni onChanged parametresi
   CustomCheckbox({
     super.key,
-    this.child,
+    required this.child,
     required this.isChecked,
     this.onChanged,
   });
@@ -61,7 +61,7 @@ class _CustomCheckboxState extends State<CustomCheckbox>
     return Row(
       children: [
         GestureDetector(
-          onTap: _toggleCheckbox,
+          onTap: _toggleCheckbox, // Sadece checkbox tıklanınca aktiflik değişir
           child: AnimatedBuilder(
             animation: _animationController,
             builder: (context, child) {
@@ -95,10 +95,7 @@ class _CustomCheckboxState extends State<CustomCheckbox>
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: GestureDetector(
-            onTap: _toggleCheckbox,
-            child: widget.child,
-          ),
+          child: widget.child,
         ),
       ],
     );

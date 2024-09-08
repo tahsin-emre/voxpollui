@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:voxpollui/boarding/for_pro/boarding_for_pro.dart';
+import 'package:voxpollui/class/model/national/get_font.dart';
 import '../pages/home_page.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -12,7 +13,7 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   final PageController _pageController = PageController();
-  int _currentPage = 0; 
+  int _currentPage = 0;
 
   final List<OnboardingSlide> slides = [
     const OnboardingSlide(
@@ -183,8 +184,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   BorderRadius.circular(5.0), // Border radius
                             ),
                           ),
-                          child: const Text(
-                            'Ana Sayfa', style: TextStyle(color: Colors.white),
+                          child: Text(
+                            'İleri',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: GetFont.GILROY_BLACK),
                             // Background color
                           ),
                         ),
@@ -231,19 +235,19 @@ class OnboardingSlide extends StatelessWidget {
             children: title
                 .split(' ')
                 .map((word) => Text(word,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 48.0,
-                      fontFamily: "Gilroy-medium",
+                      fontFamily: GetFont.GILROY_MEDIUM,
                       fontWeight: FontWeight.bold,
                     )))
                 .toList(),
           ),
           Text(
             description,
-            style: const TextStyle(
+            style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w400,
-                fontFamily: "Gilroy"),
+                fontFamily: GetFont.GILROY_MEDIUM),
           ),
           const SizedBox(height: 20.0),
         ],
