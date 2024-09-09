@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
-import 'package:voxpollui/class/model/national/get_color.dart';
+import 'package:voxpollui/class/custom/custom_tabbar.dart';
+import 'package:voxpollui/class/model/user.dart';
+import 'package:voxpollui/class/widget_class.dart';
+import 'package:voxpollui/pages/home_page.dart';
+import 'package:voxpollui/pages/settings/ayarlar_ve_destek.dart';
 import 'package:voxpollui/script/database.dart';
 
 // ignore: must_be_immutable
@@ -9,17 +13,26 @@ class ProfilePage extends StatefulWidget {
   int? i;
   bool isMe;
   String? viewedUser;
+  List<Map<String, dynamic>>? pollObjects;
+  List<Map<String, dynamic>>? usersObjects;
 
-  ProfilePage(this.i, {super.key, required this.isMe, this.viewedUser});
+  ProfilePage(this.i,
+      {super.key,
+      required this.isMe,
+      this.viewedUser,
+      required this.pollObjects,
+      required this.usersObjects});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage>
+    with TickerProviderStateMixin {
   Database database = Database();
   bool isFollowing = false;
   dynamic followed;
+  DataManager dataManager = DataManager();
   dynamic followers;
   String? objectId;
   String? username;
@@ -31,6 +44,10 @@ class _ProfilePageState extends State<ProfilePage> {
   Map<String, dynamic>? polls;
   bool _isLoading = false;
 
+  late TabController _tabController;
+
+  List<String> tabText = ["Katıldıklarım", "Oluşturduklarım"];
+
   @override
   void initState() {
     super.initState();
@@ -40,6 +57,13 @@ class _ProfilePageState extends State<ProfilePage> {
     } else {
       _loadPollData();
     }
+    _tabController = TabController(length: tabText.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadPollData() async {
@@ -133,33 +157,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
                 const Divider(),
-                TabBar(
-                  indicatorColor: AppColor.nationalColor,
-                  labelColor: AppColor.nationalColor,
-                  tabs: const [
-                    Tab(text: 'Katıldıklarım'),
-                    Tab(text: 'Oluşturduklarım'),
-                  ],
-                ),
-                Expanded(
-                  child: TabBarView(
-                    children: [
-                      if (polls != null)
-                        ListView.builder(
-                          itemCount: polls!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container();
-                          },
-                        ),
-                      if (polls != null)
-                        ListView.builder(
-                          itemCount: polls!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container();
-                          },
-                        ),
-                    ],
-                  ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: CustomTabbar.customTabbar(_tabController, tabText),
                 ),
                 widget.isMe == true
                     ? const SizedBox.shrink()
@@ -180,7 +180,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   icon: const Icon(Icons.arrow_back),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()));
                   },
                   style: ButtonStyle(
                     backgroundColor:
@@ -199,12 +202,33 @@ class _ProfilePageState extends State<ProfilePage> {
                   IconButton(
                     icon: const Icon(Icons.settings, color: Colors.white),
                     onPressed: () {
-                      // Ayarlar sayfasına yönlendirme
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AyarlarVeDestek()));
                     },
                   ),
                 ],
               ),
             ),
+            /*
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  if (dataManager.getPolls()?.isEmpty ?? true) {
+                    return Column(children: [
+                      LoadingScreen.loadingScreen(text: ''),
+                    ]);
+                  }
+                  return ForWidget.buildCard(context, widget.usersObjects!,
+                      widget.pollObjects!, index);
+                },
+                childCount: (dataManager.getPolls()?.isNotEmpty ?? false)
+                    ? dataManager.getPolls()?.length
+                    : 1,
+              ),
+            ),
+            */
           ],
         ),
       ),
@@ -217,13 +241,13 @@ class _ProfilePageState extends State<ProfilePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          number.toString(),
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          label,
+          style: const TextStyle(fontSize: 16),
         ),
         const SizedBox(height: 4),
         Text(
-          label,
-          style: const TextStyle(fontSize: 16),
+          number.toString(),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ],
     );

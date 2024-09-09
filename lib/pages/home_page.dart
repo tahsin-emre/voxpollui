@@ -71,8 +71,8 @@ class _HomePageState extends State<HomePage> {
         ),
         ProfilePage(
           4,
-          // pollObjects: pollObjects,
-          // usersObjects: usersObjects,
+          pollObjects: pollObjects,
+          usersObjects: usersObjects,
           isMe: true,
         ),
       ];

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
+import 'package:voxpollui/class/model/national/get_color.dart';
+import 'package:voxpollui/class/model/national/get_font.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/script/database.dart';
 
@@ -24,9 +26,9 @@ class SurveyPage extends StatefulWidget {
 
 class _SurveyPageState extends State<SurveyPage> {
   late Future<List<PollOption>> _pollOptions;
-  List<String> _pollOptionTitles = []; // Bu yeni listeyi ekleyin
+  List<String> _pollOptionTitles = [];
   bool _hasVoted = false;
-  bool isLoading = true; // Yükleme durumu ekleyin
+  bool isLoading = true;
 
   bool isPollCreator = false;
   late ParseUser currentUser;
@@ -34,21 +36,20 @@ class _SurveyPageState extends State<SurveyPage> {
   @override
   void initState() {
     super.initState();
-    isLoading = true; // İlk başta yükleniyor olarak ayarlayın
-    _pollOptions = _fetchPollOptions(); // _pollOptions'ı başlatın
-    _checkIfUserVoted(); // Sonra _hasUserVoted'ı çağırın
+    isLoading = true;
+    _pollOptions = _fetchPollOptions();
+    _checkIfUserVoted();
   }
 
   Future<void> _checkIfUserVoted() async {
     await _loadCurrentUser();
     bool hasVoted = await Database.hasUserVoted(widget.pollData, widget.index);
-    // print("_hasVoted: $hasVoted"); // Debug için yazdırın
     setState(() {
       _hasVoted = hasVoted;
       if (!_hasVoted) {
         _pollOptions = _fetchPollOptions();
       }
-      isLoading = false; // Veriler yüklendiğinde yükleme durumunu güncelleyin
+      isLoading = false;
     });
   }
 
@@ -62,11 +63,11 @@ class _SurveyPageState extends State<SurveyPage> {
     final ParseResponse apiResponse = await queryPollOptions.query();
 
     if (apiResponse.success && apiResponse.results != null) {
-      _pollOptionTitles.clear(); // Listeyi temizleyin
+      _pollOptionTitles.clear();
       return apiResponse.results!.map((e) {
         String optionId = e.get<String>('objectId') ?? 'Bilinmiyor';
         String optionTitle = e.get<String>('text') ?? 'Hata';
-        _pollOptionTitles.add(optionTitle); // Başlığı listeye ekleyin
+        _pollOptionTitles.add(optionTitle);
         return PollOption(
           id: optionId,
           title: Text(optionTitle),
@@ -107,11 +108,34 @@ class _SurveyPageState extends State<SurveyPage> {
     DateTime now = DateTime.now();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Anket Sayfası'),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Center(
+          child: Image.asset(
+            'assets/image/anket_iko.png',
+            width: 100,
+            height: 100,
+          ),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+          color: Colors.black,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(Colors.white),
+            shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(
+                side: const BorderSide(
+                  color: Color.fromARGB(255, 188, 188, 188),
+                ),
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+            ),
+          ),
         ),
       ),
       body: Container(
@@ -146,9 +170,35 @@ class _SurveyPageState extends State<SurveyPage> {
                               // title_image var mı yok mu kontrol edin
                               widget.pollData[widget.index]['title_image'] !=
                                       null
-                                  ? Image.network(widget.pollData[widget.index]
-                                      ['title_image']["url"])
-                                  : SizedBox(),
+                                  ? Stack(
+                                      children: [
+                                        Image.network(
+                                          widget.pollData[widget.index]
+                                              ['title_image']["url"],
+                                          fit: BoxFit.cover,
+                                        ),
+                                        Positioned(
+                                          top: 8.0,
+                                          right: 8.0,
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: const BoxDecoration(
+                                              color: Colors.white,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: IconButton(
+                                              icon: const Icon(Icons.share),
+                                              color: AppColor.nationalColor,
+                                              onPressed: () {
+                                                print("Share button clicked");
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : const SizedBox(),
 
                               FlutterPolls(
                                 pollId: widget.pollData[widget.index]
@@ -180,15 +230,49 @@ class _SurveyPageState extends State<SurveyPage> {
                                   }
                                 },
                                 pollEnded: pollEnded,
-                                pollTitle: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    widget.pollData[widget.index]['title'],
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
+                                pollTitle: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0.0, 10.0, 0.0, 10.0),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: 'Kalan Süre:',
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                      GetFont.GILROY_LIGHT,
+                                                  color: Colors.black,
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: '6 Saat 24 Dakika',
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                      GetFont.GILROY_MEDIUM,
+                                                  color: Colors.black,
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        widget.pollData[widget.index]['title'],
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontFamily: GetFont.GILROY_BOLD),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 pollOptions: snapshot.data!,
                                 votedPercentageTextStyle: const TextStyle(
@@ -200,6 +284,13 @@ class _SurveyPageState extends State<SurveyPage> {
                           );
                         },
                       ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(
+                "Anket detaylarını görüntülemek için lütfen ankete katılın.",
+                style: TextStyle(fontFamily: GetFont.GILROY_MEDIUM),
+              ),
+            )
           ],
         ),
       ),
@@ -209,19 +300,19 @@ class _SurveyPageState extends State<SurveyPage> {
   Widget _buildCardCommunity() {
     return ListTile(
       leading: const CircleAvatar(
-        backgroundImage: AssetImage('assets/image/login.png'),
+        backgroundImage: AssetImage('assets/image/ibrahim.png'),
       ),
       title: Row(
         children: [
           Text('${widget.userData.name}'),
           const SizedBox(width: 4.0),
-          const Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
+          Icon(Icons.check_circle, color: AppColor.nationalColor, size: 16.0),
           const SizedBox(width: 4.0),
           Text('@${widget.userData.username}',
               style: const TextStyle(fontSize: 12.0)),
         ],
       ),
-      subtitle: const Text('Topluluk Açıklaması'),
+      subtitle: const Text('1.8M Takipçi'),
       trailing: InkWell(
         onTap: () {
           print("${widget.index}");
@@ -229,7 +320,7 @@ class _SurveyPageState extends State<SurveyPage> {
           // // print('Trailing ikonuna tıklandı!');
           // Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(4, pollObjects: widget.pollData, usersObjects: widget.userData,)));
         },
-        child: const Icon(Icons.arrow_forward),
+        child: const Icon(Icons.more_vert),
       ),
     );
   }

@@ -650,11 +650,11 @@ class ForWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ProfilePage(
-                        4,
-                        isMe: false,
-                        viewedUser: usersObjects[index]['objectId'],
-                      ))); // pollObjects: pollObjects, usersObjects: usersObjects,
+                  builder: (context) => ProfilePage(4,
+                      isMe: false,
+                      viewedUser: usersObjects[index]['objectId'],
+                      pollObjects: pollObjects,
+                      usersObjects: usersObjects)));
         },
         style: TextButton.styleFrom(
           foregroundColor: Colors.black,
