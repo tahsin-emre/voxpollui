@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class CustomCheckbox extends StatefulWidget {
   Widget child;
   bool isChecked = false;
-  final ValueChanged<bool>? onChanged; // Yeni onChanged parametresi
+  final ValueChanged<bool>? onChanged;
   CustomCheckbox({
     super.key,
     required this.child,
@@ -50,19 +50,18 @@ class _CustomCheckboxState extends State<CustomCheckbox>
         _animationController.reverse();
       }
       if (widget.onChanged != null) {
-        widget.onChanged!(
-            widget.isChecked); // Checkbox durumunu dışarıya bildirin
+        widget.onChanged!(widget.isChecked);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        GestureDetector(
-          onTap: _toggleCheckbox, // Sadece checkbox tıklanınca aktiflik değişir
-          child: AnimatedBuilder(
+    return GestureDetector(
+      onTap: _toggleCheckbox, // Hem checkbox hem de metin için tıklama işlevi
+      child: Row(
+        children: [
+          AnimatedBuilder(
             animation: _animationController,
             builder: (context, child) {
               return Container(
@@ -92,12 +91,12 @@ class _CustomCheckboxState extends State<CustomCheckbox>
               );
             },
           ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: widget.child,
-        ),
-      ],
+          const SizedBox(width: 8),
+          Expanded(
+            child: widget.child,
+          ),
+        ],
+      ),
     );
   }
 }

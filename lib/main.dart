@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:voxpollui/boarding/boarding_bir.dart';
+import 'package:voxpollui/boarding/onboarding_page.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/pages/home_page.dart';
 import 'package:voxpollui/notifier/theme.dart';
@@ -40,10 +42,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
+    final FlutterLocalization _localization = FlutterLocalization.instance;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Vox Poll',
       theme: themeNotifier.currentTheme,
+      locale: const Locale('tr'),
+      supportedLocales: const [
+        Locale('en'),
+        Locale('tr'),
+      ],
+      localizationsDelegates: _localization.localizationsDelegates,
       home: FutureBuilder<dynamic>(
         future: getCurrentUser(),
         builder: (context, snapshot) {

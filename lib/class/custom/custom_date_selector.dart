@@ -17,7 +17,7 @@ class BirthDateSelector extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BirthDateSelectorState createState() => _BirthDateSelectorState();
+  State<BirthDateSelector> createState() => _BirthDateSelectorState();
 }
 
 class _BirthDateSelectorState extends State<BirthDateSelector> {

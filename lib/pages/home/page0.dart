@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:voxpollui/boarding/for_pro/boarding_for_pro.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
+import 'package:voxpollui/class/custom/custom_switch.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
 import 'package:voxpollui/class/model/national/get_font.dart';
 import 'package:voxpollui/class/model/user.dart';
@@ -307,85 +308,14 @@ class _Page0State extends State<Page0> {
                 // S.S.S. sayfasına yönlendirme
               },
             ),
-            /*
-            ListTile(
-              title: Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  'Çıkış Yap',
-                  style: TextStyle(
-                    fontFamily: GetFont.GILROY_BOLD,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-              onTap: () async {
-                try {
-                  ParseUser? currentUser = await ParseUser.currentUser();
-                  await currentUser?.logout();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => BoardinBir()),
-                  );
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Çıkış yapılırken bir hata oluştu.'),
-                    ),
-                  );
-                }
-              },
-            ),
-            */
-            const SizedBox(height: 20),
-            /*
-            ListTile(
-              trailing: Consumer<ThemeNotifier>(
-                builder: (context, themeNotifier, child) {
-                  bool isDarkMode = themeNotifier.isDarkMode;
-                  return GestureDetector(
-                    onTap: () {
-                      _temayiDegistir(isDarkMode);
-                    },
-                    child: Container(
-                      width: 80.0,
-                      height: 30.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: isDarkMode
-                            ? const Color.fromARGB(255, 88, 7, 146)
-                            : Colors.blue,
-                      ),
-                      child: Stack(
-                        children: [
-                          AnimatedAlign(
-                            alignment: Alignment(_alignX, 0),
-                            duration: const Duration(milliseconds: 200),
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 800),
-                              curve: Curves.easeInOut,
-                              width: 40.0,
-                              height: 40.0,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: isDarkMode ? Colors.black : Colors.white,
-                              ),
-                              child: Icon(
-                                isDarkMode
-                                    ? Icons.nightlight_round
-                                    : Icons.wb_sunny_rounded,
-                                color: isDarkMode ? Colors.blue : Colors.orange,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+            const Spacer(),
+            const Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: CustomSwitch(),
               ),
             ),
-            */
           ],
         ),
       ),
@@ -411,25 +341,24 @@ class _Page0State extends State<Page0> {
                         Container(
                           width: MediaQuery.of(context).size.width - 200,
                           child: Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Merhaba, \n",
-                                    style: TextStyle(
-                                      fontSize: 24.0,
-                                      fontFamily: GetFont.GILROY_LIGHT,
-                                    ),
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Merhaba, \n",
+                                  style: TextStyle(
+                                    fontSize: 24.0,
+                                    fontFamily: GetFont.GILROY_LIGHT,
                                   ),
-                                  TextSpan(
-                                    text: '$name $surname',
-                                    style: TextStyle(
+                                ),
+                                TextSpan(
+                                  text: '$name $surname',
+                                  style: TextStyle(
                                       fontSize: 24.0,
-                                      fontFamily: GetFont.GILROY_BOLD
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                      fontFamily: GetFont.GILROY_BOLD),
+                                ),
+                              ],
                             ),
+                          ),
                         ),
                         /*
                         Column(
