@@ -68,6 +68,7 @@ class _CommunityPageState extends State<CommunityPage> {
                           child: NationalButton.nationalButton(
                               text: "Topluluk Oluştur",
                               onPressed: () {
+                                /*
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -76,6 +77,7 @@ class _CommunityPageState extends State<CommunityPage> {
                                               usersObjects: widget.usersObjects,
                                               pollObjects: widget.pollObjects,
                                             )));
+                                            */
                               }),
                         ),
                         const SizedBox(height: 10.0),
