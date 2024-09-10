@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_appbar.dart';
 import 'package:voxpollui/class/custom/custom_button.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
@@ -25,6 +26,27 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
   String publicPrivate = "Herkese Açık";
 
   String? selectedCategory;
+
+  List<String> interests = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchInterests();
+  }
+
+  Future<void> _fetchInterests() async {
+    final ParseResponse response = await ParseObject('Interest').getAll();
+    if (response.success && response.results != null) {
+      setState(() {
+        interests = response.results!
+            .map((e) => e.get<String>('name') as String)
+            .toList();
+      });
+    } else {
+      // Handle error
+    }
+  }
 
   List<String> categories = [
     'Ekonomi',
@@ -113,24 +135,16 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                DropdownButtonFormField(
-                  dropdownColor: Colors.white,
-                  value: selectedCategory,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
+                DropdownMenu<String>(
+                  menuStyle: MenuStyle(
+                    backgroundColor: WidgetStateProperty.all(Colors.white),
                   ),
-                  hint: const Text('Kategori Seçiniz'),
-                  onChanged: (newValue) {
-                    setState(() {
-                      selectedCategory = newValue;
-                    });
-                  },
-                  items: categories.map((category) {
-                    return DropdownMenuItem(
-                      value: category,
-                      child: Text(category),
-                    );
+                  width: MediaQuery.of(context).size.width,
+                  initialSelection: interests.first,
+                  dropdownMenuEntries:
+                      interests.map<DropdownMenuEntry<String>>((String value) {
+                    return DropdownMenuEntry<String>(
+                        value: value, label: value);
                   }).toList(),
                 ),
                 const SizedBox(height: 20),
