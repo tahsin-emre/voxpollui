@@ -5,4 +5,5 @@ class GetFont {
   static String GILROY_BOLD = "Gilroy-bold";
   static String GILROY_HEAVY = "Gilroy-heavhy";
   static String GILROY_REGULAR = "Gilroy-regular";
+  static String GILROY_SEMIBOLD = "Gilroy-semibold";
 }

@@ -124,3 +124,6 @@ flutter:
    - family: Gilroy-regular
      fonts:
        - asset: assets/fonts/gilroy/Gilroy-Regular.ttf
+   - family: Gilroy-semibold
+     fonts:
+       - asset: assets/fonts/gilroy/Gilroy-SemiBold.ttf

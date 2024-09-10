@@ -85,15 +85,14 @@ class _BoardinIkiState extends State<BoardinIki> {
                     width: 200,
                   )),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
                   child: Text(
                     'Telefon\nNumaranız',
                     style: TextStyle(
                       color: Color(0xFF0C0C0C),
                       fontSize: 40,
-                      fontFamily: 'Gilroy-medium',
-                      fontWeight: FontWeight.w500,
+                      fontFamily: GetFont.GILROY_SEMIBOLD,
                       height: 0,
                     ),
                   ),
