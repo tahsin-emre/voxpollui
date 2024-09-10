@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/class/custom/custom_appbar.dart';
 import 'package:voxpollui/class/custom/custom_button.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
+import 'package:voxpollui/class/model/national/get_font.dart';
 import 'package:voxpollui/class/widget_class.dart';
 
 // ignore: must_be_immutable
@@ -18,7 +20,7 @@ class CreateCommunityPage extends StatefulWidget {
 }
 
 class _CreateCommunityPageState extends State<CreateCommunityPage> {
-  TextEditingController community_name = TextEditingController();
+  TextEditingController communityName = TextEditingController();
   bool switchValue = true;
   String publicPrivate = "Herkese Açık";
 
@@ -28,30 +30,18 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
     'Ekonomi',
     'Siyaset',
     'Oyun',
-    'Ekonomi',
-    'Siyaset',
-    'Oyun',
-    'Ekonomi',
-    'Siyaset',
-    'Oyun',
-    'Ekonomi',
-    'Siyaset',
-    'Oyun',
-    'Ekonomi',
-    'Siyaset',
-    'Oyun'
   ];
 
   String username = '';
 
-  final TextEditingController call_users = TextEditingController();
+  final TextEditingController callUsers = TextEditingController();
   // final FocusNode _focusNode = FocusNode();
 
   void addCallUsers() {
-    if (call_users.text.isEmpty) {
-      call_users.text = "";
+    if (callUsers.text.isEmpty) {
+      callUsers.text = "";
     } else {
-      call_users.text = username;
+      callUsers.text = username;
     }
   }
 
@@ -59,19 +49,19 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
   // void initState() {
   //   super.initState();
   //   _focusNode.addListener(() {
-  //     if (_focusNode.hasFocus && call_users.text.isEmpty) {
-  //       call_users.text = '+90 ';
-  //       call_users.selection = TextSelection.fromPosition(
-  //         TextPosition(offset: call_users.text.length),
+  //     if (_focusNode.hasFocus && callUsers.text.isEmpty) {
+  //       callUsers.text = '+90 ';
+  //       callUsers.selection = TextSelection.fromPosition(
+  //         TextPosition(offset: callUsers.text.length),
   //       );
   //     }
   //   });
-  //   call_users.addListener(() {
-  //     final text = call_users.text;
+  //   callUsers.addListener(() {
+  //     final text = callUsers.text;
   //     if (!text.startsWith('+90 ')) {
-  //       call_users.text = '+90 ${text.replaceAll('+90 ', '')}';
-  //       call_users.selection = TextSelection.fromPosition(
-  //         TextPosition(offset: call_users.text.length),
+  //       callUsers.text = '+90 ${text.replaceAll('+90 ', '')}';
+  //       callUsers.selection = TextSelection.fromPosition(
+  //         TextPosition(offset: callUsers.text.length),
   //       );
   //     }
   //   });
@@ -80,19 +70,25 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.white,
+      appBar: CustomAppBar.customAppBar(context, ""),
       body: SingleChildScrollView(
         child: SizedBox(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
-                  child: Text("Topluluk Oluştur"),
+                  child: Text(
+                    "Topluluk Oluştur",
+                    style: TextStyle(
+                        fontSize: 24, fontFamily: GetFont.GILROY_BOLD),
+                  ),
                 ),
                 TextField(
-                  controller: community_name,
+                  controller: communityName,
+                  scrollPadding: const EdgeInsets.all(0.0),
                   decoration: InputDecoration(
                     labelText: 'Topluluk Adı',
                     border: const UnderlineInputBorder(),
@@ -102,6 +98,8 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: AppColor.nationalColor),
                     ),
+                    labelStyle: const TextStyle(color: Colors.black),
+                    focusColor: AppColor.nationalColor,
                   ),
                   cursorColor: AppColor.nationalColor,
                 ),
@@ -116,7 +114,12 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                 ),
                 const SizedBox(height: 20),
                 DropdownButtonFormField(
+                  dropdownColor: Colors.white,
                   value: selectedCategory,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                  ),
                   hint: const Text('Kategori Seçiniz'),
                   onChanged: (newValue) {
                     setState(() {
@@ -141,7 +144,7 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                 ),
                 const SizedBox(height: 20),
                 TextField(
-                  controller: call_users,
+                  controller: callUsers,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
                     hintText: 'Kullanıcı Adı',
@@ -166,7 +169,7 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                   },
                   onSubmitted: (value) {
                     setState(() {
-                      call_users.text = username;
+                      callUsers.text = username;
                     });
                   },
                 ),
