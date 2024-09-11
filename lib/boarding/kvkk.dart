@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/class/model/national/get_font.dart';
 
 class Kvkk extends StatelessWidget {
   const Kvkk({super.key});
@@ -7,37 +8,33 @@ class Kvkk extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white, // Arka plan rengi
-        elevation: 0, // Gölge kaldırıldı
-        title: const Align(
-          alignment: Alignment.centerLeft, // Başlığı sola yasla
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Align(
+          alignment: Alignment.centerLeft,
           child: Text(
             'Aydınlatma Metni',
             style: TextStyle(
-              color: Colors.black, // Başlık rengi
-              fontSize: 18, // Başlık font boyutu
-              fontFamily: "Gilroy-medium",
-              fontWeight: FontWeight.bold, // Başlık kalınlığı
+              color: Colors.black,
+              fontSize: 18,
+              fontFamily: GetFont.GILROY_BOLD,
             ),
           ),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          color: Colors.black, // İkon rengi
+          color: Colors.black,
           onPressed: () {
-            Navigator.of(context).pop(); // Geri gitme işlemi
+            Navigator.of(context).pop();
           },
           style: ButtonStyle(
-            backgroundColor:
-                WidgetStateProperty.all(Colors.white), // Arkaplan rengi
+            backgroundColor: WidgetStateProperty.all(Colors.white),
             shape: WidgetStateProperty.all(
               RoundedRectangleBorder(
                 side: const BorderSide(
-                  color: Color.fromARGB(
-                      255, 188, 188, 188), // Kenarlık rengi ve kalınlığı
+                  color: Color.fromARGB(255, 188, 188, 188),
                 ),
-                borderRadius:
-                    BorderRadius.circular(4.0), // Kenarlık yuvarlaklığı
+                borderRadius: BorderRadius.circular(4.0),
               ),
             ),
           ),
@@ -49,33 +46,31 @@ class Kvkk extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
         color: Colors.white,
         child: RichText(
-          text: const TextSpan(
+          text: TextSpan(
             style: TextStyle(
               color: Colors.black,
-              fontFamily: 'Gilroy-medium',
               height: 1.5,
             ),
             children: [
               TextSpan(
                 text: 'VoxPoll App. Aydınlatma Metni\n',
                 style: TextStyle(
-                  fontFamily: "Gilroy-medium",
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
+                  fontFamily: GetFont.GILROY_BOLD,
+                  fontSize: 16,
                 ),
               ),
               TextSpan(
                   text:
                       'Hoş geldiniz! VoxPoll kullanmaya başladığınız için teşekkür ederiz. Lütfen aşağıdaki bilgileri dikkatlice okuyunuz.\n\n',
                   style: TextStyle(
-                    fontSize: 13,
-                  )),
+                      fontSize: 14, fontFamily: GetFont.GILROY_MEDIUM)),
               TextSpan(
                 text: '1. Hakkında\n',
                 style: TextStyle(
                   fontFamily: "Gilroy-medium",
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
+                  height: 10,
                 ),
               ),
               TextSpan(

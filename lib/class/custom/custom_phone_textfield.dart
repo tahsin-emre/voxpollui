@@ -41,7 +41,7 @@ class PhoneTextField extends StatelessWidget {
                   TextSpan(
                     text: '+90 ',
                     style: TextStyle(
-                      fontFamily: GetFont.GILROY_MEDIUM,
+                      fontFamily: GetFont.GILROY_SEMIBOLD,
                       color: Colors.black,
                       fontSize: 28,
                     ),
@@ -80,13 +80,11 @@ class PhoneNumberFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    final digitsOnly =
-        newValue.text.replaceAll(RegExp(r'[^\d]'), ''); // Only digits
+    final digitsOnly = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
     final formattedText = _formatAsPhoneNumber(digitsOnly);
     return TextEditingValue(
       text: formattedText,
-      selection: TextSelection.collapsed(
-          offset: formattedText.length), // Cursor at the end
+      selection: TextSelection.collapsed(offset: formattedText.length),
     );
   }
 

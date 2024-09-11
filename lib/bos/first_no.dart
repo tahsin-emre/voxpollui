@@ -17,7 +17,7 @@ class BoardinBir extends StatelessWidget {
           child: Stack(
             children: [
               Positioned(
-                left: 270,
+                left: 298,
                 top: 493,
                 child: SizedBox(
                   width: 260,
@@ -45,8 +45,8 @@ class BoardinBir extends StatelessWidget {
                       ),
                       // Sağa bakan ok
                       Positioned(
-                        left: 60,
-                        top: 115,
+                        left: 50, // Okun başlangıç noktasının x koordinatı
+                        top: 115, // Okun başlangıç noktasının y koordinatı
                         child: GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -56,37 +56,8 @@ class BoardinBir extends StatelessWidget {
                           },
                           child: const Icon(
                             Icons.arrow_forward,
-                            size: 40,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ), //@
-                ),
-              ),
-              Positioned(
-                left: -150,
-                top: 200,
-                child: SizedBox(
-                  width: 260,
-                  height: 260,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        child: Transform(
-                          transform: Matrix4.identity()
-                            ..translate(0.0, 0.0)
-                            ..rotateZ(0.00),
-                          child: Container(
-                            width: 183.85,
-                            height: 183.85,
-                            decoration: ShapeDecoration(
-                              color: Colors.grey.withOpacity(0.2),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(56),
-                              ),
-                            ),
+                            size: 40, // Okun boyutu
+                            color: Colors.white, // Okun rengi
                           ),
                         ),
                       ),
@@ -398,8 +369,8 @@ class BoardinBir extends StatelessWidget {
                   'Bütün merak',
                   style: TextStyle(
                     color: const Color(0xFF0C0C0C),
-                    fontSize: 36,
-                    fontFamily: GetFont.GILROY_LIGHT,
+                    fontSize: 40,
+                    fontFamily: GetFont.GILROY_BOLD,
                     fontWeight: FontWeight.w300,
                     height: 0,
                   ),
@@ -412,27 +383,27 @@ class BoardinBir extends StatelessWidget {
                   'ettiğiniz',
                   style: TextStyle(
                     color: const Color(0xFF0C0C0C),
-                    fontSize: 36,
-                    fontFamily: GetFont.GILROY_LIGHT,
+                    fontSize: 40,
+                    fontFamily: GetFont.GILROY_BOLD,
                     fontWeight: FontWeight.w300,
                     height: 0,
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 47,
                 top: 588,
                 child: Text(
                   'cevaplar',
                   style: TextStyle(
-                    color: const Color(0xFF2355FF),
-                    fontSize: 36,
-                    fontFamily: GetFont.GILROY_BLACK,
+                    color: Color(0xFF2355FF),
+                    fontSize: 40,
+                    fontFamily: 'Gilroy',
+                    fontWeight: FontWeight.w700,
                     height: 0,
                   ),
                 ),
               ),
-              /*
               Positioned(
                 left: 47,
                 top: 650,
@@ -486,39 +457,35 @@ class BoardinBir extends StatelessWidget {
                   ),
                 ),
               ),
-              */
-              Positioned(
-                left: 15,
-                top: 620,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const BoardinIki()),
-                      );
-                    },
-                    child: Container(
-                      alignment: Alignment.bottomCenter,
-                      width: MediaQuery.of(context).size.width / 2 - 50,
-                      height: 49,
-                      margin: const EdgeInsets.all(31),
-                      decoration: ShapeDecoration(
-                        color: const Color(0xFF2355FF),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
+                            builder: (context) => const BoardinIki()));
+                  },
+                  child: Container(
+                    alignment: Alignment.bottomCenter,
+                    width: double.infinity,
+                    height: 49,
+                    margin: const EdgeInsets.all(
+                        31), // Burası ekranın kenar boşluklarını ayarlar
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF2355FF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Center(
-                        child: Text(
-                          'Başlayalım',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontFamily: GetFont.GILROY_SEMIBOLD,
-                          ),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'İleri',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Gilroy',
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),

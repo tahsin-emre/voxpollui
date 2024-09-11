@@ -31,7 +31,7 @@ class _CustomCheckboxState extends State<CustomCheckbox>
     );
     _sizeAnimation =
         Tween<double>(begin: 20.0, end: 21.0).animate(_animationController);
-    _colorAnimation = ColorTween(begin: Colors.black, end: Colors.white)
+    _colorAnimation = ColorTween(begin: Colors.transparent, end: Colors.white)
         .animate(_animationController);
   }
 

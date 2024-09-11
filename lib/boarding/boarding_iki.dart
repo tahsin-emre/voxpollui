@@ -86,11 +86,11 @@ class _BoardinIkiState extends State<BoardinIki> {
                   )),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
                   child: Text(
                     'Telefon\nNumaranız',
                     style: TextStyle(
-                      color: Color(0xFF0C0C0C),
+                      color: const Color(0xFF0C0C0C),
                       fontSize: 40,
                       fontFamily: GetFont.GILROY_SEMIBOLD,
                       height: 0,
@@ -127,10 +127,10 @@ class _BoardinIkiState extends State<BoardinIki> {
                         TextSpan(
                           text: 'Aydınlatma Metni',
                           style: TextStyle(
-                              color: const Color(0xFF0C0C0C),
-                              fontSize: 13,
-                              fontFamily: GetFont.GILROY_MEDIUM,
-                              fontWeight: FontWeight.bold),
+                            color: Colors.black,
+                            fontSize: 13,
+                            fontFamily: GetFont.GILROY_BOLD,
+                          ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.push(
@@ -140,19 +140,18 @@ class _BoardinIkiState extends State<BoardinIki> {
                             },
                           children: [
                             TextSpan(
-                              text: '’ni okudum,',
+                              text: '’ni okudum, ',
                               style: TextStyle(
-                                  color: const Color(0xFF0C0C0C),
+                                  color: Colors.black,
                                   fontFamily: GetFont.GILROY_MEDIUM,
                                   fontWeight: FontWeight.w400),
                             ),
                             TextSpan(
                               text: 'Açık Rıza Metni',
                               style: TextStyle(
-                                  color: const Color(0xFF0C0C0C),
+                                  color: Colors.black,
                                   fontSize: 13,
-                                  fontFamily: GetFont.GILROY_MEDIUM,
-                                  fontWeight: FontWeight.bold),
+                                  fontFamily: GetFont.GILROY_BOLD),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Navigator.push(
@@ -190,7 +189,7 @@ class _BoardinIkiState extends State<BoardinIki> {
                         TextSpan(
                           text: 'Açık Rıza Metni ve ',
                           style: TextStyle(
-                              color: const Color(0xFF0C0C0C),
+                              color: Colors.black,
                               fontSize: 13,
                               fontFamily: GetFont.GILROY_MEDIUM,
                               fontWeight: FontWeight.w400),
@@ -198,9 +197,8 @@ class _BoardinIkiState extends State<BoardinIki> {
                             TextSpan(
                               text: 'Ticari Elektronik İleti Aydınlatma Metni ',
                               style: TextStyle(
-                                  color: const Color(0xFF0C0C0C),
-                                  fontFamily: GetFont.GILROY_MEDIUM,
-                                  fontWeight: FontWeight.bold),
+                                  color: Colors.black,
+                                  fontFamily: GetFont.GILROY_BOLD),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Navigator.push(
@@ -218,21 +216,6 @@ class _BoardinIkiState extends State<BoardinIki> {
                                   fontSize: 13,
                                   fontFamily: GetFont.GILROY_MEDIUM,
                                   fontWeight: FontWeight.w400),
-                            ),
-                            TextSpan(
-                              text: 'Açık Rıza Metni',
-                              style: TextStyle(
-                                  color: const Color(0xFF0C0C0C),
-                                  fontFamily: GetFont.GILROY_MEDIUM,
-                                  fontWeight: FontWeight.bold),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: ((context) =>
-                                              const Kvkk())));
-                                },
                             ),
                           ],
                         ),
@@ -257,7 +240,7 @@ class _BoardinIkiState extends State<BoardinIki> {
                             TextSpan(
                               text: 'İleri butonuna basarak ',
                               style: TextStyle(
-                                color: const Color(0xFF0C0C0C),
+                                color: Colors.black,
                                 fontSize: 12,
                                 fontFamily: GetFont.GILROY_MEDIUM,
                                 fontWeight: FontWeight.w400,
@@ -267,17 +250,15 @@ class _BoardinIkiState extends State<BoardinIki> {
                             TextSpan(
                               text: 'Kullanıcı Sözleşmesi',
                               style: TextStyle(
-                                color: const Color(0xFF0C0C0C),
+                                color: Colors.black,
                                 fontSize: 12,
-                                fontFamily: GetFont.GILROY_MEDIUM,
-                                fontWeight: FontWeight.bold,
-                                height: 0,
+                                fontFamily: GetFont.GILROY_BOLD,
                               ),
                             ),
                             TextSpan(
                               text: '’ni kabul etmiş olursunuz.',
                               style: TextStyle(
-                                color: const Color(0xFF0C0C0C),
+                                color: Colors.black,
                                 fontSize: 12,
                                 fontFamily: GetFont.GILROY_MEDIUM,
                                 fontWeight: FontWeight.w400,
