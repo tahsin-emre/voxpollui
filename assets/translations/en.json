@@ -1,3 +1,17 @@
 {
-    "appName": "Vox Poll"
+    "appName": "Vox Poll",
+    "auth": {
+        "login": "Login",
+        "register": "Register",
+        "phone": "Phone"
+    },
+    "feed": {
+        "title": "Feed",
+        "createPoll": "Create Poll",
+        "polls": "Polls"
+    },
+    "onboard": {
+        "welcome": "Welcome to Vox Poll",
+        "continue": "Continue"
+    }
 }

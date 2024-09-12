@@ -4,7 +4,6 @@ part of '../route_tree.dart';
 class LoginRoute extends GoRouteData {
   const LoginRoute();
   static const String path = '/auth/login';
-  static final $parentNavigatorKey = AppRouter.rootNavigatorKey;
   @override
   TPage buildPage(BuildContext context, GoRouterState state) {
     return TPage(child: const LoginView());
@@ -15,7 +14,6 @@ class LoginRoute extends GoRouteData {
 class RegisterRoute extends GoRouteData {
   const RegisterRoute();
   static const String path = '/auth/register';
-  static final $parentNavigatorKey = AppRouter.rootNavigatorKey;
   @override
   TPage buildPage(BuildContext context, GoRouterState state) {
     return TPage(child: const RegisterView());

@@ -1,3 +1,17 @@
 {
-    "appName": "Vox Poll"
+    "appName": "Vox Poll",
+    "auth": {
+        "login": "Giriş Yap",
+        "register": "Kayıt Ol",
+        "phone": "Telefon"
+    },
+    "feed": {
+        "title": "Akış",
+        "createPoll": "Anket Oluştur",
+        "polls": "Anketler"
+    },
+    "onboard": {
+        "welcome": "Vox Poll'a hoş geldiniz",
+        "continue": "Devam"
+    }
 }

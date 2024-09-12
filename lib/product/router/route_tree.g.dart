@@ -16,7 +16,6 @@ List<RouteBase> get $appRoutes => [
 
 RouteBase get $loginRoute => GoRouteData.$route(
       path: '/auth/login',
-      parentNavigatorKey: LoginRoute.$parentNavigatorKey,
       factory: $LoginRouteExtension._fromState,
     );
 
@@ -39,7 +38,6 @@ extension $LoginRouteExtension on LoginRoute {
 
 RouteBase get $registerRoute => GoRouteData.$route(
       path: '/auth/register',
-      parentNavigatorKey: RegisterRoute.$parentNavigatorKey,
       factory: $RegisterRouteExtension._fromState,
     );
 
@@ -96,7 +94,6 @@ extension $FeedRouteExtension on FeedRoute {
 
 RouteBase get $splashRoute => GoRouteData.$route(
       path: '/',
-      parentNavigatorKey: SplashRoute.$parentNavigatorKey,
       factory: $SplashRouteExtension._fromState,
     );
 
@@ -119,7 +116,6 @@ extension $SplashRouteExtension on SplashRoute {
 
 RouteBase get $onboardRoute => GoRouteData.$route(
       path: '/onboard',
-      parentNavigatorKey: OnboardRoute.$parentNavigatorKey,
       factory: $OnboardRouteExtension._fromState,
     );
 

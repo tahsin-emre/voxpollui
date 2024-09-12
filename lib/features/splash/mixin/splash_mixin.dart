@@ -15,6 +15,12 @@ mixin SplashMixin on State<SplashView> {
     checkUser();
   }
 
+  @override
+  void dispose() {
+    authCubit.close();
+    super.dispose();
+  }
+
   Future<void> checkUser() async {
     final userId = authCubit.handleCurrentUser();
     UserModel? user;
