@@ -23,12 +23,9 @@ void main() async {
 }
 
 Future<Widget> initializeApp() async {
-  return MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => ThemeNotifier()),
-    ],
-    child: const MyApp(),
-  );
+  return MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => ThemeNotifier()),
+  ], child: const MyApp());
 }
 
 class MyApp extends StatelessWidget {
