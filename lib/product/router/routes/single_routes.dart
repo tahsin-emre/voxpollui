@@ -10,3 +10,14 @@ class SplashRoute extends GoRouteData {
     return TPage(child: const SplashView());
   }
 }
+
+@TypedGoRoute<OnboardRoute>(path: OnboardRoute.path)
+class OnboardRoute extends GoRouteData {
+  const OnboardRoute();
+  static const String path = '/onboard';
+  static final $parentNavigatorKey = AppRouter.rootNavigatorKey;
+  @override
+  TPage buildPage(BuildContext context, GoRouterState state) {
+    return TPage(child: const OnboardView());
+  }
+}

@@ -8,7 +8,7 @@ final class UserModel extends Equatable {
     this.name,
   });
 
-  factory UserModel.fromQDS(QueryDocumentSnapshot snapshot) {
+  factory UserModel.fromDS(DocumentSnapshot snapshot) {
     final data = snapshot.data()! as Map<String, dynamic>;
     return UserModel(
       id: snapshot.id,
