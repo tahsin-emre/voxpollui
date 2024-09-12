@@ -14,6 +14,9 @@ class _LoginViewState extends State<LoginView> with LoginMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(LocaleKeys.auth_login.tr()),
+      ),
       body: Center(
         child: Text(
           LocaleKeys.auth_login.tr(),

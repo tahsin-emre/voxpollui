@@ -14,8 +14,17 @@ class _OnboardViewState extends State<OnboardView> with OnboardMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text(LocaleKeys.onboard_welcome.tr()),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Text(LocaleKeys.onboard_welcome.tr()),
+          ),
+          ElevatedButton(
+            onPressed: onContinue,
+            child: Text(LocaleKeys.onboard_continue.tr()),
+          ),
+        ],
       ),
     );
   }
