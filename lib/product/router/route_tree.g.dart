@@ -8,6 +8,7 @@ part of 'route_tree.dart';
 
 List<RouteBase> get $appRoutes => [
       $loginRoute,
+      $splashRoute,
     ];
 
 RouteBase get $loginRoute => GoRouteData.$route(
@@ -21,6 +22,29 @@ extension $LoginRouteExtension on LoginRoute {
 
   String get location => GoRouteData.$location(
         '/auth/login',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $splashRoute => GoRouteData.$route(
+      path: '/',
+      parentNavigatorKey: SplashRoute.$parentNavigatorKey,
+      factory: $SplashRouteExtension._fromState,
+    );
+
+extension $SplashRouteExtension on SplashRoute {
+  static SplashRoute _fromState(GoRouterState state) => const SplashRoute();
+
+  String get location => GoRouteData.$location(
+        '/',
       );
 
   void go(BuildContext context) => context.go(location);

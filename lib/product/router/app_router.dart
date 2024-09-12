@@ -8,7 +8,7 @@ final class AppRouter {
 
   static final config = GoRouter(
     navigatorKey: rootNavigatorKey,
-    initialLocation: LoginRoute.path,
+    initialLocation: SplashRoute.path,
     routes: $appRoutes,
   );
 }

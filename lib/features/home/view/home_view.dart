@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/features/home/mixin/home_mixin.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -7,9 +8,11 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView> with HomeMixin {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: Container(),
+    );
   }
 }
