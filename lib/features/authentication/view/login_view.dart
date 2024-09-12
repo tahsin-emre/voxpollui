@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/authentication/mixin/login_mixin.dart';
+import 'package:voxpollui/features/authentication/view/form_otp.dart';
+import 'package:voxpollui/features/authentication/view/form_phone.dart';
 import 'package:voxpollui/product/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/services/firebase/auth_service.dart';
 
 final class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -17,11 +20,29 @@ class _LoginViewState extends State<LoginView> with LoginMixin {
       appBar: AppBar(
         title: Text(LocaleKeys.auth_login.tr()),
       ),
-      body: Center(
-        child: Text(
-          LocaleKeys.auth_login.tr(),
-        ),
+      body: StreamBuilder<AuthStatus>(
+        stream: authStream.stream,
+        builder: (_, snapshot) {
+          final status = snapshot.data;
+          if (status == null) return error('loading-snapshot');
+          if (status == AuthStatus.none) {
+            return FormPhone(
+              phoneController: phoneController,
+              onPhoneVerify: verifyPhone,
+            );
+          }
+          if (status == AuthStatus.onCodeSent) {
+            return FormOtp(otpController: otpController);
+          }
+          if (status == AuthStatus.onSuccess) return error('success');
+          if (status == AuthStatus.onError) return error('error');
+          return error('on others');
+        },
       ),
     );
+  }
+
+  Widget error(String text) {
+    return Center(child: Text(text));
   }
 }

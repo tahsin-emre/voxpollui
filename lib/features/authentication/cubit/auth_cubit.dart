@@ -8,6 +8,7 @@ final class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(const AuthState());
   final _authService = AuthService();
   final _userService = UserService();
+
   String? handleCurrentUser() {
     return _authService.getCurrentUserId();
   }
