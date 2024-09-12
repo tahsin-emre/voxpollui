@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/features/authentication/mixin/login_mixin.dart';
 import 'package:voxpollui/product/localization/locale_keys.g.dart';
 
-class LoginView extends StatefulWidget {
+final class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
   @override

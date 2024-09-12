@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:voxpollui/product/localization/locale_keys.g.dart';
 
-class FeedView extends StatefulWidget {
+final class FeedView extends StatefulWidget {
   const FeedView({super.key});
 
   @override

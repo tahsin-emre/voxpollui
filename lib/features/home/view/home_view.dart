@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/home/mixin/home_mixin.dart';
 
-class HomeView extends StatefulWidget {
+final class HomeView extends StatefulWidget {
   const HomeView(this.child, {super.key});
   final Widget child;
   @override

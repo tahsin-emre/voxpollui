@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/splash/mixin/splash_mixin.dart';
 
-class SplashView extends StatefulWidget {
+final class SplashView extends StatefulWidget {
   const SplashView({super.key});
 
   @override

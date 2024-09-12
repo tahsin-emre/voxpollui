@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/features/authentication/mixin/register_mixin.dart';
 import 'package:voxpollui/product/localization/locale_keys.g.dart';
 
-class RegisterView extends StatefulWidget {
+final class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
 
   @override
