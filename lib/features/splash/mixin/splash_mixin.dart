@@ -12,7 +12,7 @@ mixin SplashMixin on State<SplashView> {
   @override
   void initState() {
     super.initState();
-    checkUser();
+    WidgetsBinding.instance.addPostFrameCallback((_) => checkUser());
   }
 
   @override
