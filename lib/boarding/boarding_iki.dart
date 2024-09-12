@@ -142,9 +142,9 @@ class _BoardinIkiState extends State<BoardinIki> {
                             TextSpan(
                               text: '’ni okudum, ',
                               style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: GetFont.GILROY_MEDIUM,
-                                  fontWeight: FontWeight.w400),
+                                color: Colors.black,
+                                fontFamily: GetFont.GILROY_LIGHT,
+                              ),
                             ),
                             TextSpan(
                               text: 'Açık Rıza Metni',
@@ -164,9 +164,9 @@ class _BoardinIkiState extends State<BoardinIki> {
                             TextSpan(
                               text: '’ni okudum ve onaylıyorum.',
                               style: TextStyle(
-                                  color: const Color(0xFF0C0C0C),
-                                  fontFamily: GetFont.GILROY_MEDIUM,
-                                  fontWeight: FontWeight.w400),
+                                color: const Color(0xFF0C0C0C),
+                                fontFamily: GetFont.GILROY_LIGHT,
+                              ),
                             ),
                           ],
                         ),
@@ -189,10 +189,10 @@ class _BoardinIkiState extends State<BoardinIki> {
                         TextSpan(
                           text: 'Açık Rıza Metni ve ',
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13,
-                              fontFamily: GetFont.GILROY_MEDIUM,
-                              fontWeight: FontWeight.w400),
+                            color: Colors.black,
+                            fontSize: 13,
+                            fontFamily: GetFont.GILROY_LIGHT,
+                          ),
                           children: [
                             TextSpan(
                               text: 'Ticari Elektronik İleti Aydınlatma Metni ',
@@ -212,10 +212,10 @@ class _BoardinIkiState extends State<BoardinIki> {
                               text:
                                   'Kapsamında SMS, e-posta ve arama almak istiyorum.',
                               style: TextStyle(
-                                  color: const Color(0xFF0C0C0C),
-                                  fontSize: 13,
-                                  fontFamily: GetFont.GILROY_MEDIUM,
-                                  fontWeight: FontWeight.w400),
+                                color: const Color(0xFF0C0C0C),
+                                fontSize: 13,
+                                fontFamily: GetFont.GILROY_LIGHT,
+                              ),
                             ),
                           ],
                         ),
@@ -242,9 +242,7 @@ class _BoardinIkiState extends State<BoardinIki> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
-                                fontFamily: GetFont.GILROY_MEDIUM,
-                                fontWeight: FontWeight.w400,
-                                height: 0,
+                                fontFamily: GetFont.GILROY_LIGHT,
                               ),
                             ),
                             TextSpan(
@@ -260,9 +258,7 @@ class _BoardinIkiState extends State<BoardinIki> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
-                                fontFamily: GetFont.GILROY_MEDIUM,
-                                fontWeight: FontWeight.w400,
-                                height: 0,
+                                fontFamily: GetFont.GILROY_LIGHT,
                               ),
                             ),
                           ],

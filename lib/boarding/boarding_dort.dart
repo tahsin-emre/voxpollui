@@ -15,7 +15,7 @@ class BoardinDort extends StatefulWidget {
 }
 
 class _StateBoardinDort extends State<BoardinDort> {
-  int currentStep = 0; // Mevcut adımı takip etmek için
+  int currentStep = 0;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
