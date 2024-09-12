@@ -163,7 +163,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10.0),
+                      const SizedBox(height: 15.0),
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 30.0), // Horizontal margin
@@ -220,34 +220,41 @@ class OnboardingSlide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 296,
-            child: Image.asset(image),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            child: SizedBox(
+              height: 296,
+              child: Image.asset(image),
+            ),
           ),
           const SizedBox(height: 20.0),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: title
-                .split(' ')
-                .map((word) => Text(word,
-                    style: TextStyle(
-                      fontSize: 48.0,
-                      fontFamily: GetFont.GILROY_MEDIUM,
-                      fontWeight: FontWeight.bold,
-                    )))
-                .toList(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: title
+                  .split(' ')
+                  .map((word) => Text(word,
+                      style: TextStyle(
+                        fontSize: 48.0,
+                        fontFamily: GetFont.GILROY_MEDIUM,
+                        fontWeight: FontWeight.bold,
+                      )))
+                  .toList(),
+            ),
           ),
-          Text(
-            description,
-            style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w400,
-                fontFamily: GetFont.GILROY_MEDIUM),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+            child: Text(
+              description,
+              style:
+                  TextStyle(fontSize: 16.0, fontFamily: GetFont.GILROY_LIGHT),
+            ),
           ),
           const SizedBox(height: 20.0),
         ],

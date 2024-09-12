@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
+import 'package:voxpollui/class/model/national/get_font.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -19,14 +20,15 @@ class CustomTextField extends StatelessWidget {
         labelText: label,
         labelStyle: TextStyle(
           color: AppColor.nationalColor,
+          fontFamily: GetFont.GILROY_MEDIUM,
           fontWeight: FontWeight.bold,
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColor.ince_nationalColor,
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(35, 85, 255, 0.5),
             width: 1.5,
           ),
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(5.0),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(

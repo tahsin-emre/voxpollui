@@ -6,6 +6,7 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:voxpollui/class/custom/custom_button.dart';
 import 'package:voxpollui/class/custom/custom_createpoll.dart';
+import 'package:voxpollui/class/custom/custom_dropdown.dart';
 import 'package:voxpollui/class/model/custom_model/textfield_model.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
 import 'package:voxpollui/class/model/national/get_font.dart';
@@ -281,6 +282,13 @@ class _CreatePollPageState extends State<CreatePollPage> {
                         )),
                     Align(
                       alignment: Alignment.centerLeft,
+                      child: CustomDropdown(
+                        items: interests,
+                      ),
+                    ),
+                    /*
+                    Align(
+                      alignment: Alignment.centerLeft,
                       child: DropdownMenu<String>(
                         menuStyle: MenuStyle(
                           backgroundColor:
@@ -295,6 +303,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                         }).toList(),
                       ),
                     ),
+                    */
                   ],
                 ),
                 const SizedBox(height: 20.0),
@@ -441,14 +450,30 @@ class _CreatePollPageState extends State<CreatePollPage> {
     return Flexible(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 12.0),
-        child: TextField(
-          decoration: InputDecoration(
-            labelText: label,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
+        child: SizedBox(
+          height: 40,
+          child: TextField(
+            decoration: InputDecoration(
+              labelText: label,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5.0),
+                borderSide: const BorderSide(color: Colors.black),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5.0),
+                borderSide: const BorderSide(color: Colors.black),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5.0),
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: const BorderSide(color: Colors.black),
+              ),
             ),
+            keyboardType: TextInputType.number,
           ),
-          keyboardType: TextInputType.number,
         ),
       ),
     );
