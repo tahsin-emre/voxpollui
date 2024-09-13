@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_loading_screen.dart';
 import 'package:voxpollui/class/custom/custom_tabbar.dart';
+import 'package:voxpollui/class/model/national/get_font.dart';
 import 'package:voxpollui/class/model/user.dart';
 import 'package:voxpollui/class/widget_class.dart';
 import 'package:voxpollui/pages/home_page.dart';
@@ -45,27 +46,16 @@ class _ProfilePageState extends State<ProfilePage>
 
   late TabController _tabController;
 
-  List<String> tabText = ["Katıldıklarım", "Oluşturduklarım"];
-
-  @override
-  void initState() {
-    super.initState();
-    checkIfFollowing(viewObjectId);
-    if (widget.isMe) {
-      _loadCurrentUser();
-    } else {
-      _loadPollData();
-    }
-    _tabController = TabController(length: tabText.length, vsync: this);
-  }
-
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
   }
 
+  List<String> tabText = [];
+
   Future<void> _loadPollData() async {
+    tabText = ["Aktif Anketler", "Geçmiş Anketler"];
     _isLoading = false;
     Database database = Database();
     ParseUser? currentUser = await ParseUser.currentUser();
@@ -85,6 +75,7 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   Future<void> _loadCurrentUser() async {
+    tabText = ["Katıldıklarım", "Oluşturduklarım"];
     ParseUser? currentUser = await ParseUser.currentUser();
     dynamic joinPoll = await Database.countUserPollResponses(
         currentUser.get<String>('objectId') ?? 'ObjectIDDDDDDD');
@@ -100,6 +91,18 @@ class _ProfilePageState extends State<ProfilePage>
 
       biyografi = "Biyografi";
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfFollowing(viewObjectId);
+    if (widget.isMe) {
+      _loadCurrentUser();
+    } else {
+      _loadPollData();
+    }
+    _tabController = TabController(length: tabText.length, vsync: this);
   }
 
   @override
@@ -134,10 +137,27 @@ class _ProfilePageState extends State<ProfilePage>
                           AssetImage('assets/image/profilepicture.png'),
                     ),
                   ),
-                  Text(
-                    "${name ?? "name"} ${surname ?? "surname"}",
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "${name ?? "name"} ${surname ?? "surname"}",
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        widget.isMe == true
+                            ? const SizedBox.shrink()
+                            : Align(
+                                alignment: Alignment.centerRight, // Sağ ortada
+                                child: _buildFollowButton(viewObjectId),
+                              ),
+                      ],
+                    ),
                   ),
                   Text('@${username ?? "username"}'),
                   Padding(
@@ -161,12 +181,6 @@ class _ProfilePageState extends State<ProfilePage>
                     padding: const EdgeInsets.all(18.0),
                     child: CustomTabbar.customTabbar(_tabController, tabText),
                   ),
-                  widget.isMe == true
-                      ? const SizedBox.shrink()
-                      : Align(
-                          alignment: Alignment.centerRight, // Sağ ortada
-                          child: _buildFollowButton(viewObjectId),
-                        ),
                   Column(
                     children: [
                       for (int index = 0;
@@ -269,20 +283,38 @@ class _ProfilePageState extends State<ProfilePage>
 
   Widget _buildFollowButton(String viewObjectId) {
     return ConstrainedBox(
-      constraints: const BoxConstraints.tightFor(width: 150),
-      child: ElevatedButton(
+      constraints: const BoxConstraints.tightFor(
+        width: 130,
+      ),
+      child: OutlinedButton(
         onPressed: () async {
           await updateFollowStatus(objectId!, viewObjectId, isFollowing);
           setState(() {
             isFollowing = !isFollowing;
           });
         },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: isFollowing ? Colors.red : Colors.blue,
+        style: OutlinedButton.styleFrom(
+          side: const BorderSide(
+              color: Color.fromRGBO(
+                13,
+                13,
+                13,
+                1,
+              ),
+              width: 1),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          backgroundColor: Colors.white,
+          elevation: 0,
         ),
         child: Text(
-          isFollowing ? 'Takibi Bırak' : 'Takip Et',
-          style: const TextStyle(color: Colors.white),
+          isFollowing ? 'Takip Ediliyor' : 'Takip Et',
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontFamily: GetFont.GILROY_MEDIUM,
+              fontWeight: FontWeight.bold),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
@@ -7,6 +8,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:voxpollui/class/custom/custom_button.dart';
 import 'package:voxpollui/class/custom/custom_createpoll.dart';
 import 'package:voxpollui/class/custom/custom_dropdown.dart';
+import 'package:voxpollui/class/custom/custom_phone_textfield.dart';
 import 'package:voxpollui/class/model/custom_model/textfield_model.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
 import 'package:voxpollui/class/model/national/get_font.dart';
@@ -127,7 +129,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
       ..set('title', title)
       ..set('createdBy', currentUser.objectId)
       ..set("title_image", uploadedFiles[0])
-      ..set('deletedDate', DateTime.now().add(const Duration(days: 365)));
+      ..set('deletedDate', "12.12.2025");
 
     // Burada setState kullanmanıza gerek yok çünkü widget'ın durumuyla ilgili bir değişiklik yok.
     final response = await poll.save();
@@ -447,13 +449,23 @@ class _CreatePollPageState extends State<CreatePollPage> {
   }
 */
   Widget _buildTimeField(String label) {
+    final _phoneNumberFormatter = PhoneNumberFormatter();
     return Flexible(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 12.0),
         child: SizedBox(
           height: 40,
           child: TextField(
+            cursorColor: AppColor.nationalColor,
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(13),
+              FilteringTextInputFormatter.digitsOnly,
+              _phoneNumberFormatter,
+            ],
             decoration: InputDecoration(
+              labelStyle: const TextStyle(
+                color: Color.fromRGBO(101, 101, 101, 1),
+              ),
               labelText: label,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5.0),
