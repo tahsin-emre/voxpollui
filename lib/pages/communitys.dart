@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:voxpollui/class/custom/custom_appbar.dart';
 import 'package:voxpollui/class/custom/custom_button.dart';
+import 'package:voxpollui/class/model/custom_model/textfield_model.dart';
 import 'package:voxpollui/class/model/national/get_color.dart';
 import 'package:voxpollui/class/model/national/get_font.dart';
 import 'package:voxpollui/class/widget_class.dart';
@@ -89,6 +94,19 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
   //   });
   // }
 
+  List<FieldOption> _options = [FieldOption(), FieldOption(), FieldOption()];
+
+  Future<void> _pickImage(FieldOption option) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        option.image = File(pickedFile.path);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,10 +126,35 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                         fontSize: 24, fontFamily: GetFont.GILROY_BOLD),
                   ),
                 ),
+                /*
+                child: TextField(
+                    controller: _titleController,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        icon: SvgPicture.asset('assets/image/add_image.svg'),
+                        onPressed: () => _pickImage(_options.first),
+                      ),
+                      label: Text(
+                        "Anket Başlığı",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: GetFont.GILROY_MEDIUM,
+                            fontSize: 18),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColor.nationalColor)),
+                    ),
+                  ),
+                */
                 TextField(
                   controller: communityName,
                   scrollPadding: const EdgeInsets.all(0.0),
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                        icon: SvgPicture.asset('assets/image/add_image.svg'),
+                        onPressed: () => _pickImage(_options.first),
+                      ),
                     labelText: 'Topluluk Adı',
                     border: const UnderlineInputBorder(),
                     enabledBorder: const UnderlineInputBorder(
