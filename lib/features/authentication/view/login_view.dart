@@ -32,7 +32,10 @@ class _LoginViewState extends State<LoginView> with LoginMixin {
             );
           }
           if (status == AuthStatus.onCodeSent) {
-            return FormOtp(otpController: otpController);
+            return FormOtp(
+              otpController: otpController,
+              onOtpVerify: verifyOtp,
+            );
           }
           if (status == AuthStatus.onSuccess) return error('success');
           if (status == AuthStatus.onError) return error('error');

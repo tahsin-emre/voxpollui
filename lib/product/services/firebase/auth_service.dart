@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
 
@@ -32,28 +32,29 @@ final class AuthService extends BaseService {
           authStream.sink.add(AuthStatus.onError);
         },
       );
-    } on Exception catch (e) {
-      log(e.toString());
+    } on Exception {
+      authStream.sink.add(AuthStatus.onError);
     }
   }
 
-  Future<void> verifyOtp({
+  Future<String?> verifyOtp({
     required String code,
     required StreamController<AuthStatus> authStream,
   }) async {
     try {
       if (verificationId == null) {
         authStream.sink.add(AuthStatus.onError);
-        return;
+        return null;
       }
       final credential = PhoneAuthProvider.credential(
         verificationId: verificationId!,
         smsCode: code,
       );
-      await auth.signInWithCredential(credential);
-    } on Exception catch (e) {
-      log(e.toString());
+      final response = await auth.signInWithCredential(credential);
+      return response.user?.uid;
+    } on Exception {
       authStream.sink.add(AuthStatus.onError);
+      return null;
     }
   }
 

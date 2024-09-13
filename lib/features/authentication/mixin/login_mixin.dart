@@ -8,7 +8,7 @@ import 'package:voxpollui/product/services/firebase/auth_service.dart';
 
 mixin LoginMixin on State<LoginView> {
   late final authCubit = context.read<AuthCubit>();
-  late final phoneController = TextEditingController();
+  late final phoneController = TextEditingController(text: '+905300387436');
   late final otpController = TextEditingController();
   final _authService = AuthService();
   final authStream = StreamController<AuthStatus>();
@@ -21,7 +21,14 @@ mixin LoginMixin on State<LoginView> {
 
   Future<void> verifyPhone() async {
     await _authService.verifyPhone(
-      phoneNumber: phoneController.text,
+      phoneNumber: '+905300387436',
+      authStream: authStream,
+    );
+  }
+
+  Future<void> verifyOtp() async {
+    await _authService.verifyOtp(
+      code: otpController.text,
       authStream: authStream,
     );
   }

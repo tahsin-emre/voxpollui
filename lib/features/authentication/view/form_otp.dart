@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 class FormOtp extends StatefulWidget {
-  const FormOtp({required this.otpController, super.key});
+  const FormOtp({
+    required this.otpController,
+    required this.onOtpVerify,
+    super.key,
+  });
   final TextEditingController otpController;
+  final VoidCallback onOtpVerify;
 
   @override
   State<FormOtp> createState() => _FormOtpState();
@@ -11,6 +16,15 @@ class FormOtp extends StatefulWidget {
 class _FormOtpState extends State<FormOtp> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      children: [
+        const Text('otp form'),
+        TextField(controller: widget.otpController),
+        ElevatedButton(
+          onPressed: widget.onOtpVerify,
+          child: const Text('otp'),
+        ),
+      ],
+    );
   }
 }
