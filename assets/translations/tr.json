@@ -1,0 +1,30 @@
+{
+    "appName": "Vox Poll",
+    "auth": {
+        "login": "Giriş Yap",
+        "logout": "Çıkış Yap",
+        "register": "Kayıt Ol",
+        "phone": "Telefon",
+        "name": "İsim",
+        "surname": "Soyisim",
+        "email": "E-posta",
+        "userName": "Kullanıcı Adı",
+        "password": "Şifre"
+    },
+    "feed": {
+        "title": "Akış",
+        "createPoll": "Anket Oluştur",
+        "polls": "Anketler"
+    },
+    "profile": {
+        "title": "Profil"
+    },
+    "onboard": {
+        "welcome": "Vox Poll'a hoş geldiniz",
+        "continue": "Devam"
+    },
+    "poll": {
+        "title": "Anket",
+        "createPoll": "Anket Oluştur"
+    }
+}

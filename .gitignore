@@ -31,6 +31,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+/lib/git_secret/
 
 # Symbolication related
 app.*.symbols
