@@ -8,7 +8,6 @@ import 'package:voxpollui/pages/home_page.dart';
 import 'package:voxpollui/pages/settings/ayarlar_ve_destek.dart';
 import 'package:voxpollui/script/database.dart';
 
-// ignore: must_be_immutable
 class ProfilePage extends StatefulWidget {
   int? i;
   bool isMe;
@@ -109,74 +108,80 @@ class _ProfilePageState extends State<ProfilePage>
       length: 2,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Stack(
-          children: [
-            Column(
-              children: [
-                if (_isLoading)
-                  LoadingScreen.loadingScreen(text: '')
-                else
-                  Container(
-                    height: 200,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                            'assets/image/profile_community/backk.png'),
-                        fit: BoxFit.cover,
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  if (_isLoading)
+                    LoadingScreen.loadingScreen(text: '')
+                  else
+                    Container(
+                      height: 200,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                              'assets/image/profile_community/backk.png'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
+                  Container(
+                    transform: Matrix4.translationValues(0, -50, 0),
+                    child: const CircleAvatar(
+                      radius: 50,
+                      backgroundImage:
+                          AssetImage('assets/image/profilepicture.png'),
+                    ),
                   ),
-                Container(
-                  transform: Matrix4.translationValues(0, -50, 0),
-                  child: const CircleAvatar(
-                    radius: 50,
-                    backgroundImage:
-                        AssetImage('assets/image/profilepicture.png'),
+                  Text(
+                    "${name ?? "name"} ${surname ?? "surname"}",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                ),
-                Text(
-                  "${name ?? "name"} ${surname ?? "surname"}",
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Text('@${username ?? "username"}'),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    biyografi ?? "biyografi",
-                    textAlign: TextAlign.center,
+                  Text('@${username ?? "username"}'),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      biyografi ?? "biyografi",
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildStatColumn(
-                        'Takip Edilen', '${followed?.length ?? 0}'),
-                    _buildStatColumn('Takipçi', '${followers?.length ?? 0}'),
-                    _buildStatColumn('Katıldığı Anket', '${joinPoll ?? 0}'),
-                  ],
-                ),
-                const Divider(),
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: CustomTabbar.customTabbar(_tabController, tabText),
-                ),
-                widget.isMe == true
-                    ? const SizedBox.shrink()
-                    : Align(
-                        alignment: Alignment.centerRight, // Sağ ortada
-                        child: _buildFollowButton(viewObjectId),
-                      ),
-              ],
-            ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                leading: IconButton(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildStatColumn(
+                          'Takip Edilen', '${followed?.length ?? 0}'),
+                      _buildStatColumn('Takipçi', '${followers?.length ?? 0}'),
+                      _buildStatColumn('Katıldığı Anket', '${joinPoll ?? 0}'),
+                    ],
+                  ),
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: CustomTabbar.customTabbar(_tabController, tabText),
+                  ),
+                  widget.isMe == true
+                      ? const SizedBox.shrink()
+                      : Align(
+                          alignment: Alignment.centerRight, // Sağ ortada
+                          child: _buildFollowButton(viewObjectId),
+                        ),
+                  Column(
+                    children: [
+                      for (int index = 0;
+                          index < (dataManager.getPolls()?.length ?? 0);
+                          index++)
+                        ForWidget.buildCard(context, widget.usersObjects!,
+                            widget.pollObjects!, index),
+                    ],
+                  ),
+                ],
+              ),
+              Positioned(
+                top: 50,
+                left: 0,
+                child: IconButton(
                   icon: const Icon(Icons.arrow_back),
                   color: Colors.white,
                   onPressed: () {
@@ -185,51 +190,23 @@ class _ProfilePageState extends State<ProfilePage>
                         MaterialPageRoute(
                             builder: (context) => const HomePage()));
                   },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        WidgetStateProperty.all(Colors.transparent),
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(
-                        side: const BorderSide(
-                          color: Color.fromARGB(255, 188, 188, 188),
-                        ),
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                    ),
-                  ),
                 ),
-                actions: [
-                  IconButton(
-                    icon: const Icon(Icons.settings, color: Colors.white),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AyarlarVeDestek()));
-                    },
-                  ),
-                ],
               ),
-            ),
-            /*
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  if (dataManager.getPolls()?.isEmpty ?? true) {
-                    return Column(children: [
-                      LoadingScreen.loadingScreen(text: ''),
-                    ]);
-                  }
-                  return ForWidget.buildCard(context, widget.usersObjects!,
-                      widget.pollObjects!, index);
-                },
-                childCount: (dataManager.getPolls()?.isNotEmpty ?? false)
-                    ? dataManager.getPolls()?.length
-                    : 1,
+              Positioned(
+                top: 50,
+                right: 0,
+                child: IconButton(
+                  icon: const Icon(Icons.settings, color: Colors.white),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AyarlarVeDestek()));
+                  },
+                ),
               ),
-            ),
-            */
-          ],
+            ],
+          ),
         ),
       ),
     );
