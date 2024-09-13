@@ -41,14 +41,29 @@ class ForWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const CircleAvatar(
-                            radius: 25,
-                            /*
-                            backgroundImage:
-                                NetworkImage(creator.profileImageUrl),
-                                */
-                            backgroundImage:
-                                AssetImage("assets/image/ibrahim.png"),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProfilePage(
+                                            4,
+                                            isMe: false,
+                                            viewedUser: users[index]
+                                                ['objectId'],
+                                            pollObjects: polls,
+                                            usersObjects: users,
+                                          )));
+                            },
+                            child: const CircleAvatar(
+                              radius: 25,
+                              /*
+                              backgroundImage:
+                                  NetworkImage(creator.profileImageUrl),
+                                  */
+                              backgroundImage:
+                                  AssetImage("assets/image/ibrahim.png"),
+                            ),
                           ),
                           const SizedBox(width: 10.0),
                           Expanded(
