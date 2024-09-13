@@ -10,6 +10,8 @@ List<RouteBase> get $appRoutes => [
       $loginRoute,
       $registerRoute,
       $homeShellRoute,
+      $pollCreateRoute,
+      $pollDetailsRoute,
       $splashRoute,
       $onboardRoute,
     ];
@@ -116,6 +118,55 @@ extension $ProfileRouteExtension on ProfileRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $pollCreateRoute => GoRouteData.$route(
+      path: '/poll/create',
+      factory: $PollCreateRouteExtension._fromState,
+    );
+
+extension $PollCreateRouteExtension on PollCreateRoute {
+  static PollCreateRoute _fromState(GoRouterState state) =>
+      const PollCreateRoute();
+
+  String get location => GoRouteData.$location(
+        '/poll/create',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $pollDetailsRoute => GoRouteData.$route(
+      path: '/poll/details',
+      factory: $PollDetailsRouteExtension._fromState,
+    );
+
+extension $PollDetailsRouteExtension on PollDetailsRoute {
+  static PollDetailsRoute _fromState(GoRouterState state) => PollDetailsRoute(
+        state.extra as PollModel,
+      );
+
+  String get location => GoRouteData.$location(
+        '/poll/details',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 RouteBase get $splashRoute => GoRouteData.$route(

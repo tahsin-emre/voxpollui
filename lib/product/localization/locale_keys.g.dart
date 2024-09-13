@@ -20,5 +20,8 @@ abstract class  LocaleKeys {
   static const onboard_welcome = 'onboard.welcome';
   static const onboard_continue = 'onboard.continue';
   static const onboard = 'onboard';
+  static const poll_title = 'poll.title';
+  static const poll_createPoll = 'poll.createPoll';
+  static const poll = 'poll';
 
 }

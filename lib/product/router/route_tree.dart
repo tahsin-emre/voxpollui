@@ -5,14 +5,18 @@ import 'package:voxpollui/features/authentication/view/register_view.dart';
 import 'package:voxpollui/features/feed/view/feed_view.dart';
 import 'package:voxpollui/features/home/view/home_view.dart';
 import 'package:voxpollui/features/onboarding/view/onboard_view.dart';
+import 'package:voxpollui/features/poll/view/poll_create_view.dart';
+import 'package:voxpollui/features/poll/view/poll_details_view.dart';
 import 'package:voxpollui/features/profile/view/profile_view.dart';
 import 'package:voxpollui/features/splash/view/splash_view.dart';
+import 'package:voxpollui/product/models/poll_model.dart';
 import 'package:voxpollui/product/models/user_model.dart';
 import 'package:voxpollui/product/router/app_router.dart';
 
 part 'route_tree.g.dart';
 part 'routes/auth_routes.dart';
 part 'routes/home_routes.dart';
+part 'routes/poll_routes.dart';
 part 'routes/single_routes.dart';
 
 final class TPage extends CustomTransitionPage<void> {

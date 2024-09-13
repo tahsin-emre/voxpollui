@@ -18,7 +18,7 @@ class _HomeViewState extends State<HomeView> with HomeMixin {
     return Scaffold(
       body: widget.child,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: onCreatePoll,
         child: IconConstants.add.toIcon,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -66,7 +66,10 @@ class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
           title: Text(LocaleKeys.profile_title.tr()),
         ),
       ],
-      option: AnimatedBarOptions(),
+      option: AnimatedBarOptions(
+        barAnimation: BarAnimation.blink,
+        iconStyle: IconStyle.animated,
+      ),
     );
   }
 }

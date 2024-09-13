@@ -21,5 +21,9 @@
     "onboard": {
         "welcome": "Vox Poll'a hoş geldiniz",
         "continue": "Devam"
+    },
+    "poll": {
+        "title": "Anket",
+        "createPoll": "Anket Oluştur"
     }
 }
