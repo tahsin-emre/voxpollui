@@ -45,6 +45,7 @@ class _LoginViewState extends State<LoginView> with LoginMixin {
     );
   }
 
+
   Widget error(String text) {
     return Center(child: Text(text));
   }

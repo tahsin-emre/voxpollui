@@ -10,8 +10,8 @@ import 'package:voxpollui/product/services/firebase/auth_service.dart';
 
 mixin LoginMixin on State<LoginView> {
   late final authCubit = context.read<AuthCubit>();
-  late final phoneController = TextEditingController(text: '+905300387436');
-  late final otpController = TextEditingController();
+  final phoneController = TextEditingController();
+  final otpController = TextEditingController();
   final _authService = AuthService();
   final authStream = StreamController<AuthStatus>();
 
