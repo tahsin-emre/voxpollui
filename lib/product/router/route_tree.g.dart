@@ -71,6 +71,11 @@ RouteBase get $homeShellRoute => ShellRouteData.$route(
           parentNavigatorKey: FeedRoute.$parentNavigatorKey,
           factory: $FeedRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: '/home/profile',
+          parentNavigatorKey: ProfileRoute.$parentNavigatorKey,
+          factory: $ProfileRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -84,6 +89,23 @@ extension $FeedRouteExtension on FeedRoute {
 
   String get location => GoRouteData.$location(
         '/home/feed',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $ProfileRouteExtension on ProfileRoute {
+  static ProfileRoute _fromState(GoRouterState state) => const ProfileRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/profile',
       );
 
   void go(BuildContext context) => context.go(location);

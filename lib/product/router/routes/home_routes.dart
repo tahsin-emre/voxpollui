@@ -3,6 +3,7 @@ part of '../route_tree.dart';
 @TypedShellRoute<HomeShellRoute>(
   routes: [
     TypedGoRoute<FeedRoute>(path: FeedRoute.path),
+    TypedGoRoute<ProfileRoute>(path: ProfileRoute.path),
   ],
 )
 final class HomeShellRoute extends ShellRouteData {
@@ -21,5 +22,15 @@ final class FeedRoute extends GoRouteData {
   @override
   TPage buildPage(BuildContext context, GoRouterState state) {
     return TPage(child: const FeedView());
+  }
+}
+
+final class ProfileRoute extends GoRouteData {
+  const ProfileRoute();
+  static const String path = '/home/profile';
+  static final $parentNavigatorKey = AppRouter.homeShellKey;
+  @override
+  TPage buildPage(BuildContext context, GoRouterState state) {
+    return TPage(child: const ProfileView());
   }
 }

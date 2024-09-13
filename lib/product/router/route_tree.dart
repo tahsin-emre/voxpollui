@@ -5,6 +5,7 @@ import 'package:voxpollui/features/authentication/view/register_view.dart';
 import 'package:voxpollui/features/feed/view/feed_view.dart';
 import 'package:voxpollui/features/home/view/home_view.dart';
 import 'package:voxpollui/features/onboarding/view/onboard_view.dart';
+import 'package:voxpollui/features/profile/view/profile_view.dart';
 import 'package:voxpollui/features/splash/view/splash_view.dart';
 import 'package:voxpollui/product/models/user_model.dart';
 import 'package:voxpollui/product/router/app_router.dart';

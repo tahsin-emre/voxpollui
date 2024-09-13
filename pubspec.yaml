@@ -20,6 +20,7 @@ dependencies:
   cloud_firestore: ^5.4.1
   #ui
   shimmer: ^3.0.0
+  stylish_bottom_bar: ^1.1.0
 
 dev_dependencies:
   flutter_test:
