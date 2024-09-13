@@ -12,10 +12,11 @@ class LoginRoute extends GoRouteData {
 
 @TypedGoRoute<RegisterRoute>(path: RegisterRoute.path)
 class RegisterRoute extends GoRouteData {
-  const RegisterRoute();
+  const RegisterRoute(this.$extra);
   static const String path = '/auth/register';
+  final UserModel $extra;
   @override
   TPage buildPage(BuildContext context, GoRouterState state) {
-    return TPage(child: const RegisterView());
+    return TPage(child: RegisterView(user: $extra));
   }
 }

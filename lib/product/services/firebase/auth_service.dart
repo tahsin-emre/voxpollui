@@ -58,8 +58,20 @@ final class AuthService extends BaseService {
     }
   }
 
+  Future<void> signOut() async {
+    await auth.signOut();
+  }
+
   String? getCurrentUserId() {
-    return auth.currentUser?.uid;
+    final user = auth.currentUser;
+    if (user == null) return null;
+    return user.uid;
+  }
+
+  String? getCurrentUserPhone() {
+    final user = auth.currentUser;
+    if (user == null) return null;
+    return user.phoneNumber;
   }
 }
 

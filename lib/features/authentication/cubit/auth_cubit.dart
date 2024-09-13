@@ -9,10 +9,18 @@ final class AuthCubit extends Cubit<AuthState> {
   final _authService = AuthService();
   final _userService = UserService();
 
-  String? handleCurrentUser() {
+  /// Handle the current user id as [String]
+  String? handleCurrentUserId() {
     return _authService.getCurrentUserId();
   }
 
+  /// Handle the current user phone as [String]
+  String? handleCurrentUserPhone() {
+    return _authService.getCurrentUserId();
+  }
+
+  /// Get the user by [userId] as [String]
+  /// Return [UserModel] if the user exists, otherwise return null
   Future<UserModel?> getUser(String userId) async {
     final user = await _userService.getUser(userId);
     if (user == null) return null;
