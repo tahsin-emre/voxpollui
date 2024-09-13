@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/features/poll/mixin/poll_details_mixin.dart';
 import 'package:voxpollui/product/models/poll_model.dart';
 
 class PollDetailsView extends StatefulWidget {
@@ -8,13 +9,19 @@ class PollDetailsView extends StatefulWidget {
   State<PollDetailsView> createState() => _PollDetailsViewState();
 }
 
-class _PollDetailsViewState extends State<PollDetailsView> {
+class _PollDetailsViewState extends State<PollDetailsView>
+    with PollDetailsMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          widget.poll.id,
+        child: ValueListenableBuilder(
+          valueListenable: isLoadingNotifier,
+          builder: (_, isLoading, __) {
+            return Text(
+              widget.poll.id,
+            );
+          },
         ),
       ),
     );

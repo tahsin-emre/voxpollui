@@ -8,7 +8,8 @@
         "name": "İsim",
         "surname": "Soyisim",
         "email": "E-posta",
-        "userName": "Kullanıcı Adı"
+        "userName": "Kullanıcı Adı",
+        "password": "Şifre"
     },
     "feed": {
         "title": "Akış",

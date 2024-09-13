@@ -10,6 +10,7 @@ abstract class  LocaleKeys {
   static const auth_surname = 'auth.surname';
   static const auth_email = 'auth.email';
   static const auth_userName = 'auth.userName';
+  static const auth_password = 'auth.password';
   static const auth = 'auth';
   static const feed_title = 'feed.title';
   static const feed_createPoll = 'feed.createPoll';
