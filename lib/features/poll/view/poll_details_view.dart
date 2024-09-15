@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/poll/mixin/poll_details_mixin.dart';
-import 'package:voxpollui/product/models/poll_model.dart';
+import 'package:voxpollui/product/models/poll/poll_model.dart';
 
 class PollDetailsView extends StatefulWidget {
   const PollDetailsView({required this.poll, super.key});
