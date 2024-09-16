@@ -9,6 +9,8 @@ final class PollModel extends Equatable {
     this.title,
     this.description,
     this.imageUrl,
+    this.createdAt,
+    this.endAt,
     this.options,
   });
 
@@ -20,10 +22,24 @@ final class PollModel extends Equatable {
       title: data['title'] as String?,
       description: data['description'] as String?,
       imageUrl: data['imageUrl'] as String?,
+      createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
+      endAt: (data['endAt'] as Timestamp?)?.toDate(),
       options: (data['options'] as List<dynamic>?)
           ?.map((e) => OptionModel.fromMap(e as Map<String, dynamic>))
           .toList(),
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'ownerId': ownerId,
+      'title': title,
+      'description': description,
+      'imageUrl': imageUrl,
+      'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : null,
+      'endAt': endAt != null ? Timestamp.fromDate(endAt!) : null,
+      'options': options?.map((e) => e.toMap()).toList(),
+    };
   }
 
   final String id;
@@ -31,6 +47,8 @@ final class PollModel extends Equatable {
   final String? title;
   final String? description;
   final String? imageUrl;
+  final DateTime? createdAt;
+  final DateTime? endAt;
   final List<OptionModel>? options;
 
   @override

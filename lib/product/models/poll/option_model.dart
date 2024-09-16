@@ -15,6 +15,14 @@ final class OptionModel extends Equatable {
     );
   }
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'optionText': optionText,
+      'voteCount': voteCount,
+    };
+  }
+
   final String id;
   final String? optionText;
   final num? voteCount;

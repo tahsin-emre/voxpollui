@@ -14,6 +14,9 @@ class _PollDetailsViewState extends State<PollDetailsView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Poll Details'),
+      ),
       body: Center(
         child: ValueListenableBuilder(
           valueListenable: isLoadingNotifier,
