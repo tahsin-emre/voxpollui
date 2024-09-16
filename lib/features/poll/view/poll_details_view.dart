@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/poll/mixin/poll_details_mixin.dart';
-import 'package:voxpollui/product/models/poll_model.dart';
+import 'package:voxpollui/product/models/poll/poll_model.dart';
 
 class PollDetailsView extends StatefulWidget {
   const PollDetailsView({required this.poll, super.key});
@@ -14,6 +14,9 @@ class _PollDetailsViewState extends State<PollDetailsView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Poll Details'),
+      ),
       body: Center(
         child: ValueListenableBuilder(
           valueListenable: isLoadingNotifier,

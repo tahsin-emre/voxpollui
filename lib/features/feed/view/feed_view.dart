@@ -1,6 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:voxpollui/features/feed/mixin/feed_mixin.dart';
+import 'package:voxpollui/features/poll/cubit/poll_cubit.dart';
+import 'package:voxpollui/features/poll/cubit/poll_state.dart';
 import 'package:voxpollui/product/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/models/poll/poll_model.dart';
+import 'package:voxpollui/product/router/route_tree.dart';
 
 final class FeedView extends StatefulWidget {
   const FeedView({super.key});
@@ -9,13 +15,41 @@ final class FeedView extends StatefulWidget {
   State<FeedView> createState() => _FeedViewState();
 }
 
-class _FeedViewState extends State<FeedView> {
+class _FeedViewState extends State<FeedView> with FeedMixin {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Text(LocaleKeys.feed_title.tr()),
-      ],
+    return ValueListenableBuilder(
+      valueListenable: isLoadingNotifier,
+      builder: (_, isLoading, __) {
+        if (isLoading) return const CircularProgressIndicator();
+        return ListView(
+          children: [
+            Text(LocaleKeys.feed_title.tr()),
+            BlocSelector<PollCubit, PollState, List<PollModel>?>(
+              selector: (state) => state.pollList,
+              builder: (_, polls) {
+                return Column(
+                  children: polls?.map(_PollTile.new).toList() ?? [],
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _PollTile extends StatelessWidget {
+  const _PollTile(this.poll);
+  final PollModel poll;
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(poll.title ?? ''),
+        onTap: () => PollDetailsRoute(poll).push<void>(context),
+      ),
     );
   }
 }
