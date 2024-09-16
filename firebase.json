@@ -1,1 +1,46 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"voxpoll","appId":"1:400526864916:android:7094587361076a02cded01","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"voxpoll","appId":"1:400526864916:ios:b01e8ced6d8d8af7cded01","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"voxpoll","configurations":{"android":"1:400526864916:android:7094587361076a02cded01","ios":"1:400526864916:ios:b01e8ced6d8d8af7cded01"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "voxpoll",
+          "appId": "1:400526864916:android:7094587361076a02cded01",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "voxpoll",
+          "appId": "1:400526864916:ios:b01e8ced6d8d8af7cded01",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "voxpoll",
+          "configurations": {
+            "android": "1:400526864916:android:7094587361076a02cded01",
+            "ios": "1:400526864916:ios:b01e8ced6d8d8af7cded01"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint"
+      ]
+    }
+  ]
+}

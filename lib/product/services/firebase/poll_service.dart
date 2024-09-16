@@ -30,6 +30,7 @@ final class PollService extends BaseService {
   }
 
   ///Vote Poll
+  Future<void> votePoll() async {}
 
   ///Get Polls
 }

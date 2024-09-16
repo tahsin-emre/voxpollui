@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
 
 final class FollowerService extends BaseService {
@@ -11,27 +10,10 @@ final class FollowerService extends BaseService {
   Future<void> followUser({
     required String localUserId,
     required String targetUserId,
-  }) async {
-    await db
-        .collection('users')
-        .doc(localUserId)
-        .collection('following')
-        .doc(targetUserId)
-        .set({
-      'uid': targetUserId,
-      'date': Timestamp.now(),
-    });
-  }
+  }) async {}
 
   Future<void> unfollowUser({
     required String localUserId,
     required String targetUserId,
-  }) async {
-    await db
-        .collection('users')
-        .doc(localUserId)
-        .collection('following')
-        .doc(targetUserId)
-        .delete();
-  }
+  }) async {}
 }
