@@ -25,7 +25,9 @@ class _ProfileViewState extends State<ProfileView> with ProfileMixin {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(LocaleKeys.profile_title.tr()),
+              Text(user?.phone ?? ''),
               Text(user?.name ?? ''),
+              Text(user?.surname ?? ''),
               ElevatedButton(
                 onPressed: signOut,
                 child: Text(LocaleKeys.auth_logout.tr()),

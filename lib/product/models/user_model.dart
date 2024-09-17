@@ -11,6 +11,7 @@ final class UserModel extends Equatable {
     this.surname,
     this.userName,
     this.email,
+    this.imageUrl,
   });
 
   factory UserModel.fromDS(DocumentSnapshot snapshot) {
@@ -24,6 +25,7 @@ final class UserModel extends Equatable {
       surname: data['surname'] as String?,
       userName: data['userName'] as String?,
       email: data['email'] as String?,
+      imageUrl: data['imageUrl'] as String?,
     );
   }
 
@@ -33,6 +35,7 @@ final class UserModel extends Equatable {
     String? surname,
     String? userName,
     String? email,
+    String? imageUrl,
     num? followersCount,
     num? followingCount,
   }) {
@@ -43,6 +46,7 @@ final class UserModel extends Equatable {
       surname: surname ?? this.surname,
       userName: userName ?? this.userName,
       email: email ?? this.email,
+      imageUrl: imageUrl ?? this.imageUrl,
       followersCount: followersCount ?? this.followersCount,
       followingCount: followingCount ?? this.followingCount,
     );
@@ -55,6 +59,7 @@ final class UserModel extends Equatable {
       'surname': surname,
       'userName': userName,
       'email': email,
+      'imageUrl': imageUrl,
       'followersCount': followersCount,
       'followingCount': followingCount,
     };
@@ -68,6 +73,7 @@ final class UserModel extends Equatable {
   final String? surname;
   final String? userName;
   final String? email;
+  final String? imageUrl;
 
   @override
   List<Object?> get props => [
@@ -77,6 +83,7 @@ final class UserModel extends Equatable {
         surname,
         userName,
         email,
+        imageUrl,
         followersCount,
         followingCount,
       ];
