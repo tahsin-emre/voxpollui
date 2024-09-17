@@ -1,5 +1,7 @@
 import 'package:voxpollui/product/models/poll/poll_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
+import 'package:voxpollui/product/services/http/http_endpoints.dart';
+import 'package:voxpollui/product/services/http/http_service.dart';
 
 final class PollService extends BaseService {
   factory PollService() => _instance;
@@ -13,6 +15,11 @@ final class PollService extends BaseService {
     return polls.docs.map(PollModel.fromQDS).toList();
   }
 
+  Future<PollModel?> getPoll(String pollId) async {
+    final poll = await db.collection('polls').doc(pollId).get();
+    return PollModel.fromDS(poll);
+  }
+
   ///Create Poll
   Future<String?> createPoll(PollModel poll) async {
     try {
@@ -23,14 +30,27 @@ final class PollService extends BaseService {
     }
   }
 
-  Future<bool> checkIfUserVoted(String pollId) async {
-    final poll = await db.collection('polls').doc(pollId).get();
-    final votes = poll.data()!['votes'] as Map<String, dynamic>?;
-    return votes?.containsKey(auth.currentUser!.uid) ?? false;
+  ///Check If User Voted
+  Future<bool> checkIfUserVoted({
+    required String pollId,
+    required String userId,
+  }) async {
+    final vote = await db
+        .collection('polls')
+        .doc(pollId)
+        .collection('votes')
+        .doc()
+        .get();
+    return vote.exists;
   }
 
   ///Vote Poll
-  Future<void> votePoll() async {}
-
-  ///Get Polls
+  Future<bool> votePoll(String pollId, String userId, String optionId) async {
+    final response = await HttpService().sendRequest(
+      HttpEndpoints.votepoll,
+      {'pollId': pollId, 'userId': userId, 'optionId': optionId},
+    );
+    if (response.body == 'true') return true;
+    return false;
+  }
 }

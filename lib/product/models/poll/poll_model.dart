@@ -30,6 +30,22 @@ final class PollModel extends Equatable {
     );
   }
 
+  factory PollModel.fromDS(DocumentSnapshot snapshot) {
+    final data = snapshot.data()! as Map<String, dynamic>;
+    return PollModel(
+      id: snapshot.id,
+      ownerId: data['ownerId'] as String,
+      title: data['title'] as String?,
+      description: data['description'] as String?,
+      imageUrl: data['imageUrl'] as String?,
+      createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
+      endAt: (data['endAt'] as Timestamp?)?.toDate(),
+      options: (data['options'] as List<dynamic>?)
+          ?.map((e) => OptionModel.fromMap(e as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'ownerId': ownerId,
@@ -58,6 +74,8 @@ final class PollModel extends Equatable {
         title,
         description,
         imageUrl,
+        createdAt,
+        endAt,
         options,
       ];
 }
