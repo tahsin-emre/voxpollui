@@ -4,7 +4,6 @@ const {onRequest} = require("firebase-functions/v2/https");
 initializeApp();
 const db = getFirestore();
 
-
 exports.votePoll = onRequest(
     async (req, res) => {
       // RequestBody {'userId':string, 'pollId':string, 'optionId':string}
@@ -81,5 +80,3 @@ exports.unfollowUser = onRequest(
       res.status(200).send(true);
     },
 );
-
-
