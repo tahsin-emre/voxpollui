@@ -37,7 +37,6 @@ mixin SplashMixin on State<SplashView> {
 
   @override
   void dispose() {
-    authCubit.close();
     super.dispose();
   }
 }

@@ -5,12 +5,12 @@ final class UserModel extends Equatable {
   const UserModel({
     required this.id,
     required this.phone,
+    this.followersCount = 0,
+    this.followingCount = 0,
     this.name,
     this.surname,
     this.userName,
     this.email,
-    this.followersCount,
-    this.followingCount,
   });
 
   factory UserModel.fromDS(DocumentSnapshot snapshot) {
@@ -18,12 +18,12 @@ final class UserModel extends Equatable {
     return UserModel(
       id: snapshot.id,
       phone: data['phone'] as String,
+      followersCount: data['followersCount'] as num? ?? 0,
+      followingCount: data['followingCount'] as num? ?? 0,
       name: data['name'] as String?,
       surname: data['surname'] as String?,
       userName: data['userName'] as String?,
       email: data['email'] as String?,
-      followersCount: data['followersCount'] as num?,
-      followingCount: data['followingCount'] as num?,
     );
   }
 
@@ -62,12 +62,12 @@ final class UserModel extends Equatable {
 
   final String id;
   final String phone;
+  final num followersCount;
+  final num followingCount;
   final String? name;
   final String? surname;
   final String? userName;
   final String? email;
-  final num? followersCount;
-  final num? followingCount;
 
   @override
   List<Object?> get props => [
@@ -77,5 +77,7 @@ final class UserModel extends Equatable {
         surname,
         userName,
         email,
+        followersCount,
+        followingCount,
       ];
 }
