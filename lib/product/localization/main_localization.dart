@@ -11,7 +11,6 @@ final class MainLocalization extends EasyLocalization {
           fallbackLocale: LocaleConstants.tr,
           supportedLocales: [
             LocaleConstants.tr,
-            LocaleConstants.en,
           ],
         );
 
