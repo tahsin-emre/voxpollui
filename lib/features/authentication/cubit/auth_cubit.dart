@@ -9,6 +9,13 @@ final class AuthCubit extends Cubit<AuthState> {
   final _authService = AuthService();
   final _userService = UserService();
 
+  /// Sign out the current user
+  Future<void> signOut() async {
+    await _authService.signOut();
+    // ignore: avoid_redundant_argument_values
+    emit(const AuthState());
+  }
+
   /// Handle the current user id as [String]
   String? handleCurrentUserId() {
     return _authService.getCurrentUserId();

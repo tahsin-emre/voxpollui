@@ -1,16 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
 import 'package:voxpollui/features/poll/view/poll_details_view.dart';
+import 'package:voxpollui/product/services/firebase/poll_service.dart';
 
 mixin PollDetailsMixin on State<PollDetailsView> {
-  final isLoadingNotifier = ValueNotifier<bool>(false);
+  late final _authCubit = context.read<AuthCubit>();
+  late final _pollService = PollService();
+  final isLoadingNotifier = ValueNotifier<bool>(true);
+  bool userVoted = false;
 
   @override
   void initState() {
     super.initState();
+    getPollDetails();
+  }
 
-    isLoadingNotifier.value = true;
-    Future.delayed(const Duration(seconds: 2), () {
-      isLoadingNotifier.value = false;
-    });
+  Future<void> getPollDetails() async {
+    await checkUserVoted();
+    isLoadingNotifier.value = false;
+  }
+
+  Future<void> checkUserVoted() async {
+    userVoted = await _pollService.checkIfUserVoted(
+      pollId: widget.poll.id,
+      userId: _authCubit.state.user!.id,
+    );
+  }
+
+  Future<void> votePoll(String optionId) async {
+    await _pollService.votePoll(
+      widget.poll.id,
+      _authCubit.state.user!.id,
+      optionId,
+    );
+    await checkUserVoted();
+    setState(() {});
   }
 }
