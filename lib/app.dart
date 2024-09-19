@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
+import 'package:voxpollui/features/home/view/mehmet/deneme.dart';
 import 'package:voxpollui/features/poll/cubit/poll_cubit.dart';
 import 'package:voxpollui/product/router/app_router.dart';
 
@@ -15,13 +16,14 @@ final class MainApp extends StatelessWidget {
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => PollCubit()),
       ],
-      child: MaterialApp.router(
+      child: MaterialApp(
         title: 'Vox Poll',
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         debugShowCheckedModeBanner: false,
-        routerConfig: AppRouter.config,
+        home: const Mdeneme(),
+        //routerConfig: AppRouter.config,
       ),
     );
   }

@@ -16,6 +16,6 @@ class OnboardRoute extends GoRouteData {
   static const String path = '/onboard';
   @override
   TPage buildPage(BuildContext context, GoRouterState state) {
-    return TPage(child: const OnboardView());
+    return TPage(child: const Mdeneme());
   }
 }

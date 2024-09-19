@@ -4,6 +4,7 @@ import 'package:voxpollui/features/authentication/view/login_view.dart';
 import 'package:voxpollui/features/authentication/view/register_view.dart';
 import 'package:voxpollui/features/feed/view/feed_view.dart';
 import 'package:voxpollui/features/home/view/home_view.dart';
+import 'package:voxpollui/features/home/view/mehmet/deneme.dart';
 import 'package:voxpollui/features/onboarding/view/onboard_view.dart';
 import 'package:voxpollui/features/poll/view/poll_create_view.dart';
 import 'package:voxpollui/features/poll/view/poll_details_view.dart';
