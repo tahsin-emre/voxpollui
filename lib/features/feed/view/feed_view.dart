@@ -1,10 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/feed/mixin/feed_mixin.dart';
+import 'package:voxpollui/features/feed/widgets/feed_header.dart';
 import 'package:voxpollui/features/poll/cubit/poll_cubit.dart';
 import 'package:voxpollui/features/poll/cubit/poll_state.dart';
-import 'package:voxpollui/product/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/models/poll/poll_model.dart';
 import 'package:voxpollui/product/router/route_tree.dart';
 
@@ -24,7 +23,7 @@ class _FeedViewState extends State<FeedView> with FeedMixin {
         if (isLoading) return const CircularProgressIndicator();
         return ListView(
           children: [
-            Text(LocaleKeys.feed_title.tr()),
+            const FeedHeader(),
             BlocSelector<PollCubit, PollState, List<PollModel>?>(
               selector: (state) => state.pollList,
               builder: (_, polls) {
