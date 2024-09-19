@@ -26,5 +26,20 @@
     "poll": {
         "title": "Anket",
         "createPoll": "Anket Oluştur"
+    },
+    "home": {
+        "drawer": {
+            "profile": "Profil",
+            "voxPollPro": "Vox Poll Pro",
+            "interests": "İlgi Alanları",
+            "communities": "Topluluklar",
+            "invite": "Arkadaşlarını Davet Et",
+            "tools": "Üretici Araçları",
+            "payments": "Ödemeler",
+            "settings": "Ayarlar ve Destek",
+            "faq": "SSS",
+            "followingText": "Takip Edilen: {}",
+            "followerText": "Takipçi: {}"
+        }
     }
 }

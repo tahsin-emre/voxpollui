@@ -24,5 +24,18 @@ abstract class  LocaleKeys {
   static const poll_title = 'poll.title';
   static const poll_createPoll = 'poll.createPoll';
   static const poll = 'poll';
+  static const home_drawer_profile = 'home.drawer.profile';
+  static const home_drawer_voxPollPro = 'home.drawer.voxPollPro';
+  static const home_drawer_interests = 'home.drawer.interests';
+  static const home_drawer_communities = 'home.drawer.communities';
+  static const home_drawer_invite = 'home.drawer.invite';
+  static const home_drawer_tools = 'home.drawer.tools';
+  static const home_drawer_payments = 'home.drawer.payments';
+  static const home_drawer_settings = 'home.drawer.settings';
+  static const home_drawer_faq = 'home.drawer.faq';
+  static const home_drawer_followingText = 'home.drawer.followingText';
+  static const home_drawer_followerText = 'home.drawer.followerText';
+  static const home_drawer = 'home.drawer';
+  static const home = 'home';
 
 }

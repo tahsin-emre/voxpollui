@@ -23,7 +23,6 @@ dependencies:
   #ui
   shimmer: ^3.0.0
   stylish_bottom_bar: ^1.1.0
-  #mehmet
   flutter_svg: ^2.0.9
 
 dev_dependencies:

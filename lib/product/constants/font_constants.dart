@@ -1,4 +1,6 @@
+@Deprecated('Dont Use Font Constants, Use TextStyles')
 final class FontConstants {
+  // ignore: deprecated_consistency
   const FontConstants._();
   static String gilroyBlack = 'Gilroy';
   static String gilroyLight = 'Gilroy-light';
