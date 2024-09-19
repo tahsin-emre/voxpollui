@@ -22,7 +22,7 @@ final class MainApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         debugShowCheckedModeBanner: false,
-        home: const Mdeneme(),
+        home: const Page0(),
         //routerConfig: AppRouter.config,
       ),
     );
