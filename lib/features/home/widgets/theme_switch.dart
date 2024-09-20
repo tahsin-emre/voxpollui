@@ -10,6 +10,12 @@ class ThemeSwitch extends StatefulWidget {
 class _ThemeSwitchState extends State<ThemeSwitch> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Switch(
+        value: true,
+        onChanged: (value) {},
+      ),
+    );
   }
 }

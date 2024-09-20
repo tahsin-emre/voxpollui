@@ -16,25 +16,36 @@ class HomeDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: AppColor.white,
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          _DrawerHeader(user),
-          const Divider(height: 20),
-          _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_profile),
-          _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_voxPollPro),
-          _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_interests),
-          _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_communities),
-          _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_invite),
-          _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_interests),
-          const Divider(height: 20),
-          _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_tools),
-          _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_payments),
-          _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_settings),
-          _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_faq),
-          const Spacer(),
-          const ThemeSwitch(),
-        ],
+      child: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            _DrawerHeader(user),
+            const Divider(height: 20),
+            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_profile),
+            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_voxPollPro),
+            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_interests),
+            _DrawerTile(
+              onTap: () {},
+              label: LocaleKeys.home_drawer_communities,
+            ),
+            _DrawerTile(
+              onTap: () {},
+              label: LocaleKeys.home_drawer_invite,
+            ),
+            _DrawerTile(
+              onTap: () {},
+              label: LocaleKeys.home_drawer_interests,
+            ),
+            const Divider(height: 20),
+            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_tools),
+            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_payments),
+            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_settings),
+            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_faq),
+            const Spacer(),
+            const ThemeSwitch(),
+          ],
+        ),
       ),
     );
   }
@@ -45,8 +56,9 @@ final class _DrawerHeader extends StatelessWidget {
   final UserModel user;
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Column(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (user.imageUrl != null)
@@ -71,30 +83,29 @@ final class _DrawerHeader extends StatelessWidget {
             style: const TextStyle(color: AppColor.opposite, fontSize: 14),
           ),
           const SizedBox(height: 5),
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: LocaleKeys.home_drawer_followingText.tr(
-                    args: [user.followingCount.toString()],
-                  ),
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: FontConstants.gilroyMedium,
-                  ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                LocaleKeys.home_drawer_followingText.tr(
+                  args: [user.followingCount.toString()],
                 ),
-                TextSpan(
-                  text: LocaleKeys.home_drawer_followerText.tr(
-                    args: [user.followersCount.toString()],
-                  ),
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: FontConstants.gilroyMedium,
-                  ),
+                style: TextStyle(
+                  fontSize: 14,
+                  fontFamily: FontConstants.gilroyMedium,
                 ),
-              ],
-            ),
-            textAlign: TextAlign.right,
+              ),
+              const SizedBox(width: 10),
+              Text(
+                LocaleKeys.home_drawer_followerText.tr(
+                  args: [user.followersCount.toString()],
+                ),
+                style: TextStyle(
+                  fontSize: 14,
+                  fontFamily: FontConstants.gilroyMedium,
+                ),
+              ),
+            ],
           ),
         ],
       ),
