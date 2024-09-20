@@ -20,6 +20,27 @@
         "title": "Profil"
     },
     "onboard": {
+        "page1": {
+            "appinfo1": "Bütün merak",
+            "appinfo2": "ettiğiniz",
+            "appinfo3": "cevaplar",
+            "start": "Başlayalım"
+        },
+        "page2": {
+            "phone1": "Telefon",
+            "phone2": "Numaranız",
+            "kvkk1": "Aydınlatma Metni",
+            "kvkk2": "'ni okudum,",
+            "kvkk3": "Açık Rıza Metni",
+            "kvkk4": "'ni okudum ve onaylıyorum",
+            "kvkk5": "Açık Rıza Metni ve",
+            "kvkk6": "Ticari Elektronik İleti Aydınlatma Metni",
+            "kvkk7": "Kapsamında SMS, e-posta ve arama almak istiyorum.",
+            "ifcontinue1": "İleri butonuna basarak",
+            "ifcontinue2": "Kullanıcı Sözleşmesi",
+            "ifcontinue3": "'ni kabul etmiş olursunuz.",
+            "continue": "İleri"
+        },
         "welcome": "Vox Poll'a hoş geldiniz",
         "continue": "Devam"
     },
