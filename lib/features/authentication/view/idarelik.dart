@@ -1,55 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:voxpollui/product/constants/color_constants.dart';
 import 'package:voxpollui/product/constants/font_constants.dart';
 
-class FormOtp extends StatefulWidget {
-  const FormOtp({
-    required this.otpController,
-    required this.onOtpVerify,
-    super.key,
-  });
-  final TextEditingController otpController;
-  final VoidCallback onOtpVerify;
-
-  @override
-  State<FormOtp> createState() => _FormOtpState();
-}
-
-class _FormOtpState extends State<FormOtp> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(25, 5, 5, 15),
-          child: Container(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Onay Kodu',
-              style: TextStyle(
-                color: const Color(0xFF0C0C0C),
-                fontSize: 40,
-                fontFamily: FontConstants.gilroyMedium,
-                height: 0,
-              ),
-            ),
-          ),
-        ),
-        const Text('otp form'),
-        TextField(controller: widget.otpController),
-        ElevatedButton(
-          onPressed: widget.onOtpVerify,
-          child: const Text('otp'),
-        ),
-      ],
-    );
-  }
-}
-
-
-/*
-
 class BoardinUc extends StatefulWidget {
-  const BoardinUc({Key? key}) : super(key: key);
+  const BoardinUc({super.key});
 
   @override
   State<BoardinUc> createState() => _BoardinUcState();
@@ -57,15 +12,15 @@ class BoardinUc extends StatefulWidget {
 
 class _BoardinUcState extends State<BoardinUc> {
   final List<TextEditingController> _controllers =
-      List.generate(4, (index) => TextEditingController());
-  final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
+      List.generate(6, (index) => TextEditingController());
+  final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
 
   @override
   void dispose() {
-    for (var controller in _controllers) {
+    for (final controller in _controllers) {
       controller.dispose();
     }
-    for (var focusNode in _focusNodes) {
+    for (final focusNode in _focusNodes) {
       focusNode.dispose();
     }
     super.dispose();
@@ -90,19 +45,19 @@ class _BoardinUcState extends State<BoardinUc> {
                         style: TextStyle(
                           color: const Color(0xFF0C0C0C),
                           fontSize: 40,
-                          fontFamily: GetFont.GILROY_MEDIUM,
+                          fontFamily: FontConstants.gilroyMedium,
                           height: 0,
                         ),
                       )),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(4, (index) {
+                  children: List.generate(6, (index) {
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: SizedBox(
-                        width: 60,
-                        height: 60,
+                        width: 50,
+                        height: 50,
                         child: TextField(
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
@@ -113,48 +68,34 @@ class _BoardinUcState extends State<BoardinUc> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 24,
-                            fontFamily: GetFont.GILROY_LIGHT,
+                            fontFamily: FontConstants.gilroyLight,
                           ),
-                          cursorColor: AppColor.nationalColor,
+                          cursorColor: AppColor.primary,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
-                              gapPadding: 10.0,
+                              gapPadding: 10,
                               borderRadius: BorderRadius.zero,
-                              borderSide: BorderSide(
-                                color: Colors.black, // Normal durumdaki sınır
-                              ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.zero,
-                              borderSide: BorderSide(
-                                color: Colors
-                                    .black, // Focus durumu için siyah sınır
-                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.zero,
-                              borderSide: BorderSide(
-                                color: Colors
-                                    .black, // Enabled durumu için siyah sınır
-                              ),
                             ),
                             counterText: '',
                           ),
                           onChanged: (value) {
                             if (value.isNotEmpty &&
                                 index < _controllers.length - 1) {
-                              // Karakter eklendiğinde bir sonraki TextField'e geçiş yap
                               FocusScope.of(context)
                                   .requestFocus(_focusNodes[index + 1]);
                             } else if (value.isEmpty && index > 0) {
-                              // Karakter silindiğinde bir önceki TextField'e geçiş yap
                               FocusScope.of(context)
                                   .requestFocus(_focusNodes[index - 1]);
                             }
                           },
                           keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction
-                              .next, // Klavyede sonraki tuşuna basmak için
+                          textInputAction: TextInputAction.next,
                         ),
                       ),
                     );
@@ -163,7 +104,7 @@ class _BoardinUcState extends State<BoardinUc> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10),
                     child: Text.rich(
                       style: const TextStyle(
                         fontSize: 11,
@@ -172,22 +113,24 @@ class _BoardinUcState extends State<BoardinUc> {
                         text:
                             ' Lütfen cep telefonunuza gelen 4 haneli kodu girin. Eğer SMS gelmediyse tekrar göndermek için',
                         style: TextStyle(
-                          fontFamily: GetFont.GILROY_LIGHT,
+                          fontFamily: FontConstants.gilroyLight,
                         ),
                         children: [
                           TextSpan(
                             text: ' buraya',
                             style: TextStyle(
-                                color: const Color(0xFF0C0C0C),
-                                fontFamily: GetFont.GILROY_MEDIUM,
-                                fontWeight: FontWeight.bold),
+                              color: const Color(0xFF0C0C0C),
+                              fontFamily: FontConstants.gilroyMedium,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           TextSpan(
                             text: ' tıklayın',
                             style: TextStyle(
-                                color: const Color(0xFF0C0C0C),
-                                fontFamily: GetFont.GILROY_LIGHT,
-                                fontWeight: FontWeight.w400),
+                              color: const Color(0xFF0C0C0C),
+                              fontFamily: FontConstants.gilroyLight,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ],
                       ),
@@ -201,10 +144,8 @@ class _BoardinUcState extends State<BoardinUc> {
             alignment: Alignment.bottomCenter,
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const BoardinDort()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const SizedBox()));
               },
               child: Container(
                 alignment: Alignment.bottomCenter,
@@ -236,5 +177,3 @@ class _BoardinUcState extends State<BoardinUc> {
     );
   }
 }
-
-*/

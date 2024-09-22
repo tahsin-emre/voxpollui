@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
+import 'package:voxpollui/features/authentication/view/kvkk.dart';
 import 'package:voxpollui/features/authentication/view/login_view.dart';
 import 'package:voxpollui/product/models/user_model.dart';
 import 'package:voxpollui/product/router/route_tree.dart';
@@ -35,6 +36,11 @@ mixin LoginMixin on State<LoginView> {
     super.dispose();
   }
 
+/*
+  void onContinue() {
+    Navigator.push(context, MaterialPageRoute(builder: (contenxt) => Kvkk()));
+  }
+*/
   Future<void> verifyPhone() async {
     await _authService.verifyPhone(
       phoneNumber: phoneController.text,
