@@ -10,15 +10,29 @@ import 'package:voxpollui/product/services/firebase/auth_service.dart';
 
 mixin LoginMixin on State<LoginView> {
   late final authCubit = context.read<AuthCubit>();
-  final phoneController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  late FocusNode focusNode;
   final otpController = TextEditingController();
   final _authService = AuthService();
   final authStream = StreamController<AuthStatus>();
+  bool onayliyorum = false;
+  bool emailAlmak = false;
 
   @override
   void initState() {
     super.initState();
     authStream.sink.add(AuthStatus.none);
+    focusNode = FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      focusNode.requestFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    phoneController.dispose();
+    focusNode.dispose();
+    super.dispose();
   }
 
   Future<void> verifyPhone() async {
