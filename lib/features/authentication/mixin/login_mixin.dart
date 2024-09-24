@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
-import 'package:voxpollui/features/authentication/view/kvkk.dart';
 import 'package:voxpollui/features/authentication/view/login_view.dart';
 import 'package:voxpollui/product/models/user_model.dart';
 import 'package:voxpollui/product/router/route_tree.dart';
@@ -12,21 +11,18 @@ import 'package:voxpollui/product/services/firebase/auth_service.dart';
 mixin LoginMixin on State<LoginView> {
   late final authCubit = context.read<AuthCubit>();
   final TextEditingController phoneController = TextEditingController();
-  late FocusNode focusNode;
+  final focusNode = FocusNode();
   final otpController = TextEditingController();
   final _authService = AuthService();
   final authStream = StreamController<AuthStatus>();
-  bool onayliyorum = false;
-  bool emailAlmak = false;
+  bool confirmContract = false;
+  bool confirmContact = false;
 
   @override
   void initState() {
     super.initState();
     authStream.sink.add(AuthStatus.none);
-    focusNode = FocusNode();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      focusNode.requestFocus();
-    });
+    focusNode.requestFocus();
   }
 
   @override
@@ -36,11 +32,6 @@ mixin LoginMixin on State<LoginView> {
     super.dispose();
   }
 
-/*
-  void onContinue() {
-    Navigator.push(context, MaterialPageRoute(builder: (contenxt) => Kvkk()));
-  }
-*/
   Future<void> verifyPhone() async {
     await _authService.verifyPhone(
       phoneNumber: phoneController.text,

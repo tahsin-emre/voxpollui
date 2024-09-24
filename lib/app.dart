@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
 import 'package:voxpollui/features/poll/cubit/poll_cubit.dart';
-import 'package:voxpollui/product/utils/constants/product_constants.dart';
 import 'package:voxpollui/product/router/app_router.dart';
+import 'package:voxpollui/product/utils/constants/product_constants.dart';
 
 final class MainApp extends StatelessWidget {
   const MainApp({super.key});
