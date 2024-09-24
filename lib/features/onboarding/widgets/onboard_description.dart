@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:voxpollui/product/constants/font_constants.dart';
-import 'package:voxpollui/product/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/utils/constants/color_constants.dart';
+import 'package:voxpollui/product/utils/constants/font_constants.dart';
 
 class OnboardDescription extends StatelessWidget {
   const OnboardDescription({required this.onContinue, super.key});
@@ -14,9 +15,9 @@ class OnboardDescription extends StatelessWidget {
           left: 47,
           top: 500,
           child: Text(
-            LocaleKeys.onboard_page1_appinfo1.tr(),
+            LocaleKeys.onboard_appinfo1.tr(),
             style: TextStyle(
-              color: const Color(0xFF0C0C0C),
+              color: AppColor.black,
               fontSize: 36,
               fontFamily: FontConstants.gilroyLight,
               fontWeight: FontWeight.w300,
@@ -28,9 +29,9 @@ class OnboardDescription extends StatelessWidget {
           left: 47,
           top: 544,
           child: Text(
-            LocaleKeys.onboard_page1_appinfo2.tr(),
+            LocaleKeys.onboard_appinfo2.tr(),
             style: TextStyle(
-              color: const Color(0xFF0C0C0C),
+              color: AppColor.black,
               fontSize: 36,
               fontFamily: FontConstants.gilroyLight,
               fontWeight: FontWeight.w300,
@@ -42,9 +43,9 @@ class OnboardDescription extends StatelessWidget {
           left: 47,
           top: 588,
           child: Text(
-            LocaleKeys.onboard_page1_appinfo3.tr(),
+            LocaleKeys.onboard_appinfo3.tr(),
             style: TextStyle(
-              color: const Color(0xFF2355FF),
+              color: AppColor.primary,
               fontSize: 36,
               fontFamily: FontConstants.gilroyBlack,
               height: 0,
@@ -64,14 +65,14 @@ class OnboardDescription extends StatelessWidget {
                 height: 49,
                 margin: const EdgeInsets.all(31),
                 decoration: ShapeDecoration(
-                  color: const Color(0xFF2355FF),
+                  color: AppColor.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
                 child: Center(
                   child: Text(
-                    LocaleKeys.onboard_page1_start.tr(),
+                    LocaleKeys.onboard_start.tr(),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,

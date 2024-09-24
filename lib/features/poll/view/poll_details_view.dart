@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/poll/mixin/poll_details_mixin.dart';
-import 'package:voxpollui/product/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/models/poll/option_model.dart';
 import 'package:voxpollui/product/models/poll/poll_model.dart';
 

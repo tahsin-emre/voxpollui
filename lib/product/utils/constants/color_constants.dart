@@ -6,4 +6,5 @@ final class AppColor {
   static const secondary = Color.fromARGB(255, 10, 145, 255);
   static const opposite = Color.fromARGB(255, 101, 101, 101);
   static const white = Color.fromARGB(255, 255, 255, 255);
+  static const black = Color.fromARGB(255, 0, 0, 0);
 }

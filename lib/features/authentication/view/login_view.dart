@@ -16,12 +16,6 @@ class _LoginViewState extends State<LoginView> with LoginMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      /*
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(LocaleKeys.auth_login.tr()),
-      ),
-      */
       body: StreamBuilder<AuthStatus>(
         stream: authStream.stream,
         builder: (_, snapshot) {
@@ -32,8 +26,10 @@ class _LoginViewState extends State<LoginView> with LoginMixin {
               phoneController: phoneController,
               onPhoneVerify: verifyPhone,
               focusNode: focusNode,
-              onayliyorum: onayliyorum,
-              emailAlmak: emailAlmak,
+              confirmContract: confirmContract,
+              confirmContact: confirmContact,
+              onContract: onContract,
+              onContact: onContact,
             );
           }
           if (status == AuthStatus.onCodeSent) {

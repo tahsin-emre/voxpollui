@@ -1,10 +1,42 @@
 {
     "appName": "Vox Poll",
+    "base": {
+        "ok": "Tamam",
+        "cancel": "İptal",
+        "yes": "Evet",
+        "no": "Hayır",
+        "close": "Kapat",
+        "save": "Kaydet",
+        "delete": "Sil",
+        "edit": "Düzenle",
+        "create": "Oluştur",
+        "update": "Güncelle",
+        "back": "Geri",
+        "next": "İleri",
+        "finish": "Bitir",
+        "and": "ve"
+    },
     "auth": {
         "login": "Giriş Yap",
         "logout": "Çıkış Yap",
         "register": "Kayıt Ol",
-        "phone": "Telefon",
+        "phoneForm": {
+            "phoneNumber": "Telefon Numaranız",
+            "contractText": "Aydınlatma Metni’ni okudum, Açık Rıza Metni’ni okudum ve onaylıyorum.",
+            "contactText": "Açık Rıza Metni ve Ticari Elektronik İleti Aydınlatma Metni kapsamında SMS, e-posta ve arama almak istiyorum.",
+            "userApproveText": "İleri butonuna basarak Kullanıcı Sözleşmesi’ni kabul etmiş olursunuz.",
+            "illuminationText": "Aydınlatma Metni",
+            "openConsentText": "Açık Rıza Metni",
+            "userAgreement": "Kullanıcı Sözleşmesi",
+            "commercialText": "Ticari Elektronik İleti Aydınlatma Metni",
+            "iRead": "'ni okudum,",
+            "iApprove": "'ni okudum ve onaylıyorum"
+        },
+        "otpForm": {
+            "otpCode": "Onay Kodu",
+            "resend": "Lütfen cep telefonunuza gelen 6 haneli kodu girin.",
+            "resendCode": "Eğer SMS gelmediyse tekrar göndermek için buraya tıklayın."
+        },
         "name": "İsim",
         "surname": "Soyisim",
         "email": "E-posta",
@@ -20,27 +52,10 @@
         "title": "Profil"
     },
     "onboard": {
-        "page1": {
-            "appinfo1": "Bütün merak",
-            "appinfo2": "ettiğiniz",
-            "appinfo3": "cevaplar",
-            "start": "Başlayalım"
-        },
-        "page2": {
-            "phone1": "Telefon",
-            "phone2": "Numaranız",
-            "kvkk1": "Aydınlatma Metni",
-            "kvkk2": "'ni okudum,",
-            "kvkk3": "Açık Rıza Metni",
-            "kvkk4": "'ni okudum ve onaylıyorum",
-            "kvkk5": "Açık Rıza Metni ve ",
-            "kvkk6": "Ticari Elektronik İleti Aydınlatma Metni ",
-            "kvkk7": "Kapsamında SMS, e-posta ve arama almak istiyorum.",
-            "ifcontinue1": "İleri butonuna basarak ",
-            "ifcontinue2": "Kullanıcı Sözleşmesi",
-            "ifcontinue3": "'ni kabul etmiş olursunuz.",
-            "continue": "İleri"
-        },
+        "appinfo1": "Bütün merak",
+        "appinfo2": "ettiğiniz",
+        "appinfo3": "cevaplar",
+        "start": "Başlayalım",
         "welcome": "Vox Poll'a hoş geldiniz",
         "continue": "Devam"
     },

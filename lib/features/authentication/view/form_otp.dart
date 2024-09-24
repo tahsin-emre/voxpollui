@@ -1,5 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:voxpollui/product/constants/font_constants.dart';
+import 'package:voxpollui/features/authentication/widgets/next_button.dart';
+import 'package:voxpollui/features/authentication/widgets/otp_text_field.dart';
+import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/utils/constants/color_constants.dart';
+import 'package:voxpollui/product/utils/constants/font_constants.dart';
 
 class FormOtp extends StatefulWidget {
   const FormOtp({
@@ -17,224 +22,42 @@ class FormOtp extends StatefulWidget {
 class _FormOtpState extends State<FormOtp> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(25, 5, 5, 15),
-          child: Container(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Onay Kodu',
-              style: TextStyle(
-                color: const Color(0xFF0C0C0C),
-                fontSize: 40,
-                fontFamily: FontConstants.gilroyMedium,
-                height: 0,
-              ),
-            ),
-          ),
-        ),
-        const Text('otp form'),
-        TextField(controller: widget.otpController),
-        ElevatedButton(
-          onPressed: widget.onOtpVerify,
-          child: const Text('otp'),
-        ),
-      ],
-    );
-  }
-}
-
-
-/*
-
-class BoardinUc extends StatefulWidget {
-  const BoardinUc({Key? key}) : super(key: key);
-
-  @override
-  State<BoardinUc> createState() => _BoardinUcState();
-}
-
-class _BoardinUcState extends State<BoardinUc> {
-  final List<TextEditingController> _controllers =
-      List.generate(4, (index) => TextEditingController());
-  final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
-
-  @override
-  void dispose() {
-    for (var controller in _controllers) {
-      controller.dispose();
-    }
-    for (var focusNode in _focusNodes) {
-      focusNode.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(25, 5, 5, 15),
-                  child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Onay Kodu',
-                        style: TextStyle(
-                          color: const Color(0xFF0C0C0C),
-                          fontSize: 40,
-                          fontFamily: GetFont.GILROY_MEDIUM,
-                          height: 0,
-                        ),
-                      )),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(4, (index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: TextField(
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                          controller: _controllers[index],
-                          focusNode: _focusNodes[index],
-                          maxLength: 1,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontFamily: GetFont.GILROY_LIGHT,
-                          ),
-                          cursorColor: AppColor.nationalColor,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(
-                              gapPadding: 10.0,
-                              borderRadius: BorderRadius.zero,
-                              borderSide: BorderSide(
-                                color: Colors.black, // Normal durumdaki sınır
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.zero,
-                              borderSide: BorderSide(
-                                color: Colors
-                                    .black, // Focus durumu için siyah sınır
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.zero,
-                              borderSide: BorderSide(
-                                color: Colors
-                                    .black, // Enabled durumu için siyah sınır
-                              ),
-                            ),
-                            counterText: '',
-                          ),
-                          onChanged: (value) {
-                            if (value.isNotEmpty &&
-                                index < _controllers.length - 1) {
-                              // Karakter eklendiğinde bir sonraki TextField'e geçiş yap
-                              FocusScope.of(context)
-                                  .requestFocus(_focusNodes[index + 1]);
-                            } else if (value.isEmpty && index > 0) {
-                              // Karakter silindiğinde bir önceki TextField'e geçiş yap
-                              FocusScope.of(context)
-                                  .requestFocus(_focusNodes[index - 1]);
-                            }
-                          },
-                          keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction
-                              .next, // Klavyede sonraki tuşuna basmak için
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text.rich(
-                      style: const TextStyle(
-                        fontSize: 11,
-                      ),
-                      TextSpan(
-                        text:
-                            ' Lütfen cep telefonunuza gelen 4 haneli kodu girin. Eğer SMS gelmediyse tekrar göndermek için',
-                        style: TextStyle(
-                          fontFamily: GetFont.GILROY_LIGHT,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: ' buraya',
-                            style: TextStyle(
-                                color: const Color(0xFF0C0C0C),
-                                fontFamily: GetFont.GILROY_MEDIUM,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: ' tıklayın',
-                            style: TextStyle(
-                                color: const Color(0xFF0C0C0C),
-                                fontFamily: GetFont.GILROY_LIGHT,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            alignment: Alignment.bottomCenter,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const BoardinDort()));
-              },
-              child: Container(
-                alignment: Alignment.bottomCenter,
-                width: double.infinity,
-                height: 49,
-                margin: const EdgeInsets.all(31),
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF2355FF),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    'İleri',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: 'Gilroy',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 140),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                LocaleKeys.auth_otpForm_otpCode.tr(),
+                style: TextStyle(
+                  color: AppColor.black,
+                  fontSize: 36,
+                  fontFamily: FontConstants.gilroyBold,
                 ),
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 24),
+            Center(
+              child: OtpTextField(
+                controller: widget.otpController,
+                onOtpVerify: widget.onOtpVerify,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(LocaleKeys.auth_otpForm_resend.tr()),
+            ),
+            const Spacer(),
+            NextButton(onTap: widget.onOtpVerify),
+          ],
+        ),
       ),
     );
   }
 }
-
-*/

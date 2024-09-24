@@ -14,6 +14,7 @@ List<RouteBase> get $appRoutes => [
       $pollDetailsRoute,
       $splashRoute,
       $onboardRoute,
+      $documentReaderRoute,
     ];
 
 RouteBase get $loginRoute => GoRouteData.$route(
@@ -201,6 +202,36 @@ extension $OnboardRouteExtension on OnboardRoute {
 
   String get location => GoRouteData.$location(
         '/onboard',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $documentReaderRoute => GoRouteData.$route(
+      path: '/onboard',
+      factory: $DocumentReaderRouteExtension._fromState,
+    );
+
+extension $DocumentReaderRouteExtension on DocumentReaderRoute {
+  static DocumentReaderRoute _fromState(GoRouterState state) =>
+      DocumentReaderRoute(
+        title: state.uri.queryParameters['title']!,
+        content: state.uri.queryParameters['content']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/onboard',
+        queryParams: {
+          'title': title,
+          'content': content,
+        },
       );
 
   void go(BuildContext context) => context.go(location);

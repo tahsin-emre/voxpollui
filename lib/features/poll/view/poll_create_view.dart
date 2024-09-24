@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:voxpollui/product/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 
 class PollCreateView extends StatefulWidget {
   const PollCreateView({super.key});

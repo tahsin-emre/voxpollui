@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:voxpollui/product/constants/locale_constants.dart';
+import 'package:voxpollui/product/utils/constants/locale_constants.dart';
 
 final class MainLocalization extends EasyLocalization {
   MainLocalization({
