@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:voxpollui/product/constants/color_constants.dart';
-import 'package:voxpollui/product/constants/font_constants.dart';
+import 'package:voxpollui/product/utils/constants/color_constants.dart';
+import 'package:voxpollui/product/utils/constants/font_constants.dart';
 
 class BoardinUc extends StatefulWidget {
   const BoardinUc({super.key});

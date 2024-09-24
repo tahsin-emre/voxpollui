@@ -4,8 +4,8 @@ import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:voxpollui/features/home/mixin/home_mixin.dart';
 import 'package:voxpollui/features/home/view/home_inherited.dart';
 import 'package:voxpollui/features/home/widgets/home_drawer.dart';
-import 'package:voxpollui/product/constants/icon_constants.dart';
-import 'package:voxpollui/product/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/utils/constants/icon_constants.dart';
+import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 
 final class HomeView extends StatefulWidget {
   const HomeView(this.child, {super.key});

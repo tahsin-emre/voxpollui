@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/authentication/view/register_view.dart';
-import 'package:voxpollui/product/extensions/context_ext.dart';
 import 'package:voxpollui/product/router/route_tree.dart';
 import 'package:voxpollui/product/services/firebase/user_service.dart';
+import 'package:voxpollui/product/utils/extensions/context_ext.dart';
 
 mixin RegisterMixin on State<RegisterView> {
   final _userService = UserService();

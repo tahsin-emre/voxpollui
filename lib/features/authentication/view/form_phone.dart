@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/features/authentication/view/custom_checkbox.dart';
 import 'package:voxpollui/features/authentication/view/idarelik.dart';
 import 'package:voxpollui/features/authentication/view/kvkk.dart';
-import 'package:voxpollui/features/authentication/view/phone_textfield.dart';
-import 'package:voxpollui/features/home/view/home_view.dart';
-import 'package:voxpollui/product/constants/color_constants.dart';
-import 'package:voxpollui/product/constants/font_constants.dart';
-import 'package:voxpollui/product/constants/image_constants.dart';
-import 'package:voxpollui/product/localization/locale_keys.g.dart';
+import 'package:voxpollui/features/authentication/widgets/phone_text_field.dart';
+import 'package:voxpollui/features/sub_features/documents/data/aydinlatma_metni.dart';
+import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/router/route_tree.dart';
+import 'package:voxpollui/product/utils/constants/color_constants.dart';
+import 'package:voxpollui/product/utils/constants/font_constants.dart';
+import 'package:voxpollui/product/utils/constants/image_constants.dart';
 
 class FormPhone extends StatelessWidget {
   const FormPhone({
@@ -27,13 +28,12 @@ class FormPhone extends StatelessWidget {
   final bool emailAlmak;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+    return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+            padding: const EdgeInsets.only(top: 20),
             child: Center(
               child: Image.asset(
                 ImageConstants.phoneImage,
@@ -45,7 +45,7 @@ class FormPhone extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
             child: Text(
-              '${LocaleKeys.onboard_page2_phone1.tr()}\n${LocaleKeys.onboard_page2_phone2.tr()}',
+              '${LocaleKeys.onboard_page2_phone1.tr()}${LocaleKeys.onboard_page2_phone2.tr()}',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 40,
@@ -54,20 +54,9 @@ class FormPhone extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(35, 30, 0, 0),
-            child: SizedBox(
-              width: 332,
-              height: 48,
-              child: PhoneTextField(
-                controller: phoneController,
-                focusNode: focusNode,
-                hintText: '555 123 45 67',
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 5,
+          PhoneTextField(
+            controller: phoneController,
+            focusNode: focusNode,
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(35, 20, 0, 0),
@@ -75,13 +64,7 @@ class FormPhone extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: CustomCheckbox(
                 isChecked: onayliyorum,
-                onChanged: (bool value) {
-                  /*
-                  setState(() {
-                    onayliyorum = value;
-                  });
-                  */
-                },
+                onChanged: (bool value) {},
                 child: Text.rich(
                   TextSpan(
                     text: LocaleKeys.onboard_page2_kvkk1.tr(),
@@ -92,10 +75,10 @@ class FormPhone extends StatelessWidget {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => const Kvkk())));
+                        const DocumentReaderRoute(
+                          title: AydinlatmaMetni.title,
+                          content: AydinlatmaMetni.content,
+                        ).go(context);
                       },
                     children: [
                       TextSpan(
@@ -182,12 +165,6 @@ class FormPhone extends StatelessWidget {
               ),
             ),
           ),
-          /*
-          ElevatedButton(
-            onPressed: onPhoneVerify,
-            child: Text(LocaleKeys.onboard_continue.tr()),
-          ),
-          */
           const Spacer(),
           Column(
             children: [
@@ -237,81 +214,6 @@ class FormPhone extends StatelessWidget {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => BoardinUc()));
                 },
-                /*
-                onPhoneVerify,
-                if (onayliyorum && emailAlmak) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const BoardinUc()),
-                  );
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Dialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        elevation: 10,
-                        backgroundColor: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              const Text(
-                                'Dikkat',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22.0,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              Text(
-                                'Rıza Metinleri Kabul Edilmelidir',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.grey[700],
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 20),
-                              Divider(
-                                color: Colors.grey[300],
-                              ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  style: TextButton.styleFrom(
-                                    backgroundColor: AppColor.primary,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16.0, vertical: 10.0),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    'Tamam',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }
-                */
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   width: double.infinity,

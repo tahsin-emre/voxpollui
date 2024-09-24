@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:voxpollui/product/constants/font_constants.dart';
-import 'package:voxpollui/product/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/utils/constants/font_constants.dart';
+import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 
 class OnboardDescription extends StatelessWidget {
   const OnboardDescription({required this.onContinue, super.key});

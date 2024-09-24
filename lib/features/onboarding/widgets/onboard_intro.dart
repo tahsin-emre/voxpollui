@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:voxpollui/product/constants/image_constants.dart';
+import 'package:voxpollui/product/utils/constants/image_constants.dart';
 
 class OnboardIntro extends StatelessWidget {
   const OnboardIntro({super.key});

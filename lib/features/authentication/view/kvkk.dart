@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:voxpollui/product/constants/font_constants.dart';
+import 'package:voxpollui/product/utils/constants/font_constants.dart';
 
 class Kvkk extends StatelessWidget {
   const Kvkk({super.key});
@@ -34,7 +34,7 @@ class Kvkk extends StatelessWidget {
                 side: const BorderSide(
                   color: Color.fromARGB(255, 188, 188, 188),
                 ),
-                borderRadius: BorderRadius.circular(4.0),
+                borderRadius: BorderRadius.circular(4),
               ),
             ),
           ),
@@ -56,51 +56,59 @@ class Kvkk extends StatelessWidget {
                 style: TitleStyle.titleStyle(),
               ),
               TextSpan(
-                  text:
-                      'Hoş geldiniz! VoxPoll kullanmaya başladığınız için teşekkür ederiz. Lütfen aşağıdaki bilgileri dikkatlice okuyunuz.\n\n',
-                  style: TitleStyle.contentStyle()),
+                text:
+                    'Hoş geldiniz! VoxPoll kullanmaya başladığınız için teşekkür ederiz. Lütfen aşağıdaki bilgileri dikkatlice okuyunuz.\n\n',
+                style: TitleStyle.contentStyle(),
+              ),
               TextSpan(
                 text: '1. Hakkında\n',
                 style: TitleStyle.titleStyle(),
               ),
               TextSpan(
-                  text:
-                      'VoxPoll, kullanıcıların anketlere ve oylamalara aracılığıyla etkileşimli bir deneyim sunan bir mobil uygulamadır. VoxPoll, [Şirket Adı] tarafından geliştirilmiş olup [Uygulama Linki] üzerinden indirilebilir.\n\n',
-                  style: TitleStyle.contentStyle()),
+                text:
+                    'VoxPoll, kullanıcıların anketlere ve oylamalara aracılığıyla etkileşimli bir deneyim sunan bir mobil uygulamadır. VoxPoll, [Şirket Adı] tarafından geliştirilmiş olup [Uygulama Linki] üzerinden indirilebilir.\n\n',
+                style: TitleStyle.contentStyle(),
+              ),
               TextSpan(
                 text: '2. Kullanım Koşulları\n',
                 style: TitleStyle.titleStyle(),
               ),
               TextSpan(
-                  text:
-                      'VoxPoll kullanıcılarının, uygulamayı kullanırken uyması gereken belirli kurallar ve şartlar bulunmaktadır. Lütfen [Kullanım Koşulları Linki] üzerinden bu koşulları okuyunuz.\n\n',
-                  style: TitleStyle.contentStyle()),
+                text:
+                    'VoxPoll kullanıcılarının, uygulamayı kullanırken uyması gereken belirli kurallar ve şartlar bulunmaktadır. Lütfen [Kullanım Koşulları Linki] üzerinden bu koşulları okuyunuz.\n\n',
+                style: TitleStyle.contentStyle(),
+              ),
               TextSpan(
                 text: '3. Gizlilik Politikası\n',
                 style: TitleStyle.titleStyle(),
               ),
               TextSpan(
-                  text:
-                      'VoxPoll tarafından toplanan ve işlenen kişisel bilgiler hakkında daha fazla bilgi almak için lütfen [Gizlilik Politikası Linki] üzerinden gizlilik politikamızı inceleyiniz.\n\n',
-                  style: TitleStyle.contentStyle()),
+                text:
+                    'VoxPoll tarafından toplanan ve işlenen kişisel bilgiler hakkında daha fazla bilgi almak için lütfen [Gizlilik Politikası Linki] üzerinden gizlilik politikamızı inceleyiniz.\n\n',
+                style: TitleStyle.contentStyle(),
+              ),
               TextSpan(
                 text: '4. Güncellemeler ve Bildirimler\n',
                 style: TitleStyle.titleStyle(),
               ),
               TextSpan(
-                  text:
-                      'VoxPoll, zaman zaman uygulama güncellemeleri ve önemli bildirimler hakkında bilgi sağlamak amacıyla bildirimler kullanabilir. Bildirimleri yönetmek için lütfen cihazınızın bildirim ayarlarını kontrol ediniz.\n\n',
-                  style: TitleStyle.contentStyle()),
+                text:
+                    'VoxPoll, zaman zaman uygulama güncellemeleri ve önemli bildirimler hakkında bilgi sağlamak amacıyla bildirimler kullanabilir. Bildirimleri yönetmek için lütfen cihazınızın bildirim ayarlarını kontrol ediniz.\n\n',
+                style: TitleStyle.contentStyle(),
+              ),
               TextSpan(
                 text: '5. İletişim\n',
                 style: TitleStyle.titleStyle(),
               ),
               TextSpan(
-                  text:
-                      'Herhangi bir soru, öneri veya sorunuz varsa, lütfen bize [İletişim Bilgileri] üzerinden ulaşın. Size en iyi hizmeti sunabilmek için buradayız.VoxPoll kullanmaya devam etmek, bu aydınlatma metni ve ilgili belgelerde belirtilen şartları kabul ettiğiniz anlamına gelir.\n\n',
-                  style: TitleStyle.contentStyle()),
+                text:
+                    'Herhangi bir soru, öneri veya sorunuz varsa, lütfen bize [İletişim Bilgileri] üzerinden ulaşın. Size en iyi hizmeti sunabilmek için buradayız.VoxPoll kullanmaya devam etmek, bu aydınlatma metni ve ilgili belgelerde belirtilen şartları kabul ettiğiniz anlamına gelir.\n\n',
+                style: TitleStyle.contentStyle(),
+              ),
               TextSpan(
-                  text: 'Teşekkür ederiz!\n', style: TitleStyle.contentStyle()),
+                text: 'Teşekkür ederiz!\n',
+                style: TitleStyle.contentStyle(),
+              ),
             ],
           ),
         ),
@@ -112,11 +120,12 @@ class Kvkk extends StatelessWidget {
 class TitleStyle {
   static TextStyle titleStyle() {
     return TextStyle(
-        fontFamily: FontConstants.gilroyMedium,
-        fontSize: 16,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0.2,
-        height: 1.3);
+      fontFamily: FontConstants.gilroyMedium,
+      fontSize: 16,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0.2,
+      height: 1.3,
+    );
   }
 
   static TextStyle contentStyle() {
