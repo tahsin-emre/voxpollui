@@ -29,6 +29,11 @@
             "iRead": "'ni okudum,",
             "iApprove": "'ni okudum ve onaylıyorum"
         },
+        "otpForm": {
+            "otpCode": "Onay Kodu",
+            "resend": "Lütfen cep telefonunuza gelen 6 haneli kodu girin.",
+            "resendCode": "Eğer SMS gelmediyse tekrar göndermek için buraya tıklayın."
+        },
         "name": "İsim",
         "surname": "Soyisim",
         "email": "E-posta",

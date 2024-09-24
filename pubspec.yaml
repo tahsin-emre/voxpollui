@@ -24,6 +24,7 @@ dependencies:
   shimmer: ^3.0.0
   stylish_bottom_bar: ^1.1.0
   flutter_svg: ^2.0.9
+  pinput: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -42,27 +43,26 @@ flutter:
     - assets/image/bottom_sheet_menu/png/
     - assets/image/bottom_sheet_menu/
     - assets/image/profile_community/
-    - assets/image/profile_community/
 
   fonts:
-   - family: Gilroy
-     fonts:
-       - asset: assets/fonts/gilroy/Gilroy-Black.ttf
-   - family: Gilroy-light
-     fonts: 
-       - asset: assets/fonts/gilroy/Gilroy-Light.ttf
-   - family: Gilroy-medium
-     fonts:
-       - asset: assets/fonts/gilroy/Gilroy-Medium.ttf
-   - family: Gilroy-bold
-     fonts:
-       - asset: assets/fonts/gilroy/Gilroy-Bold.ttf
-   - family: Gilroy-heavhy
-     fonts:
-       - asset: assets/fonts/gilroy/Gilroy-Heavy.ttf
-   - family: Gilroy-regular
-     fonts:
-       - asset: assets/fonts/gilroy/Gilroy-Regular.ttf
-   - family: Gilroy-semibold
-     fonts:
-       - asset: assets/fonts/gilroy/Gilroy-SemiBold.ttf
+  - family: Gilroy
+    fonts:
+    - asset: assets/fonts/gilroy/Gilroy-Black.ttf
+  - family: Gilroy-light
+    fonts: 
+    - asset: assets/fonts/gilroy/Gilroy-Light.ttf
+  - family: Gilroy-medium
+    fonts:
+    - asset: assets/fonts/gilroy/Gilroy-Medium.ttf
+  - family: Gilroy-bold
+    fonts:
+    - asset: assets/fonts/gilroy/Gilroy-Bold.ttf
+  - family: Gilroy-heavhy
+    fonts:
+    - asset: assets/fonts/gilroy/Gilroy-Heavy.ttf
+  - family: Gilroy-regular
+    fonts:
+    - asset: assets/fonts/gilroy/Gilroy-Regular.ttf
+  - family: Gilroy-semibold
+    fonts:
+    - asset: assets/fonts/gilroy/Gilroy-SemiBold.ttf

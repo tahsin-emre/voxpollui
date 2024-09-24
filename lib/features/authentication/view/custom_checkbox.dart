@@ -30,7 +30,7 @@ class _CustomCheckboxState extends State<CustomCheckbox>
       vsync: this,
     );
     _sizeAnimation =
-        Tween<double>(begin: 20.0, end: 21.0).animate(_animationController);
+        Tween<double>(begin: 20, end: 21).animate(_animationController);
     _colorAnimation = ColorTween(begin: Colors.transparent, end: Colors.white)
         .animate(_animationController);
   }
@@ -72,8 +72,8 @@ class _CustomCheckboxState extends State<CustomCheckbox>
                       ? const Color.fromARGB(255, 35, 86, 255)
                       : Colors.transparent,
                   borderRadius: widget.isChecked
-                      ? BorderRadius.circular(4.0)
-                      : BorderRadius.circular(0.0),
+                      ? BorderRadius.circular(4)
+                      : BorderRadius.circular(0),
                   border: Border.all(
                     color: widget.isChecked
                         ? const Color.fromARGB(255, 35, 86, 255)

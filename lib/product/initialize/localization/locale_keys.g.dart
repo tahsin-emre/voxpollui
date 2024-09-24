@@ -28,6 +28,10 @@ abstract class  LocaleKeys {
   static const auth_phoneForm_iRead = 'auth.phoneForm.iRead';
   static const auth_phoneForm_iApprove = 'auth.phoneForm.iApprove';
   static const auth_phoneForm = 'auth.phoneForm';
+  static const auth_otpForm_otpCode = 'auth.otpForm.otpCode';
+  static const auth_otpForm_resend = 'auth.otpForm.resend';
+  static const auth_otpForm_resendCode = 'auth.otpForm.resendCode';
+  static const auth_otpForm = 'auth.otpForm';
   static const auth_name = 'auth.name';
   static const auth_surname = 'auth.surname';
   static const auth_email = 'auth.email';
