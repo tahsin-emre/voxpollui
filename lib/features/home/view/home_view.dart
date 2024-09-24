@@ -20,7 +20,6 @@ class HomeViewState extends State<HomeView> with HomeMixin {
     return HomeInherited(
       state: this,
       child: Scaffold(
-        appBar: AppBar(),
         key: scaffoldKey,
         body: widget.child,
         endDrawer: HomeDrawer(user: user),

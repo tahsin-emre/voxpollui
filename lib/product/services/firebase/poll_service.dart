@@ -1,4 +1,4 @@
-import 'package:voxpollui/product/models/poll/poll_model.dart';
+import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
 import 'package:voxpollui/product/services/http/http_endpoints.dart';
 import 'package:voxpollui/product/services/http/http_service.dart';

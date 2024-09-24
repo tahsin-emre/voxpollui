@@ -4,7 +4,7 @@ import 'package:voxpollui/features/feed/mixin/feed_mixin.dart';
 import 'package:voxpollui/features/feed/widgets/feed_header.dart';
 import 'package:voxpollui/features/poll/cubit/poll_cubit.dart';
 import 'package:voxpollui/features/poll/cubit/poll_state.dart';
-import 'package:voxpollui/product/models/poll/poll_model.dart';
+import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/router/route_tree.dart';
 
 final class FeedView extends StatefulWidget {
