@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/authentication/view/custom_checkbox.dart';
+import 'package:voxpollui/features/authentication/view/idarelik.dart';
+import 'package:voxpollui/features/authentication/view/kvkk.dart';
 import 'package:voxpollui/features/authentication/view/phone_textfield.dart';
 import 'package:voxpollui/features/home/view/home_view.dart';
 import 'package:voxpollui/product/constants/color_constants.dart';
@@ -90,12 +92,10 @@ class FormPhone extends StatelessWidget {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        /*
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: ((context) => const Kvkk())));
-                                */
                       },
                     children: [
                       TextSpan(
@@ -114,12 +114,10 @@ class FormPhone extends StatelessWidget {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            /*
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: ((context) => const Kvkk())));
-                                    */
                           },
                       ),
                       TextSpan(
@@ -164,12 +162,10 @@ class FormPhone extends StatelessWidget {
                             fontFamily: FontConstants.gilroyBold),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            /*
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: ((context) => const Kvkk())));
-                                    */
                           },
                       ),
                       TextSpan(
@@ -197,12 +193,10 @@ class FormPhone extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  /*
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Kvkk()),
-                );
-                */
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Kvkk()),
+                  );
                 },
                 child: SizedBox(
                   width: 333,
@@ -240,7 +234,11 @@ class FormPhone extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  /*
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => BoardinUc()));
+                },
+                /*
+                onPhoneVerify,
                 if (onayliyorum && emailAlmak) {
                   Navigator.push(
                     context,
@@ -314,7 +312,6 @@ class FormPhone extends StatelessWidget {
                   );
                 }
                 */
-                },
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   width: double.infinity,
