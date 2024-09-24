@@ -22,6 +22,9 @@
         "register": "Kayıt Ol",
         "phoneForm": {
             "phoneNumber": "Telefon Numaranız",
+            "contractText": "Aydınlatma Metni’ni okudum, Açık Rıza Metni’ni okudum ve onaylıyorum.",
+            "contactText": "Açık Rıza Metni ve Ticari Elektronik İleti Aydınlatma Metni kapsamında SMS, e-posta ve arama almak istiyorum.",
+            "userApproveText": "İleri butonuna basarak Kullanıcı Sözleşmesi’ni kabul etmiş olursunuz.",
             "illuminationText": "Aydınlatma Metni",
             "openConsentText": "Açık Rıza Metni",
             "userAgreement": "Kullanıcı Sözleşmesi",

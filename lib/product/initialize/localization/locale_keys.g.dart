@@ -21,6 +21,9 @@ abstract class  LocaleKeys {
   static const auth_logout = 'auth.logout';
   static const auth_register = 'auth.register';
   static const auth_phoneForm_phoneNumber = 'auth.phoneForm.phoneNumber';
+  static const auth_phoneForm_contractText = 'auth.phoneForm.contractText';
+  static const auth_phoneForm_contactText = 'auth.phoneForm.contactText';
+  static const auth_phoneForm_userApproveText = 'auth.phoneForm.userApproveText';
   static const auth_phoneForm_illuminationText = 'auth.phoneForm.illuminationText';
   static const auth_phoneForm_openConsentText = 'auth.phoneForm.openConsentText';
   static const auth_phoneForm_userAgreement = 'auth.phoneForm.userAgreement';

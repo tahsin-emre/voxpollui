@@ -42,12 +42,20 @@ class FormPhone extends StatelessWidget {
             focusNode: focusNode,
           ),
           AuthCheckBoxTile(
-            text: 'I approve the User Agreement',
+            text: LocaleKeys.auth_phoneForm_contractText,
             onChanged: onContract,
             initValue: confirmContract,
           ),
+          AuthCheckBoxTile(
+            text: LocaleKeys.auth_phoneForm_contactText,
+            onChanged: onContact,
+            initValue: confirmContact,
+          ),
           const Spacer(),
-          Text(LocaleKeys.auth_phoneForm_userAgreement.tr()),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 28),
+            child: Text(LocaleKeys.auth_phoneForm_userApproveText.tr()),
+          ),
           NextButton(onTap: onPhoneVerify),
         ],
       ),

@@ -33,9 +33,9 @@ mixin LoginMixin on State<LoginView> {
   }
 
   // ignore: avoid_positional_boolean_parameters
-  void onContact(bool? value) => setState(() => confirmContact = value!);
+  void onContact(bool? value) => confirmContact = value!;
   // ignore: avoid_positional_boolean_parameters
-  void onContract(bool? value) => setState(() => confirmContract = value!);
+  void onContract(bool? value) => confirmContract = value!;
 
   Future<void> verifyPhone() async {
     final phone = '+90${phoneController.text.replaceAll(' ', '')}';
