@@ -28,6 +28,8 @@ class _LoginViewState extends State<LoginView> with LoginMixin {
               focusNode: focusNode,
               confirmContract: confirmContract,
               confirmContact: confirmContact,
+              onContract: onContract,
+              onContact: onContact,
             );
           }
           if (status == AuthStatus.onCodeSent) {

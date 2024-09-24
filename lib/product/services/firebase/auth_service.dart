@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
@@ -26,13 +27,15 @@ final class AuthService extends BaseService {
           authStream.sink.add(AuthStatus.onCodeSent);
         },
         verificationFailed: (FirebaseException e) {
+          log('message: ${e.message}');
           authStream.sink.add(AuthStatus.onError);
         },
         codeAutoRetrievalTimeout: (timeout) {
           authStream.sink.add(AuthStatus.onError);
         },
       );
-    } on Exception {
+    } on Exception catch (e) {
+      log('message: $e');
       authStream.sink.add(AuthStatus.onError);
     }
   }
