@@ -30,7 +30,7 @@ class FormPhone extends StatelessWidget {
       child: Column(
         children: [
           Center(
-            child: Image.asset(ImageConstants.phoneImage),
+            child: Image.asset(ImageConstants.loginPhone),
           ),
           Text(
             LocaleKeys.auth_phoneForm_phoneNumber.tr(),

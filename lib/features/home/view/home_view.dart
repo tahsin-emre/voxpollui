@@ -1,11 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:voxpollui/features/home/mixin/home_mixin.dart';
 import 'package:voxpollui/features/home/view/home_inherited.dart';
 import 'package:voxpollui/features/home/widgets/home_drawer.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
+import 'package:voxpollui/product/utils/constants/image_constants.dart';
 
 final class HomeView extends StatefulWidget {
   const HomeView(this.child, {super.key});
@@ -21,6 +23,9 @@ class HomeViewState extends State<HomeView> with HomeMixin {
       state: this,
       child: Scaffold(
         key: scaffoldKey,
+        appBar: AppBar(
+          title: Text(LocaleKeys.appName.tr()),
+        ),
         body: widget.child,
         endDrawer: HomeDrawer(user: user),
         floatingActionButton: FloatingActionButton(
@@ -28,9 +33,7 @@ class HomeViewState extends State<HomeView> with HomeMixin {
           child: IconConstants.add.toIcon,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: HomeBottomNavBar(
-          onTap: onPageChanged,
-        ),
+        bottomNavigationBar: HomeBottomNavBar(onTap: onPageChanged),
       ),
     );
   }
@@ -57,19 +60,19 @@ class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
       fabLocation: StylishBarFabLocation.center,
       items: [
         BottomBarItem(
-          icon: IconConstants.home.toIcon,
+          icon: SvgPicture.asset(ImageConstants.home),
           title: Text(LocaleKeys.feed_title.tr()),
         ),
         BottomBarItem(
-          icon: IconConstants.error.toIcon,
+          icon: SvgPicture.asset(ImageConstants.discover),
           title: Text(LocaleKeys.appName.tr()),
         ),
         BottomBarItem(
-          icon: IconConstants.error.toIcon,
+          icon: SvgPicture.asset(ImageConstants.community),
           title: Text(LocaleKeys.appName.tr()),
         ),
         BottomBarItem(
-          icon: IconConstants.profile.toIcon,
+          icon: SvgPicture.asset(ImageConstants.profile),
           title: Text(LocaleKeys.profile_title.tr()),
         ),
       ],

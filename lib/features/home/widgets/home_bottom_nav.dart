@@ -1,37 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:voxpollui/product/utils/constants/image_constants.dart';
 
 class HomeBottomNav extends StatelessWidget {
   const HomeBottomNav({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 85,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildNavBarItem(
-            'assets/image/bottom_navigation/home_png.png',
-            'assets/image/bottom_navigation/home_selected_png.png',
-            0,
-          ),
-          _buildNavBarItem(
-            'assets/image/bottom_navigation/community.svg',
-            'assets/image/bottom_navigation/community_selected.svg',
-            1,
-          ),
-          _buildAddButton(),
-          _buildNavBarItem(
-            'assets/image/bottom_navigation/groups.svg',
-            'assets/image/bottom_navigation/group_selected.svg',
-            3,
-          ),
-          _buildNavBarItem(
-            'assets/image/bottom_navigation/person_png.png',
-            'assets/image/bottom_navigation/person_selected_png.png',
-            4,
-          ),
-        ],
+    return SafeArea(
+      child: const SizedBox(
+        height: 85,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            NavBarItem(svgPath: ImageConstants.home),
+            NavBarItem(svgPath: ImageConstants.discover),
+            NavBarItem(svgPath: ImageConstants.community),
+            NavBarItem(svgPath: ImageConstants.profile),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+final class NavBarItem extends StatelessWidget {
+  const NavBarItem({required this.svgPath, super.key});
+  final String svgPath;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: SizedBox(
+        width: 36,
+        height: 36,
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Align(
+              child: SvgPicture.asset(
+                svgPath,
+                color: Colors.black,
+                width: 32,
+                height: 32,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
