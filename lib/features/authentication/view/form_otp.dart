@@ -27,31 +27,31 @@ class _FormOtpState extends State<FormOtp> {
         padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 140),
-            Text(
-              LocaleKeys.auth_otpForm_otpCode.tr(),
-              style: TextStyle(
-                color: AppColor.black,
-                fontSize: 36,
-                fontFamily: FontConstants.gilroyMedium,
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                LocaleKeys.auth_otpForm_otpCode.tr(),
+                style: TextStyle(
+                  color: AppColor.black,
+                  fontSize: 36,
+                  fontFamily: FontConstants.gilroyBold,
+                ),
               ),
             ),
-            OtpTextField(
-              controller: widget.otpController,
-              onOtpVerify: widget.onOtpVerify,
+            const SizedBox(height: 24),
+            Center(
+              child: OtpTextField(
+                controller: widget.otpController,
+                onOtpVerify: widget.onOtpVerify,
+              ),
             ),
             const SizedBox(height: 20),
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(LocaleKeys.auth_otpForm_resend.tr()),
-                    Text(LocaleKeys.auth_otpForm_resendCode.tr()),
-                  ],
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(LocaleKeys.auth_otpForm_resend.tr()),
             ),
             const Spacer(),
             NextButton(onTap: widget.onOtpVerify),

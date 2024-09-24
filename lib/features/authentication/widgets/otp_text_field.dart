@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:voxpollui/product/utils/constants/font_constants.dart';
 
 class OtpTextField extends StatelessWidget {
   const OtpTextField({
@@ -14,6 +15,17 @@ class OtpTextField extends StatelessWidget {
     return Pinput(
       length: 6,
       autofocus: true,
+      defaultPinTheme: PinTheme(
+        width: 56,
+        height: 60,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(2),
+          border: Border.all(),
+        ),
+        textStyle:
+            TextStyle(fontFamily: FontConstants.gilroyBold, fontSize: 24),
+      ),
       controller: controller,
       onCompleted: (value) => onOtpVerify(),
     );
