@@ -38,7 +38,7 @@ mixin LoginMixin on State<LoginView> {
   void onContract(bool? value) => confirmContract = value!;
 
   Future<void> verifyPhone() async {
-    final phone = '+90${phoneController.text.replaceAll(' ', '')}';
+    final phone = '+90${phoneController.text.trim().replaceAll(' ', '')}';
     await _authService.verifyPhone(
       phoneNumber: phone,
       authStream: authStream,

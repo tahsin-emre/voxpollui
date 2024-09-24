@@ -27,10 +27,14 @@ final class ImageConstants {
   static const onboard4 = '$_onboard/onboard4.png';
 
   //Bottom Navigation Bar
-  static const community = '$_navBar/community.svg';
-  static const home = '$_navBar/home.svg';
-  static const discover = '$_navBar/discover.svg';
-  static const profile = '$_navBar/profile.svg';
+  static const community = '$_navBar/community.png';
+  static const home = '$_navBar/home.png';
+  static const discover = '$_navBar/discover.png';
+  static const profile = '$_navBar/profile.png';
+  static const communitySelected = '$_navBar/community_selected.png';
+  static const homeSelected = '$_navBar/home_selected.png';
+  static const discoverSelected = '$_navBar/discover_selected.png';
+  static const profileSelected = '$_navBar/profile_selected.png';
 
   //Bottom Sheet Menu
   static const block = '$_sheetMenu/block.svg';
