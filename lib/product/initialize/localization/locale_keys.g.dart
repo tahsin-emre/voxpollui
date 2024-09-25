@@ -44,6 +44,7 @@ abstract class  LocaleKeys {
   static const feed_title = 'feed.title';
   static const feed_createPoll = 'feed.createPoll';
   static const feed_polls = 'feed.polls';
+  static const feed_hello = 'feed.hello';
   static const feed = 'feed';
   static const profile_title = 'profile.title';
   static const profile = 'profile';
