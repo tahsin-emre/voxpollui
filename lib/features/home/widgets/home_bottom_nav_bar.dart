@@ -4,8 +4,9 @@ import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/image_constants.dart';
 
 class HomeBottomNavBar extends StatefulWidget {
-  const HomeBottomNavBar({required this.onTap, super.key});
+  const HomeBottomNavBar({required this.onTap, required this.onAdd, super.key});
   final ValueChanged<int> onTap;
+  final VoidCallback onAdd;
 
   @override
   State<HomeBottomNavBar> createState() => _HomeBottomNavBarState();
@@ -20,78 +21,79 @@ class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _item(
+          _NavItem(
             image: ImageConstants.home,
             selectedImage: ImageConstants.homeSelected,
             title: LocaleKeys.feed_title,
-            index: 0,
+            isSelected: _currentIndex == 0,
+            onTap: () => changeIndex(0),
           ),
-          _item(
+          _NavItem(
             image: ImageConstants.discover,
             selectedImage: ImageConstants.discoverSelected,
             title: LocaleKeys.appName,
-            index: 1,
+            isSelected: _currentIndex == 1,
+            onTap: () => changeIndex(1),
           ),
-          _addItem(),
-          _item(
+          _AddButton(widget.onAdd),
+          _NavItem(
             image: ImageConstants.community,
             selectedImage: ImageConstants.communitySelected,
             title: LocaleKeys.appName,
-            index: 2,
+            isSelected: _currentIndex == 2,
+            onTap: () => changeIndex(2),
           ),
-          _item(
+          _NavItem(
             image: ImageConstants.profile,
             selectedImage: ImageConstants.profileSelected,
             title: LocaleKeys.profile_title,
-            index: 3,
+            isSelected: _currentIndex == 3,
+            onTap: () => changeIndex(3),
           ),
         ],
       ),
     );
   }
 
-  Widget _addItem() {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        width: 50,
-        height: 50,
-        decoration: const BoxDecoration(
-          color: AppColor.primary,
-          shape: BoxShape.circle,
-        ),
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-    );
+  void changeIndex(int index) {
+    widget.onTap(index);
+    setState(() => _currentIndex = index);
   }
+}
 
-  Widget _item({
-    required String image,
-    required String selectedImage,
-    required String title,
-    required int index,
-  }) {
+final class _NavItem extends StatelessWidget {
+  const _NavItem({
+    required this.image,
+    required this.selectedImage,
+    required this.title,
+    required this.isSelected,
+    required this.onTap,
+  });
+  final String image;
+  final String selectedImage;
+  final String title;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _currentIndex = index;
-        });
-      },
+      onTap: onTap,
       child: SizedBox(
-        width: 36,
-        height: 36,
+        width: 40,
+        height: 40,
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Align(
               child: Image.asset(
-                _currentIndex == index ? selectedImage : image,
-                color: _currentIndex == index ? AppColor.primary : Colors.grey,
+                isSelected ? selectedImage : image,
+                color: isSelected ? AppColor.primary : Colors.grey,
                 width: 32,
                 height: 32,
               ),
             ),
-            if (_currentIndex == index)
+            if (isSelected)
               Transform.translate(
                 offset: const Offset(0, 45),
                 child: Transform.rotate(
@@ -108,6 +110,30 @@ class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
               ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+final class _AddButton extends StatelessWidget {
+  const _AddButton(this.onAdd);
+  final VoidCallback onAdd;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onAdd,
+      child: Container(
+        width: 50,
+        height: 50,
+        decoration: const BoxDecoration(
+          color: AppColor.primary,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(color: AppColor.primary, spreadRadius: 1, blurRadius: 8),
+          ],
+        ),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

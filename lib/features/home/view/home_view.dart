@@ -25,7 +25,10 @@ class HomeViewState extends State<HomeView> with HomeMixin {
         ),
         body: widget.child,
         endDrawer: HomeDrawer(user: user),
-        bottomNavigationBar: HomeBottomNavBar(onTap: onPageChanged),
+        bottomNavigationBar: HomeBottomNavBar(
+          onTap: onPageChanged,
+          onAdd: onAdd,
+        ),
       ),
     );
   }

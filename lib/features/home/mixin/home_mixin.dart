@@ -15,7 +15,7 @@ mixin HomeMixin on State<HomeView> {
     user = _authCubit.state.user!;
   }
 
-  void onCreatePoll() {
+  void onAdd() {
     const PollCreateRoute().push<void>(context);
   }
 
