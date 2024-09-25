@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/image_constants.dart';
+import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
 
 class HomeBottomNavBar extends StatefulWidget {
   const HomeBottomNavBar({required this.onTap, required this.onAdd, super.key});
@@ -17,7 +20,7 @@ class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: WidgetSizes.l),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -80,8 +83,8 @@ final class _NavItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        width: 40,
-        height: 40,
+        width: WidgetSizes.x4L,
+        height: WidgetSizes.x4L,
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
@@ -97,13 +100,13 @@ final class _NavItem extends StatelessWidget {
               Transform.translate(
                 offset: const Offset(0, 45),
                 child: Transform.rotate(
-                  angle: -45 * (3.14159265359 / 180),
+                  angle: -45 * pi / 180,
                   child: Container(
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
                       color: AppColor.primary,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ),
