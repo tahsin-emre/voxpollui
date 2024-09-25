@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_state.dart';
-import 'package:voxpollui/product/models/user_model.dart';
+import 'package:voxpollui/product/initialize/models/user_model.dart';
 import 'package:voxpollui/product/services/firebase/auth_service.dart';
 import 'package:voxpollui/product/services/firebase/user_service.dart';
 

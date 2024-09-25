@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:voxpollui/product/models/poll/poll_model.dart';
+import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 
 final class PollState extends Equatable {
   const PollState({

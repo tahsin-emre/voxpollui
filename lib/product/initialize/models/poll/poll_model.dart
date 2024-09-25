@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:voxpollui/product/models/poll/option_model.dart';
+import 'package:voxpollui/product/initialize/models/poll/option_model.dart';
 
 final class PollModel extends Equatable {
   const PollModel({

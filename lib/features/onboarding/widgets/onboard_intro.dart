@@ -45,7 +45,7 @@ class OnboardIntro extends StatelessWidget {
             height: 90,
             decoration: const ShapeDecoration(
               image: DecorationImage(
-                image: AssetImage(ImageConstants.profilePhoto1),
+                image: AssetImage(ImageConstants.profile1),
                 fit: BoxFit.fill,
               ),
               shape: OvalBorder(),
@@ -60,7 +60,7 @@ class OnboardIntro extends StatelessWidget {
             height: 69,
             decoration: const ShapeDecoration(
               image: DecorationImage(
-                image: AssetImage(ImageConstants.profilePhoto2),
+                image: AssetImage(ImageConstants.profile2),
                 fit: BoxFit.fill,
               ),
               shape: OvalBorder(),
@@ -75,7 +75,7 @@ class OnboardIntro extends StatelessWidget {
             height: 125,
             decoration: const ShapeDecoration(
               image: DecorationImage(
-                image: AssetImage(ImageConstants.profilePhoto2),
+                image: AssetImage(ImageConstants.profile3),
                 fit: BoxFit.fill,
               ),
               shape: OvalBorder(),

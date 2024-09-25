@@ -39,10 +39,11 @@ flutter:
   assets:
     - assets/translations/
     - assets/image/
-    - assets/image/bottom_navigation/
-    - assets/image/bottom_sheet_menu/png/
+    - assets/image/bottom_nav_bar/
     - assets/image/bottom_sheet_menu/
-    - assets/image/profile_community/
+    - assets/image/common/
+    - assets/image/onboard/
+
 
   fonts:
   - family: Gilroy

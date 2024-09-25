@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/authentication/mixin/register_mixin.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
-import 'package:voxpollui/product/models/user_model.dart';
+import 'package:voxpollui/product/initialize/models/user_model.dart';
 
 final class RegisterView extends StatefulWidget {
   const RegisterView({required this.user, super.key});

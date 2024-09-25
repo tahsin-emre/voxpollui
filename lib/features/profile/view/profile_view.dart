@@ -5,7 +5,7 @@ import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_state.dart';
 import 'package:voxpollui/features/profile/mixin/profile_mixin.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
-import 'package:voxpollui/product/models/user_model.dart';
+import 'package:voxpollui/product/initialize/models/user_model.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
