@@ -4,8 +4,8 @@ import 'package:voxpollui/features/feed/mixin/feed_mixin.dart';
 import 'package:voxpollui/features/feed/widgets/feed_header.dart';
 import 'package:voxpollui/features/poll/cubit/poll_cubit.dart';
 import 'package:voxpollui/features/poll/cubit/poll_state.dart';
+import 'package:voxpollui/features/poll/widget/poll_tile.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
-import 'package:voxpollui/product/router/route_tree.dart';
 
 final class FeedView extends StatefulWidget {
   const FeedView({super.key});
@@ -28,27 +28,13 @@ class _FeedViewState extends State<FeedView> with FeedMixin {
               selector: (state) => state.pollList,
               builder: (_, polls) {
                 return Column(
-                  children: polls?.map(_PollTile.new).toList() ?? [],
+                  children: polls?.map(PollTile.new).toList() ?? [],
                 );
               },
             ),
           ],
         );
       },
-    );
-  }
-}
-
-class _PollTile extends StatelessWidget {
-  const _PollTile(this.poll);
-  final PollModel poll;
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(poll.title ?? ''),
-        onTap: () => PollDetailsRoute(poll).push<void>(context),
-      ),
     );
   }
 }

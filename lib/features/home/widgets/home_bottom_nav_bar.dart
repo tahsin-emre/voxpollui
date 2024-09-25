@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/image_constants.dart';
+import 'package:voxpollui/product/utils/constants/page_paddings.dart';
 import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
 
 class HomeBottomNavBar extends StatefulWidget {
@@ -20,7 +21,7 @@ class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: WidgetSizes.l),
+      padding: PagePaddings.allL,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
