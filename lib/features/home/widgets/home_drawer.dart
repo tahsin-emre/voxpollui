@@ -17,8 +17,7 @@ class HomeDrawer extends StatelessWidget {
     return Drawer(
       backgroundColor: AppColor.white,
       child: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Column(
           children: [
             _DrawerHeader(user),
             const Divider(height: 20),
