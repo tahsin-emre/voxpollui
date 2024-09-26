@@ -8,6 +8,7 @@ final class IconConstants {
   static const profile = Icons.person_outline;
   static const add = Icons.add_outlined;
   static const notification = Icons.notifications_none_outlined;
+  static const community = Icons.people_outline;
 }
 
 extension IconConstantsExt on IconData {

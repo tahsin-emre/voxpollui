@@ -4,6 +4,7 @@ part of '../route_tree.dart';
   routes: [
     TypedGoRoute<FeedRoute>(path: FeedRoute.path),
     TypedGoRoute<ProfileRoute>(path: ProfileRoute.path),
+    TypedGoRoute<CommunityRoute>(path: CommunityRoute.path),
   ],
 )
 final class HomeShellRoute extends ShellRouteData {
@@ -32,5 +33,15 @@ final class ProfileRoute extends GoRouteData {
   @override
   TPage buildPage(BuildContext context, GoRouterState state) {
     return TPage(child: const ProfileView());
+  }
+}
+
+final class CommunityRoute extends GoRouteData {
+  const CommunityRoute();
+  static const String path = '/home/community';
+  static final $parentNavigatorKey = AppRouter.homeShellKey;
+  @override
+  TPage buildPage(BuildContext context, GoRouterState state) {
+    return TPage(child: const CommunityListView());
   }
 }

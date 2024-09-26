@@ -78,5 +78,12 @@
             "followingText": "Takip Edilen: {}",
             "followerText": "Takipçi: {}"
         }
+    },
+    "community": {
+        "title": "Topluluk",
+        "communities": "Topluluklar",
+        "communitySearc": "Topluluk Ara",
+        "createCommunity": "Topluluk Oluştur",
+        "xMembers": "{} Katılımcı"
     }
 }

@@ -71,5 +71,11 @@ abstract class  LocaleKeys {
   static const home_drawer_followerText = 'home.drawer.followerText';
   static const home_drawer = 'home.drawer';
   static const home = 'home';
+  static const community_title = 'community.title';
+  static const community_communities = 'community.communities';
+  static const community_communitySearc = 'community.communitySearc';
+  static const community_createCommunity = 'community.createCommunity';
+  static const community_xMembers = 'community.xMembers';
+  static const community = 'community';
 
 }

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
+import 'package:voxpollui/features/community/cubit/community_cubit.dart';
 import 'package:voxpollui/features/poll/cubit/poll_cubit.dart';
 import 'package:voxpollui/features/settings/cubit/settings_cubit.dart';
 import 'package:voxpollui/features/settings/cubit/settings_state.dart';
@@ -18,6 +19,7 @@ final class MainApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => PollCubit()),
+        BlocProvider(create: (_) => CommunityCubit()),
         BlocProvider(create: (_) => SettingsCubit()),
       ],
       child: BlocSelector<SettingsCubit, SettingsState, ThemeData?>(

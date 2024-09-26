@@ -22,6 +22,8 @@ mixin HomeMixin on State<HomeView> {
   void onPageChanged(int index) {
     if (index == 0) {
       const FeedRoute().go(context);
+    } else if (index == 2) {
+      const CommunityRoute().go(context);
     } else if (index == 3) {
       const ProfileRoute().go(context);
     }

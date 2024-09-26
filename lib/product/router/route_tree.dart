@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:voxpollui/features/authentication/view/login_view.dart';
 import 'package:voxpollui/features/authentication/view/register_view.dart';
+import 'package:voxpollui/features/community/view/community_list_view.dart';
 import 'package:voxpollui/features/feed/view/feed_view.dart';
 import 'package:voxpollui/features/home/view/home_view.dart';
 import 'package:voxpollui/features/onboarding/view/onboard_view.dart';
@@ -19,11 +20,11 @@ part 'routes/auth_routes.dart';
 part 'routes/home_routes.dart';
 part 'routes/poll_routes.dart';
 part 'routes/single_routes.dart';
+part 'routes/community_routes.dart';
 
 final class TPage extends CustomTransitionPage<void> {
-  TPage({
-    required super.child,
-  }) : super(
+  TPage({required super.child})
+      : super(
           transitionsBuilder: (_, animation, __, ___) => FadeTransition(
             opacity: animation,
             child: child,
