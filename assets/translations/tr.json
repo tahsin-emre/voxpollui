@@ -82,7 +82,7 @@
     "community": {
         "title": "Topluluk",
         "communities": "Topluluklar",
-        "communitySearc": "Topluluk Ara",
+        "communitySearch": "Topluluk Ara",
         "createCommunity": "Topluluk Oluştur",
         "xMembers": "{} Katılımcı"
     }
