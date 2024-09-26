@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:voxpollui/features/sub_features/common_widgets/extended_elevated
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
+import 'package:voxpollui/product/utils/constants/icon_constants.dart';
 import 'package:voxpollui/product/utils/constants/page_paddings.dart';
 import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
 
@@ -39,7 +41,7 @@ class _CommunityCreateViewState extends State<CommunityCreateView>
                   fontFamily: FontConstants.gilroyBold,
                 ),
               ),
-              _NameField(nameCont),
+              _NameField(nameCont, onImage: () {}),
               const SizedBox(height: WidgetSizes.xl),
               const _CategoryField(),
               const SizedBox(height: WidgetSizes.xl),
@@ -61,8 +63,9 @@ class _CommunityCreateViewState extends State<CommunityCreateView>
 }
 
 final class _NameField extends StatelessWidget {
-  const _NameField(this.controller);
+  const _NameField(this.controller, {required this.onImage});
   final TextEditingController controller;
+  final VoidCallback onImage;
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -70,6 +73,8 @@ final class _NameField extends StatelessWidget {
       cursorColor: AppColor.primary,
       decoration: CustomInputDecoration(
         labelText: LocaleKeys.community_communityName.tr(),
+        suffixIcon: IconConstants.imageAdd,
+        suffixTap: onImage,
       ),
     );
   }
@@ -77,10 +82,11 @@ final class _NameField extends StatelessWidget {
 
 final class _CategoryField extends StatelessWidget {
   const _CategoryField();
-
+  static final _dropDownKey = GlobalKey<DropdownSearchState<String>>();
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           LocaleKeys.community_category.tr(),
@@ -88,6 +94,20 @@ final class _CategoryField extends StatelessWidget {
             fontSize: 18,
             fontFamily: FontConstants.gilroyBold,
           ),
+        ),
+        DropdownSearch<String>(
+          key: _dropDownKey,
+          selectedItem: "Menu",
+          items: (filter, infiniteScrollProps) =>
+              ["Menu", "Dialog", "Modal", "BottomSheet"],
+          decoratorProps: DropDownDecoratorProps(
+            decoration: InputDecoration(
+              labelText: 'Examples for: ',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          popupProps: PopupProps.menu(
+              fit: FlexFit.loose, constraints: BoxConstraints()),
         ),
       ],
     );

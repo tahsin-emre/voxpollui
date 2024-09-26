@@ -23,10 +23,7 @@ final class CommunityCard extends StatelessWidget {
           const SizedBox(width: 4),
           const Icon(Icons.check_circle, color: AppColor.primary, size: 16),
           const SizedBox(width: 4),
-          Text(
-            '@${community.userName}',
-            style: const TextStyle(fontSize: 12),
-          ),
+          Text('@${community.name}', style: const TextStyle(fontSize: 12)),
         ],
       ),
       subtitle: Text(

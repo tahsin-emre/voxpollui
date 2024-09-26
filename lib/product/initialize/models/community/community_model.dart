@@ -5,7 +5,7 @@ final class CommunityModel extends Equatable {
   const CommunityModel({
     required this.id,
     this.name,
-    this.userName,
+    this.categoryId,
     this.imageUrl,
     this.isPublic,
     this.memberCount,
@@ -18,7 +18,7 @@ final class CommunityModel extends Equatable {
     return CommunityModel(
       id: snapshot.id,
       name: data['name'] as String?,
-      userName: data['userName'] as String?,
+      categoryId: data['categoryId'] as String?,
       imageUrl: data['imageUrl'] as String?,
       isPublic: data['isPublic'] as bool?,
       memberCount: data['memberCount'] as num?,
@@ -30,8 +30,8 @@ final class CommunityModel extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'userName': userName,
       'imageUrl': imageUrl,
+      'categoryId': categoryId,
       'isPublic': isPublic,
       'memberCount': memberCount,
       'pollCount': pollCount,
@@ -42,8 +42,8 @@ final class CommunityModel extends Equatable {
   CommunityModel copyWith({
     String? id,
     String? name,
-    String? userName,
     String? imageUrl,
+    String? categoryId,
     bool? isPublic,
     num? memberCount,
     num? pollCount,
@@ -52,7 +52,7 @@ final class CommunityModel extends Equatable {
     return CommunityModel(
       id: id ?? this.id,
       name: name ?? this.name,
-      userName: userName ?? this.userName,
+      categoryId: categoryId ?? this.categoryId,
       imageUrl: imageUrl ?? this.imageUrl,
       isPublic: isPublic ?? this.isPublic,
       memberCount: memberCount ?? this.memberCount,
@@ -63,8 +63,8 @@ final class CommunityModel extends Equatable {
 
   final String id;
   final String? name;
-  final String? userName;
   final String? imageUrl;
+  final String? categoryId;
   final bool? isPublic;
   final num? memberCount;
   final num? pollCount;
@@ -74,7 +74,7 @@ final class CommunityModel extends Equatable {
   List<Object?> get props => [
         id,
         name,
-        userName,
+        categoryId,
         imageUrl,
         isPublic,
         memberCount,

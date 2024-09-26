@@ -11,6 +11,7 @@ final class IconConstants {
   static const community = Icons.people_outline;
   static const search = Icons.search_outlined;
   static const more = Icons.more_vert_outlined;
+  static const imageAdd = Icons.add_photo_alternate_outlined;
 }
 
 extension IconConstantsExt on IconData {
