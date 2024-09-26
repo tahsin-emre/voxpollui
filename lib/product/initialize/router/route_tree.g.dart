@@ -15,6 +15,7 @@ List<RouteBase> get $appRoutes => [
       $pollDetailsRoute,
       $splashRoute,
       $documentReaderRoute,
+      $communityCreateRoute,
     ];
 
 RouteBase get $loginRoute => GoRouteData.$route(
@@ -255,6 +256,29 @@ extension $DocumentReaderRouteExtension on DocumentReaderRoute {
           'title': title,
           'content': content,
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $communityCreateRoute => GoRouteData.$route(
+      path: '/community/create',
+      factory: $CommunityCreateRouteExtension._fromState,
+    );
+
+extension $CommunityCreateRouteExtension on CommunityCreateRoute {
+  static CommunityCreateRoute _fromState(GoRouterState state) =>
+      const CommunityCreateRoute();
+
+  String get location => GoRouteData.$location(
+        '/community/create',
       );
 
   void go(BuildContext context) => context.go(location);

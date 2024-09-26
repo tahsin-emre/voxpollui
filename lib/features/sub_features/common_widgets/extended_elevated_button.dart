@@ -10,16 +10,22 @@ class ExtendedElevatedButton extends Container {
     super.key,
   }) : super(
           margin: PagePaddings.allS,
-          child: ElevatedButton(
-            onPressed: onPressed,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColor.primary,
-              foregroundColor: AppColor.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5), // Border radius
+          child: Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: onPressed,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColor.primary,
+                    foregroundColor: AppColor.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5), // Border radius
+                    ),
+                  ),
+                  child: Text(text.tr()),
+                ),
               ),
-            ),
-            child: Text(text.tr()),
+            ],
           ),
         );
 }

@@ -87,6 +87,13 @@
         "createCommunity": "Topluluk Oluştur",
         "myCommunities": "Topluluklarım",
         "recomendedCommunities": "Önerilen Topluluklar",
-        "xMembers": "{} Katılımcı"
+        "xMembers": "{} Katılımcı",
+        "communityName": "Topluluk Adı",
+        "category": "Kategori",
+        "categoryHint": "Kategori Seç",
+        "invitePeople": "İnsanları Dave Edin",
+        "invitePeopleHint": "Kullanıcı Adı",
+        "public": "Herkese Açık",
+        "private": "Özel"
     }
 }

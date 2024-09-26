@@ -79,6 +79,13 @@ abstract class  LocaleKeys {
   static const community_myCommunities = 'community.myCommunities';
   static const community_recomendedCommunities = 'community.recomendedCommunities';
   static const community_xMembers = 'community.xMembers';
+  static const community_communityName = 'community.communityName';
+  static const community_category = 'community.category';
+  static const community_categoryHint = 'community.categoryHint';
+  static const community_invitePeople = 'community.invitePeople';
+  static const community_invitePeopleHint = 'community.invitePeopleHint';
+  static const community_public = 'community.public';
+  static const community_private = 'community.private';
   static const community = 'community';
 
 }

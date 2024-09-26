@@ -7,4 +7,5 @@ final class AppColor {
   static const opposite = Color.fromARGB(255, 101, 101, 101);
   static const white = Color.fromARGB(255, 255, 255, 255);
   static const black = Color.fromARGB(255, 0, 0, 0);
+  static const borderColor = Color.fromARGB(255, 188, 188, 188);
 }

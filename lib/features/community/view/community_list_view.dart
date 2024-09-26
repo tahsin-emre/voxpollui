@@ -40,7 +40,7 @@ class _CommunityListViewState extends State<CommunityListView>
                   label: LocaleKeys.community_communitySearch,
                 ),
                 ExtendedElevatedButton(
-                  onPressed: () {},
+                  onPressed: navToCreate,
                   text: LocaleKeys.community_createCommunity,
                 ),
                 Padding(

@@ -7,9 +7,10 @@ final class CommunityModel extends Equatable {
     this.name,
     this.userName,
     this.imageUrl,
-    this.managerList,
+    this.isPublic,
     this.memberCount,
     this.pollCount,
+    this.managerList,
   });
 
   factory CommunityModel.fromQDS(QueryDocumentSnapshot snapshot) {
@@ -19,9 +20,10 @@ final class CommunityModel extends Equatable {
       name: data['name'] as String?,
       userName: data['userName'] as String?,
       imageUrl: data['imageUrl'] as String?,
-      managerList: data['managerList'] as List<dynamic>?,
+      isPublic: data['isPublic'] as bool?,
       memberCount: data['memberCount'] as num?,
       pollCount: data['pollCount'] as num?,
+      managerList: data['managerList'] as List<dynamic>?,
     );
   }
 
@@ -30,9 +32,10 @@ final class CommunityModel extends Equatable {
       'name': name,
       'userName': userName,
       'imageUrl': imageUrl,
-      'managerList': managerList,
+      'isPublic': isPublic,
       'memberCount': memberCount,
       'pollCount': pollCount,
+      'managerList': managerList,
     };
   }
 
@@ -41,18 +44,20 @@ final class CommunityModel extends Equatable {
     String? name,
     String? userName,
     String? imageUrl,
-    List<dynamic>? managerList,
+    bool? isPublic,
     num? memberCount,
     num? pollCount,
+    List<dynamic>? managerList,
   }) {
     return CommunityModel(
       id: id ?? this.id,
       name: name ?? this.name,
       userName: userName ?? this.userName,
       imageUrl: imageUrl ?? this.imageUrl,
-      managerList: managerList ?? this.managerList,
+      isPublic: isPublic ?? this.isPublic,
       memberCount: memberCount ?? this.memberCount,
       pollCount: pollCount ?? this.pollCount,
+      managerList: managerList ?? this.managerList,
     );
   }
 
@@ -60,9 +65,10 @@ final class CommunityModel extends Equatable {
   final String? name;
   final String? userName;
   final String? imageUrl;
-  final List<dynamic>? managerList;
+  final bool? isPublic;
   final num? memberCount;
   final num? pollCount;
+  final List<dynamic>? managerList;
 
   @override
   List<Object?> get props => [
@@ -70,8 +76,9 @@ final class CommunityModel extends Equatable {
         name,
         userName,
         imageUrl,
-        managerList,
+        isPublic,
         memberCount,
         pollCount,
+        managerList,
       ];
 }
