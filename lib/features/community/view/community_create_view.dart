@@ -41,34 +41,39 @@ class _CommunityCreateViewState extends State<CommunityCreateView>
               child: Form(
                 key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      LocaleKeys.community_createCommunity.tr(),
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontFamily: FontConstants.gilroyBold,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        LocaleKeys.community_createCommunity.tr(),
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontFamily: FontConstants.gilroyBold,
+                        ),
                       ),
-                    ),
-                    _NameField(
-                      nameCont,
-                      imageUrlNotifier: imageUrlNotifier,
-                      onImage: pickImage,
-                    ),
-                    const SizedBox(height: WidgetSizes.xl),
-                    _CategoryField(categories),
-                    const SizedBox(height: WidgetSizes.xl),
-                    _PublicField(
-                      valueNotifier: isPublicNotifier,
-                      onChanged: (val) => isPublicNotifier.value = val,
-                    ),
-                    const SizedBox(height: WidgetSizes.xl),
-                    ExtendedElevatedButton(
-                      onPressed: onSave,
-                      text: LocaleKeys.community_createCommunity.tr(),
-                    ),
-                  ],
+                      _NameField(
+                        nameCont,
+                        imageUrlNotifier: imageUrlNotifier,
+                        onImage: pickImage,
+                      ),
+                      const SizedBox(height: WidgetSizes.xl),
+                      _CategoryField(
+                        categories,
+                        onChanged: (val) => categoryIdNotifier.value = val,
+                      ),
+                      const SizedBox(height: WidgetSizes.xl),
+                      _PublicField(
+                        valueNotifier: isPublicNotifier,
+                        onChanged: (val) => isPublicNotifier.value = val,
+                      ),
+                      const SizedBox(height: WidgetSizes.xl),
+                      ExtendedElevatedButton(
+                        onPressed: onSave,
+                        text: LocaleKeys.community_createCommunity.tr(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -95,10 +100,19 @@ final class _NameField extends StatelessWidget {
       builder: (_, url, __) {
         return Column(
           children: [
-            if (url != null) Image.network(url),
+            if (url != null)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  url,
+                  fit: BoxFit.fitWidth,
+                  width: double.infinity,
+                ),
+              ),
             TextField(
               controller: controller,
               cursorColor: AppColor.primary,
+              autofocus: true,
               decoration: CustomInputDecoration(
                 labelText: LocaleKeys.community_communityName.tr(),
                 suffixIcon: IconConstants.imageAdd,
@@ -113,8 +127,9 @@ final class _NameField extends StatelessWidget {
 }
 
 final class _CategoryField extends StatelessWidget {
-  const _CategoryField(this.categories);
+  const _CategoryField(this.categories, {required this.onChanged});
   final List<CommunityCategoryModel> categories;
+  final ValueChanged<String> onChanged;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -127,24 +142,35 @@ final class _CategoryField extends StatelessWidget {
             fontFamily: FontConstants.gilroyBold,
           ),
         ),
-        CustomDropdown<CommunityCategoryModel>.search(
-          items: categories,
-          listItemPadding: EdgeInsets.zero,
-          itemsListPadding: EdgeInsets.zero,
-          expandedHeaderPadding: EdgeInsets.zero,
-          closedHeaderPadding: EdgeInsets.zero,
-          hintText: LocaleKeys.community_categoryHint.tr(),
-          searchHintText: LocaleKeys.base_search.tr(),
-          noResultFoundText: LocaleKeys.community_categoryNotFound.tr(),
-          headerBuilder: (_, item, __) => ListTile(
-            title: Text(item.name ?? ''),
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          padding: PagePaddings.horS,
+          decoration: BoxDecoration(
+            border: Border.all(),
+            borderRadius: BorderRadius.circular(8),
           ),
-          listItemBuilder: (_, item, __, ___) {
-            return ListTile(
+          child: CustomDropdown<CommunityCategoryModel>.search(
+            onChanged: (value) {
+              if (value == null) return;
+              onChanged(value.id);
+            },
+            items: categories,
+            listItemPadding: EdgeInsets.zero,
+            itemsListPadding: EdgeInsets.zero,
+            expandedHeaderPadding: EdgeInsets.zero,
+            closedHeaderPadding: EdgeInsets.zero,
+            hintText: LocaleKeys.community_categoryHint.tr(),
+            searchHintText: LocaleKeys.base_search.tr(),
+            noResultFoundText: LocaleKeys.community_categoryNotFound.tr(),
+            headerBuilder: (_, item, __) => ListTile(
               title: Text(item.name ?? ''),
-            );
-          },
-          onChanged: (value) {},
+            ),
+            listItemBuilder: (_, item, __, ___) {
+              return ListTile(
+                title: Text(item.name ?? ''),
+              );
+            },
+          ),
         ),
       ],
     );

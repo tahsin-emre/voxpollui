@@ -12,18 +12,18 @@ final class CommunityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {},
-      leading: community.imageUrl == null
-          ? IconConstants.community.toIcon
-          : CircleAvatar(
-              backgroundImage: NetworkImage(community.imageUrl ?? ''),
-            ),
+      leading: CircleAvatar(
+        backgroundImage: community.imageUrl != null
+            ? NetworkImage(community.imageUrl!)
+            : null,
+        child:
+            community.imageUrl == null ? IconConstants.community.toIcon : null,
+      ),
       title: Row(
         children: [
           Text('${community.name}'),
           const SizedBox(width: 4),
           const Icon(Icons.check_circle, color: AppColor.primary, size: 16),
-          const SizedBox(width: 4),
-          Text('@${community.name}', style: const TextStyle(fontSize: 12)),
         ],
       ),
       subtitle: Text(

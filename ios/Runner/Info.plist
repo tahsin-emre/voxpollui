@@ -38,7 +38,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Uygulama galeriye erişmek için izin istiyor.</string>
+	<string>Gallery access is required to use photo services.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera access is required to use photo services when necessary.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

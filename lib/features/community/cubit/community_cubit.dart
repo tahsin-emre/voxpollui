@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/community/cubit/community_state.dart';
+import 'package:voxpollui/product/initialize/models/community/community_model.dart';
 import 'package:voxpollui/product/services/firebase/community_service.dart';
 
 final class CommunityCubit extends Cubit<CommunityState> {
@@ -28,5 +29,7 @@ final class CommunityCubit extends Cubit<CommunityState> {
     );
   }
 
-  Future<void> createCommunity() async {}
+  Future<bool> createCommunity(CommunityModel community) async {
+    return _communityService.createCommunity(community);
+  }
 }

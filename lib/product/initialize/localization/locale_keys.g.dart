@@ -18,6 +18,7 @@ abstract class  LocaleKeys {
   static const base_and = 'base.and';
   static const base_join = 'base.join';
   static const base_search = 'base.search';
+  static const base_somethingWentWrong = 'base.somethingWentWrong';
   static const base = 'base';
   static const auth_login = 'auth.login';
   static const auth_logout = 'auth.logout';
@@ -88,6 +89,7 @@ abstract class  LocaleKeys {
   static const community_public = 'community.public';
   static const community_private = 'community.private';
   static const community_categoryNotFound = 'community.categoryNotFound';
+  static const community_communityCreated = 'community.communityCreated';
   static const community = 'community';
 
 }

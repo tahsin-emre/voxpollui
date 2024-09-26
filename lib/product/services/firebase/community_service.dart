@@ -7,6 +7,16 @@ final class CommunityService extends BaseService {
   CommunityService._();
   static final CommunityService _instance = CommunityService._();
 
+  ///Create Community
+  Future<bool> createCommunity(CommunityModel community) async {
+    try {
+      await db.collection('communities').add(community.toMap());
+      return true;
+    } on Exception {
+      return false;
+    }
+  }
+
   ///Join Community
 
   ///Get Communities

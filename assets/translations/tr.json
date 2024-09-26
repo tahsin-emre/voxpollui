@@ -16,7 +16,8 @@
         "finish": "Bitir",
         "and": "ve",
         "join": "Katıl",
-        "search": "Ara"
+        "search": "Ara",
+        "somethingWentWrong": "Bir şeyler yanlış gitti"
     },
     "auth": {
         "login": "Giriş Yap",
@@ -96,6 +97,7 @@
         "invitePeopleHint": "Kullanıcı Adı",
         "public": "Herkese Açık",
         "private": "Özel",
-        "categoryNotFound": "Kategori bulunamadı"
+        "categoryNotFound": "Kategori bulunamadı",
+        "communityCreated": "Topluluk Oluşturuldu!"
     }
 }
