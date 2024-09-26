@@ -4,8 +4,9 @@ import 'package:voxpollui/features/feed/mixin/feed_mixin.dart';
 import 'package:voxpollui/features/feed/widgets/feed_header.dart';
 import 'package:voxpollui/features/poll/cubit/poll_cubit.dart';
 import 'package:voxpollui/features/poll/cubit/poll_state.dart';
+import 'package:voxpollui/features/poll/widget/poll_tile.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
-import 'package:voxpollui/product/router/route_tree.dart';
+import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
 
 final class FeedView extends StatefulWidget {
   const FeedView({super.key});
@@ -21,34 +22,36 @@ class _FeedViewState extends State<FeedView> with FeedMixin {
       valueListenable: isLoadingNotifier,
       builder: (_, isLoading, __) {
         if (isLoading) return const CircularProgressIndicator();
-        return ListView(
-          children: [
-            const FeedHeader(),
-            BlocSelector<PollCubit, PollState, List<PollModel>?>(
-              selector: (state) => state.pollList,
-              builder: (_, polls) {
-                return Column(
-                  children: polls?.map(_PollTile.new).toList() ?? [],
-                );
-              },
-            ),
-          ],
+        return SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverList(
+                delegate: SliverChildListDelegate([
+                  FeedHeader(
+                    user: user,
+                    onDrawerTap: openDrawer,
+                  ),
+                  const SizedBox(height: WidgetSizes.l),
+                  BlocSelector<PollCubit, PollState, List<PollModel>?>(
+                    selector: (state) => state.pollList,
+                    builder: (_, polls) {
+                      if (polls?.isEmpty ?? true) {
+                        return const Center(child: Text('No Polls'));
+                      }
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: polls!.length,
+                        itemBuilder: (_, index) => PollTile(polls[index]),
+                      );
+                    },
+                  ),
+                ]),
+              ),
+            ],
+          ),
         );
       },
-    );
-  }
-}
-
-class _PollTile extends StatelessWidget {
-  const _PollTile(this.poll);
-  final PollModel poll;
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(poll.title ?? ''),
-        onTap: () => PollDetailsRoute(poll).push<void>(context),
-      ),
     );
   }
 }

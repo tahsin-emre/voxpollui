@@ -46,7 +46,8 @@
     "feed": {
         "title": "Akış",
         "createPoll": "Anket Oluştur",
-        "polls": "Anketler"
+        "polls": "Anketler",
+        "hello": "Merhaba, "
     },
     "profile": {
         "title": "Profil"
