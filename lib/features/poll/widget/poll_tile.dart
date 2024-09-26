@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
-import 'package:voxpollui/product/router/route_tree.dart';
+import 'package:voxpollui/product/initialize/router/route_tree.dart';
 
 final class PollTile extends StatelessWidget {
   const PollTile(this.poll, {super.key});

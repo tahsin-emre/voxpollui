@@ -13,7 +13,7 @@ import 'package:voxpollui/features/splash/view/splash_view.dart';
 import 'package:voxpollui/features/sub_features/documents/view/document_reader_view.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/initialize/models/user_model.dart';
-import 'package:voxpollui/product/router/app_router.dart';
+import 'package:voxpollui/product/initialize/router/app_router.dart';
 
 part 'route_tree.g.dart';
 part 'routes/auth_routes.dart';
