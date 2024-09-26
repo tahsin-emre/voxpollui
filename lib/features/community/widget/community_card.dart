@@ -11,7 +11,7 @@ final class CommunityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => null,
+      onTap: () {},
       leading: community.imageUrl == null
           ? IconConstants.community.toIcon
           : CircleAvatar(

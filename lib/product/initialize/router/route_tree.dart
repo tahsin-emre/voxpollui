@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:voxpollui/features/authentication/view/login_view.dart';
 import 'package:voxpollui/features/authentication/view/register_view.dart';
+import 'package:voxpollui/features/community/view/community_create_view.dart';
 import 'package:voxpollui/features/community/view/community_list_view.dart';
 import 'package:voxpollui/features/feed/view/feed_view.dart';
 import 'package:voxpollui/features/home/view/home_view.dart';

@@ -9,11 +9,8 @@ mixin CommunityListMixin on State<CommunityListView> {
   @override
   void initState() {
     super.initState();
-    _fetchCommunityList();
-  }
-
-  Future<void> _fetchCommunityList() async {
-    print('object');
     _communityCubit.fetchCommunityList();
   }
+
+  void navigateToCommunityCreate() {}
 }

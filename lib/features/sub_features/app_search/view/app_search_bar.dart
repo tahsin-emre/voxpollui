@@ -33,9 +33,10 @@ class _AppSearchBarState extends State<AppSearchBar> {
             borderRadius: BorderRadius.circular(8),
           ),
           hintStyle: TextStyle(
-              color: const Color.fromARGB(255, 101, 101, 101),
-              fontSize: 14,
-              fontFamily: FontConstants.gilroyMedium),
+            color: const Color.fromARGB(255, 101, 101, 101),
+            fontSize: 14,
+            fontFamily: FontConstants.gilroyMedium,
+          ),
         ),
         onSubmitted: (value) {},
       ),
