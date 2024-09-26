@@ -14,7 +14,8 @@
         "back": "Geri",
         "next": "İleri",
         "finish": "Bitir",
-        "and": "ve"
+        "and": "ve",
+        "join": "Katıl"
     },
     "auth": {
         "login": "Giriş Yap",
@@ -84,6 +85,8 @@
         "communities": "Topluluklar",
         "communitySearch": "Topluluk Ara",
         "createCommunity": "Topluluk Oluştur",
+        "myCommunities": "Topluluklarım",
+        "recomendedCommunities": "Önerilen Topluluklar",
         "xMembers": "{} Katılımcı"
     }
 }

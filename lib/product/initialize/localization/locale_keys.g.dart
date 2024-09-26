@@ -16,6 +16,7 @@ abstract class  LocaleKeys {
   static const base_next = 'base.next';
   static const base_finish = 'base.finish';
   static const base_and = 'base.and';
+  static const base_join = 'base.join';
   static const base = 'base';
   static const auth_login = 'auth.login';
   static const auth_logout = 'auth.logout';
@@ -75,6 +76,8 @@ abstract class  LocaleKeys {
   static const community_communities = 'community.communities';
   static const community_communitySearch = 'community.communitySearch';
   static const community_createCommunity = 'community.createCommunity';
+  static const community_myCommunities = 'community.myCommunities';
+  static const community_recomendedCommunities = 'community.recomendedCommunities';
   static const community_xMembers = 'community.xMembers';
   static const community = 'community';
 

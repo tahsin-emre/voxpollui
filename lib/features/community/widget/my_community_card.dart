@@ -5,8 +5,8 @@ import 'package:voxpollui/product/initialize/models/community/community_model.da
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
 
-final class CommunityCard extends StatelessWidget {
-  const CommunityCard(this.community, {super.key});
+final class MyCommunityCard extends StatelessWidget {
+  const MyCommunityCard(this.community, {super.key});
   final CommunityModel community;
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,9 @@ final class CommunityCard extends StatelessWidget {
       subtitle: Text(
         LocaleKeys.community_xMembers.tr(args: ['${community.memberCount}']),
       ),
-      trailing: TextButton(
-        onPressed: () {},
-        child: Text(LocaleKeys.base_join.tr()),
+      trailing: InkWell(
+        onTap: () {},
+        child: IconConstants.more.toIcon,
       ),
     );
   }
