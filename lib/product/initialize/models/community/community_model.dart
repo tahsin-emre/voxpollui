@@ -6,6 +6,7 @@ final class CommunityModel extends Equatable {
     required this.id,
     this.name,
     this.managerList,
+    this.memberCount,
   });
 
   factory CommunityModel.fromQDS(QueryDocumentSnapshot snapshot) {
@@ -14,6 +15,7 @@ final class CommunityModel extends Equatable {
       id: snapshot.id,
       name: data['name'] as String?,
       managerList: data['managerList'] as List<dynamic>?,
+      memberCount: data['memberCount'] as num?,
     );
   }
 
@@ -21,6 +23,7 @@ final class CommunityModel extends Equatable {
     return {
       'name': name,
       'managerList': managerList,
+      'memberCount': memberCount,
     };
   }
 
@@ -28,18 +31,21 @@ final class CommunityModel extends Equatable {
     String? id,
     String? name,
     List<dynamic>? managerList,
+    num? memberCount,
   }) {
     return CommunityModel(
       id: id ?? this.id,
       name: name ?? this.name,
       managerList: managerList ?? this.managerList,
+      memberCount: memberCount ?? this.memberCount,
     );
   }
 
   final String id;
   final String? name;
   final List<dynamic>? managerList;
+  final num? memberCount;
 
   @override
-  List<Object?> get props => [id, name, managerList];
+  List<Object?> get props => [id, name, managerList, memberCount];
 }
