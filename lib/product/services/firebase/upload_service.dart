@@ -7,7 +7,11 @@ final class UploadService extends BaseService {
   UploadService._();
   static final UploadService _instance = UploadService._();
 
-  Future<String> uploadImage(String path, String fileName, File file) async {
+  Future<String> uploadImage({
+    required String fileName,
+    required File file,
+    required String path,
+  }) async {
     final ref = storage.ref().child(path).child(fileName);
     final uploadTask = ref.putFile(file);
     final snapshot = await uploadTask.whenComplete(() => null);

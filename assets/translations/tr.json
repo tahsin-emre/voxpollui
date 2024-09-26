@@ -15,7 +15,8 @@
         "next": "İleri",
         "finish": "Bitir",
         "and": "ve",
-        "join": "Katıl"
+        "join": "Katıl",
+        "search": "Ara"
     },
     "auth": {
         "login": "Giriş Yap",
@@ -94,6 +95,7 @@
         "invitePeople": "İnsanları Dave Edin",
         "invitePeopleHint": "Kullanıcı Adı",
         "public": "Herkese Açık",
-        "private": "Özel"
+        "private": "Özel",
+        "categoryNotFound": "Kategori bulunamadı"
     }
 }

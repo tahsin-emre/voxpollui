@@ -7,8 +7,19 @@ mixin CommunityCreateMixin on State<CommunityCreateView> {
   late final _communityCubit = context.read<CommunityCubit>();
   final formKey = GlobalKey<FormState>();
   final nameCont = TextEditingController();
-  final isPublic = ValueNotifier<bool>(true);
-  final imageUrl = ValueNotifier<String?>(null);
+  final isPublicNotifier = ValueNotifier<bool>(true);
+  final imageUrlNotifier = ValueNotifier<String?>(null);
+  final categoryIdNotifier = ValueNotifier<String?>(null);
 
-  Future<void> onSave() async {}
+  @override
+  void initState() {
+    super.initState();
+    _communityCubit.getCategories();
+  }
+
+  Future<void> pickImage() async {}
+
+  Future<void> onSave() async {
+    await _communityCubit.createCommunity();
+  }
 }
