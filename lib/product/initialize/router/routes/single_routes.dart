@@ -10,16 +10,6 @@ class SplashRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<OnboardRoute>(path: OnboardRoute.path)
-class OnboardRoute extends GoRouteData {
-  const OnboardRoute();
-  static const String path = '/onboard';
-  @override
-  TPage buildPage(BuildContext context, GoRouterState state) {
-    return TPage(child: const OnboardView());
-  }
-}
-
 @TypedGoRoute<DocumentReaderRoute>(path: DocumentReaderRoute.path)
 class DocumentReaderRoute extends GoRouteData {
   const DocumentReaderRoute({required this.title, required this.content});

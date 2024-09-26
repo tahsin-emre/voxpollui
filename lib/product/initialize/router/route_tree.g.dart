@@ -9,12 +9,13 @@ part of 'route_tree.dart';
 List<RouteBase> get $appRoutes => [
       $loginRoute,
       $registerRoute,
+      $onboardRoute,
       $homeShellRoute,
       $pollCreateRoute,
       $pollDetailsRoute,
       $splashRoute,
-      $onboardRoute,
       $documentReaderRoute,
+      $communityCreateRoute,
     ];
 
 RouteBase get $loginRoute => GoRouteData.$route(
@@ -65,6 +66,28 @@ extension $RegisterRouteExtension on RegisterRoute {
       context.replace(location, extra: $extra);
 }
 
+RouteBase get $onboardRoute => GoRouteData.$route(
+      path: '/onboard',
+      factory: $OnboardRouteExtension._fromState,
+    );
+
+extension $OnboardRouteExtension on OnboardRoute {
+  static OnboardRoute _fromState(GoRouterState state) => const OnboardRoute();
+
+  String get location => GoRouteData.$location(
+        '/onboard',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
 RouteBase get $homeShellRoute => ShellRouteData.$route(
       navigatorKey: HomeShellRoute.$navigatorKey,
       factory: $HomeShellRouteExtension._fromState,
@@ -78,6 +101,11 @@ RouteBase get $homeShellRoute => ShellRouteData.$route(
           path: '/home/profile',
           parentNavigatorKey: ProfileRoute.$parentNavigatorKey,
           factory: $ProfileRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/home/community',
+          parentNavigatorKey: CommunityRoute.$parentNavigatorKey,
+          factory: $CommunityRouteExtension._fromState,
         ),
       ],
     );
@@ -109,6 +137,24 @@ extension $ProfileRouteExtension on ProfileRoute {
 
   String get location => GoRouteData.$location(
         '/home/profile',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CommunityRouteExtension on CommunityRoute {
+  static CommunityRoute _fromState(GoRouterState state) =>
+      const CommunityRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/community',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -192,28 +238,6 @@ extension $SplashRouteExtension on SplashRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $onboardRoute => GoRouteData.$route(
-      path: '/onboard',
-      factory: $OnboardRouteExtension._fromState,
-    );
-
-extension $OnboardRouteExtension on OnboardRoute {
-  static OnboardRoute _fromState(GoRouterState state) => const OnboardRoute();
-
-  String get location => GoRouteData.$location(
-        '/onboard',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
 RouteBase get $documentReaderRoute => GoRouteData.$route(
       path: '/onboard',
       factory: $DocumentReaderRouteExtension._fromState,
@@ -232,6 +256,29 @@ extension $DocumentReaderRouteExtension on DocumentReaderRoute {
           'title': title,
           'content': content,
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $communityCreateRoute => GoRouteData.$route(
+      path: '/community/create',
+      factory: $CommunityCreateRouteExtension._fromState,
+    );
+
+extension $CommunityCreateRouteExtension on CommunityCreateRoute {
+  static CommunityCreateRoute _fromState(GoRouterState state) =>
+      const CommunityCreateRoute();
+
+  String get location => GoRouteData.$location(
+        '/community/create',
       );
 
   void go(BuildContext context) => context.go(location);

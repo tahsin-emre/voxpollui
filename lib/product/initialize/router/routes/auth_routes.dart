@@ -20,3 +20,13 @@ class RegisterRoute extends GoRouteData {
     return TPage(child: RegisterView(user: $extra));
   }
 }
+
+@TypedGoRoute<OnboardRoute>(path: OnboardRoute.path)
+class OnboardRoute extends GoRouteData {
+  const OnboardRoute();
+  static const String path = '/onboard';
+  @override
+  TPage buildPage(BuildContext context, GoRouterState state) {
+    return TPage(child: const OnboardView());
+  }
+}

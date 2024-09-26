@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/authentication/view/register_view.dart';
-import 'package:voxpollui/product/router/route_tree.dart';
+import 'package:voxpollui/product/initialize/router/route_tree.dart';
 import 'package:voxpollui/product/services/firebase/user_service.dart';
 import 'package:voxpollui/product/utils/extensions/context_ext.dart';
 

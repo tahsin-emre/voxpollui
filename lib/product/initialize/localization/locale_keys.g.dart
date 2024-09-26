@@ -16,6 +16,9 @@ abstract class  LocaleKeys {
   static const base_next = 'base.next';
   static const base_finish = 'base.finish';
   static const base_and = 'base.and';
+  static const base_join = 'base.join';
+  static const base_search = 'base.search';
+  static const base_somethingWentWrong = 'base.somethingWentWrong';
   static const base = 'base';
   static const auth_login = 'auth.login';
   static const auth_logout = 'auth.logout';
@@ -71,5 +74,22 @@ abstract class  LocaleKeys {
   static const home_drawer_followerText = 'home.drawer.followerText';
   static const home_drawer = 'home.drawer';
   static const home = 'home';
+  static const community_title = 'community.title';
+  static const community_communities = 'community.communities';
+  static const community_communitySearch = 'community.communitySearch';
+  static const community_createCommunity = 'community.createCommunity';
+  static const community_myCommunities = 'community.myCommunities';
+  static const community_recomendedCommunities = 'community.recomendedCommunities';
+  static const community_xMembers = 'community.xMembers';
+  static const community_communityName = 'community.communityName';
+  static const community_category = 'community.category';
+  static const community_categoryHint = 'community.categoryHint';
+  static const community_invitePeople = 'community.invitePeople';
+  static const community_invitePeopleHint = 'community.invitePeopleHint';
+  static const community_public = 'community.public';
+  static const community_private = 'community.private';
+  static const community_categoryNotFound = 'community.categoryNotFound';
+  static const community_communityCreated = 'community.communityCreated';
+  static const community = 'community';
 
 }

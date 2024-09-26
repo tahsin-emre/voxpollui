@@ -14,7 +14,10 @@
         "back": "Geri",
         "next": "İleri",
         "finish": "Bitir",
-        "and": "ve"
+        "and": "ve",
+        "join": "Katıl",
+        "search": "Ara",
+        "somethingWentWrong": "Bir şeyler yanlış gitti"
     },
     "auth": {
         "login": "Giriş Yap",
@@ -78,5 +81,23 @@
             "followingText": "Takip Edilen: {}",
             "followerText": "Takipçi: {}"
         }
+    },
+    "community": {
+        "title": "Topluluk",
+        "communities": "Topluluklar",
+        "communitySearch": "Topluluk Ara",
+        "createCommunity": "Topluluk Oluştur",
+        "myCommunities": "Topluluklarım",
+        "recomendedCommunities": "Önerilen Topluluklar",
+        "xMembers": "{} Katılımcı",
+        "communityName": "Topluluk Adı",
+        "category": "Kategori",
+        "categoryHint": "Kategori Seç",
+        "invitePeople": "İnsanları Dave Edin",
+        "invitePeopleHint": "Kullanıcı Adı",
+        "public": "Herkese Açık",
+        "private": "Özel",
+        "categoryNotFound": "Kategori bulunamadı",
+        "communityCreated": "Topluluk Oluşturuldu!"
     }
 }

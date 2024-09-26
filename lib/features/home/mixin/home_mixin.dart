@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
 import 'package:voxpollui/features/home/view/home_view.dart';
 import 'package:voxpollui/product/initialize/models/user_model.dart';
-import 'package:voxpollui/product/router/route_tree.dart';
+import 'package:voxpollui/product/initialize/router/route_tree.dart';
 
 mixin HomeMixin on State<HomeView> {
   late final _authCubit = context.read<AuthCubit>();
@@ -22,6 +22,8 @@ mixin HomeMixin on State<HomeView> {
   void onPageChanged(int index) {
     if (index == 0) {
       const FeedRoute().go(context);
+    } else if (index == 2) {
+      const CommunityRoute().go(context);
     } else if (index == 3) {
       const ProfileRoute().go(context);
     }
