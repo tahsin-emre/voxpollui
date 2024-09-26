@@ -7,8 +7,9 @@ final class PollModel extends Equatable {
     required this.id,
     required this.ownerId,
     this.title,
-    this.description,
     this.imageUrl,
+    this.categoryId,
+    this.isPublic,
     this.createdAt,
     this.endAt,
     this.options,
@@ -20,8 +21,9 @@ final class PollModel extends Equatable {
       id: snapshot.id,
       ownerId: data['ownerId'] as String,
       title: data['title'] as String?,
-      description: data['description'] as String?,
       imageUrl: data['imageUrl'] as String?,
+      categoryId: data['categoryId'] as String?,
+      isPublic: data['isPublic'] as bool?,
       createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
       endAt: (data['endAt'] as Timestamp?)?.toDate(),
       options: (data['options'] as List<dynamic>?)
@@ -36,8 +38,9 @@ final class PollModel extends Equatable {
       id: snapshot.id,
       ownerId: data['ownerId'] as String,
       title: data['title'] as String?,
-      description: data['description'] as String?,
       imageUrl: data['imageUrl'] as String?,
+      categoryId: data['categoryId'] as String?,
+      isPublic: data['isPublic'] as bool?,
       createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
       endAt: (data['endAt'] as Timestamp?)?.toDate(),
       options: (data['options'] as List<dynamic>?)
@@ -50,10 +53,11 @@ final class PollModel extends Equatable {
     return {
       'ownerId': ownerId,
       'title': title,
-      'description': description,
       'imageUrl': imageUrl,
-      'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : null,
-      'endAt': endAt != null ? Timestamp.fromDate(endAt!) : null,
+      'categoryId': categoryId,
+      'isPublic': isPublic,
+      'createdAt': createdAt,
+      'endAt': endAt,
       'options': options?.map((e) => e.toMap()).toList(),
     };
   }
@@ -61,8 +65,9 @@ final class PollModel extends Equatable {
   final String id;
   final String ownerId;
   final String? title;
-  final String? description;
   final String? imageUrl;
+  final String? categoryId;
+  final bool? isPublic;
   final DateTime? createdAt;
   final DateTime? endAt;
   final List<OptionModel>? options;
@@ -72,8 +77,9 @@ final class PollModel extends Equatable {
         id,
         ownerId,
         title,
-        description,
         imageUrl,
+        categoryId,
+        isPublic,
         createdAt,
         endAt,
         options,

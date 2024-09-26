@@ -1,5 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:voxpollui/features/poll/cubit/poll_cubit.dart';
+import 'package:voxpollui/features/poll/cubit/poll_state.dart';
 import 'package:voxpollui/features/poll/mixin/poll_details_mixin.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/initialize/models/poll/option_model.dart';
@@ -16,26 +20,22 @@ class _PollDetailsViewState extends State<PollDetailsView>
     with PollDetailsMixin {
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: isLoadingNotifier,
-      builder: (_, isLoading, __) {
-        if (isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(LocaleKeys.poll_title.tr()),
-          ),
-          body: Column(
-            children: [
-              Image.network(widget.poll.imageUrl ?? ''),
-              Text(widget.poll.title ?? ''),
-              Text(widget.poll.description ?? ''),
-              _PollOptions(options: widget.poll.options ?? []),
-              Text(userVoted.toString()),
-            ],
+    return BlocBuilder<PollCubit, PollState>(
+      builder: (_, state) {
+        return Skeletonizer(
+          enabled: state.isLoading,
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(LocaleKeys.poll_title.tr()),
+            ),
+            body: Column(
+              children: [
+                Image.network(widget.poll.imageUrl ?? ''),
+                Text(widget.poll.title ?? ''),
+                _PollOptions(options: widget.poll.options ?? []),
+                Text(userVoted.toString()),
+              ],
+            ),
           ),
         );
       },

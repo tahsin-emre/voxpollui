@@ -73,6 +73,7 @@ abstract class  LocaleKeys {
   static const poll_hour = 'poll.hour';
   static const poll_minute = 'poll.minute';
   static const poll_publish = 'poll.publish';
+  static const poll_pollPublished = 'poll.pollPublished';
   static const poll = 'poll';
   static const home_drawer_profile = 'home.drawer.profile';
   static const home_drawer_voxPollPro = 'home.drawer.voxPollPro';

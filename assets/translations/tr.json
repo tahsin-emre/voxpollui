@@ -78,7 +78,8 @@
         "day": "Gün",
         "hour": "Saat",
         "minute": "Dakika",
-        "publish": "Yayınla"
+        "publish": "Yayınla",
+        "pollPublished": "Anket Yayınlandı!"
     },
     "home": {
         "drawer": {
