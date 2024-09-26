@@ -12,6 +12,7 @@ import 'package:voxpollui/features/sub_features/common_widgets/custom_input_deco
 import 'package:voxpollui/features/sub_features/common_widgets/extended_elevated_button.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/initialize/models/poll/community_category_model.dart';
+import 'package:voxpollui/product/initialize/models/poll/option_model.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
@@ -51,11 +52,15 @@ class _PollCreateViewState extends State<PollCreateView> with PollCreateMixin {
                           fontFamily: FontConstants.gilroyBold,
                         ),
                       ),
-                      const SizedBox(height: WidgetSizes.xl),
                       _NameField(
                         titleCont,
                         imageUrlNotifier: imageUrlNotifier,
                         onImage: pickImage,
+                      ),
+                      const SizedBox(height: WidgetSizes.xl),
+                      _OptionsField(
+                        optionsNotifier: optionsNotifier,
+                        onChanged: (val) => optionsNotifier.value = val,
                       ),
                       const SizedBox(height: WidgetSizes.xl),
                       _CategoryField(
@@ -79,6 +84,63 @@ class _PollCreateViewState extends State<PollCreateView> with PollCreateMixin {
           );
         },
       ),
+    );
+  }
+}
+
+class _OptionsField extends StatelessWidget {
+  const _OptionsField({required this.optionsNotifier, required this.onChanged});
+  final ValueNotifier<List<OptionModel>> optionsNotifier;
+  final ValueChanged<List<OptionModel>> onChanged;
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder(
+      valueListenable: optionsNotifier,
+      builder: (_, optionsList, __) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              LocaleKeys.poll_options.tr(),
+              style: TextStyle(
+                fontSize: 18,
+                fontFamily: FontConstants.gilroyBold,
+              ),
+            ),
+            for (var i = 0; i < optionsList.length; i++)
+              TextField(
+                onChanged: (val) {
+                  optionsList[i] = optionsList[i].copyWith(optionText: val);
+                  onChanged(optionsList);
+                },
+                cursorColor: AppColor.primary,
+                decoration: CustomInputDecoration(
+                  labelText: i.toString(),
+                  suffixIcon: IconConstants.delete,
+                  suffixTap: () {
+                    optionsList.removeAt(i);
+                    onChanged(optionsList);
+                  },
+                ),
+              ),
+            ListTile(
+              onTap: () {
+                optionsList.add(
+                  OptionModel(
+                    id: optionsList.length.toString(),
+                    optionText: '',
+                    voteCount: 0,
+                  ),
+                );
+                optionsNotifier.value = optionsList;
+              },
+              title: Text(LocaleKeys.poll_addOption.tr()),
+              leading: IconConstants.add.toIcon,
+              contentPadding: PagePaddings.horS,
+            ),
+          ],
+        );
+      },
     );
   }
 }

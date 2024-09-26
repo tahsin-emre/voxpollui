@@ -27,6 +27,10 @@ mixin PollCreateMixin on State<PollCreateView> {
   @override
   void initState() {
     super.initState();
+    optionsNotifier.value = [
+      const OptionModel(id: '1', optionText: '', voteCount: 0),
+      const OptionModel(id: '2', optionText: '', voteCount: 0),
+    ];
     _pollCubit.getCategories();
   }
 
@@ -56,12 +60,13 @@ mixin PollCreateMixin on State<PollCreateView> {
       isPublic: isPublicNotifier.value,
       options: optionsNotifier.value,
     );
-    final response = await _pollCubit.createPoll(poll);
-    if (response == null) {
-      notifyFail();
-      return;
-    }
-    notifyAndPop();
+    print(poll);
+    // final response = await _pollCubit.createPoll(poll);
+    // if (response == null) {
+    //   notifyFail();
+    //   return;
+    // }
+    // notifyAndPop();
   }
 
   void notifyFail() {

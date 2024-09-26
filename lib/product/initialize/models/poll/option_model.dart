@@ -15,6 +15,18 @@ final class OptionModel extends Equatable {
     );
   }
 
+  OptionModel copyWith({
+    String? id,
+    String? optionText,
+    num? voteCount,
+  }) {
+    return OptionModel(
+      id: id ?? this.id,
+      optionText: optionText ?? this.optionText,
+      voteCount: voteCount ?? this.voteCount,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
