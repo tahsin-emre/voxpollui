@@ -16,12 +16,12 @@ final class UploadService extends BaseService {
     final uploadTask = ref.putFile(File(file.path));
     final snapshot = await uploadTask.whenComplete(() => null);
     final url = await snapshot.ref.getDownloadURL();
-    print(url);
     return url;
   }
 }
 
 enum UploadFolder {
   communityImage,
+  pollImage,
   userImage,
 }

@@ -65,7 +65,20 @@
     },
     "poll": {
         "title": "Anket",
-        "createPoll": "Anket Oluştur"
+        "createPoll": "Anket Oluştur",
+        "polls": "Anketler",
+        "pollTitle": "Anket Başlığı",
+        "options": "Seçenekler",
+        "addOption": "Seçenek Ekle",
+        "category": "Kategori",
+        "categoryHint": "Kategori Seç",
+        "public": "Herkese Açık",
+        "private": "Takipçilere Özel",
+        "pollTime": "Anket Süresi",
+        "day": "Gün",
+        "hour": "Saat",
+        "minute": "Dakika",
+        "publish": "Yayınla"
     },
     "home": {
         "drawer": {
