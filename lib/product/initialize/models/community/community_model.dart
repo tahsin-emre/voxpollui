@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 final class CommunityModel extends Equatable {
@@ -13,17 +12,16 @@ final class CommunityModel extends Equatable {
     this.managerList,
   });
 
-  factory CommunityModel.fromQDS(QueryDocumentSnapshot snapshot) {
-    final data = snapshot.data()! as Map<String, dynamic>;
+  factory CommunityModel.fromJson(Map<String, dynamic> json, String id) {
     return CommunityModel(
-      id: snapshot.id,
-      name: data['name'] as String?,
-      categoryId: data['categoryId'] as String?,
-      imageUrl: data['imageUrl'] as String?,
-      isPublic: data['isPublic'] as bool?,
-      memberCount: data['memberCount'] as num?,
-      pollCount: data['pollCount'] as num?,
-      managerList: data['managerList'] as List<dynamic>?,
+      id: id,
+      name: json['name'] as String?,
+      categoryId: json['categoryId'] as String?,
+      imageUrl: json['imageUrl'] as String?,
+      isPublic: json['isPublic'] as bool?,
+      memberCount: json['memberCount'] as num?,
+      pollCount: json['pollCount'] as num?,
+      managerList: json['managerList'] as List<dynamic>?,
     );
   }
 

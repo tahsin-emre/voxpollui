@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:voxpollui/product/initialize/models/community/community_category_model.dart';
 import 'package:voxpollui/product/initialize/models/community/community_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
@@ -26,16 +25,29 @@ final class CommunityService extends BaseService {
   Future<List<CommunityModel>> getCommunities() async {
     final response =
         await db.collection(FireStoreCollections.communities.name).get();
-    final communityList = response.docs.map(CommunityModel.fromQDS).toList();
+    final communityList = response.docs
+        .map((e) => CommunityModel.fromJson(e.data(), e.id))
+        .toList();
     return communityList;
   }
 
   Future<List<CommunityModel>> getUserCommunities(String userId) async {
-    final response = await db
+    final idListResponse = await db
         .collectionGroup(FireStoreCollections.members.name)
-        .where(FieldPath.documentId, isEqualTo: userId)
+        .where('userId', isEqualTo: userId)
         .get();
-    final communityList = response.docs.map(CommunityModel.fromQDS).toList();
+    final idList =
+        idListResponse.docs.map((e) => e.reference.parent.parent?.id).toList();
+    final communityList = <CommunityModel>[];
+    for (final id in idList) {
+      final response = await db
+          .collection(FireStoreCollections.communities.name)
+          .doc(id)
+          .get();
+      if (!response.exists) continue;
+      final community = CommunityModel.fromJson(response.data()!, response.id);
+      communityList.add(community);
+    }
     return communityList;
   }
 
