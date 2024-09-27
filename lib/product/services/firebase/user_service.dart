@@ -12,9 +12,12 @@ final class UserService extends BaseService {
   /// Return [UserModel] if the user exists, otherwise return null
   Future<UserModel?> getUser(String userId) async {
     try {
-      final response = await db.collection('users').doc(userId).get();
+      final response = await db
+          .collection(FireStoreCollections.users.name)
+          .doc(userId)
+          .get();
       if (response.exists) {
-        return UserModel.fromDS(response);
+        return UserModel.fromJson(response.data()!, response.id);
       }
       return null;
     } on Exception catch (e) {

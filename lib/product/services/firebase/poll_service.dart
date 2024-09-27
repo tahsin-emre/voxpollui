@@ -13,14 +13,15 @@ final class PollService extends BaseService {
   Future<List<PollModel>> getFeedPolls() async {
     ///Implement getPolls via Cloud Functions
     final polls = await db.collection(FireStoreCollections.polls.name).get();
-    return polls.docs.map(PollModel.fromQDS).toList();
+    return polls.docs.map((e) => PollModel.fromJson(e.data(), e.id)).toList();
   }
 
   ///Get Poll Details
   Future<PollModel?> getPoll(String pollId) async {
-    final poll =
+    final response =
         await db.collection(FireStoreCollections.polls.name).doc(pollId).get();
-    return PollModel.fromDS(poll);
+    if (!response.exists) return null;
+    return PollModel.fromJson(response.data()!, response.id);
   }
 
   ///Get Polls By User
@@ -29,7 +30,7 @@ final class PollService extends BaseService {
         .collection(FireStoreCollections.polls.name)
         .where('ownerId', isEqualTo: userId)
         .get();
-    return polls.docs.map(PollModel.fromQDS).toList();
+    return polls.docs.map((e) => PollModel.fromJson(e.data(), e.id)).toList();
   }
 
   ///Create Poll
