@@ -10,12 +10,13 @@ List<RouteBase> get $appRoutes => [
       $loginRoute,
       $registerRoute,
       $onboardRoute,
+      $communityCreateRoute,
       $homeShellRoute,
       $pollCreateRoute,
       $pollDetailsRoute,
       $splashRoute,
       $documentReaderRoute,
-      $communityCreateRoute,
+      $userProfileRoute,
     ];
 
 RouteBase get $loginRoute => GoRouteData.$route(
@@ -88,6 +89,29 @@ extension $OnboardRouteExtension on OnboardRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
+RouteBase get $communityCreateRoute => GoRouteData.$route(
+      path: '/community/create',
+      factory: $CommunityCreateRouteExtension._fromState,
+    );
+
+extension $CommunityCreateRouteExtension on CommunityCreateRoute {
+  static CommunityCreateRoute _fromState(GoRouterState state) =>
+      const CommunityCreateRoute();
+
+  String get location => GoRouteData.$location(
+        '/community/create',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
 RouteBase get $homeShellRoute => ShellRouteData.$route(
       navigatorKey: HomeShellRoute.$navigatorKey,
       factory: $HomeShellRouteExtension._fromState,
@@ -98,9 +122,14 @@ RouteBase get $homeShellRoute => ShellRouteData.$route(
           factory: $FeedRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: '/home/profile',
-          parentNavigatorKey: ProfileRoute.$parentNavigatorKey,
-          factory: $ProfileRouteExtension._fromState,
+          path: '/home/discover',
+          parentNavigatorKey: DiscoverRoute.$parentNavigatorKey,
+          factory: $DiscoverRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/home/myProfile',
+          parentNavigatorKey: MyProfileRoute.$parentNavigatorKey,
+          factory: $MyProfileRouteExtension._fromState,
         ),
         GoRouteData.$route(
           path: '/home/community',
@@ -132,11 +161,29 @@ extension $FeedRouteExtension on FeedRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $ProfileRouteExtension on ProfileRoute {
-  static ProfileRoute _fromState(GoRouterState state) => const ProfileRoute();
+extension $DiscoverRouteExtension on DiscoverRoute {
+  static DiscoverRoute _fromState(GoRouterState state) => const DiscoverRoute();
 
   String get location => GoRouteData.$location(
-        '/home/profile',
+        '/home/discover',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $MyProfileRouteExtension on MyProfileRoute {
+  static MyProfileRoute _fromState(GoRouterState state) =>
+      const MyProfileRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/myProfile',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -268,17 +315,21 @@ extension $DocumentReaderRouteExtension on DocumentReaderRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $communityCreateRoute => GoRouteData.$route(
-      path: '/community/create',
-      factory: $CommunityCreateRouteExtension._fromState,
+RouteBase get $userProfileRoute => GoRouteData.$route(
+      path: '/userProfile',
+      factory: $UserProfileRouteExtension._fromState,
     );
 
-extension $CommunityCreateRouteExtension on CommunityCreateRoute {
-  static CommunityCreateRoute _fromState(GoRouterState state) =>
-      const CommunityCreateRoute();
+extension $UserProfileRouteExtension on UserProfileRoute {
+  static UserProfileRoute _fromState(GoRouterState state) => UserProfileRoute(
+        uid: state.uri.queryParameters['uid']!,
+      );
 
   String get location => GoRouteData.$location(
-        '/community/create',
+        '/userProfile',
+        queryParams: {
+          'uid': uid,
+        },
       );
 
   void go(BuildContext context) => context.go(location);

@@ -8,6 +8,7 @@ final class CustomAppBar extends AppBar {
   CustomAppBar(
     BuildContext context, {
     String? title,
+    super.actions,
     super.key,
   }) : super(
           scrolledUnderElevation: 0,

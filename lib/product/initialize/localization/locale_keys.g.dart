@@ -50,6 +50,9 @@ abstract class  LocaleKeys {
   static const feed_hello = 'feed.hello';
   static const feed = 'feed';
   static const profile_title = 'profile.title';
+  static const profile_following = 'profile.following';
+  static const profile_followers = 'profile.followers';
+  static const profile_pollCount = 'profile.pollCount';
   static const profile = 'profile';
   static const onboard_appinfo1 = 'onboard.appinfo1';
   static const onboard_appinfo2 = 'onboard.appinfo2';
