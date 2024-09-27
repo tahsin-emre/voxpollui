@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/page_paddings.dart';
@@ -22,7 +21,7 @@ class ExtendedElevatedButton extends Container {
                       borderRadius: BorderRadius.circular(5), // Border radius
                     ),
                   ),
-                  child: Text(text.tr()),
+                  child: Text(text),
                 ),
               ),
             ],

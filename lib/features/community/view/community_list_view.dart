@@ -7,7 +7,7 @@ import 'package:voxpollui/features/community/cubit/community_state.dart';
 import 'package:voxpollui/features/community/mixin/community_list_mixin.dart';
 import 'package:voxpollui/features/community/widget/community_card.dart';
 import 'package:voxpollui/features/community/widget/my_community_card.dart';
-import 'package:voxpollui/features/sub_features/app_search/view/app_search_bar.dart';
+import 'package:voxpollui/features/sub_features/common_widgets/app_search_bar.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/extended_elevated_button.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
@@ -41,7 +41,7 @@ class _CommunityListViewState extends State<CommunityListView>
                 ),
                 ExtendedElevatedButton(
                   onPressed: navToCreate,
-                  text: LocaleKeys.community_createCommunity,
+                  text: LocaleKeys.community_createCommunity.tr(),
                 ),
                 Padding(
                   padding: PagePaddings.horL,

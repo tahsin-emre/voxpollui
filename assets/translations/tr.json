@@ -53,7 +53,14 @@
         "hello": "Merhaba, "
     },
     "profile": {
-        "title": "Profil"
+        "title": "Profil",
+        "following": "Takip Edilen",
+        "followers": "Takipçi",
+        "pollCount": "Açılan Anket",
+        "myParticipatedPolls": "Katıldığım Anketler",
+        "myCreatedPolls": "Oluşturduğum Anketler",
+        "follow": "Takip Et",
+        "unfollow": "Takip Ediliyor"
     },
     "onboard": {
         "appinfo1": "Bütün merak",

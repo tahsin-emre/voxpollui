@@ -22,6 +22,13 @@ final class PollService extends BaseService {
     return PollModel.fromDS(poll);
   }
 
+  ///Get Polls By User
+  Future<List<PollModel>> getPollsByUser(String userId) async {
+    final polls =
+        await db.collection('polls').where('ownerId', isEqualTo: userId).get();
+    return polls.docs.map(PollModel.fromQDS).toList();
+  }
+
   ///Create Poll
   Future<String?> createPoll(PollModel poll) async {
     try {

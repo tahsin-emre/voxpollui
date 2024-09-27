@@ -10,11 +10,14 @@ final class CommunityCubit extends Cubit<CommunityState> {
 
   Future<void> fetchCommunityList() async {
     emit(state.copyWith(isLoading: true));
+    final myCommunityList = await _communityService.getMyCommunities();
     final communityList = await _communityService.getCommunities();
+    communityList.removeWhere(myCommunityList.contains);
     final categoryList = await _communityService.getCommunityCategories();
     emit(
       state.copyWith(
         communityList: communityList,
+        myCommunityList: myCommunityList,
         categoryList: categoryList,
         isLoading: false,
       ),
