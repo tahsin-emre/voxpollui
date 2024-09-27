@@ -7,7 +7,6 @@ import 'package:voxpollui/product/services/firebase/poll_service.dart';
 mixin PollDetailsMixin on State<PollDetailsView> {
   late final _authCubit = context.read<AuthCubit>();
   late final _pollService = PollService();
-  final isLoadingNotifier = ValueNotifier<bool>(true);
   bool userVoted = false;
 
   @override
@@ -18,14 +17,6 @@ mixin PollDetailsMixin on State<PollDetailsView> {
 
   Future<void> getPollDetails() async {
     await checkUserVoted();
-    isLoadingNotifier.value = false;
-  }
-
-  Future<void> checkUserVoted() async {
-    userVoted = await _pollService.checkIfUserVoted(
-      pollId: widget.poll.id,
-      userId: _authCubit.state.user!.id,
-    );
   }
 
   Future<void> votePoll(String optionId) async {
@@ -36,5 +27,12 @@ mixin PollDetailsMixin on State<PollDetailsView> {
     );
     await checkUserVoted();
     setState(() {});
+  }
+
+  Future<void> checkUserVoted() async {
+    userVoted = await _pollService.checkIfUserVoted(
+      pollId: widget.poll.id,
+      userId: _authCubit.state.user!.id,
+    );
   }
 }

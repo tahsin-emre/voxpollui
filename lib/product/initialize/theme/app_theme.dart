@@ -7,6 +7,10 @@ final class AppTheme {
   static ThemeData get light {
     return ThemeData(
       primaryColor: AppColor.primary,
+      colorScheme: const ColorScheme.light().copyWith(
+        primary: AppColor.primary,
+        secondary: AppColor.secondary,
+      ),
       scaffoldBackgroundColor: AppColor.white,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       textTheme: const TextTheme(),

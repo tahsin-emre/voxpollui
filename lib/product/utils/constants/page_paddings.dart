@@ -24,4 +24,13 @@ final class PagePaddings {
 
   /// Value of 16.0
   static const EdgeInsets horL = EdgeInsets.symmetric(horizontal: 16);
+
+  /// Value of 8.0
+  static const EdgeInsets verS = EdgeInsets.symmetric(vertical: 8);
+
+  /// Value of 12.0
+  static const EdgeInsets verM = EdgeInsets.symmetric(vertical: 12);
+
+  /// Value of 16.0
+  static const EdgeInsets verL = EdgeInsets.symmetric(vertical: 16);
 }

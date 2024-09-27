@@ -1,3 +1,4 @@
+import 'package:voxpollui/product/initialize/models/poll/community_category_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
 import 'package:voxpollui/product/services/http/http_endpoints.dart';
@@ -15,6 +16,7 @@ final class PollService extends BaseService {
     return polls.docs.map(PollModel.fromQDS).toList();
   }
 
+  ///Get Poll Details
   Future<PollModel?> getPoll(String pollId) async {
     final poll = await db.collection('polls').doc(pollId).get();
     return PollModel.fromDS(poll);
@@ -28,6 +30,13 @@ final class PollService extends BaseService {
     } catch (e) {
       return null;
     }
+  }
+
+  ///Get Poll Categories
+  Future<List<PollCategoryModel>> getPollCategories() async {
+    final response = await db.collection('pollCategories').get();
+    final categoryList = response.docs.map(PollCategoryModel.fromQDS).toList();
+    return categoryList;
   }
 
   ///Check If User Voted

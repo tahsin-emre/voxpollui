@@ -16,9 +16,9 @@ final class CustomInputDecoration extends InputDecoration {
           ),
           enabledBorder: const UnderlineInputBorder(),
           suffix: suffixTap != null
-              ? IconButton(
-                  onPressed: suffixTap,
-                  icon: (suffixIcon ?? IconConstants.more).toIcon,
+              ? InkWell(
+                  onTap: suffixTap,
+                  child: (suffixIcon ?? IconConstants.more).toSmallIcon(),
                 )
               : null,
         );

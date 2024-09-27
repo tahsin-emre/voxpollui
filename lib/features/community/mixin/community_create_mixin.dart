@@ -35,6 +35,7 @@ mixin CommunityCreateMixin on State<CommunityCreateView> {
     );
     if (pickedFile == null) return;
     final imageUrl = await _uploadService.uploadImage(
+      userId: _authCubit.state.user?.id ?? 'Unknown User',
       file: pickedFile,
       folder: UploadFolder.communityImage,
     );
