@@ -7,3 +7,21 @@ abstract class BaseService {
   final auth = FirebaseAuth.instance;
   final storage = FirebaseStorage.instance;
 }
+
+enum FireStoreCollections {
+  //Top Level Collections
+  users,
+  polls,
+  pollCategories,
+  communities,
+  communityCategories,
+  //Sub Collections
+  votes,
+  followers,
+  following,
+  members,
+}
+
+enum FireStoreFields {
+  none,
+}

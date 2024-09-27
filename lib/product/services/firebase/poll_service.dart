@@ -1,4 +1,4 @@
-import 'package:voxpollui/product/initialize/models/poll/community_category_model.dart';
+import 'package:voxpollui/product/initialize/models/poll/poll_category_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
 import 'package:voxpollui/product/services/http/http_endpoints.dart';
@@ -12,27 +12,52 @@ final class PollService extends BaseService {
   ///Get Polls For Feed View
   Future<List<PollModel>> getFeedPolls() async {
     ///Implement getPolls via Cloud Functions
-    final polls = await db.collection('polls').get();
-    return polls.docs.map(PollModel.fromQDS).toList();
+    final polls = await db.collection(FireStoreCollections.polls.name).get();
+    return polls.docs.map((e) => PollModel.fromJson(e.data(), e.id)).toList();
   }
 
   ///Get Poll Details
   Future<PollModel?> getPoll(String pollId) async {
-    final poll = await db.collection('polls').doc(pollId).get();
-    return PollModel.fromDS(poll);
+    final response =
+        await db.collection(FireStoreCollections.polls.name).doc(pollId).get();
+    if (!response.exists) return null;
+    return PollModel.fromJson(response.data()!, response.id);
   }
 
   ///Get Polls By User
   Future<List<PollModel>> getPollsByUser(String userId) async {
-    final polls =
-        await db.collection('polls').where('ownerId', isEqualTo: userId).get();
-    return polls.docs.map(PollModel.fromQDS).toList();
+    final polls = await db
+        .collection(FireStoreCollections.polls.name)
+        .where('ownerId', isEqualTo: userId)
+        .get();
+    return polls.docs.map((e) => PollModel.fromJson(e.data(), e.id)).toList();
+  }
+
+  ///Get Polls Which User Participated
+  Future<List<PollModel>> getPollsParticipated(String userId) async {
+    final idListResponse = await db
+        .collectionGroup(FireStoreCollections.votes.name)
+        .where('userId', isEqualTo: userId)
+        .get();
+    final idList =
+        idListResponse.docs.map((e) => e.reference.parent.parent?.id).toList();
+    final pollList = <PollModel>[];
+    for (final id in idList) {
+      final response =
+          await db.collection(FireStoreCollections.polls.name).doc(id).get();
+      if (!response.exists) continue;
+      final community = PollModel.fromJson(response.data()!, response.id);
+      pollList.add(community);
+    }
+    return pollList;
   }
 
   ///Create Poll
   Future<String?> createPoll(PollModel poll) async {
     try {
-      final pollId = await db.collection('polls').add(poll.toMap());
+      final pollId = await db
+          .collection(FireStoreCollections.polls.name)
+          .add(poll.toMap());
       return pollId.id;
     } catch (e) {
       return null;
@@ -41,7 +66,8 @@ final class PollService extends BaseService {
 
   ///Get Poll Categories
   Future<List<PollCategoryModel>> getPollCategories() async {
-    final response = await db.collection('pollCategories').get();
+    final response =
+        await db.collection(FireStoreCollections.pollCategories.name).get();
     final categoryList = response.docs.map(PollCategoryModel.fromQDS).toList();
     return categoryList;
   }
@@ -52,9 +78,9 @@ final class PollService extends BaseService {
     required String userId,
   }) async {
     final vote = await db
-        .collection('polls')
+        .collection(FireStoreCollections.polls.name)
         .doc(pollId)
-        .collection('votes')
+        .collection(FireStoreCollections.votes.name)
         .doc(userId)
         .get();
     return vote.data()?['optionId'] as String?;

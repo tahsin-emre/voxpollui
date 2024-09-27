@@ -11,11 +11,13 @@ final class ProfileCubit extends Cubit<ProfileState> {
   Future<void> fetchUser(String userId) async {
     emit(state.copyWith(isLoading: true));
     final user = await _userService.getUser(userId);
-    final polls = await _pollService.getPollsByUser(userId);
+    final createdPolls = await _pollService.getPollsByUser(userId);
+    final participatedPolls = await _pollService.getPollsParticipated(userId);
     emit(
       state.copyWith(
         user: user,
-        polls: polls,
+        createdPolls: createdPolls,
+        participatedPolls: participatedPolls,
         isLoading: false,
       ),
     );

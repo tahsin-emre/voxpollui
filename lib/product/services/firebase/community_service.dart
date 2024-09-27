@@ -10,7 +10,9 @@ final class CommunityService extends BaseService {
   ///Create Community
   Future<bool> createCommunity(CommunityModel community) async {
     try {
-      await db.collection('communities').add(community.toMap());
+      await db
+          .collection(FireStoreCollections.communities.name)
+          .add(community.toMap());
       return true;
     } on Exception {
       return false;
@@ -21,19 +23,38 @@ final class CommunityService extends BaseService {
 
   ///Get Communities
   Future<List<CommunityModel>> getCommunities() async {
-    final response = await db.collection('communities').get();
-    final communityList = response.docs.map(CommunityModel.fromQDS).toList();
+    final response =
+        await db.collection(FireStoreCollections.communities.name).get();
+    final communityList = response.docs
+        .map((e) => CommunityModel.fromJson(e.data(), e.id))
+        .toList();
     return communityList;
   }
 
-  Future<List<CommunityModel>> getMyCommunities() async {
-    final response = await db.collection('communities').get();
-    final communityList = response.docs.map(CommunityModel.fromQDS).toList();
+  Future<List<CommunityModel>> getUserCommunities(String userId) async {
+    final idListResponse = await db
+        .collectionGroup(FireStoreCollections.members.name)
+        .where('userId', isEqualTo: userId)
+        .get();
+    final idList =
+        idListResponse.docs.map((e) => e.reference.parent.parent?.id).toList();
+    final communityList = <CommunityModel>[];
+    for (final id in idList) {
+      final response = await db
+          .collection(FireStoreCollections.communities.name)
+          .doc(id)
+          .get();
+      if (!response.exists) continue;
+      final community = CommunityModel.fromJson(response.data()!, response.id);
+      communityList.add(community);
+    }
     return communityList;
   }
 
   Future<List<CommunityCategoryModel>> getCommunityCategories() async {
-    final response = await db.collection('communityCategories').get();
+    final response = await db
+        .collection(FireStoreCollections.communityCategories.name)
+        .get();
     final categoryList =
         response.docs.map(CommunityCategoryModel.fromQDS).toList();
     return categoryList;

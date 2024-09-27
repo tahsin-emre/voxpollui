@@ -29,7 +29,11 @@ exports.votePoll = onRequest(
         return option;
       });
       await pollRef.collection("votes").doc(userId)
-          .set({"optionId": optionId, "createdAt": new Date()});
+          .set(
+              {"optionId": optionId,
+                "createdAt": new Date(),
+                "userId": userId},
+          );
       await pollRef.update({options: updatedOptions});
       res.status(200).send(true);
     },

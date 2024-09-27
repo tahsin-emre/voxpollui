@@ -15,35 +15,17 @@ final class PollModel extends Equatable {
     this.options,
   });
 
-  factory PollModel.fromQDS(QueryDocumentSnapshot snapshot) {
-    final data = snapshot.data()! as Map<String, dynamic>;
+  factory PollModel.fromJson(Map<String, dynamic> json, String id) {
     return PollModel(
-      id: snapshot.id,
-      ownerId: data['ownerId'] as String,
-      title: data['title'] as String?,
-      imageUrl: data['imageUrl'] as String?,
-      categoryId: data['categoryId'] as String?,
-      isPublic: data['isPublic'] as bool?,
-      createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
-      endAt: (data['endAt'] as Timestamp?)?.toDate(),
-      options: (data['options'] as List<dynamic>?)
-          ?.map((e) => OptionModel.fromMap(e as Map<String, dynamic>))
-          .toList(),
-    );
-  }
-
-  factory PollModel.fromDS(DocumentSnapshot snapshot) {
-    final data = snapshot.data()! as Map<String, dynamic>;
-    return PollModel(
-      id: snapshot.id,
-      ownerId: data['ownerId'] as String,
-      title: data['title'] as String?,
-      imageUrl: data['imageUrl'] as String?,
-      categoryId: data['categoryId'] as String?,
-      isPublic: data['isPublic'] as bool?,
-      createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
-      endAt: (data['endAt'] as Timestamp?)?.toDate(),
-      options: (data['options'] as List<dynamic>?)
+      id: id,
+      ownerId: json['ownerId'] as String,
+      title: json['title'] as String?,
+      imageUrl: json['imageUrl'] as String?,
+      categoryId: json['categoryId'] as String?,
+      isPublic: json['isPublic'] as bool?,
+      createdAt: (json['createdAt'] as Timestamp?)?.toDate(),
+      endAt: (json['endAt'] as Timestamp?)?.toDate(),
+      options: (json['options'] as List<dynamic>?)
           ?.map((e) => OptionModel.fromMap(e as Map<String, dynamic>))
           .toList(),
     );

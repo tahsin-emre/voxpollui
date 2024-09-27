@@ -34,7 +34,7 @@ final class _ProfileImageHeader extends StatelessWidget {
                       : null,
                   child: user.imageUrl == null
                       ? IconConstants.profile
-                          .toCustomIcon(size: 64, color: AppColor.secondary)
+                          .toCustomIcon(size: 64, color: AppColor.white)
                       : null,
                 ),
               ],
@@ -166,44 +166,26 @@ final class _ProfileTabNav extends StatelessWidget {
 }
 
 final class _ProfileTabView extends StatelessWidget {
-  const _ProfileTabView(this.pageNotifier, {required this.createdPolls});
+  const _ProfileTabView(
+    this.pageNotifier, {
+    required this.createdPolls,
+    required this.participatedPolls,
+  });
   final ValueNotifier<int> pageNotifier;
   final List<PollModel> createdPolls;
+  final List<PollModel> participatedPolls;
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: pageNotifier,
       builder: (_, page, __) {
-        if (page == 0) return const _ProfileParticipatedPolls();
-        if (page == 1) return _ProfileCreatedPolls(createdPolls);
-        return const SizedBox.shrink();
+        return Column(
+          children: [
+            if (page == 0) ...participatedPolls.map(PollTile.new),
+            if (page == 1) ...createdPolls.map(PollTile.new),
+          ],
+        );
       },
-    );
-  }
-}
-
-final class _ProfileCreatedPolls extends StatelessWidget {
-  const _ProfileCreatedPolls(this.polls);
-  final List<PollModel> polls;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ...polls.map(PollTile.new),
-      ],
-    );
-  }
-}
-
-final class _ProfileParticipatedPolls extends StatelessWidget {
-  const _ProfileParticipatedPolls();
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        Text('data'),
-      ],
     );
   }
 }

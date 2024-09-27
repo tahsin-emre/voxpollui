@@ -43,7 +43,7 @@ class _ProfileViewState extends State<ProfileView> with ProfileMixin {
                   if (user != null)
                     _ProfileInfo(
                       user,
-                      pollCount: state.polls?.length ?? 0,
+                      pollCount: state.createdPolls?.length ?? 0,
                       isOwn: isOwnProfile,
                     ),
                   const Divider(),
@@ -53,7 +53,8 @@ class _ProfileViewState extends State<ProfileView> with ProfileMixin {
                   ),
                   _ProfileTabView(
                     pageNotifier,
-                    createdPolls: state.polls ?? [],
+                    createdPolls: state.createdPolls ?? [],
+                    participatedPolls: state.participatedPolls ?? [],
                   ),
                 ],
               ),
