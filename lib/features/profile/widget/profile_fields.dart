@@ -34,7 +34,7 @@ final class _ProfileImageHeader extends StatelessWidget {
                       : null,
                   child: user.imageUrl == null
                       ? IconConstants.profile
-                          .toCustomIcon(size: 64, color: AppColor.secondary)
+                          .toCustomIcon(size: 64, color: AppColor.white)
                       : null,
                 ),
               ],

@@ -13,7 +13,6 @@ final class ProfileCubit extends Cubit<ProfileState> {
     final user = await _userService.getUser(userId);
     final createdPolls = await _pollService.getPollsByUser(userId);
     final participatedPolls = await _pollService.getPollsParticipated(userId);
-    print(participatedPolls.length);
     emit(
       state.copyWith(
         user: user,
