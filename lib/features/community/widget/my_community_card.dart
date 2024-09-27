@@ -22,8 +22,6 @@ final class MyCommunityCard extends StatelessWidget {
           Text('${community.name}'),
           const SizedBox(width: 4),
           const Icon(Icons.check_circle, color: AppColor.primary, size: 16),
-          const SizedBox(width: 4),
-          Text('@${community.name}', style: const TextStyle(fontSize: 12)),
         ],
       ),
       subtitle: Text(
