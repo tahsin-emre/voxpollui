@@ -118,5 +118,13 @@ abstract class  LocaleKeys {
   static const community_categoryNotFound = 'community.categoryNotFound';
   static const community_communityCreated = 'community.communityCreated';
   static const community = 'community';
+  static const discover_title = 'discover.title';
+  static const discover_communities = 'discover.communities';
+  static const discover_people = 'discover.people';
+  static const discover_polls = 'discover.polls';
+  static const discover_all = 'discover.all';
+  static const discover_showAll = 'discover.showAll';
+  static const discover_search = 'discover.search';
+  static const discover = 'discover';
 
 }

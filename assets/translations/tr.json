@@ -126,5 +126,14 @@
         "private": "Özel",
         "categoryNotFound": "Kategori bulunamadı",
         "communityCreated": "Topluluk Oluşturuldu!"
+    },
+    "discover": {
+        "title": "Keşfet",
+        "communities": "Topluluklar",
+        "people": "Kişiler",
+        "polls": "Anketler",
+        "all": "Tümü",
+        "showAll": "Tümünü Göster",
+        "search": "Ara"
     }
 }
