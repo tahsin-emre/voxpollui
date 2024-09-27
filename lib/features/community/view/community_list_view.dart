@@ -41,7 +41,7 @@ class _CommunityListViewState extends State<CommunityListView>
                 ),
                 ExtendedElevatedButton(
                   onPressed: navToCreate,
-                  text: LocaleKeys.community_createCommunity,
+                  text: LocaleKeys.community_createCommunity.tr(),
                 ),
                 Padding(
                   padding: PagePaddings.horL,

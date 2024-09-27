@@ -55,11 +55,22 @@ class _ProfileViewState extends State<ProfileView> with ProfileMixin {
               );
             },
           ),
-          Container(
-            color: Colors.white,
-            height: 100,
-            width: 500,
-          ),
+          // if (!isOwnProfile)
+          //   CustomAppBar(
+          //     context,
+          //     isTransparent: true,
+          //     title: '',
+          //   ),
+          // if (isOwnProfile)
+          //   AppBar(
+          //     backgroundColor: Colors.transparent,
+          //     actions: [
+          //       IconButton(
+          //         icon: IconConstants.settings.toIcon,
+          //         onPressed: () {},
+          //       ),
+          //     ],
+          //   ),
         ],
       ),
     );

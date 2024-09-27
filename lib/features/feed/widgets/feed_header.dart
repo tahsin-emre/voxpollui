@@ -5,7 +5,6 @@ import 'package:voxpollui/product/initialize/models/user_model.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
 import 'package:voxpollui/product/utils/constants/page_paddings.dart';
-import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
 
 class FeedHeader extends StatelessWidget {
   const FeedHeader({required this.user, required this.onDrawerTap, super.key});
@@ -41,15 +40,16 @@ class FeedHeader extends StatelessWidget {
             icon: IconConstants.notification.toIcon,
             onPressed: () {},
           ),
-          IconButton(
-            icon: user.imageUrl != null
-                ? Image.network(
-                    user.imageUrl!,
-                    width: WidgetSizes.x3L,
-                    height: WidgetSizes.x3L,
-                  )
-                : IconConstants.profile.toIcon,
-            onPressed: onDrawerTap,
+          GestureDetector(
+            onTap: onDrawerTap,
+            child: CircleAvatar(
+              radius: 25,
+              backgroundColor: Colors.black,
+              backgroundImage:
+                  user.imageUrl != null ? NetworkImage(user.imageUrl!) : null,
+              child:
+                  user.imageUrl == null ? IconConstants.profile.toIcon : null,
+            ),
           ),
         ],
       ),

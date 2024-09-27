@@ -83,7 +83,7 @@ class _PollCreateViewState extends State<PollCreateView> with PollCreateMixin {
                       ),
                       ExtendedElevatedButton(
                         onPressed: onSave,
-                        text: LocaleKeys.poll_publish,
+                        text: LocaleKeys.poll_publish.tr(),
                       ),
                     ],
                   ),

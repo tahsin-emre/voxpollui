@@ -73,7 +73,7 @@ class _PollTile extends StatelessWidget {
         ExtendedElevatedButton(
           onPressed: () => PollDetailsRoute(PollExtra(poll: poll, user: user))
               .push<void>(context),
-          text: LocaleKeys.base_join,
+          text: LocaleKeys.base_join.tr(),
         ),
       ],
     );

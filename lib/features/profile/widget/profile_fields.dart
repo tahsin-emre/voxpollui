@@ -48,12 +48,39 @@ final class _ProfileInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          user.name ?? '',
-          style: TextStyle(
-            fontSize: 28,
-            fontFamily: FontConstants.gilroyBold,
-          ),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  margin: PagePaddings.horL,
+                  padding: PagePaddings.horS,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: AppColor.black,
+                  ),
+                  child: Text(
+                    LocaleKeys.profile_follow.tr(),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppColor.white,
+                      fontFamily: FontConstants.gilroySemibold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              user.name ?? '',
+              style: TextStyle(
+                fontSize: 28,
+                fontFamily: FontConstants.gilroyBold,
+              ),
+            ),
+          ],
         ),
         Text(
           '@${user.userName}',
@@ -190,7 +217,11 @@ final class _TabNavBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: InkWell(
-        onTap: () => onTap(index),
+        onTap: () {
+          print(index);
+
+          onTap(index);
+        },
         child: Container(
           alignment: Alignment.center,
           width: double.infinity,
