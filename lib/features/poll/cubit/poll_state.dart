@@ -5,26 +5,35 @@ import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 final class PollState extends Equatable {
   const PollState({
     this.isLoading = false,
-    this.pollList,
+    this.selectedPoll,
+    this.feedList,
     this.categoryList,
   });
 
   PollState copyWith({
     bool? isLoading,
-    List<PollModel>? pollList,
+    PollModel? selectedPoll,
+    List<PollModel>? feedList,
     List<PollCategoryModel>? categoryList,
   }) {
     return PollState(
       isLoading: isLoading ?? this.isLoading,
-      pollList: pollList ?? this.pollList,
+      selectedPoll: selectedPoll ?? this.selectedPoll,
+      feedList: feedList ?? this.feedList,
       categoryList: categoryList ?? this.categoryList,
     );
   }
 
   final bool isLoading;
-  final List<PollModel>? pollList;
+  final PollModel? selectedPoll;
+  final List<PollModel>? feedList;
   final List<PollCategoryModel>? categoryList;
 
   @override
-  List<Object?> get props => [pollList, categoryList, isLoading];
+  List<Object?> get props => [
+        isLoading,
+        selectedPoll,
+        feedList,
+        categoryList,
+      ];
 }

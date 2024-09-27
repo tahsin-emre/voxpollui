@@ -1,13 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:voxpollui/features/profile/widget/user_tile.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/extended_elevated_button.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/initialize/models/user_model.dart';
+import 'package:voxpollui/product/initialize/router/route_tree.dart';
 import 'package:voxpollui/product/services/firebase/user_service.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
-import 'package:voxpollui/product/utils/constants/icon_constants.dart';
 import 'package:voxpollui/product/utils/constants/page_paddings.dart';
 import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
 
@@ -28,9 +30,9 @@ final class PollTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (user != null) _UserTile(user),
+                if (user != null) UserTile(user),
                 const SizedBox(height: 10),
-                _PollTile(poll),
+                if (user != null) _PollTile(poll, user),
               ],
             ),
           ),
@@ -41,10 +43,13 @@ final class PollTile extends StatelessWidget {
 }
 
 class _PollTile extends StatelessWidget {
-  const _PollTile(this.poll);
+  const _PollTile(this.poll, this.user);
   final PollModel poll;
+  final UserModel user;
   @override
   Widget build(BuildContext context) {
+    num userVoted = 0;
+    poll.options?.forEach((e) => userVoted += e.voteCount ?? 0);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -57,7 +62,7 @@ class _PollTile extends StatelessWidget {
         ),
         const SizedBox(height: WidgetSizes.s),
         Text(
-          '${poll.options?.length ?? 0} kişi katıldı',
+          LocaleKeys.poll_xUserJoined.tr(args: [userVoted.toString()]),
           style: TextStyle(
             fontSize: 14,
             color: AppColor.black,
@@ -66,74 +71,9 @@ class _PollTile extends StatelessWidget {
         ),
         const SizedBox(height: WidgetSizes.s),
         ExtendedElevatedButton(
-          onPressed: () {},
+          onPressed: () => PollDetailsRoute(PollExtra(poll: poll, user: user))
+              .push<void>(context),
           text: LocaleKeys.base_join,
-        ),
-      ],
-    );
-  }
-}
-
-final class _UserTile extends StatelessWidget {
-  const _UserTile(this.user);
-  final UserModel user;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GestureDetector(
-          onTap: () {},
-          child: CircleAvatar(
-            radius: 25,
-            backgroundColor: AppColor.black,
-            backgroundImage:
-                user.imageUrl != null ? NetworkImage(user.imageUrl!) : null,
-            child: user.imageUrl == null ? IconConstants.profile.toIcon : null,
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    user.name ?? '',
-                    style: TextStyle(
-                      fontFamily: FontConstants.gilroySemibold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  IconConstants.verify.toCustomIcon(size: 20),
-                  const SizedBox(width: 5),
-                  Text(
-                    '@${user.userName}',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColor.opposite,
-                      fontFamily: FontConstants.gilroySemibold,
-                    ),
-                  ),
-                ],
-              ),
-              Text(
-                '${user.followersCount} Takipçi',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: FontConstants.gilroyMedium,
-                ),
-              ),
-            ],
-          ),
-        ),
-        GestureDetector(
-          onTap: () {},
-          child: IconConstants.more.toIcon,
         ),
       ],
     );

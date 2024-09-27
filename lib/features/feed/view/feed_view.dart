@@ -29,7 +29,7 @@ class _FeedViewState extends State<FeedView> with FeedMixin {
               ),
               const SizedBox(height: WidgetSizes.l),
               BlocSelector<PollCubit, PollState, List<PollModel>?>(
-                selector: (state) => state.pollList,
+                selector: (state) => state.feedList,
                 builder: (_, polls) {
                   if (polls?.isEmpty ?? true) return const SizedBox.shrink();
                   return ListView.builder(
