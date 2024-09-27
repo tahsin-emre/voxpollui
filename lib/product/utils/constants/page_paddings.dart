@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 final class PagePaddings {
+  /// Value of 4.0
+  static const EdgeInsets allXS = EdgeInsets.all(4);
+
   /// Value of 8.0
   static const EdgeInsets allS = EdgeInsets.all(8);
 

@@ -56,7 +56,9 @@
         "title": "Profil",
         "following": "Takip Edilen",
         "followers": "Takipçi",
-        "pollCount": "Açılan Anket"
+        "pollCount": "Açılan Anket",
+        "myParticipatedPolls": "Katıldığım Anketler",
+        "myCreatedPolls": "Oluşturduğum Anketler"
     },
     "onboard": {
         "appinfo1": "Bütün merak",

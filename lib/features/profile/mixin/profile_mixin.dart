@@ -8,6 +8,7 @@ import 'package:voxpollui/product/initialize/router/route_tree.dart';
 mixin ProfileMixin on State<ProfileView> {
   late final _profileCubit = context.read<ProfileCubit>();
   late final _authCubit = context.read<AuthCubit>();
+  late final pageNotifier = ValueNotifier<int>(0);
   bool get isOwnProfile => widget.userId == null;
 
   @override
