@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
+import 'package:voxpollui/features/profile/cubit/profile_cubit.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/services/firebase/follower_service.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
@@ -18,6 +19,7 @@ final class FollowButton extends StatefulWidget {
 
 class _FollowButtonState extends State<FollowButton> {
   late final _authCubit = context.read<AuthCubit>();
+  late final _profileCubit = context.read<ProfileCubit>();
   final isLoadingNotifier = ValueNotifier<bool>(false);
   final _followerService = FollowerService();
   bool isFollowing = false;
@@ -46,28 +48,31 @@ class _FollowButtonState extends State<FollowButton> {
       valueListenable: isLoadingNotifier,
       builder: (_, isLoading, __) {
         return GestureDetector(
-          onTap: () {
+          onTap: () async {
             if (isLoading) return;
             isLoadingNotifier.value = true;
             final localUserId = _authCubit.state.user?.id;
             final targetUserId = widget.userId;
+            final Future<bool> process;
             if (isFollowing) {
-              _followerService.unfollowUser(
+              process = _followerService.unfollowUser(
                 localUserId: localUserId ?? '',
                 targetUserId: targetUserId,
               );
             } else {
-              _followerService.followUser(
+              process = _followerService.followUser(
                 localUserId: localUserId ?? '',
                 targetUserId: targetUserId,
               );
             }
-            setState(() => isFollowing = !isFollowing);
+            final response = await process;
+            if (!response) return;
+            await _profileCubit.fetchUser(targetUserId);
             isLoadingNotifier.value = false;
           },
           child: Container(
             margin: PagePaddings.horL,
-            padding: PagePaddings.horS,
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               border: Border.all(
@@ -75,16 +80,18 @@ class _FollowButtonState extends State<FollowButton> {
               ),
               color: isFollowing ? AppColor.white : AppColor.black,
             ),
-            child: Text(
-              isFollowing
-                  ? LocaleKeys.profile_unfollow.tr()
-                  : LocaleKeys.profile_follow.tr(),
-              style: TextStyle(
-                fontSize: 15,
-                color: isFollowing ? AppColor.black : AppColor.white,
-                fontFamily: FontConstants.gilroySemibold,
-              ),
-            ),
+            child: isLoading
+                ? const SizedBox.shrink()
+                : Text(
+                    isFollowing
+                        ? LocaleKeys.profile_unfollow.tr()
+                        : LocaleKeys.profile_follow.tr(),
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: isFollowing ? AppColor.black : AppColor.white,
+                      fontFamily: FontConstants.gilroySemibold,
+                    ),
+                  ),
           ),
         );
       },
