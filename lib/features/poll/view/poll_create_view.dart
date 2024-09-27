@@ -2,6 +2,7 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:voxpollui/features/poll/cubit/poll_cubit.dart';
@@ -18,6 +19,8 @@ import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
 import 'package:voxpollui/product/utils/constants/page_paddings.dart';
 import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
+
+part '../widget/poll_create_fields.dart';
 
 class PollCreateView extends StatefulWidget {
   const PollCreateView({super.key});
@@ -68,6 +71,12 @@ class _PollCreateViewState extends State<PollCreateView> with PollCreateMixin {
                         onChanged: (value) => categoryIdNotifier.value = value,
                       ),
                       const SizedBox(height: WidgetSizes.xl),
+                      _TimeField(
+                        dayCont: dayCont,
+                        hourCont: hourCont,
+                        minuteCont: minuteCont,
+                      ),
+                      const SizedBox(height: WidgetSizes.xl),
                       _PublicField(
                         valueNotifier: isPublicNotifier,
                         onChanged: (value) => isPublicNotifier.value = value,
@@ -84,191 +93,6 @@ class _PollCreateViewState extends State<PollCreateView> with PollCreateMixin {
           );
         },
       ),
-    );
-  }
-}
-
-class _OptionsField extends StatelessWidget {
-  const _OptionsField({required this.optionsNotifier, required this.onChanged});
-  final ValueNotifier<List<OptionModel>> optionsNotifier;
-  final ValueChanged<List<OptionModel>> onChanged;
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: optionsNotifier,
-      builder: (_, optionsList, __) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              LocaleKeys.poll_options.tr(),
-              style: TextStyle(
-                fontSize: 18,
-                fontFamily: FontConstants.gilroyBold,
-              ),
-            ),
-            for (var i = 0; i < optionsList.length; i++)
-              TextField(
-                onChanged: (val) {
-                  optionsList[i] = optionsList[i].copyWith(optionText: val);
-                  onChanged(optionsList);
-                },
-                cursorColor: AppColor.primary,
-                decoration: CustomInputDecoration(
-                  labelText: i.toString(),
-                  suffixIcon: IconConstants.delete,
-                  suffixTap: () {
-                    optionsList.removeAt(i);
-                    onChanged(optionsList);
-                  },
-                ),
-              ),
-            ListTile(
-              onTap: () {
-                optionsList.add(
-                  OptionModel(
-                    id: optionsList.length.toString(),
-                    optionText: '',
-                    voteCount: 0,
-                  ),
-                );
-                optionsNotifier.value = optionsList;
-              },
-              title: Text(LocaleKeys.poll_addOption.tr()),
-              leading: IconConstants.add.toIcon,
-              contentPadding: PagePaddings.horS,
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-final class _NameField extends StatelessWidget {
-  const _NameField(
-    this.controller, {
-    required this.imageUrlNotifier,
-    required this.onImage,
-  });
-  final TextEditingController controller;
-  final ValueListenable<String?> imageUrlNotifier;
-  final VoidCallback onImage;
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: imageUrlNotifier,
-      builder: (_, url, __) {
-        return Column(
-          children: [
-            if (url != null)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  url,
-                  fit: BoxFit.fitWidth,
-                  width: double.infinity,
-                ),
-              ),
-            TextField(
-              controller: controller,
-              cursorColor: AppColor.primary,
-              autofocus: true,
-              decoration: CustomInputDecoration(
-                labelText: LocaleKeys.poll_pollTitle.tr(),
-                suffixIcon: IconConstants.imageAdd,
-                suffixTap: onImage,
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-final class _CategoryField extends StatelessWidget {
-  const _CategoryField(this.categories, {required this.onChanged});
-  final List<PollCategoryModel> categories;
-  final ValueChanged<String> onChanged;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          LocaleKeys.community_category.tr(),
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: FontConstants.gilroyBold,
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(top: 8),
-          padding: PagePaddings.horS,
-          decoration: BoxDecoration(
-            border: Border.all(),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: CustomDropdown<PollCategoryModel>.search(
-            onChanged: (value) {
-              if (value == null) return;
-              onChanged(value.id);
-            },
-            items: categories,
-            listItemPadding: EdgeInsets.zero,
-            itemsListPadding: EdgeInsets.zero,
-            expandedHeaderPadding: EdgeInsets.zero,
-            closedHeaderPadding: EdgeInsets.zero,
-            hintText: LocaleKeys.community_categoryHint.tr(),
-            searchHintText: LocaleKeys.base_search.tr(),
-            noResultFoundText: LocaleKeys.community_categoryNotFound.tr(),
-            headerBuilder: (_, item, __) => ListTile(
-              title: Text(item.name ?? ''),
-            ),
-            listItemBuilder: (_, item, __, ___) {
-              return ListTile(
-                title: Text(item.name ?? ''),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-final class _PublicField extends StatelessWidget {
-  const _PublicField({required this.valueNotifier, required this.onChanged});
-  final ValueListenable<bool> valueNotifier;
-  final ValueChanged<bool> onChanged;
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: valueNotifier,
-      builder: (_, value, __) {
-        return Row(
-          children: [
-            Text(
-              value
-                  ? LocaleKeys.poll_public.tr()
-                  : LocaleKeys.poll_private.tr(),
-              style: TextStyle(
-                fontSize: 18,
-                fontFamily: FontConstants.gilroyBold,
-              ),
-            ),
-            const Spacer(),
-            Switch(
-              value: value,
-              onChanged: onChanged,
-              inactiveTrackColor: Colors.white,
-              activeColor: AppColor.primary,
-              inactiveThumbColor: AppColor.primary,
-            ),
-          ],
-        );
-      },
     );
   }
 }

@@ -22,4 +22,11 @@ extension IconConstantsExt on IconData {
       size: WidgetSizes.x3L,
     );
   }
+
+  Icon toSmallIcon() {
+    return Icon(
+      this,
+      size: WidgetSizes.xxl,
+    );
+  }
 }

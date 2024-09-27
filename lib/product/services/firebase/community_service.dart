@@ -26,6 +26,12 @@ final class CommunityService extends BaseService {
     return communityList;
   }
 
+  Future<List<CommunityModel>> getMyCommunities() async {
+    final response = await db.collection('communities').get();
+    final communityList = response.docs.map(CommunityModel.fromQDS).toList();
+    return communityList;
+  }
+
   Future<List<CommunityCategoryModel>> getCommunityCategories() async {
     final response = await db.collection('communityCategories').get();
     final categoryList =

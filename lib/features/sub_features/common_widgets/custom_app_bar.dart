@@ -6,6 +6,8 @@ import 'package:voxpollui/product/utils/constants/font_constants.dart';
 final class CustomAppBar extends AppBar {
   CustomAppBar(BuildContext context, {String? title, super.key})
       : super(
+          scrolledUnderElevation: 0,
+          forceMaterialTransparency: false,
           backgroundColor: AppColor.white,
           elevation: 0,
           title: Align(

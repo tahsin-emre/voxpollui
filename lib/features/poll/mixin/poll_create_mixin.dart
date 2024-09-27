@@ -18,18 +18,20 @@ mixin PollCreateMixin on State<PollCreateView> {
   final _uploadService = UploadService();
   final formKey = GlobalKey<FormState>();
   final titleCont = TextEditingController();
+  final dayCont = TextEditingController();
+  final hourCont = TextEditingController();
+  final minuteCont = TextEditingController();
   final imageUrlNotifier = ValueNotifier<String?>(null);
   final categoryIdNotifier = ValueNotifier<String?>(null);
   final isPublicNotifier = ValueNotifier<bool>(true);
-  final endTimeNotifier = ValueNotifier<DateTime?>(null);
   final optionsNotifier = ValueNotifier<List<OptionModel>>([]);
 
   @override
   void initState() {
     super.initState();
     optionsNotifier.value = [
+      const OptionModel(id: '0', optionText: '', voteCount: 0),
       const OptionModel(id: '1', optionText: '', voteCount: 0),
-      const OptionModel(id: '2', optionText: '', voteCount: 0),
     ];
     _pollCubit.getCategories();
   }
@@ -42,6 +44,7 @@ mixin PollCreateMixin on State<PollCreateView> {
     );
     if (pickedFile == null) return;
     final imageUrl = await _uploadService.uploadImage(
+      userId: _authCubit.state.user?.id ?? 'Unknown User',
       file: pickedFile,
       folder: UploadFolder.communityImage,
     );
@@ -49,24 +52,31 @@ mixin PollCreateMixin on State<PollCreateView> {
   }
 
   Future<void> onSave() async {
+    final endTime = DateTime.now().add(
+      Duration(
+        days: int.tryParse(dayCont.text) ?? 0,
+        hours: int.tryParse(hourCont.text) ?? 0,
+        minutes: int.tryParse(minuteCont.text) ?? 0,
+      ),
+    );
     final poll = PollModel(
       id: '',
       ownerId: _authCubit.state.user!.id,
       title: titleCont.text,
       createdAt: DateTime.now(),
-      endAt: endTimeNotifier.value,
+      endAt: endTime,
       imageUrl: imageUrlNotifier.value,
       categoryId: categoryIdNotifier.value,
       isPublic: isPublicNotifier.value,
       options: optionsNotifier.value,
     );
-    print(poll);
-    // final response = await _pollCubit.createPoll(poll);
-    // if (response == null) {
-    //   notifyFail();
-    //   return;
-    // }
-    // notifyAndPop();
+
+    final response = await _pollCubit.createPoll(poll);
+    if (response == null) {
+      notifyFail();
+      return;
+    }
+    notifyAndPop();
   }
 
   void notifyFail() {
@@ -79,5 +89,6 @@ mixin PollCreateMixin on State<PollCreateView> {
     context
       ..showSnackBar(LocaleKeys.poll_pollPublished.tr())
       ..pop();
+    //Go to the poll detail page added later.
   }
 }
