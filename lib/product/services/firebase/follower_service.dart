@@ -12,9 +12,9 @@ final class FollowerService extends BaseService {
     required String targetUserId,
   }) async {
     final response = await db
-        .collection('users')
+        .collection(FireStoreCollections.users.name)
         .doc(localUserId)
-        .collection('following')
+        .collection(FireStoreCollections.following.name)
         .doc(targetUserId)
         .get();
     if (response.exists) return true;

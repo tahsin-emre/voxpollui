@@ -12,27 +12,32 @@ final class PollService extends BaseService {
   ///Get Polls For Feed View
   Future<List<PollModel>> getFeedPolls() async {
     ///Implement getPolls via Cloud Functions
-    final polls = await db.collection('polls').get();
+    final polls = await db.collection(FireStoreCollections.polls.name).get();
     return polls.docs.map(PollModel.fromQDS).toList();
   }
 
   ///Get Poll Details
   Future<PollModel?> getPoll(String pollId) async {
-    final poll = await db.collection('polls').doc(pollId).get();
+    final poll =
+        await db.collection(FireStoreCollections.polls.name).doc(pollId).get();
     return PollModel.fromDS(poll);
   }
 
   ///Get Polls By User
   Future<List<PollModel>> getPollsByUser(String userId) async {
-    final polls =
-        await db.collection('polls').where('ownerId', isEqualTo: userId).get();
+    final polls = await db
+        .collection(FireStoreCollections.polls.name)
+        .where('ownerId', isEqualTo: userId)
+        .get();
     return polls.docs.map(PollModel.fromQDS).toList();
   }
 
   ///Create Poll
   Future<String?> createPoll(PollModel poll) async {
     try {
-      final pollId = await db.collection('polls').add(poll.toMap());
+      final pollId = await db
+          .collection(FireStoreCollections.polls.name)
+          .add(poll.toMap());
       return pollId.id;
     } catch (e) {
       return null;
@@ -41,7 +46,8 @@ final class PollService extends BaseService {
 
   ///Get Poll Categories
   Future<List<PollCategoryModel>> getPollCategories() async {
-    final response = await db.collection('pollCategories').get();
+    final response =
+        await db.collection(FireStoreCollections.pollCategories.name).get();
     final categoryList = response.docs.map(PollCategoryModel.fromQDS).toList();
     return categoryList;
   }
@@ -52,9 +58,9 @@ final class PollService extends BaseService {
     required String userId,
   }) async {
     final vote = await db
-        .collection('polls')
+        .collection(FireStoreCollections.polls.name)
         .doc(pollId)
-        .collection('votes')
+        .collection(FireStoreCollections.votes.name)
         .doc(userId)
         .get();
     return vote.data()?['optionId'] as String?;
