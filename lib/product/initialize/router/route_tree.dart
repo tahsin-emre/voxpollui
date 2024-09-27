@@ -7,7 +7,7 @@ import 'package:voxpollui/features/community/view/community_create_view.dart';
 import 'package:voxpollui/features/community/view/community_list_view.dart';
 import 'package:voxpollui/features/feed/view/feed_view.dart';
 import 'package:voxpollui/features/home/view/home_view.dart';
-import 'package:voxpollui/features/onboarding/view/onboard_view.dart';
+import 'package:voxpollui/features/sub_features/onboard/view/onboard_view.dart';
 import 'package:voxpollui/features/poll/view/poll_create_view.dart';
 import 'package:voxpollui/features/poll/view/poll_details_view.dart';
 import 'package:voxpollui/features/profile/view/profile_view.dart';
