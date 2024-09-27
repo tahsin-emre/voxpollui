@@ -1,4 +1,4 @@
-import 'package:voxpollui/product/initialize/models/poll/community_category_model.dart';
+import 'package:voxpollui/product/initialize/models/poll/poll_category_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
 import 'package:voxpollui/product/services/http/http_endpoints.dart';
@@ -31,6 +31,25 @@ final class PollService extends BaseService {
         .where('ownerId', isEqualTo: userId)
         .get();
     return polls.docs.map((e) => PollModel.fromJson(e.data(), e.id)).toList();
+  }
+
+  ///Get Polls Which User Participated
+  Future<List<PollModel>> getPollsParticipated(String userId) async {
+    final idListResponse = await db
+        .collectionGroup(FireStoreCollections.votes.name)
+        .where('userId', isEqualTo: userId)
+        .get();
+    final idList =
+        idListResponse.docs.map((e) => e.reference.parent.parent?.id).toList();
+    final pollList = <PollModel>[];
+    for (final id in idList) {
+      final response =
+          await db.collection(FireStoreCollections.polls.name).doc(id).get();
+      if (!response.exists) continue;
+      final community = PollModel.fromJson(response.data()!, response.id);
+      pollList.add(community);
+    }
+    return pollList;
   }
 
   ///Create Poll

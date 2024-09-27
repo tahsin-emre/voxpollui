@@ -6,29 +6,34 @@ final class ProfileState extends Equatable {
   const ProfileState({
     this.isLoading = false,
     this.user,
-    this.polls,
+    this.createdPolls,
+    this.participatedPolls,
   });
 
   ProfileState copyWith({
     bool? isLoading,
     UserModel? user,
-    List<PollModel>? polls,
+    List<PollModel>? createdPolls,
+    List<PollModel>? participatedPolls,
   }) {
     return ProfileState(
       isLoading: isLoading ?? this.isLoading,
       user: user ?? this.user,
-      polls: polls ?? this.polls,
+      createdPolls: createdPolls ?? this.createdPolls,
+      participatedPolls: participatedPolls ?? this.participatedPolls,
     );
   }
 
   final bool isLoading;
   final UserModel? user;
-  final List<PollModel>? polls;
+  final List<PollModel>? createdPolls;
+  final List<PollModel>? participatedPolls;
 
   @override
   List<Object?> get props => [
         isLoading,
         user,
-        polls,
+        createdPolls,
+        participatedPolls,
       ];
 }
