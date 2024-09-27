@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
 import 'package:voxpollui/features/home/view/home_view.dart';
@@ -14,12 +13,6 @@ mixin HomeMixin on State<HomeView> {
   void initState() {
     super.initState();
     user = _authCubit.state.user!;
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.black,
-        statusBarIconBrightness: Brightness.dark,
-      ),
-    );
   }
 
   void onAdd() {
