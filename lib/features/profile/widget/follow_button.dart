@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
 import 'package:voxpollui/features/profile/cubit/profile_cubit.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
