@@ -2,25 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
+import 'package:voxpollui/product/utils/constants/image_constants.dart';
 
 final class CustomAppBar extends AppBar {
-  CustomAppBar(BuildContext context, {String? title, super.key})
-      : super(
+  CustomAppBar(
+    BuildContext context, {
+    String? title,
+    super.key,
+  }) : super(
           scrolledUnderElevation: 0,
           forceMaterialTransparency: false,
           backgroundColor: AppColor.white,
           elevation: 0,
-          title: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              title ?? '',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontFamily: FontConstants.gilroyBold,
-              ),
-            ),
-          ),
+          centerTitle: true,
+          title: title == null
+              ? Image.asset(ImageConstants.poll)
+              : Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontFamily: FontConstants.gilroyBold,
+                  ),
+                ),
           leading: IconButton(
             padding: EdgeInsets.zero,
             icon: const Icon(Icons.arrow_back),

@@ -7,17 +7,23 @@ final class PollCubit extends Cubit<PollState> {
   PollCubit() : super(const PollState());
   final _pollService = PollService();
 
-  Future<void> getPolls() async {
+  Future<void> getFeedPolls() async {
     emit(state.copyWith(isLoading: true));
-    final polls = await _pollService.getPolls();
     final categoryList = await _pollService.getPollCategories();
+    final polls = await _pollService.getFeedPolls();
     emit(
       state.copyWith(
         isLoading: false,
-        pollList: polls,
+        feedList: polls,
         categoryList: categoryList,
       ),
     );
+  }
+
+  Future<void> getPoll(String pollId) async {
+    emit(state.copyWith(isLoading: true));
+    final poll = await _pollService.getPoll(pollId);
+    emit(state.copyWith(isLoading: false, selectedPoll: poll));
   }
 
   Future<String?> createPoll(PollModel poll) async {

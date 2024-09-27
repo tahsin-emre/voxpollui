@@ -10,7 +10,7 @@ final class PollService extends BaseService {
   static final PollService _instance = PollService._();
 
   ///Get Polls For Feed View
-  Future<List<PollModel>> getPolls() async {
+  Future<List<PollModel>> getFeedPolls() async {
     ///Implement getPolls via Cloud Functions
     final polls = await db.collection('polls').get();
     return polls.docs.map(PollModel.fromQDS).toList();
@@ -40,7 +40,7 @@ final class PollService extends BaseService {
   }
 
   ///Check If User Voted
-  Future<bool> checkIfUserVoted({
+  Future<String?> checkIfUserVoted({
     required String pollId,
     required String userId,
   }) async {
@@ -48,9 +48,9 @@ final class PollService extends BaseService {
         .collection('polls')
         .doc(pollId)
         .collection('votes')
-        .doc()
+        .doc(userId)
         .get();
-    return vote.exists;
+    return vote.data()?['optionId'] as String?;
   }
 
   ///Vote Poll

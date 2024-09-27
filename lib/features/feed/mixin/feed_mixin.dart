@@ -17,7 +17,7 @@ mixin FeedMixin on State<FeedView> {
   }
 
   Future<void> getFeed() async {
-    await _pollCubit.getPolls();
+    await _pollCubit.getFeedPolls();
   }
 
   void openDrawer() {

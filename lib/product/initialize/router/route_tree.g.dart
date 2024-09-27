@@ -197,7 +197,7 @@ RouteBase get $pollDetailsRoute => GoRouteData.$route(
 
 extension $PollDetailsRouteExtension on PollDetailsRoute {
   static PollDetailsRoute _fromState(GoRouterState state) => PollDetailsRoute(
-        state.extra as PollModel,
+        state.extra as PollExtra,
       );
 
   String get location => GoRouteData.$location(

@@ -29,6 +29,7 @@ dependencies:
   pinput: ^5.0.0
   skeletonizer: ^1.4.2
   animated_custom_dropdown: ^3.1.1
+  flutter_polls: ^0.1.6
 
 dev_dependencies:
   flutter_test:

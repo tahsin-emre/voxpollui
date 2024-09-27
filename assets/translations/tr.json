@@ -79,7 +79,13 @@
         "hour": "Saat",
         "minute": "Dakika",
         "publish": "Yayınla",
-        "pollPublished": "Anket Yayınlandı!"
+        "pollPublished": "Anket Yayınlandı!",
+        "xUserJoined": "{} Kullanıcı Katıldı",
+        "timeLeftText": "Kalan Süre",
+        "timeLeftDay": "{} Gün {} Saat {} Dakika Kaldı",
+        "timeLeftHour": "{} Saat {} Dakika Kaldı",
+        "timeLeftMinute": "{} Dakika Kaldı",
+        "voted": "Oy Kullanıldı"
     },
     "home": {
         "drawer": {
