@@ -37,7 +37,7 @@ exports.votePoll = onRequest(
 
 exports.followUser = onRequest(
     async (req, res) => {
-      // RequestBody {'userId':string, 'followerId':string
+      // RequestBody {'userId':string, 'followerId':string}
       const followerId = req.body.followerId;
       const userId = req.body.userId;
       const userRef = db.collection("users").doc(userId);
@@ -60,7 +60,7 @@ exports.followUser = onRequest(
 
 exports.unfollowUser = onRequest(
     async (req, res) => {
-      // RequestBody {'userId':string, 'followerId':string
+      // RequestBody {'userId':string, 'followerId':string}
       const followerId = req.body.followerId;
       const userId = req.body.userId;
       const userRef = db.collection("users").doc(userId);

@@ -1,49 +1,72 @@
 part of '../view/profile_view.dart';
 
 final class _ProfileImageHeader extends StatelessWidget {
-  const _ProfileImageHeader(this.user, {required this.hasAppBar});
+  const _ProfileImageHeader(this.user, {required this.isOwn});
   final UserModel user;
-  final bool hasAppBar;
+  final bool isOwn;
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: Alignment.bottomCenter,
       children: [
-        Column(
+        CustomAppBar(context),
+        Stack(
+          alignment: Alignment.bottomCenter,
           children: [
-            Image.network(
-              user.imageUrl ?? 'https://picsum.photos/200',
-              width: double.infinity,
-              height: WidgetSizes.maxiL,
-              fit: BoxFit.fitWidth,
+            Column(
+              children: [
+                Image.network(
+                  user.imageUrl ?? 'https://picsum.photos/200',
+                  width: double.infinity,
+                  height: WidgetSizes.maxiL,
+                  fit: BoxFit.fitWidth,
+                ),
+                const SizedBox(height: WidgetSizes.x4L),
+              ],
             ),
-            const SizedBox(height: WidgetSizes.x4L),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CircleAvatar(
+                  radius: 50,
+                  backgroundColor: AppColor.black,
+                  backgroundImage: user.imageUrl != null
+                      ? NetworkImage(user.imageUrl!)
+                      : null,
+                  child: user.imageUrl == null
+                      ? IconConstants.profile
+                          .toCustomIcon(size: 64, color: AppColor.secondary)
+                      : null,
+                ),
+              ],
+            ),
           ],
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundColor: AppColor.black,
-              backgroundImage:
-                  user.imageUrl != null ? NetworkImage(user.imageUrl!) : null,
-              child: user.imageUrl == null
-                  ? IconConstants.profile
-                      .toCustomIcon(size: 64, color: AppColor.secondary)
-                  : null,
-            ),
-          ],
-        ),
+        if (!isOwn)
+          CustomAppBar(
+            context,
+            isTransparent: true,
+            title: '',
+          ),
+        if (isOwn)
+          AppBar(
+            backgroundColor: Colors.transparent,
+            actions: [
+              IconButton(
+                icon: IconConstants.settings.toIcon,
+                onPressed: () {},
+              ),
+            ],
+          ),
       ],
     );
   }
 }
 
 final class _ProfileInfo extends StatelessWidget {
-  const _ProfileInfo(this.user, {required this.pollCount});
+  const _ProfileInfo(this.user, {required this.pollCount, required this.isOwn});
   final UserModel user;
   final num pollCount;
+  final bool isOwn;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,32 +74,15 @@ final class _ProfileInfo extends StatelessWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: () {},
-                child: Container(
-                  margin: PagePaddings.horL,
-                  padding: PagePaddings.horS,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: AppColor.black,
-                  ),
-                  child: Text(
-                    LocaleKeys.profile_follow.tr(),
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: AppColor.white,
-                      fontFamily: FontConstants.gilroySemibold,
-                    ),
-                  ),
-                ),
+            if (!isOwn)
+              Align(
+                alignment: Alignment.centerRight,
+                child: FollowButton(userId: user.id),
               ),
-            ),
             Text(
               user.name ?? '',
               style: TextStyle(
-                fontSize: 28,
+                fontSize: 22,
                 fontFamily: FontConstants.gilroyBold,
               ),
             ),
@@ -85,7 +91,7 @@ final class _ProfileInfo extends StatelessWidget {
         Text(
           '@${user.userName}',
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 14,
             color: AppColor.opposite,
             fontFamily: FontConstants.gilroySemibold,
           ),
@@ -93,7 +99,7 @@ final class _ProfileInfo extends StatelessWidget {
         Text(
           user.description ?? '',
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 14,
             color: AppColor.black,
             fontFamily: FontConstants.gilroyRegular,
           ),
@@ -159,7 +165,7 @@ final class _ProfileTabNav extends StatelessWidget {
   }
 }
 
-class _ProfileTabView extends StatelessWidget {
+final class _ProfileTabView extends StatelessWidget {
   const _ProfileTabView(this.pageNotifier, {required this.createdPolls});
   final ValueNotifier<int> pageNotifier;
   final List<PollModel> createdPolls;
@@ -217,11 +223,7 @@ final class _TabNavBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: InkWell(
-        onTap: () {
-          print(index);
-
-          onTap(index);
-        },
+        onTap: () => onTap(index),
         child: Container(
           alignment: Alignment.center,
           width: double.infinity,
