@@ -50,7 +50,7 @@ final class PollService extends BaseService {
         .collection('votes')
         .doc(userId)
         .get();
-    return vote.data()!['optionId'] as String?;
+    return vote.data()?['optionId'] as String?;
   }
 
   ///Vote Poll
