@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
 
 final class IconConstants {
@@ -13,6 +14,7 @@ final class IconConstants {
   static const search = Icons.search_outlined;
   static const more = Icons.more_vert_outlined;
   static const imageAdd = Icons.add_photo_alternate_outlined;
+  static const verify = Icons.verified;
 }
 
 extension IconConstantsExt on IconData {
@@ -27,6 +29,17 @@ extension IconConstantsExt on IconData {
     return Icon(
       this,
       size: WidgetSizes.xxl,
+    );
+  }
+
+  Icon toCustomIcon({
+    double size = WidgetSizes.x3L,
+    Color color = AppColor.primary,
+  }) {
+    return Icon(
+      this,
+      size: size,
+      color: color,
     );
   }
 }
