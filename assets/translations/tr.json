@@ -17,7 +17,8 @@
         "and": "ve",
         "join": "Katıl",
         "search": "Ara",
-        "somethingWentWrong": "Bir şeyler yanlış gitti"
+        "somethingWentWrong": "Bir şeyler yanlış gitti",
+        "pleaseFill": "Lütfen tüm alanları doldurun"
     },
     "auth": {
         "login": "Giriş Yap",
@@ -43,13 +44,22 @@
         "personalForm": {
             "personalInfo": "Kişisel Bilgiler",
             "subtitle": "Bazı bilgiler sonradan değiştirilemez.",
-            "subtitle2": "Lütfen doğru girdiğinizden emin olun."
+            "subtitle2": "Lütfen doğru girdiğinizden emin olun.",
+            "provinceNotFound": "İl bulunamadı",
+            "districtNotFound": "İlçe bulunamadı",
+            "interests": "İlgi Alanları",
+            "interestsHint": "10 adet seçebilir ve profilinizden güncelleyebilirsiniz."
         },
         "name": "İsim",
         "surname": "Soyisim",
         "email": "E-posta",
         "userName": "Kullanıcı Adı",
-        "password": "Şifre"
+        "province": "İl",
+        "district": "İlçe",
+        "dateOfBirth": "Doğum Tarihi",
+        "gender": "Cinsiyet",
+        "genderMale": "Erkek",
+        "genderFemale": "Kadın"
     },
     "feed": {
         "title": "Akış",
@@ -140,5 +150,23 @@
         "all": "Tümü",
         "showAll": "Tümünü Göster",
         "search": "Ara"
-    }
+    },
+    "politics": "Politika",
+    "sports": "Spor",
+    "history": "Tarih",
+    "music": "Müzik",
+    "technology": "Teknoloji",
+    "software": "Yazılım",
+    "automotive": "Otomotiv",
+    "football": "Futbol",
+    "nature": "Doğa",
+    "science": "Bilim",
+    "cinema": "Sinema",
+    "eSports": "E-Spor",
+    "fashion": "Moda",
+    "economy": "Ekonomi",
+    "socialMedia": "Sosyal Medya",
+    "enterprise": "Girişimcilik",
+    "food": "Gıda",
+    "decoration": "Dekorasyon"
 }

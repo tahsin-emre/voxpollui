@@ -11,6 +11,11 @@ final class AppTheme {
         primary: AppColor.primary,
         secondary: AppColor.secondary,
       ),
+      snackBarTheme: const SnackBarThemeData(
+        backgroundColor: AppColor.secondary,
+        behavior: SnackBarBehavior.floating,
+        contentTextStyle: TextStyle(color: AppColor.white),
+      ),
       scaffoldBackgroundColor: AppColor.white,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       textTheme: const TextTheme(),

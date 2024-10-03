@@ -19,6 +19,7 @@ abstract class  LocaleKeys {
   static const base_join = 'base.join';
   static const base_search = 'base.search';
   static const base_somethingWentWrong = 'base.somethingWentWrong';
+  static const base_pleaseFill = 'base.pleaseFill';
   static const base = 'base';
   static const auth_login = 'auth.login';
   static const auth_logout = 'auth.logout';
@@ -41,12 +42,21 @@ abstract class  LocaleKeys {
   static const auth_personalForm_personalInfo = 'auth.personalForm.personalInfo';
   static const auth_personalForm_subtitle = 'auth.personalForm.subtitle';
   static const auth_personalForm_subtitle2 = 'auth.personalForm.subtitle2';
+  static const auth_personalForm_provinceNotFound = 'auth.personalForm.provinceNotFound';
+  static const auth_personalForm_districtNotFound = 'auth.personalForm.districtNotFound';
+  static const auth_personalForm_interests = 'auth.personalForm.interests';
+  static const auth_personalForm_interestsHint = 'auth.personalForm.interestsHint';
   static const auth_personalForm = 'auth.personalForm';
   static const auth_name = 'auth.name';
   static const auth_surname = 'auth.surname';
   static const auth_email = 'auth.email';
   static const auth_userName = 'auth.userName';
-  static const auth_password = 'auth.password';
+  static const auth_province = 'auth.province';
+  static const auth_district = 'auth.district';
+  static const auth_dateOfBirth = 'auth.dateOfBirth';
+  static const auth_gender = 'auth.gender';
+  static const auth_genderMale = 'auth.genderMale';
+  static const auth_genderFemale = 'auth.genderFemale';
   static const auth = 'auth';
   static const feed_title = 'feed.title';
   static const feed_createPoll = 'feed.createPoll';
@@ -130,5 +140,23 @@ abstract class  LocaleKeys {
   static const discover_showAll = 'discover.showAll';
   static const discover_search = 'discover.search';
   static const discover = 'discover';
+  static const politics = 'politics';
+  static const sports = 'sports';
+  static const history = 'history';
+  static const music = 'music';
+  static const technology = 'technology';
+  static const software = 'software';
+  static const automotive = 'automotive';
+  static const football = 'football';
+  static const nature = 'nature';
+  static const science = 'science';
+  static const cinema = 'cinema';
+  static const eSports = 'eSports';
+  static const fashion = 'fashion';
+  static const economy = 'economy';
+  static const socialMedia = 'socialMedia';
+  static const enterprise = 'enterprise';
+  static const food = 'food';
+  static const decoration = 'decoration';
 
 }

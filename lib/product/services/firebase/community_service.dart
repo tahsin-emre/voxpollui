@@ -1,4 +1,4 @@
-import 'package:voxpollui/product/initialize/models/community/community_category_model.dart';
+import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/initialize/models/community/community_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
 
@@ -51,12 +51,12 @@ final class CommunityService extends BaseService {
     return communityList;
   }
 
-  Future<List<CommunityCategoryModel>> getCommunityCategories() async {
-    final response = await db
-        .collection(FireStoreCollections.communityCategories.name)
-        .get();
-    final categoryList =
-        response.docs.map(CommunityCategoryModel.fromQDS).toList();
+  Future<List<CategoryModel>> getCommunityCategories() async {
+    final response =
+        await db.collection(FireStoreCollections.categories.name).get();
+    final categoryList = response.docs
+        .map((e) => CategoryModel.fromMap(e.data(), e.id))
+        .toList();
     return categoryList;
   }
 

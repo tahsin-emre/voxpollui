@@ -161,7 +161,7 @@ class _TimeFieldState extends State<_TimeField> {
 
 final class _CategoryField extends StatelessWidget {
   const _CategoryField(this.categories, {required this.onChanged});
-  final List<PollCategoryModel> categories;
+  final List<CategoryModel> categories;
   final ValueChanged<String> onChanged;
   @override
   Widget build(BuildContext context) {
@@ -182,7 +182,7 @@ final class _CategoryField extends StatelessWidget {
             border: Border.all(),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: CustomDropdown<PollCategoryModel>.search(
+          child: CustomDropdown<CategoryModel>.search(
             onChanged: (value) {
               if (value == null) return;
               onChanged(value.id);
@@ -196,11 +196,11 @@ final class _CategoryField extends StatelessWidget {
             searchHintText: LocaleKeys.base_search.tr(),
             noResultFoundText: LocaleKeys.community_categoryNotFound.tr(),
             headerBuilder: (_, item, __) => ListTile(
-              title: Text(item.name ?? ''),
+              title: Text(item.name.tr()),
             ),
             listItemBuilder: (_, item, __, ___) {
               return ListTile(
-                title: Text(item.name ?? ''),
+                title: Text(item.name.tr()),
               );
             },
           ),

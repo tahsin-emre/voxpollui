@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:voxpollui/product/initialize/models/poll/poll_category_model.dart';
+import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 
 final class PollState extends Equatable {
@@ -14,7 +14,7 @@ final class PollState extends Equatable {
     bool? isLoading,
     PollModel? selectedPoll,
     List<PollModel>? feedList,
-    List<PollCategoryModel>? categoryList,
+    List<CategoryModel>? categoryList,
   }) {
     return PollState(
       isLoading: isLoading ?? this.isLoading,
@@ -27,7 +27,7 @@ final class PollState extends Equatable {
   final bool isLoading;
   final PollModel? selectedPoll;
   final List<PollModel>? feedList;
-  final List<PollCategoryModel>? categoryList;
+  final List<CategoryModel>? categoryList;
 
   @override
   List<Object?> get props => [

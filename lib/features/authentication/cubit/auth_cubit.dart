@@ -23,7 +23,7 @@ final class AuthCubit extends Cubit<AuthState> {
 
   /// Handle the current user phone as [String]
   String? handleCurrentUserPhone() {
-    return _authService.getCurrentUserId();
+    return _authService.getCurrentUserPhone();
   }
 
   /// Get the user by [userId] as [String]
