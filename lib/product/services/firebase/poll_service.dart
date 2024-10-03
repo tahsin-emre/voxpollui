@@ -1,4 +1,4 @@
-import 'package:voxpollui/product/initialize/models/poll/poll_category_model.dart';
+import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
 import 'package:voxpollui/product/services/http/http_endpoints.dart';
@@ -65,10 +65,12 @@ final class PollService extends BaseService {
   }
 
   ///Get Poll Categories
-  Future<List<PollCategoryModel>> getPollCategories() async {
+  Future<List<CategoryModel>> getPollCategories() async {
     final response =
-        await db.collection(FireStoreCollections.pollCategories.name).get();
-    final categoryList = response.docs.map(PollCategoryModel.fromQDS).toList();
+        await db.collection(FireStoreCollections.categories.name).get();
+    final categoryList = response.docs
+        .map((e) => CategoryModel.fromMap(e.data(), e.id))
+        .toList();
     return categoryList;
   }
 

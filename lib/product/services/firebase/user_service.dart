@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/initialize/models/user_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
 
@@ -34,6 +35,18 @@ final class UserService extends BaseService {
       return true;
     } on Exception {
       return false;
+    }
+  }
+
+  Future<List<CategoryModel>> getCategories() async {
+    try {
+      final response =
+          await db.collection(FireStoreCollections.categories.name).get();
+      return response.docs
+          .map((e) => CategoryModel.fromMap(e.data(), e.id))
+          .toList();
+    } on Exception {
+      return [];
     }
   }
 }

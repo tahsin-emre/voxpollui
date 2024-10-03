@@ -11,7 +11,7 @@ import 'package:voxpollui/features/sub_features/common_widgets/custom_app_bar.da
 import 'package:voxpollui/features/sub_features/common_widgets/custom_input_decoration.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/extended_elevated_button.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
-import 'package:voxpollui/product/initialize/models/community/community_category_model.dart';
+import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
@@ -128,7 +128,7 @@ final class _NameField extends StatelessWidget {
 
 final class _CategoryField extends StatelessWidget {
   const _CategoryField(this.categories, {required this.onChanged});
-  final List<CommunityCategoryModel> categories;
+  final List<CategoryModel> categories;
   final ValueChanged<String> onChanged;
   @override
   Widget build(BuildContext context) {
@@ -149,7 +149,7 @@ final class _CategoryField extends StatelessWidget {
             border: Border.all(),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: CustomDropdown<CommunityCategoryModel>.search(
+          child: CustomDropdown<CategoryModel>.search(
             onChanged: (value) {
               if (value == null) return;
               onChanged(value.id);
@@ -163,11 +163,11 @@ final class _CategoryField extends StatelessWidget {
             searchHintText: LocaleKeys.base_search.tr(),
             noResultFoundText: LocaleKeys.community_categoryNotFound.tr(),
             headerBuilder: (_, item, __) => ListTile(
-              title: Text(item.name ?? ''),
+              title: Text(item.name.tr()),
             ),
             listItemBuilder: (_, item, __, ___) {
               return ListTile(
-                title: Text(item.name ?? ''),
+                title: Text(item.name.tr()),
               );
             },
           ),

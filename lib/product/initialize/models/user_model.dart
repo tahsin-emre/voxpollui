@@ -17,6 +17,7 @@ final class UserModel extends Equatable {
     this.district,
     this.gender,
     this.dateOfBirth,
+    this.interests,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json, String id) {
@@ -37,6 +38,7 @@ final class UserModel extends Equatable {
       dateOfBirth: json['dateOfBirth'] == null
           ? null
           : (json['dateOfBirth'] as Timestamp).toDate(),
+      interests: json['interests'] as List<dynamic>?,
     );
   }
 
@@ -54,6 +56,7 @@ final class UserModel extends Equatable {
     num? district,
     num? gender,
     DateTime? dateOfBirth,
+    List<dynamic>? interests,
   }) {
     return UserModel(
       id: id,
@@ -70,6 +73,7 @@ final class UserModel extends Equatable {
       district: district ?? this.district,
       gender: gender ?? this.gender,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      interests: interests ?? this.interests,
     );
   }
 
@@ -89,6 +93,7 @@ final class UserModel extends Equatable {
       'gender': gender,
       'dateOfBirth':
           dateOfBirth != null ? Timestamp.fromDate(dateOfBirth!) : null,
+      'interests': interests,
     };
   }
 
@@ -106,6 +111,7 @@ final class UserModel extends Equatable {
   final num? district;
   final num? gender;
   final DateTime? dateOfBirth;
+  final List<dynamic>? interests;
 
   @override
   List<Object?> get props => [
@@ -123,5 +129,6 @@ final class UserModel extends Equatable {
         district,
         gender,
         dateOfBirth,
+        interests,
       ];
 }

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:voxpollui/product/initialize/models/community/community_category_model.dart';
+import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/initialize/models/community/community_model.dart';
 
 final class CommunityState extends Equatable {
@@ -14,7 +14,7 @@ final class CommunityState extends Equatable {
     bool? isLoading,
     List<CommunityModel>? communityList,
     List<CommunityModel>? myCommunityList,
-    List<CommunityCategoryModel>? categoryList,
+    List<CategoryModel>? categoryList,
   }) {
     return CommunityState(
       isLoading: isLoading ?? this.isLoading,
@@ -27,7 +27,7 @@ final class CommunityState extends Equatable {
   final bool isLoading;
   final List<CommunityModel>? communityList;
   final List<CommunityModel>? myCommunityList;
-  final List<CommunityCategoryModel>? categoryList;
+  final List<CategoryModel>? categoryList;
 
   @override
   List<Object?> get props => [

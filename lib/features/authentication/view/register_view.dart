@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/authentication/mixin/register_mixin.dart';
+import 'package:voxpollui/features/authentication/view/form_interests.dart';
 import 'package:voxpollui/features/authentication/view/form_personal.dart';
 import 'package:voxpollui/product/initialize/models/user_model.dart';
 
@@ -22,11 +23,14 @@ class _RegisterViewState extends State<RegisterView> with RegisterMixin {
               return FormPersonal(
                 initialUser: user,
                 onNext: onNext,
-                formKey: formKey,
               );
             }
             if (index == 1) {
-              return const SizedBox();
+              return FormInterests(
+                initialUser: user,
+                onNext: register,
+                categories: categoryList,
+              );
             }
             return const SizedBox();
           },

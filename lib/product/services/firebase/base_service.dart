@@ -12,9 +12,8 @@ enum FireStoreCollections {
   //Top Level Collections
   users,
   polls,
-  pollCategories,
+  categories,
   communities,
-  communityCategories,
   //Sub Collections
   votes,
   followers,

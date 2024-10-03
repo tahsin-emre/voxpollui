@@ -12,8 +12,8 @@ import 'package:voxpollui/features/sub_features/common_widgets/custom_app_bar.da
 import 'package:voxpollui/features/sub_features/common_widgets/custom_input_decoration.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/extended_elevated_button.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/option_model.dart';
-import 'package:voxpollui/product/initialize/models/poll/poll_category_model.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
