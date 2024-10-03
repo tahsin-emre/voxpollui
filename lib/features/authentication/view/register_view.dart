@@ -20,11 +20,13 @@ class _RegisterViewState extends State<RegisterView> with RegisterMixin {
           builder: (_, index, __) {
             if (index == 0) {
               return FormPersonal(
-                nameController: nameController,
-                surnameController: surnameController,
-                userNameController: userNameController,
-                emailController: emailController,
+                initialUser: user,
+                onNext: onNext,
+                formKey: formKey,
               );
+            }
+            if (index == 1) {
+              return const SizedBox();
             }
             return const SizedBox();
           },

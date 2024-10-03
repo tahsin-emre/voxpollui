@@ -43,13 +43,18 @@
         "personalForm": {
             "personalInfo": "Kişisel Bilgiler",
             "subtitle": "Bazı bilgiler sonradan değiştirilemez.",
-            "subtitle2": "Lütfen doğru girdiğinizden emin olun."
+            "subtitle2": "Lütfen doğru girdiğinizden emin olun.",
+            "provinceNotFound": "İl bulunamadı",
+            "districtNotFound": "İlçe bulunamadı"
         },
         "name": "İsim",
         "surname": "Soyisim",
         "email": "E-posta",
         "userName": "Kullanıcı Adı",
-        "password": "Şifre"
+        "province": "İl",
+        "district": "İlçe",
+        "dateOfBirth": "Doğum Tarihi",
+        "gender": "Cinsiyet"
     },
     "feed": {
         "title": "Akış",

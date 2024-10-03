@@ -42,6 +42,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/data/
     - assets/translations/
     - assets/image/
     - assets/image/bottom_nav_bar/
