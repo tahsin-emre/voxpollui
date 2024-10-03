@@ -5,6 +5,7 @@ import 'package:voxpollui/product/services/firebase/user_service.dart';
 import 'package:voxpollui/product/utils/extensions/context_ext.dart';
 
 mixin RegisterMixin on State<RegisterView> {
+  final indexNotifier = ValueNotifier<int>(0);
   final _userService = UserService();
   final nameController = TextEditingController();
   final surnameController = TextEditingController();

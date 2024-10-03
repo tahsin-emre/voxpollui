@@ -40,6 +40,11 @@
             "resend": "Lütfen cep telefonunuza gelen 6 haneli kodu girin.",
             "resendCode": "Eğer SMS gelmediyse tekrar göndermek için buraya tıklayın."
         },
+        "personalForm": {
+            "personalInfo": "Kişisel Bilgiler",
+            "subtitle": "Bazı bilgiler sonradan değiştirilemez.",
+            "subtitle2": "Lütfen doğru girdiğinizden emin olun."
+        },
         "name": "İsim",
         "surname": "Soyisim",
         "email": "E-posta",
@@ -126,5 +131,14 @@
         "private": "Özel",
         "categoryNotFound": "Kategori bulunamadı",
         "communityCreated": "Topluluk Oluşturuldu!"
+    },
+    "discover": {
+        "title": "Keşfet",
+        "communities": "Topluluklar",
+        "people": "Kişiler",
+        "polls": "Anketler",
+        "all": "Tümü",
+        "showAll": "Tümünü Göster",
+        "search": "Ara"
     }
 }

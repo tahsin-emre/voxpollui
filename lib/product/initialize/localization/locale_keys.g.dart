@@ -38,6 +38,10 @@ abstract class  LocaleKeys {
   static const auth_otpForm_resend = 'auth.otpForm.resend';
   static const auth_otpForm_resendCode = 'auth.otpForm.resendCode';
   static const auth_otpForm = 'auth.otpForm';
+  static const auth_personalForm_personalInfo = 'auth.personalForm.personalInfo';
+  static const auth_personalForm_subtitle = 'auth.personalForm.subtitle';
+  static const auth_personalForm_subtitle2 = 'auth.personalForm.subtitle2';
+  static const auth_personalForm = 'auth.personalForm';
   static const auth_name = 'auth.name';
   static const auth_surname = 'auth.surname';
   static const auth_email = 'auth.email';
@@ -118,5 +122,13 @@ abstract class  LocaleKeys {
   static const community_categoryNotFound = 'community.categoryNotFound';
   static const community_communityCreated = 'community.communityCreated';
   static const community = 'community';
+  static const discover_title = 'discover.title';
+  static const discover_communities = 'discover.communities';
+  static const discover_people = 'discover.people';
+  static const discover_polls = 'discover.polls';
+  static const discover_all = 'discover.all';
+  static const discover_showAll = 'discover.showAll';
+  static const discover_search = 'discover.search';
+  static const discover = 'discover';
 
 }
