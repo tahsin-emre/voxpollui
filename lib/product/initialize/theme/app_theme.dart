@@ -7,6 +7,8 @@ final class AppTheme {
   static ThemeData get light {
     return ThemeData(
       primaryColor: AppColor.primary,
+      scaffoldBackgroundColor: AppColor.white,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
       colorScheme: const ColorScheme.light().copyWith(
         primary: AppColor.primary,
         secondary: AppColor.secondary,
@@ -16,9 +18,6 @@ final class AppTheme {
         behavior: SnackBarBehavior.floating,
         contentTextStyle: TextStyle(color: AppColor.white),
       ),
-      scaffoldBackgroundColor: AppColor.white,
-      visualDensity: VisualDensity.adaptivePlatformDensity,
-      textTheme: const TextTheme(),
     );
   }
 
@@ -27,6 +26,15 @@ final class AppTheme {
       primaryColor: AppColor.primary,
       scaffoldBackgroundColor: AppColor.black,
       visualDensity: VisualDensity.adaptivePlatformDensity,
+      colorScheme: const ColorScheme.dark().copyWith(
+        primary: AppColor.primary,
+        secondary: AppColor.secondary,
+      ),
+      snackBarTheme: const SnackBarThemeData(
+        backgroundColor: AppColor.secondary,
+        behavior: SnackBarBehavior.floating,
+        contentTextStyle: TextStyle(color: AppColor.white),
+      ),
     );
   }
 }
