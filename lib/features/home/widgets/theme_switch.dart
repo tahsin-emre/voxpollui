@@ -1,8 +1,5 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:voxpollui/features/settings/cubit/settings_cubit.dart';
-import 'package:voxpollui/features/settings/cubit/settings_state.dart';
-import 'package:voxpollui/product/initialize/theme/app_theme.dart';
 
 class ThemeSwitch extends StatefulWidget {
   const ThemeSwitch({super.key});
@@ -14,16 +11,20 @@ class ThemeSwitch extends StatefulWidget {
 class _ThemeSwitchState extends State<ThemeSwitch> {
   @override
   Widget build(BuildContext context) {
+    final themeOf = AdaptiveTheme.of(context);
     return Align(
       alignment: Alignment.centerRight,
-      child: BlocBuilder<SettingsCubit, SettingsState>(
-        builder: (_, state) {
+      child: ValueListenableBuilder(
+        valueListenable: themeOf.modeChangeNotifier,
+        builder: (_, mode, __) {
           return Switch(
-            value: state.theme == AppTheme.light,
-            onChanged: (newValue) {
-              context
-                  .read<SettingsCubit>()
-                  .changeTheme(newValue ? AppTheme.light : AppTheme.dark);
+            value: mode == AdaptiveThemeMode.light,
+            onChanged: (value) {
+              if (value) {
+                themeOf.setLight();
+                return;
+              }
+              themeOf.setDark();
             },
           );
         },
