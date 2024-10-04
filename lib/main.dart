@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,5 +20,6 @@ void main() async {
   await SharedService.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(MainLocalization(child: const MainApp()));
+  final theme = await AdaptiveTheme.getThemeMode();
+  runApp(MainLocalization(child: MainApp(initialTheme: theme)));
 }
