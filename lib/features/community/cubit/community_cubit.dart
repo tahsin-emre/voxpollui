@@ -40,4 +40,18 @@ final class CommunityCubit extends Cubit<CommunityState> {
     // await _communityService.joinCommunity(userId, communityId);
     await fetchCommunityList(userId);
   }
+
+  Future<void> getPolls(String communityId) async {
+    final allPolls = await _communityService.getCommunityPolls(communityId);
+    final selectedNewPolls =
+        allPolls.where((e) => e.endAt!.isBefore(DateTime.now())).toList();
+    final selectedOldPolls =
+        allPolls.where((e) => e.endAt!.isAfter(DateTime.now())).toList();
+    emit(
+      state.copyWith(
+        selectedNewPolls: selectedNewPolls,
+        selectedOldPolls: selectedOldPolls,
+      ),
+    );
+  }
 }

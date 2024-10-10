@@ -4,11 +4,12 @@ final class CommunityModel extends Equatable {
   const CommunityModel({
     required this.id,
     this.name,
+    this.userName,
+    this.description,
     this.categoryId,
     this.imageUrl,
     this.isPublic,
     this.memberCount,
-    this.pollCount,
     this.managerList,
   });
 
@@ -16,11 +17,12 @@ final class CommunityModel extends Equatable {
     return CommunityModel(
       id: id,
       name: json['name'] as String?,
+      userName: json['userName'] as String?,
+      description: json['description'] as String?,
       categoryId: json['categoryId'] as String?,
       imageUrl: json['imageUrl'] as String?,
       isPublic: json['isPublic'] as bool?,
       memberCount: json['memberCount'] as num?,
-      pollCount: json['pollCount'] as num?,
       managerList: json['managerList'] as List<dynamic>?,
     );
   }
@@ -28,11 +30,12 @@ final class CommunityModel extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
+      'userName': userName,
+      'description': description,
       'imageUrl': imageUrl,
       'categoryId': categoryId,
       'isPublic': isPublic,
       'memberCount': memberCount,
-      'pollCount': pollCount,
       'managerList': managerList,
     };
   }
@@ -40,43 +43,47 @@ final class CommunityModel extends Equatable {
   CommunityModel copyWith({
     String? id,
     String? name,
+    String? userName,
+    String? description,
     String? imageUrl,
     String? categoryId,
     bool? isPublic,
     num? memberCount,
-    num? pollCount,
     List<dynamic>? managerList,
   }) {
     return CommunityModel(
       id: id ?? this.id,
       name: name ?? this.name,
+      userName: userName ?? this.userName,
+      description: description ?? this.description,
       categoryId: categoryId ?? this.categoryId,
       imageUrl: imageUrl ?? this.imageUrl,
       isPublic: isPublic ?? this.isPublic,
       memberCount: memberCount ?? this.memberCount,
-      pollCount: pollCount ?? this.pollCount,
       managerList: managerList ?? this.managerList,
     );
   }
 
   final String id;
   final String? name;
+  final String? userName;
+  final String? description;
   final String? imageUrl;
   final String? categoryId;
   final bool? isPublic;
   final num? memberCount;
-  final num? pollCount;
   final List<dynamic>? managerList;
 
   @override
   List<Object?> get props => [
         id,
         name,
+        userName,
+        description,
         categoryId,
         imageUrl,
         isPublic,
         memberCount,
-        pollCount,
         managerList,
       ];
 }

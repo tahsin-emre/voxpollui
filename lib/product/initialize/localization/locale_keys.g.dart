@@ -71,6 +71,7 @@ abstract class  LocaleKeys {
   static const profile_myCreatedPolls = 'profile.myCreatedPolls';
   static const profile_follow = 'profile.follow';
   static const profile_unfollow = 'profile.unfollow';
+  static const profile_members = 'profile.members';
   static const profile = 'profile';
   static const onboard_appinfo1 = 'onboard.appinfo1';
   static const onboard_appinfo2 = 'onboard.appinfo2';
@@ -123,6 +124,7 @@ abstract class  LocaleKeys {
   static const community_recomendedCommunities = 'community.recomendedCommunities';
   static const community_xMembers = 'community.xMembers';
   static const community_communityName = 'community.communityName';
+  static const community_communityDescription = 'community.communityDescription';
   static const community_category = 'community.category';
   static const community_categoryHint = 'community.categoryHint';
   static const community_invitePeople = 'community.invitePeople';
@@ -131,6 +133,8 @@ abstract class  LocaleKeys {
   static const community_private = 'community.private';
   static const community_categoryNotFound = 'community.categoryNotFound';
   static const community_communityCreated = 'community.communityCreated';
+  static const community_activePolls = 'community.activePolls';
+  static const community_oldPolls = 'community.oldPolls';
   static const community = 'community';
   static const discover_title = 'discover.title';
   static const discover_communities = 'discover.communities';

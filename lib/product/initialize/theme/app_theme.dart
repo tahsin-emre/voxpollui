@@ -42,7 +42,7 @@ final class AppTheme {
       ),
       drawerTheme: const DrawerThemeData(
         elevation: 0,
-        backgroundColor: AppColor.black,
+        backgroundColor: Color.fromARGB(255, 45, 45, 45),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(20),

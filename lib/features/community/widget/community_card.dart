@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/initialize/models/community/community_model.dart';
+import 'package:voxpollui/product/initialize/router/route_tree.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
 
@@ -11,7 +12,7 @@ final class CommunityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      onTap: () => CommunityDetailRoute(community).push<void>(context),
       leading: CircleAvatar(
         backgroundImage: community.imageUrl != null
             ? NetworkImage(community.imageUrl!)

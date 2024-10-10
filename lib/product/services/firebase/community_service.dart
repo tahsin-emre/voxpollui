@@ -1,5 +1,6 @@
 import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/initialize/models/community/community_model.dart';
+import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
 
 final class CommunityService extends BaseService {
@@ -60,7 +61,13 @@ final class CommunityService extends BaseService {
     return categoryList;
   }
 
-  ///Get Communities With Keyword
-
-  ///Get Community By Id
+  Future<List<PollModel>> getCommunityPolls(String communityId) async {
+    final response = await db
+        .collection(FireStoreCollections.polls.name)
+        .where(FireStoreFields.ownerId.name, isEqualTo: communityId)
+        .get();
+    final pollList =
+        response.docs.map((e) => PollModel.fromJson(e.data(), e.id)).toList();
+    return pollList;
+  }
 }

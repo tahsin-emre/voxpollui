@@ -40,6 +40,10 @@ final class PollTile extends StatelessWidget {
       },
     );
   }
+
+  Future<UserModel?> getUser(String userId) async {
+    return UserService().getUser(userId);
+  }
 }
 
 class _PollTile extends StatelessWidget {

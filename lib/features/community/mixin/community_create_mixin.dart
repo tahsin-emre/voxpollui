@@ -17,6 +17,7 @@ mixin CommunityCreateMixin on State<CommunityCreateView> {
   final _uploadService = UploadService();
   final formKey = GlobalKey<FormState>();
   final nameCont = TextEditingController();
+  final descriptionCont = TextEditingController();
   final isPublicNotifier = ValueNotifier<bool>(true);
   final imageUrlNotifier = ValueNotifier<String?>(null);
   final categoryIdNotifier = ValueNotifier<String?>(null);
@@ -46,12 +47,13 @@ mixin CommunityCreateMixin on State<CommunityCreateView> {
     final community = CommunityModel(
       id: '',
       name: nameCont.text,
+      userName: nameCont.text.replaceAll(' ', '').toLowerCase(),
+      description: descriptionCont.text,
       isPublic: isPublicNotifier.value,
       imageUrl: imageUrlNotifier.value,
       categoryId: categoryIdNotifier.value,
       managerList: [_authCubit.state.user!.id],
-      memberCount: 1,
-      pollCount: 0,
+      memberCount: 0,
     );
     final response = await _communityCubit.createCommunity(community);
     if (response) {
