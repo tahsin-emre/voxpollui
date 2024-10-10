@@ -15,9 +15,10 @@ import 'package:voxpollui/features/profile/view/profile_view.dart';
 import 'package:voxpollui/features/splash/view/splash_view.dart';
 import 'package:voxpollui/features/sub_features/documents/view/document_reader_view.dart';
 import 'package:voxpollui/features/sub_features/onboard/view/onboard_view.dart';
-import 'package:voxpollui/product/initialize/models/community/community_model.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/owner_model.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/user_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
-import 'package:voxpollui/product/initialize/models/user_model.dart';
 import 'package:voxpollui/product/initialize/router/app_router.dart';
 
 part 'route_tree.g.dart';

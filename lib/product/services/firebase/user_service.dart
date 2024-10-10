@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:voxpollui/product/initialize/models/category_model.dart';
-import 'package:voxpollui/product/initialize/models/user_model.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/user_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
 
 final class UserService extends BaseService {

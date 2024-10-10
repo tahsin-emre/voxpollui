@@ -7,7 +7,7 @@ import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
 import 'package:voxpollui/features/community/cubit/community_cubit.dart';
 import 'package:voxpollui/features/community/view/community_create_view.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
-import 'package:voxpollui/product/initialize/models/community/community_model.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
 import 'package:voxpollui/product/services/firebase/upload_service.dart';
 import 'package:voxpollui/product/utils/extensions/context_ext.dart';
 

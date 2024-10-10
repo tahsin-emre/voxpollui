@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/user_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
-import 'package:voxpollui/product/initialize/models/user_model.dart';
 
 final class ProfileState extends Equatable {
   const ProfileState({

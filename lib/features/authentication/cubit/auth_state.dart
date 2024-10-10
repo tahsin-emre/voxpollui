@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:voxpollui/product/initialize/models/user_model.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/user_model.dart';
 
 final class AuthState extends Equatable {
   const AuthState({

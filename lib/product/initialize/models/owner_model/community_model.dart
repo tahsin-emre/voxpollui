@@ -1,16 +1,18 @@
 import 'package:equatable/equatable.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/owner_model.dart';
 
-final class CommunityModel extends Equatable {
-  const CommunityModel({
-    required this.id,
-    this.name,
-    this.userName,
-    this.description,
+final class CommunityModel extends OwnerModel with EquatableMixin {
+  CommunityModel({
+    required super.id,
+    super.name,
+    super.userName,
+    super.description,
+    super.imageUrl,
+    super.isPublic,
     this.categoryId,
-    this.imageUrl,
-    this.isPublic,
     this.memberCount,
     this.managerList,
+    super.ownerType = OwnerType.community,
   });
 
   factory CommunityModel.fromJson(Map<String, dynamic> json, String id) {
@@ -33,8 +35,8 @@ final class CommunityModel extends Equatable {
       'userName': userName,
       'description': description,
       'imageUrl': imageUrl,
-      'categoryId': categoryId,
       'isPublic': isPublic,
+      'categoryId': categoryId,
       'memberCount': memberCount,
       'managerList': managerList,
     };
@@ -46,8 +48,8 @@ final class CommunityModel extends Equatable {
     String? userName,
     String? description,
     String? imageUrl,
-    String? categoryId,
     bool? isPublic,
+    String? categoryId,
     num? memberCount,
     List<dynamic>? managerList,
   }) {
@@ -56,22 +58,16 @@ final class CommunityModel extends Equatable {
       name: name ?? this.name,
       userName: userName ?? this.userName,
       description: description ?? this.description,
-      categoryId: categoryId ?? this.categoryId,
       imageUrl: imageUrl ?? this.imageUrl,
       isPublic: isPublic ?? this.isPublic,
+      categoryId: categoryId ?? this.categoryId,
       memberCount: memberCount ?? this.memberCount,
       managerList: managerList ?? this.managerList,
     );
   }
 
-  final String id;
-  final String? name;
-  final String? userName;
-  final String? description;
-  final String? imageUrl;
-  final String? categoryId;
-  final bool? isPublic;
   final num? memberCount;
+  final String? categoryId;
   final List<dynamic>? managerList;
 
   @override
@@ -80,9 +76,9 @@ final class CommunityModel extends Equatable {
         name,
         userName,
         description,
-        categoryId,
         imageUrl,
         isPublic,
+        categoryId,
         memberCount,
         managerList,
       ];

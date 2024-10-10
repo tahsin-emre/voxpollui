@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:voxpollui/product/initialize/models/category_model.dart';
-import 'package:voxpollui/product/initialize/models/community/community_model.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 
 final class CommunityState extends Equatable {

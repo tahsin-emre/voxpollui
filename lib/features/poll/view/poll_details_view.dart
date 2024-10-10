@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:voxpollui/features/poll/mixin/poll_details_mixin.dart';
-import 'package:voxpollui/features/profile/widget/user_tile.dart';
+import 'package:voxpollui/features/poll/widget/poll_user_tile.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/custom_app_bar.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/owner_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
-import 'package:voxpollui/product/initialize/models/user_model.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/page_paddings.dart';
 import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
@@ -15,9 +15,9 @@ import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
 part '../widget/poll_details_fields.dart';
 
 class PollDetailsView extends StatefulWidget {
-  const PollDetailsView({required this.poll, required this.user, super.key});
+  const PollDetailsView({required this.poll, required this.owner, super.key});
   final PollModel poll;
-  final UserModel user;
+  final OwnerModel owner;
   @override
   State<PollDetailsView> createState() => _PollDetailsViewState();
 }
@@ -36,9 +36,8 @@ class _PollDetailsViewState extends State<PollDetailsView>
             child: Padding(
               padding: PagePaddings.horL,
               child: ListView(
-                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  UserTile(widget.user),
+                  PollUserTile(widget.owner),
                   const SizedBox(height: WidgetSizes.xxl),
                   if (imageUrl != null)
                     Center(
