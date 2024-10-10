@@ -84,3 +84,24 @@ exports.unfollowUser = onRequest(
       res.status(200).send(true);
     },
 );
+
+exports.joinCommunity = onRequest(
+    async (req, res) => {
+    // RequestBody {'userId':string, 'communityId':string}
+      const communityId = req.body.communityId;
+      const userId = req.body.userId;
+      const communityRef = db.collection("communities").doc(communityId);
+      const membersRef = communityRef.collection("members");
+      const communitySnap = await communityRef.get();
+      const communityData = communitySnap.data();
+      await membersRef.doc(userId).set({
+        "createdAt": new Date(),
+        "userId": userId,
+      });
+      await communityRef.update({
+        "memberCount": communityData.memberCount + 1,
+      });
+      res.status(200).send(true);
+    },
+);
+

@@ -2,6 +2,7 @@ enum HttpEndpoints {
   votepoll,
   followuser,
   unfollowuser,
+  joincommunity,
 }
 
 extension HttpEndpointsExtension on HttpEndpoints {

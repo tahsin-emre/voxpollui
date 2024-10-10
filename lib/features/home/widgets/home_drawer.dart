@@ -15,7 +15,6 @@ class HomeDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: AppColor.white,
       child: SafeArea(
         child: Column(
           children: [

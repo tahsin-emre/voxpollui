@@ -13,6 +13,16 @@ final class AppTheme {
         primary: AppColor.primary,
         secondary: AppColor.secondary,
       ),
+      drawerTheme: const DrawerThemeData(
+        elevation: 0,
+        backgroundColor: AppColor.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
+      ),
       snackBarTheme: const SnackBarThemeData(
         backgroundColor: AppColor.secondary,
         behavior: SnackBarBehavior.floating,
@@ -29,6 +39,16 @@ final class AppTheme {
       colorScheme: const ColorScheme.dark().copyWith(
         primary: AppColor.primary,
         secondary: AppColor.secondary,
+      ),
+      drawerTheme: const DrawerThemeData(
+        elevation: 0,
+        backgroundColor: AppColor.black,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
       ),
       snackBarTheme: const SnackBarThemeData(
         backgroundColor: AppColor.secondary,
