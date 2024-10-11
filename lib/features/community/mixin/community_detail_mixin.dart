@@ -8,6 +8,12 @@ mixin CommunityDetailMixin on State<CommunityDetailView> {
   final isLoadingNotifier = ValueNotifier<bool>(false);
   final pageNotifier = ValueNotifier<int>(0);
 
+  @override
+  void initState() {
+    super.initState();
+    getPolls();
+  }
+
   Future<void> getPolls() async {
     isLoadingNotifier.value = true;
     await _communityCubit.getPolls(widget.community.id);

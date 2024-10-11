@@ -7,6 +7,7 @@ import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/owner_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/initialize/router/route_tree.dart';
+import 'package:voxpollui/product/services/firebase/community_service.dart';
 import 'package:voxpollui/product/services/firebase/user_service.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
@@ -42,7 +43,16 @@ final class PollTile extends StatelessWidget {
   }
 
   Future<OwnerModel?> getUser() async {
-    return UserService().getUser(poll.ownerId);
+    final userResponse = await UserService().getUser(poll.ownerId);
+    if (userResponse != null) {
+      return userResponse;
+    }
+    final communityResponse =
+        await CommunityService().getCommunity(poll.ownerId);
+    if (communityResponse != null) {
+      return communityResponse;
+    }
+    return null;
   }
 }
 
