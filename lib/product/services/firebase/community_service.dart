@@ -1,6 +1,9 @@
 import 'package:voxpollui/product/initialize/models/category_model.dart';
-import 'package:voxpollui/product/initialize/models/community/community_model.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
+import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
+import 'package:voxpollui/product/services/http/http_endpoints.dart';
+import 'package:voxpollui/product/services/http/http_service.dart';
 
 final class CommunityService extends BaseService {
   factory CommunityService() => _instance;
@@ -20,6 +23,14 @@ final class CommunityService extends BaseService {
   }
 
   ///Join Community
+  Future<bool> joinCommunity(String userId, String communityId) async {
+    final response = await HttpService().sendRequest(
+      HttpEndpoints.joincommunity,
+      {'userId': userId, 'communityId': communityId},
+    );
+    if (response.body == 'true') return true;
+    return false;
+  }
 
   ///Get Communities
   Future<List<CommunityModel>> getCommunities() async {
@@ -31,6 +42,7 @@ final class CommunityService extends BaseService {
     return communityList;
   }
 
+  ///Get Comminities which user is member of
   Future<List<CommunityModel>> getUserCommunities(String userId) async {
     final idListResponse = await db
         .collectionGroup(FireStoreCollections.members.name)
@@ -51,6 +63,7 @@ final class CommunityService extends BaseService {
     return communityList;
   }
 
+  ///Get Categories
   Future<List<CategoryModel>> getCommunityCategories() async {
     final response =
         await db.collection(FireStoreCollections.categories.name).get();
@@ -60,7 +73,25 @@ final class CommunityService extends BaseService {
     return categoryList;
   }
 
-  ///Get Communities With Keyword
+  ///Get Polls of a Community
+  Future<List<PollModel>> getCommunityPolls(String communityId) async {
+    final response = await db
+        .collection(FireStoreCollections.polls.name)
+        .where(FireStoreFields.ownerId.name, isEqualTo: communityId)
+        .get();
+    final pollList =
+        response.docs.map((e) => PollModel.fromJson(e.data(), e.id)).toList();
+    return pollList;
+  }
 
-  ///Get Community By Id
+  ///Get Community by Id
+  Future<CommunityModel?> getCommunity(String communityId) async {
+    final response = await db
+        .collection(FireStoreCollections.communities.name)
+        .doc(communityId)
+        .get();
+    if (!response.exists) return null;
+    final community = CommunityModel.fromJson(response.data()!, response.id);
+    return community;
+  }
 }

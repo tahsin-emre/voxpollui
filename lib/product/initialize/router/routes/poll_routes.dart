@@ -17,15 +17,17 @@ class PollDetailsRoute extends GoRouteData {
   final PollExtra $extra;
   @override
   TPage buildPage(BuildContext context, GoRouterState state) {
-    return TPage(child: PollDetailsView(poll: $extra.poll, user: $extra.user));
+    return TPage(
+      child: PollDetailsView(poll: $extra.poll, owner: $extra.owner),
+    );
   }
 }
 
 final class PollExtra extends Equatable {
-  const PollExtra({required this.poll, required this.user});
+  const PollExtra({required this.poll, required this.owner});
   final PollModel poll;
-  final UserModel user;
+  final OwnerModel owner;
 
   @override
-  List<Object?> get props => [poll, user];
+  List<Object?> get props => [poll, owner];
 }

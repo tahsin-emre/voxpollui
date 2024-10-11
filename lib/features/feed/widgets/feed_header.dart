@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
-import 'package:voxpollui/product/initialize/models/user_model.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/user_model.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
 import 'package:voxpollui/product/utils/constants/page_paddings.dart';

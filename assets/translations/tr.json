@@ -75,7 +75,8 @@
         "myParticipatedPolls": "Katıldığım Anketler",
         "myCreatedPolls": "Oluşturduğum Anketler",
         "follow": "Takip Et",
-        "unfollow": "Takip Ediliyor"
+        "unfollow": "Takip Ediliyor",
+        "members": "Katılımcılar"
     },
     "onboard": {
         "appinfo1": "Bütün merak",
@@ -133,14 +134,17 @@
         "recomendedCommunities": "Önerilen Topluluklar",
         "xMembers": "{} Katılımcı",
         "communityName": "Topluluk Adı",
+        "communityDescription": "Topluluk Açıklaması",
         "category": "Kategori",
         "categoryHint": "Kategori Seç",
-        "invitePeople": "İnsanları Dave Edin",
+        "invitePeople": "İnsanları Davet Edin",
         "invitePeopleHint": "Kullanıcı Adı",
         "public": "Herkese Açık",
         "private": "Özel",
         "categoryNotFound": "Kategori bulunamadı",
-        "communityCreated": "Topluluk Oluşturuldu!"
+        "communityCreated": "Topluluk Oluşturuldu!",
+        "activePolls": "Aktif Anketler",
+        "oldPolls": "Geçmiş Anketler"
     },
     "discover": {
         "title": "Keşfet",

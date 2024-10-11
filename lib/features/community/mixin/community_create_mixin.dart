@@ -7,7 +7,7 @@ import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
 import 'package:voxpollui/features/community/cubit/community_cubit.dart';
 import 'package:voxpollui/features/community/view/community_create_view.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
-import 'package:voxpollui/product/initialize/models/community/community_model.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
 import 'package:voxpollui/product/services/firebase/upload_service.dart';
 import 'package:voxpollui/product/utils/extensions/context_ext.dart';
 
@@ -17,6 +17,7 @@ mixin CommunityCreateMixin on State<CommunityCreateView> {
   final _uploadService = UploadService();
   final formKey = GlobalKey<FormState>();
   final nameCont = TextEditingController();
+  final descriptionCont = TextEditingController();
   final isPublicNotifier = ValueNotifier<bool>(true);
   final imageUrlNotifier = ValueNotifier<String?>(null);
   final categoryIdNotifier = ValueNotifier<String?>(null);
@@ -46,12 +47,13 @@ mixin CommunityCreateMixin on State<CommunityCreateView> {
     final community = CommunityModel(
       id: '',
       name: nameCont.text,
+      userName: nameCont.text.replaceAll(' ', '').toLowerCase(),
+      description: descriptionCont.text,
       isPublic: isPublicNotifier.value,
       imageUrl: imageUrlNotifier.value,
       categoryId: categoryIdNotifier.value,
       managerList: [_authCubit.state.user!.id],
-      memberCount: 1,
-      pollCount: 0,
+      memberCount: 0,
     );
     final response = await _communityCubit.createCommunity(community);
     if (response) {

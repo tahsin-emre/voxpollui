@@ -38,12 +38,13 @@ final class DiscoverRoute extends GoRouteData {
 }
 
 final class MyProfileRoute extends GoRouteData {
-  const MyProfileRoute();
+  const MyProfileRoute(this.$extra);
   static const String path = '/home/myProfile';
   static final $parentNavigatorKey = AppRouter.homeShellKey;
+  final String $extra;
   @override
   TPage buildPage(BuildContext context, GoRouterState state) {
-    return TPage(child: const ProfileView());
+    return TPage(child: ProfileView(userId: $extra));
   }
 }
 

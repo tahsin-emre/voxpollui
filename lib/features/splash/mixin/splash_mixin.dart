@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
 import 'package:voxpollui/features/splash/view/splash_view.dart';
-import 'package:voxpollui/product/initialize/models/user_model.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/user_model.dart';
 import 'package:voxpollui/product/initialize/router/route_tree.dart';
 
 mixin SplashMixin on State<SplashView> {

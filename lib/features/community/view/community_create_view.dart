@@ -58,6 +58,15 @@ class _CommunityCreateViewState extends State<CommunityCreateView>
                         onImage: pickImage,
                       ),
                       const SizedBox(height: WidgetSizes.xl),
+                      TextField(
+                        controller: descriptionCont,
+                        cursorColor: AppColor.primary,
+                        decoration: CustomInputDecoration(
+                          labelText:
+                              LocaleKeys.community_communityDescription.tr(),
+                        ),
+                      ),
+                      const SizedBox(height: WidgetSizes.xl),
                       _CategoryField(
                         categories,
                         onChanged: (val) => categoryIdNotifier.value = val,

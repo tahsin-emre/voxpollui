@@ -1,23 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/owner_model.dart';
 
-final class UserModel extends Equatable {
-  const UserModel({
-    required this.id,
-    required this.phone,
+final class UserModel extends OwnerModel with EquatableMixin {
+  UserModel({
+    required super.id,
+    super.imageUrl,
+    super.description,
+    super.userName,
+    super.name,
+    super.isPublic,
+    this.phone,
     this.followersCount = 0,
     this.followingCount = 0,
-    this.name,
     this.surname,
-    this.userName,
     this.email,
-    this.imageUrl,
-    this.description,
     this.province,
     this.district,
     this.gender,
     this.dateOfBirth,
     this.interests,
+    super.ownerType = OwnerType.user,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json, String id) {
@@ -43,13 +46,14 @@ final class UserModel extends Equatable {
   }
 
   UserModel copyWith({
-    String? phone,
     String? name,
-    String? surname,
     String? userName,
     String? description,
-    String? email,
     String? imageUrl,
+    bool? isPublic,
+    String? phone,
+    String? surname,
+    String? email,
     num? followersCount,
     num? followingCount,
     num? province,
@@ -60,13 +64,14 @@ final class UserModel extends Equatable {
   }) {
     return UserModel(
       id: id,
-      phone: phone ?? this.phone,
       name: name ?? this.name,
-      surname: surname ?? this.surname,
       userName: userName ?? this.userName,
-      email: email ?? this.email,
       imageUrl: imageUrl ?? this.imageUrl,
       description: description ?? this.description,
+      isPublic: isPublic ?? this.isPublic,
+      phone: phone ?? this.phone,
+      surname: surname ?? this.surname,
+      email: email ?? this.email,
       followersCount: followersCount ?? this.followersCount,
       followingCount: followingCount ?? this.followingCount,
       province: province ?? this.province,
@@ -79,13 +84,14 @@ final class UserModel extends Equatable {
 
   Map<String, dynamic> toMap() {
     return {
-      'phone': phone,
       'name': name,
-      'surname': surname,
       'userName': userName,
-      'email': email,
       'imageUrl': imageUrl,
       'description': description,
+      'isPublic': isPublic,
+      'phone': phone,
+      'surname': surname,
+      'email': email,
       'followersCount': followersCount,
       'followingCount': followingCount,
       'province': province,
@@ -97,16 +103,11 @@ final class UserModel extends Equatable {
     };
   }
 
-  final String id;
-  final String phone;
   final num followersCount;
   final num followingCount;
-  final String? name;
+  final String? phone;
   final String? surname;
-  final String? userName;
   final String? email;
-  final String? imageUrl;
-  final String? description;
   final num? province;
   final num? district;
   final num? gender;
@@ -116,13 +117,14 @@ final class UserModel extends Equatable {
   @override
   List<Object?> get props => [
         id,
-        phone,
         name,
-        surname,
         userName,
-        email,
         imageUrl,
         description,
+        isPublic,
+        phone,
+        surname,
+        email,
         followersCount,
         followingCount,
         province,

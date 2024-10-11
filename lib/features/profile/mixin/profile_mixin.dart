@@ -9,7 +9,7 @@ mixin ProfileMixin on State<ProfileView> {
   late final _profileCubit = context.read<ProfileCubit>();
   late final _authCubit = context.read<AuthCubit>();
   late final pageNotifier = ValueNotifier<int>(0);
-  bool get isOwnProfile => widget.userId == null;
+  bool get isOwnProfile => widget.userId == _authCubit.state.user?.id;
 
   @override
   void initState() {
@@ -18,10 +18,7 @@ mixin ProfileMixin on State<ProfileView> {
   }
 
   Future<void> fetchAllData() async {
-    var uid = widget.userId;
-    uid ??= _authCubit.state.user?.id;
-    if (uid == null) return;
-    await _profileCubit.fetchUser(uid);
+    await _profileCubit.fetchUser(widget.userId);
   }
 
   Future<void> signOut() async {

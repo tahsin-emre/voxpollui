@@ -9,8 +9,8 @@ import 'package:voxpollui/features/profile/mixin/profile_mixin.dart';
 import 'package:voxpollui/features/profile/widget/follow_button.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/custom_app_bar.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/user_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
-import 'package:voxpollui/product/initialize/models/user_model.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
@@ -20,8 +20,8 @@ import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
 part '../widget/profile_fields.dart';
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({super.key, this.userId});
-  final String? userId;
+  const ProfileView({required this.userId, super.key});
+  final String userId;
   @override
   State<ProfileView> createState() => _ProfileViewState();
 }

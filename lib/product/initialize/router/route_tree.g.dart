@@ -11,6 +11,7 @@ List<RouteBase> get $appRoutes => [
       $registerRoute,
       $onboardRoute,
       $communityCreateRoute,
+      $communityDetailRoute,
       $homeShellRoute,
       $pollCreateRoute,
       $pollDetailsRoute,
@@ -112,6 +113,33 @@ extension $CommunityCreateRouteExtension on CommunityCreateRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
+RouteBase get $communityDetailRoute => GoRouteData.$route(
+      path: '/community/detail',
+      factory: $CommunityDetailRouteExtension._fromState,
+    );
+
+extension $CommunityDetailRouteExtension on CommunityDetailRoute {
+  static CommunityDetailRoute _fromState(GoRouterState state) =>
+      CommunityDetailRoute(
+        state.extra as CommunityModel,
+      );
+
+  String get location => GoRouteData.$location(
+        '/community/detail',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
+}
+
 RouteBase get $homeShellRoute => ShellRouteData.$route(
       navigatorKey: HomeShellRoute.$navigatorKey,
       factory: $HomeShellRouteExtension._fromState,
@@ -179,21 +207,24 @@ extension $DiscoverRouteExtension on DiscoverRoute {
 }
 
 extension $MyProfileRouteExtension on MyProfileRoute {
-  static MyProfileRoute _fromState(GoRouterState state) =>
-      const MyProfileRoute();
+  static MyProfileRoute _fromState(GoRouterState state) => MyProfileRoute(
+        state.extra as String,
+      );
 
   String get location => GoRouteData.$location(
         '/home/myProfile',
       );
 
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: $extra);
 
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
 
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+      context.pushReplacement(location, extra: $extra);
 
-  void replace(BuildContext context) => context.replace(location);
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 extension $CommunityRouteExtension on CommunityRoute {
