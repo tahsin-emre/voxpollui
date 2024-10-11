@@ -27,7 +27,7 @@ mixin HomeMixin on State<HomeView> {
     } else if (index == 2) {
       const CommunityRoute().go(context);
     } else if (index == 3) {
-      const MyProfileRoute().go(context);
+      MyProfileRoute(user.id).go(context);
     }
   }
 }

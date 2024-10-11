@@ -20,8 +20,8 @@ import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
 part '../widget/profile_fields.dart';
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({super.key, this.userId});
-  final String? userId;
+  const ProfileView({required this.userId, super.key});
+  final String userId;
   @override
   State<ProfileView> createState() => _ProfileViewState();
 }
