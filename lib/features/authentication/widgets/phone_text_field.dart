@@ -43,7 +43,7 @@ class PhoneTextField extends StatelessWidget {
           enabledBorder: const UnderlineInputBorder(),
           focusedBorder: const UnderlineInputBorder(),
           border: InputBorder.none,
-          hintText: '5XX XXX XX XX',
+          hintText: '553 772 30 30',
           hintStyle: TextStyle(
             color: Colors.black,
             fontSize: 28,

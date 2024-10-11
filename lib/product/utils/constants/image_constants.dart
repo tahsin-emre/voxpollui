@@ -4,6 +4,7 @@ final class ImageConstants {
   static const _navBar = '$_prefix/bottom_nav_bar';
   static const _sheetMenu = '$_prefix/bottom_sheet_menu';
   static const _onboard = '$_prefix/onboard';
+  static const _registerOnboard = '$_prefix/register_onboard';
   static const _common = '$_prefix/common';
 
   //App Logo
@@ -14,8 +15,9 @@ final class ImageConstants {
   static const cover = '$_common/cover.png';
   static const addImage = '$_common/add_image.svg';
   static const cal = '$_common/cal.svg';
-  static const settings = '$_common/settings.svg';
+  static const settings = '$_common/setting.svg';
   static const settingsImage = '$_common/settings_image.svg';
+
   //Onboard
   static const loginPhone = '$_onboard/login_phone.png';
   static const profile1 = '$_onboard/profile1.png';
@@ -25,6 +27,12 @@ final class ImageConstants {
   static const onboard2 = '$_onboard/onboard2.png';
   static const onboard3 = '$_onboard/onboard3.png';
   static const onboard4 = '$_onboard/onboard4.png';
+
+  //RegisterOnboard
+  static const registerOnboard1 = '$_registerOnboard/onboard1.png';
+  static const registerOnboard2 = '$_registerOnboard/onboard2.png';
+  static const registerOnboard3 = '$_registerOnboard/onboard3.png';
+  static const registerOnboard4 = '$_registerOnboard/onboard4.png';
 
   //Bottom Navigation Bar
   static const community = '$_navBar/community.png';

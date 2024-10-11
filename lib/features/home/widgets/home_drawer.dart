@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/features/home/widgets/theme_switch.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/user_model.dart';
+import 'package:voxpollui/product/initialize/router/route_tree.dart';
+import 'package:voxpollui/product/services/firebase/auth_service.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 
@@ -20,7 +22,18 @@ class HomeDrawer extends StatelessWidget {
           children: [
             _DrawerHeader(user),
             const Divider(height: 20),
-            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_profile),
+            _DrawerTile(
+              onTap: () => MyProfileRoute(user.id).go(context),
+              label: LocaleKeys.home_drawer_profile,
+            ),
+            _DrawerTile(
+              onTap: () async {
+                await AuthService().signOut();
+                // ignore: use_build_context_synchronously
+                const SplashRoute().go(context);
+              },
+              label: LocaleKeys.auth_logout,
+            ),
             _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_voxPollPro),
             _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_interests),
             _DrawerTile(

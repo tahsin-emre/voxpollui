@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/features/authentication/view/register_view.dart';
 import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/user_model.dart';
-import 'package:voxpollui/product/initialize/router/route_tree.dart';
 import 'package:voxpollui/product/services/firebase/user_service.dart';
 import 'package:voxpollui/product/utils/extensions/context_ext.dart';
 
@@ -35,9 +34,8 @@ mixin RegisterMixin on State<RegisterView> {
       showSnackBar('Failed to register');
       return;
     }
-    navigateToHome();
+    indexNotifier.value = 2;
   }
 
-  void navigateToHome() => const FeedRoute().go(context);
   void showSnackBar(String text) => context.showSnackBar(text);
 }

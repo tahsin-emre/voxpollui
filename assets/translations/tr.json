@@ -17,6 +17,7 @@
         "and": "ve",
         "join": "Katıl",
         "search": "Ara",
+        "tryAgain": "Tekrar Dene",
         "somethingWentWrong": "Bir şeyler yanlış gitti",
         "pleaseFill": "Lütfen tüm alanları doldurun"
     },
@@ -26,15 +27,16 @@
         "register": "Kayıt Ol",
         "phoneForm": {
             "phoneNumber": "Telefon Numaranız",
-            "contractText": "Aydınlatma Metni’ni okudum, Açık Rıza Metni’ni okudum ve onaylıyorum.",
-            "contactText": "Açık Rıza Metni ve Ticari Elektronik İleti Aydınlatma Metni kapsamında SMS, e-posta ve arama almak istiyorum.",
-            "userApproveText": "İleri butonuna basarak Kullanıcı Sözleşmesi’ni kabul etmiş olursunuz.",
             "illuminationText": "Aydınlatma Metni",
             "openConsentText": "Açık Rıza Metni",
             "userAgreement": "Kullanıcı Sözleşmesi",
             "commercialText": "Ticari Elektronik İleti Aydınlatma Metni",
-            "iRead": "'ni okudum,",
-            "iApprove": "'ni okudum ve onaylıyorum"
+            "and": " ve ",
+            "iRead": "'ni okudum, ",
+            "onContinue": "İleri butonuna basarak ",
+            "iApprove": "'ni okudum ve onaylıyorum.",
+            "iApprove2": " kapsamında SMS, e-posta ve arama almak istiyorum.",
+            "iApprove3": "'ni kabul etmiş olursunuz."
         },
         "otpForm": {
             "otpCode": "Onay Kodu",
@@ -84,7 +86,13 @@
         "appinfo3": "cevaplar",
         "start": "Başlayalım",
         "welcome": "Vox Poll'a hoş geldiniz",
-        "continue": "Devam"
+        "continue": "İleri",
+        "onboard1title": "Artık\nAnket\nZamanı",
+        "onboard1desc": "İlgi alanlarınızla veya firmanızla ilgili bütün merak ettiklerinizin cevaplarını öğrenmek artık çok kolay.",
+        "onboard2title": "İlgi\nAlanlarını\nBelirle",
+        "onboard2desc": "Seçtiğiniz ilgi alanlarınıza göre anlık olarak tüm anketleri cevaplayabilir veya sonuçları inceleyebilirsiniz.",
+        "onboard3title": "Sınırsız\nAnkete\nKatıl",
+        "onboard3desc": "İstediğiniz kadar ankete katılıp dilerseniz VoxPoll Premium abonesi olup anket açıp sonuçları inceyebilirsiniz."
     },
     "poll": {
         "title": "Anket",

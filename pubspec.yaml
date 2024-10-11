@@ -31,6 +31,7 @@ dependencies:
   animated_custom_dropdown: ^3.1.1
   flutter_polls: ^0.1.6
   adaptive_theme: ^3.6.0
+  flutter_markdown: ^0.7.3+2
 
 dev_dependencies:
   flutter_test:
@@ -44,12 +45,14 @@ flutter:
 
   assets:
     - assets/data/
+    - assets/docs/
     - assets/translations/
     - assets/image/
     - assets/image/bottom_nav_bar/
     - assets/image/bottom_sheet_menu/
     - assets/image/common/
     - assets/image/onboard/
+    - assets/image/register_onboard/
 
 
   fonts:

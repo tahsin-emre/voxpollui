@@ -12,13 +12,12 @@ class SplashRoute extends GoRouteData {
 
 @TypedGoRoute<DocumentReaderRoute>(path: DocumentReaderRoute.path)
 class DocumentReaderRoute extends GoRouteData {
-  const DocumentReaderRoute({required this.title, required this.content});
-  static const String path = '/onboard';
-  final String title;
-  final String content;
+  const DocumentReaderRoute(this.$extra);
+  static const String path = '/documentReader';
+  final DocumentModel $extra;
   @override
   TPage buildPage(BuildContext context, GoRouterState state) {
-    return TPage(child: DocumentReaderView(title: title, content: content));
+    return TPage(child: DocumentReaderView(document: $extra));
   }
 }
 

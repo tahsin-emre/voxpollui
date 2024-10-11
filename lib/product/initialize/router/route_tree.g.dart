@@ -317,33 +317,30 @@ extension $SplashRouteExtension on SplashRoute {
 }
 
 RouteBase get $documentReaderRoute => GoRouteData.$route(
-      path: '/onboard',
+      path: '/documentReader',
       factory: $DocumentReaderRouteExtension._fromState,
     );
 
 extension $DocumentReaderRouteExtension on DocumentReaderRoute {
   static DocumentReaderRoute _fromState(GoRouterState state) =>
       DocumentReaderRoute(
-        title: state.uri.queryParameters['title']!,
-        content: state.uri.queryParameters['content']!,
+        state.extra as DocumentModel,
       );
 
   String get location => GoRouteData.$location(
-        '/onboard',
-        queryParams: {
-          'title': title,
-          'content': content,
-        },
+        '/documentReader',
       );
 
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: $extra);
 
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
 
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+      context.pushReplacement(location, extra: $extra);
 
-  void replace(BuildContext context) => context.replace(location);
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 RouteBase get $userProfileRoute => GoRouteData.$route(

@@ -1,7 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/authentication/mixin/login_mixin.dart';
 import 'package:voxpollui/features/authentication/view/form_otp.dart';
 import 'package:voxpollui/features/authentication/view/form_phone.dart';
+import 'package:voxpollui/features/sub_features/common_widgets/extended_elevated_button.dart';
+import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/services/firebase/auth_service.dart';
 
 final class LoginView extends StatefulWidget {
@@ -47,6 +50,18 @@ class _LoginViewState extends State<LoginView> with LoginMixin {
   }
 
   Widget error(String text) {
-    return Center(child: Text(text));
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(child: Text(text)),
+        ExtendedElevatedButton(
+          onPressed: () {
+            focusNode.requestFocus();
+            authStream.sink.add(AuthStatus.none);
+          },
+          text: LocaleKeys.base_tryAgain.tr(),
+        ),
+      ],
+    );
   }
 }
