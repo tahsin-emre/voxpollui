@@ -23,6 +23,13 @@ final class AppTheme {
           ),
         ),
       ),
+      iconTheme: const IconThemeData(color: AppColor.black),
+      dividerTheme: const DividerThemeData(
+        color: AppColor.opposite,
+        thickness: 1,
+        indent: 10,
+        endIndent: 10,
+      ),
       snackBarTheme: const SnackBarThemeData(
         backgroundColor: AppColor.secondary,
         behavior: SnackBarBehavior.floating,
@@ -49,6 +56,13 @@ final class AppTheme {
             bottomRight: Radius.circular(20),
           ),
         ),
+      ),
+      iconTheme: const IconThemeData(color: AppColor.white),
+      dividerTheme: const DividerThemeData(
+        color: AppColor.opposite,
+        thickness: 1,
+        indent: 10,
+        endIndent: 10,
       ),
       snackBarTheme: const SnackBarThemeData(
         backgroundColor: AppColor.secondary,

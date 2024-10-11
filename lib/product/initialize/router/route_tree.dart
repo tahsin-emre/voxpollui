@@ -13,6 +13,7 @@ import 'package:voxpollui/features/poll/view/poll_create_view.dart';
 import 'package:voxpollui/features/poll/view/poll_details_view.dart';
 import 'package:voxpollui/features/profile/view/profile_view.dart';
 import 'package:voxpollui/features/splash/view/splash_view.dart';
+import 'package:voxpollui/features/sub_features/documents/data/document_model.dart';
 import 'package:voxpollui/features/sub_features/documents/view/document_reader_view.dart';
 import 'package:voxpollui/features/sub_features/onboard/view/onboard_view.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';

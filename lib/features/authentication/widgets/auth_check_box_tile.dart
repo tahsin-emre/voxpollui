@@ -1,7 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
-import 'package:voxpollui/product/utils/constants/font_constants.dart';
 
 class AuthCheckBoxTile extends StatefulWidget {
   const AuthCheckBoxTile({
@@ -10,7 +8,7 @@ class AuthCheckBoxTile extends StatefulWidget {
     required this.initValue,
     super.key,
   });
-  final String text;
+  final Widget text;
   final bool initValue;
   final ValueChanged<bool?> onChanged;
 
@@ -49,13 +47,7 @@ class _AuthCheckBoxTileState extends State<AuthCheckBoxTile>
           _toggleCheckbox();
           widget.onChanged(value);
         },
-        title: Text(
-          widget.text.tr(),
-          style: TextStyle(
-            fontFamily: FontConstants.gilroyLight,
-            fontSize: 14,
-          ),
-        ),
+        title: widget.text,
         controlAffinity: ListTileControlAffinity.leading,
         activeColor: AppColor.primary,
       ),

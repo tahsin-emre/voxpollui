@@ -19,6 +19,7 @@ final class UserModel extends OwnerModel with EquatableMixin {
     this.district,
     this.gender,
     this.dateOfBirth,
+    this.createdAt,
     this.interests,
     super.ownerType = OwnerType.user,
   });
@@ -41,6 +42,9 @@ final class UserModel extends OwnerModel with EquatableMixin {
       dateOfBirth: json['dateOfBirth'] == null
           ? null
           : (json['dateOfBirth'] as Timestamp).toDate(),
+      createdAt: json['createdAt'] == null
+          ? null
+          : (json['createdAt'] as Timestamp).toDate(),
       interests: json['interests'] as List<dynamic>?,
     );
   }
@@ -60,6 +64,7 @@ final class UserModel extends OwnerModel with EquatableMixin {
     num? district,
     num? gender,
     DateTime? dateOfBirth,
+    DateTime? createdAt,
     List<dynamic>? interests,
   }) {
     return UserModel(
@@ -78,6 +83,7 @@ final class UserModel extends OwnerModel with EquatableMixin {
       district: district ?? this.district,
       gender: gender ?? this.gender,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      createdAt: createdAt ?? this.createdAt,
       interests: interests ?? this.interests,
     );
   }
@@ -99,6 +105,7 @@ final class UserModel extends OwnerModel with EquatableMixin {
       'gender': gender,
       'dateOfBirth':
           dateOfBirth != null ? Timestamp.fromDate(dateOfBirth!) : null,
+      'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : null,
       'interests': interests,
     };
   }
@@ -112,6 +119,7 @@ final class UserModel extends OwnerModel with EquatableMixin {
   final num? district;
   final num? gender;
   final DateTime? dateOfBirth;
+  final DateTime? createdAt;
   final List<dynamic>? interests;
 
   @override
@@ -131,6 +139,7 @@ final class UserModel extends OwnerModel with EquatableMixin {
         district,
         gender,
         dateOfBirth,
+        createdAt,
         interests,
       ];
 }
