@@ -7,6 +7,7 @@ import 'package:voxpollui/product/initialize/router/route_tree.dart';
 import 'package:voxpollui/product/services/firebase/auth_service.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
+import 'package:voxpollui/product/utils/constants/icon_constants.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({
@@ -18,44 +19,47 @@ class HomeDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: SafeArea(
-        child: Column(
-          children: [
-            _DrawerHeader(user),
-            const Divider(height: 20),
-            _DrawerTile(
-              onTap: () => MyProfileRoute(user.id).go(context),
-              label: LocaleKeys.home_drawer_profile,
-            ),
-            _DrawerTile(
-              onTap: () async {
-                await AuthService().signOut();
-                // ignore: use_build_context_synchronously
-                const SplashRoute().go(context);
-              },
-              label: LocaleKeys.auth_logout,
-            ),
-            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_voxPollPro),
-            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_interests),
-            _DrawerTile(
-              onTap: () {},
-              label: LocaleKeys.home_drawer_communities,
-            ),
-            _DrawerTile(
-              onTap: () {},
-              label: LocaleKeys.home_drawer_invite,
-            ),
-            _DrawerTile(
-              onTap: () {},
-              label: LocaleKeys.home_drawer_interests,
-            ),
-            const Divider(height: 20),
-            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_tools),
-            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_payments),
-            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_settings),
-            _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_faq),
-            const Spacer(),
-            const ThemeSwitch(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _DrawerHeader(user),
+              const Divider(height: 20),
+              _DrawerTile(
+                onTap: () => MyProfileRoute(user.id).go(context),
+                label: LocaleKeys.home_drawer_profile,
+              ),
+              _DrawerTile(
+                onTap: () async {
+                  await AuthService().signOut();
+                  // ignore: use_build_context_synchronously
+                  const SplashRoute().go(context);
+                },
+                label: LocaleKeys.auth_logout,
+              ),
+              _DrawerTile(
+                onTap: () {},
+                label: LocaleKeys.home_drawer_voxPollPro,
+              ),
+              _DrawerTile(
+                onTap: () {},
+                label: LocaleKeys.home_drawer_interests,
+              ),
+              _DrawerTile(
+                onTap: () {},
+                label: LocaleKeys.home_drawer_communities,
+              ),
+              _DrawerTile(
+                onTap: () {},
+                label: LocaleKeys.home_drawer_invite,
+              ),
+              const Divider(height: 20),
+              _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_tools),
+              _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_payments),
+              _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_settings),
+              _DrawerTile(onTap: () {}, label: LocaleKeys.home_drawer_faq),
+              const ThemeSwitch(),
+            ],
+          ),
         ),
       ),
     );
@@ -72,11 +76,13 @@ final class _DrawerHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          if (user.imageUrl != null)
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: NetworkImage(user.imageUrl!),
-            ),
+          CircleAvatar(
+            radius: 25,
+            backgroundColor: AppColor.black,
+            backgroundImage:
+                user.imageUrl != null ? NetworkImage(user.imageUrl!) : null,
+            child: user.imageUrl == null ? IconConstants.profile.toIcon : null,
+          ),
           const SizedBox(height: 10),
           Text(
             '${user.name} ${user.surname}',
@@ -87,7 +93,6 @@ final class _DrawerHeader extends StatelessWidget {
               fontSize: 18,
             ),
           ),
-          const SizedBox(height: 5),
           Text(
             '@${user.userName}',
             textAlign: TextAlign.right,

@@ -29,7 +29,11 @@ mixin RegisterMixin on State<RegisterView> {
   }
 
   Future<void> register(UserModel newUser) async {
-    final result = await _userService.createUser(newUser);
+    final lastUser = newUser.copyWith(
+      isPublic: true,
+      createdAt: DateTime.now(),
+    );
+    final result = await _userService.createUser(lastUser);
     if (!result) {
       showSnackBar('Failed to register');
       return;
