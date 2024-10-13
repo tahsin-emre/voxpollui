@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
+import 'package:voxpollui/product/utils/constants/icon_constants.dart';
 import 'package:voxpollui/product/utils/constants/image_constants.dart';
+import 'package:voxpollui/product/utils/constants/page_paddings.dart';
 
 final class CustomAppBar extends AppBar {
   CustomAppBar(
@@ -28,8 +30,8 @@ final class CustomAppBar extends AppBar {
                   ),
                 ),
           leading: IconButton(
-            padding: EdgeInsets.zero,
-            icon: const Icon(Icons.arrow_back),
+            padding: PagePaddings.allXS,
+            icon: IconConstants.arrowBack.toIcon,
             color: Colors.black,
             onPressed: () => context.pop(),
             style: ButtonStyle(

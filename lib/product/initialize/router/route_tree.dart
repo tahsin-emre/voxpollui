@@ -11,6 +11,7 @@ import 'package:voxpollui/features/feed/view/feed_view.dart';
 import 'package:voxpollui/features/home/view/home_view.dart';
 import 'package:voxpollui/features/poll/view/poll_create_view.dart';
 import 'package:voxpollui/features/poll/view/poll_details_view.dart';
+import 'package:voxpollui/features/profile/view/profile_edit_view.dart';
 import 'package:voxpollui/features/profile/view/profile_view.dart';
 import 'package:voxpollui/features/splash/view/splash_view.dart';
 import 'package:voxpollui/features/sub_features/documents/data/document_model.dart';

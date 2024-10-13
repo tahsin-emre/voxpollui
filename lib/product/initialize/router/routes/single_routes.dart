@@ -31,3 +31,14 @@ class UserProfileRoute extends GoRouteData {
     return TPage(child: ProfileView(userId: uid));
   }
 }
+
+@TypedGoRoute<UserProfileEditRoute>(path: UserProfileEditRoute.path)
+class UserProfileEditRoute extends GoRouteData {
+  const UserProfileEditRoute(this.$extra);
+  static const String path = '/userProfile/edit';
+  final UserModel $extra;
+  @override
+  TPage buildPage(BuildContext context, GoRouterState state) {
+    return TPage(child: ProfileEditView(user: $extra));
+  }
+}

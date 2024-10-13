@@ -52,8 +52,18 @@ final class _ProfileImageHeader extends StatelessWidget {
             backgroundColor: Colors.transparent,
             actions: [
               IconButton(
+                padding: PagePaddings.allXS,
                 icon: IconConstants.settings.toIcon,
-                onPressed: () {},
+                onPressed: () => UserProfileEditRoute(user).push<void>(context),
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Colors.white),
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      side: const BorderSide(color: AppColor.borderColor),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

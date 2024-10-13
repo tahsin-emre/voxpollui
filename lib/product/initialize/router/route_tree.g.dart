@@ -18,6 +18,7 @@ List<RouteBase> get $appRoutes => [
       $splashRoute,
       $documentReaderRoute,
       $userProfileRoute,
+      $userProfileEditRoute,
     ];
 
 RouteBase get $loginRoute => GoRouteData.$route(
@@ -368,4 +369,31 @@ extension $UserProfileRouteExtension on UserProfileRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $userProfileEditRoute => GoRouteData.$route(
+      path: '/userProfile/edit',
+      factory: $UserProfileEditRouteExtension._fromState,
+    );
+
+extension $UserProfileEditRouteExtension on UserProfileEditRoute {
+  static UserProfileEditRoute _fromState(GoRouterState state) =>
+      UserProfileEditRoute(
+        state.extra as UserModel,
+      );
+
+  String get location => GoRouteData.$location(
+        '/userProfile/edit',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
