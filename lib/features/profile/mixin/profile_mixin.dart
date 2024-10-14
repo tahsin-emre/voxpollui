@@ -15,10 +15,15 @@ mixin ProfileMixin on State<ProfileView> {
   void initState() {
     super.initState();
     fetchAllData();
+    getPolls();
   }
 
   Future<void> fetchAllData() async {
     await _profileCubit.fetchUser(widget.userId);
+  }
+
+  void getPolls() {
+    _profileCubit.fetchUserPolls(widget.userId);
   }
 
   Future<void> signOut() async {

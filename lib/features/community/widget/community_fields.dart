@@ -14,7 +14,7 @@ final class _ProfileImageHeader extends StatelessWidget {
             Column(
               children: [
                 Image.network(
-                  community.imageUrl ?? 'https://picsum.photos/200',
+                  community.backgroundUrl ?? 'https://picsum.photos/200',
                   width: double.infinity,
                   height: WidgetSizes.maxiL,
                   fit: BoxFit.fitWidth,

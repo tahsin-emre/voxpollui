@@ -5,6 +5,7 @@ import 'package:voxpollui/features/profile/mixin/profile_edit_mixin.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/custom_app_bar.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/custom_input_decoration.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/extended_elevated_button.dart';
+import 'package:voxpollui/features/sub_features/common_widgets/image_change_tile.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/user_model.dart';
 
@@ -26,6 +27,13 @@ class _ProfileEditViewState extends State<ProfileEditView>
           key: formKey,
           child: Column(
             children: [
+              ImageChangeTile(
+                userId: widget.user.id,
+                onProfileUrl: changeProfileUrl,
+                onBackUrl: changeBackUrl,
+                initProfile: profileUrlNotifier.value,
+                initBack: backUrlNotifier.value,
+              ),
               EditTextField(
                 label: LocaleKeys.auth_name,
                 controller: nameController,
@@ -33,6 +41,10 @@ class _ProfileEditViewState extends State<ProfileEditView>
               EditTextField(
                 label: LocaleKeys.auth_surname,
                 controller: surnameController,
+              ),
+              EditTextField(
+                label: LocaleKeys.profile_about,
+                controller: descriptionController,
               ),
               EditTextField(
                 label: LocaleKeys.auth_email,

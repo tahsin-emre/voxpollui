@@ -76,6 +76,9 @@ abstract class  LocaleKeys {
   static const profile_unfollow = 'profile.unfollow';
   static const profile_members = 'profile.members';
   static const profile_editProfile = 'profile.editProfile';
+  static const profile_profileImage = 'profile.profileImage';
+  static const profile_backgroundImage = 'profile.backgroundImage';
+  static const profile_about = 'profile.about';
   static const profile = 'profile';
   static const onboard_appinfo1 = 'onboard.appinfo1';
   static const onboard_appinfo2 = 'onboard.appinfo2';

@@ -38,6 +38,15 @@ final class UserService extends BaseService {
     }
   }
 
+  Future<bool> updateUser(UserModel user) async {
+    try {
+      await db.collection('users').doc(user.id).update(user.toMap());
+      return true;
+    } on Exception {
+      return false;
+    }
+  }
+
   Future<List<CategoryModel>> getCategories() async {
     try {
       final response =

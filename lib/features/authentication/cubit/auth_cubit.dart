@@ -34,4 +34,9 @@ final class AuthCubit extends Cubit<AuthState> {
     emit(state.copyWith(user: user));
     return user;
   }
+
+  void updateUser(UserModel user) {
+    _userService.updateUser(user);
+    emit(state.copyWith(user: user));
+  }
 }

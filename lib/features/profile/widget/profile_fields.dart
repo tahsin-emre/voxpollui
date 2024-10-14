@@ -8,14 +8,13 @@ final class _ProfileImageHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CustomAppBar(context),
         Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Column(
               children: [
                 Image.network(
-                  user.imageUrl ?? 'https://picsum.photos/200',
+                  user.backgroundUrl ?? 'https://picsum.photos/200',
                   width: double.infinity,
                   height: WidgetSizes.maxiL,
                   fit: BoxFit.fitWidth,

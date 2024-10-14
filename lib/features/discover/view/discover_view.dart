@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/app_search_bar.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
@@ -18,7 +17,10 @@ class _DiscoverViewState extends State<DiscoverView> {
       child: ListView(
         padding: PagePaddings.allL,
         children: [
-          AppSearchBar(onChanged: (val) {}, label: LocaleKeys.base_search.tr()),
+          AppSearchBar(
+            onChanged: (val) {},
+            label: LocaleKeys.base_search,
+          ),
         ],
       ),
     );

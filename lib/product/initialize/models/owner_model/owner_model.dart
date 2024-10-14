@@ -6,6 +6,7 @@ abstract class OwnerModel {
     this.userName,
     this.description,
     this.imageUrl,
+    this.backgroundUrl,
     this.isPublic,
   });
 
@@ -14,6 +15,7 @@ abstract class OwnerModel {
   final String? userName;
   final String? description;
   final String? imageUrl;
+  final String? backgroundUrl;
   final bool? isPublic;
   final OwnerType ownerType;
 }
