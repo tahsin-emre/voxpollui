@@ -80,7 +80,10 @@
         "follow": "Takip Et",
         "unfollow": "Takip Ediliyor",
         "members": "Katılımcılar",
-        "editProfile": "Profili Düzenle"
+        "editProfile": "Profili Düzenle",
+        "profileImage": "Profil Resmi",
+        "backgroundImage": "Arka Plan Resmi",
+        "about": "Hakkında"
     },
     "onboard": {
         "appinfo1": "Bütün merak",

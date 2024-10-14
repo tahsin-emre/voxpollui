@@ -7,6 +7,7 @@ final class CustomInputDecoration extends InputDecoration {
     required super.labelText,
     VoidCallback? suffixTap,
     IconData? suffixIcon,
+    String? prefix,
   }) : super(
           border: const UnderlineInputBorder(),
           labelStyle: const TextStyle(color: Colors.black),
@@ -15,6 +16,7 @@ final class CustomInputDecoration extends InputDecoration {
             borderSide: BorderSide(color: AppColor.primary),
           ),
           enabledBorder: const UnderlineInputBorder(),
+          prefixText: prefix,
           suffix: suffixTap != null
               ? InkWell(
                   onTap: suffixTap,

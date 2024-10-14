@@ -31,6 +31,13 @@ class _CommunityDetailViewState extends State<CommunityDetailView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(
+          IconConstants.add,
+          color: AppColor.white,
+        ),
+      ),
       body: ValueListenableBuilder(
         valueListenable: isLoadingNotifier,
         builder: (_, isLoading, __) {
