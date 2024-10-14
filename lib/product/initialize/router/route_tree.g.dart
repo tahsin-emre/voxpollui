@@ -12,6 +12,7 @@ List<RouteBase> get $appRoutes => [
       $onboardRoute,
       $communityCreateRoute,
       $communityDetailRoute,
+      $communityEditRoute,
       $homeShellRoute,
       $pollCreateRoute,
       $pollDetailsRoute,
@@ -127,6 +128,33 @@ extension $CommunityDetailRouteExtension on CommunityDetailRoute {
 
   String get location => GoRouteData.$location(
         '/community/detail',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
+}
+
+RouteBase get $communityEditRoute => GoRouteData.$route(
+      path: '/community/edit',
+      factory: $CommunityEditRouteExtension._fromState,
+    );
+
+extension $CommunityEditRouteExtension on CommunityEditRoute {
+  static CommunityEditRoute _fromState(GoRouterState state) =>
+      CommunityEditRoute(
+        state.extra as CommunityModel,
+      );
+
+  String get location => GoRouteData.$location(
+        '/community/edit',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);

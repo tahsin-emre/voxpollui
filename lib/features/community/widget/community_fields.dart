@@ -1,13 +1,13 @@
 part of '../view/community_detail_view.dart';
 
 final class _ProfileImageHeader extends StatelessWidget {
-  const _ProfileImageHeader(this.community);
+  const _ProfileImageHeader(this.community, {required this.isManager});
   final CommunityModel community;
+  final bool isManager;
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CustomAppBar(context),
         Stack(
           alignment: Alignment.bottomCenter,
           children: [
@@ -40,11 +40,35 @@ final class _ProfileImageHeader extends StatelessWidget {
             ),
           ],
         ),
-        CustomAppBar(
-          context,
-          isTransparent: true,
-          title: '',
-        ),
+        if (!isManager)
+          CustomAppBar(
+            context,
+            isTransparent: true,
+            title: '',
+          ),
+        if (isManager)
+          CustomAppBar(
+            context,
+            isTransparent: true,
+            title: '',
+            actions: [
+              IconButton(
+                padding: PagePaddings.allXS,
+                icon: IconConstants.settings.toIcon,
+                onPressed: () =>
+                    CommunityEditRoute(community).push<void>(context),
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Colors.white),
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      side: const BorderSide(color: AppColor.borderColor),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
       ],
     );
   }

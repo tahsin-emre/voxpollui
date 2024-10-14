@@ -29,20 +29,22 @@ final class CustomAppBar extends AppBar {
                     fontFamily: FontConstants.gilroyBold,
                   ),
                 ),
-          leading: IconButton(
-            padding: PagePaddings.allXS,
-            icon: IconConstants.arrowBack.toIcon,
-            color: Colors.black,
-            onPressed: () => context.pop(),
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(Colors.white),
-              shape: WidgetStateProperty.all(
-                RoundedRectangleBorder(
-                  side: const BorderSide(color: AppColor.borderColor),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ),
-            ),
-          ),
+          leading: context.canPop()
+              ? IconButton(
+                  padding: PagePaddings.allXS,
+                  icon: IconConstants.arrowBack.toIcon,
+                  color: Colors.black,
+                  onPressed: () => context.pop(),
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(Colors.white),
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        side: const BorderSide(color: AppColor.borderColor),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  ),
+                )
+              : null,
         );
 }

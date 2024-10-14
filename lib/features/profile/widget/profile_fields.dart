@@ -47,8 +47,10 @@ final class _ProfileImageHeader extends StatelessWidget {
             title: '',
           ),
         if (isOwn)
-          AppBar(
-            backgroundColor: Colors.transparent,
+          CustomAppBar(
+            context,
+            isTransparent: true,
+            title: '',
             actions: [
               IconButton(
                 padding: PagePaddings.allXS,

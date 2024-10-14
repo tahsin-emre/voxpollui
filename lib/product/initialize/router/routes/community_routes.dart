@@ -20,3 +20,14 @@ class CommunityDetailRoute extends GoRouteData {
     return TPage(child: CommunityDetailView(community: $extra));
   }
 }
+
+@TypedGoRoute<CommunityEditRoute>(path: CommunityEditRoute.path)
+class CommunityEditRoute extends GoRouteData {
+  const CommunityEditRoute(this.$extra);
+  static const String path = '/community/edit';
+  final CommunityModel $extra;
+  @override
+  TPage buildPage(BuildContext context, GoRouterState state) {
+    return TPage(child: CommunityEditView(community: $extra));
+  }
+}

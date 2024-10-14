@@ -10,6 +10,7 @@ import 'package:voxpollui/features/sub_features/common_widgets/custom_app_bar.da
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
+import 'package:voxpollui/product/initialize/router/route_tree.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
@@ -48,7 +49,10 @@ class _CommunityDetailViewState extends State<CommunityDetailView>
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      _ProfileImageHeader(widget.community),
+                      _ProfileImageHeader(
+                        widget.community,
+                        isManager: isManager,
+                      ),
                       _ProfileInfo(
                         widget.community,
                         pollCount: (state.selectedNewPolls?.length ?? 0) +
