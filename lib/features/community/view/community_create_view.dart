@@ -7,6 +7,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:voxpollui/features/community/cubit/community_cubit.dart';
 import 'package:voxpollui/features/community/cubit/community_state.dart';
 import 'package:voxpollui/features/community/mixin/community_create_mixin.dart';
+import 'package:voxpollui/features/sub_features/common_widgets/category_selector.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/custom_app_bar.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/custom_input_decoration.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/extended_elevated_button.dart';
@@ -67,7 +68,7 @@ class _CommunityCreateViewState extends State<CommunityCreateView>
                         ),
                       ),
                       const SizedBox(height: WidgetSizes.xl),
-                      _CategoryField(
+                      CategorySelector(
                         categories,
                         onChanged: (val) => categoryIdNotifier.value = val,
                       ),
@@ -131,57 +132,6 @@ final class _NameField extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-final class _CategoryField extends StatelessWidget {
-  const _CategoryField(this.categories, {required this.onChanged});
-  final List<CategoryModel> categories;
-  final ValueChanged<String> onChanged;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          LocaleKeys.community_category.tr(),
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: FontConstants.gilroyBold,
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(top: 8),
-          padding: PagePaddings.horS,
-          decoration: BoxDecoration(
-            border: Border.all(),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: CustomDropdown<CategoryModel>.search(
-            onChanged: (value) {
-              if (value == null) return;
-              onChanged(value.id);
-            },
-            items: categories,
-            listItemPadding: EdgeInsets.zero,
-            itemsListPadding: EdgeInsets.zero,
-            expandedHeaderPadding: EdgeInsets.zero,
-            closedHeaderPadding: EdgeInsets.zero,
-            hintText: LocaleKeys.community_categoryHint.tr(),
-            searchHintText: LocaleKeys.base_search.tr(),
-            noResultFoundText: LocaleKeys.community_categoryNotFound.tr(),
-            headerBuilder: (_, item, __) => ListTile(
-              title: Text(item.name.tr()),
-            ),
-            listItemBuilder: (_, item, __, ___) {
-              return ListTile(
-                title: Text(item.name.tr()),
-              );
-            },
-          ),
-        ),
-      ],
     );
   }
 }

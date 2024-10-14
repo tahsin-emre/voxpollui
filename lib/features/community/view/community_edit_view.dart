@@ -46,6 +46,14 @@ class _CommunityEditViewState extends State<CommunityEditView>
                 controller: usernameController,
                 prefix: '@',
               ),
+              // Padding(
+              //   padding: PagePaddings.allS,
+              //   child: CategorySelector(
+              //     categories,
+              //     initialId: categoryIdNotifier.value,
+              //     onChanged: changeCategory,
+              //   ),
+              // ),
               ExtendedElevatedButton(
                 onPressed: onSave,
                 text: LocaleKeys.base_save.tr(),
