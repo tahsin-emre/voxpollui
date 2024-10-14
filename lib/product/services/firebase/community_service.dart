@@ -22,6 +22,18 @@ final class CommunityService extends BaseService {
     }
   }
 
+  Future<bool> updateCommunity(CommunityModel community) async {
+    try {
+      await db
+          .collection(FireStoreCollections.communities.name)
+          .doc(community.id)
+          .update(community.toMap());
+      return true;
+    } on Exception {
+      return false;
+    }
+  }
+
   ///Join Community
   Future<bool> joinCommunity(String userId, String communityId) async {
     final response = await HttpService().sendRequest(

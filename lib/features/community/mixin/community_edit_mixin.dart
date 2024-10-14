@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:voxpollui/features/community/cubit/community_cubit.dart';
 import 'package:voxpollui/features/community/view/community_edit_view.dart';
 
 mixin CommunityEditMixin on State<CommunityEditView> {
@@ -42,7 +44,7 @@ mixin CommunityEditMixin on State<CommunityEditView> {
       backgroundUrl: backUrlNotifier.value,
       description: descriptionController.text,
     );
-
+    context.read<CommunityCubit>().updateCommunity(community);
     context.pop(community);
   }
 }

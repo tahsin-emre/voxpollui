@@ -8,6 +8,7 @@ import 'package:voxpollui/features/profile/view/profile_edit_view.dart';
 mixin ProfileEditMixin on State<ProfileEditView> {
   final profileUrlNotifier = ValueNotifier<String?>(null);
   final backUrlNotifier = ValueNotifier<String?>(null);
+  final dateNotifier = ValueNotifier<DateTime?>(null);
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
@@ -31,9 +32,15 @@ mixin ProfileEditMixin on State<ProfileEditView> {
     setState(() {});
   }
 
+  void changeDate(DateTime? date) {
+    dateNotifier.value = date;
+    setState(() {});
+  }
+
   void setCurrentData() {
     profileUrlNotifier.value = widget.user.imageUrl;
     backUrlNotifier.value = widget.user.backgroundUrl;
+    dateNotifier.value = widget.user.dateOfBirth;
     nameController.text = widget.user.name ?? '';
     surnameController.text = widget.user.surname ?? '';
     usernameController.text = widget.user.userName ?? '';
@@ -50,6 +57,7 @@ mixin ProfileEditMixin on State<ProfileEditView> {
       imageUrl: profileUrlNotifier.value,
       backgroundUrl: backUrlNotifier.value,
       description: descriptionController.text,
+      dateOfBirth: dateNotifier.value,
     );
     context.read<AuthCubit>().updateUser(user);
     context.read<ProfileCubit>().updateUser(user);

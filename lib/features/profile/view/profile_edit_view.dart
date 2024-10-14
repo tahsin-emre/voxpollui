@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:voxpollui/features/authentication/widgets/personal_fields.dart';
 import 'package:voxpollui/features/profile/mixin/profile_edit_mixin.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/custom_app_bar.dart';
-import 'package:voxpollui/features/sub_features/common_widgets/custom_input_decoration.dart';
+import 'package:voxpollui/features/sub_features/common_widgets/edit_text_field.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/extended_elevated_button.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/image_change_tile.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
@@ -56,8 +56,8 @@ class _ProfileEditViewState extends State<ProfileEditView>
                 prefix: '@',
               ),
               DateField(
-                initialDate: widget.user.dateOfBirth,
-                (date) {},
+                changeDate,
+                initialDate: dateNotifier.value,
               ),
               ExtendedElevatedButton(
                 onPressed: onSave,
@@ -65,32 +65,6 @@ class _ProfileEditViewState extends State<ProfileEditView>
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-final class EditTextField extends StatelessWidget {
-  const EditTextField({
-    required this.label,
-    required this.controller,
-    this.prefix,
-    super.key,
-  });
-  final String label;
-  final TextEditingController controller;
-  final String? prefix;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      child: TextField(
-        controller: controller,
-        decoration: CustomInputDecoration(
-          labelText: label.tr(),
-          prefix: prefix,
         ),
       ),
     );

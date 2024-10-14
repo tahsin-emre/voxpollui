@@ -1,9 +1,14 @@
 part of '../view/community_detail_view.dart';
 
 final class _ProfileImageHeader extends StatelessWidget {
-  const _ProfileImageHeader(this.community, {required this.isManager});
+  const _ProfileImageHeader(
+    this.community, {
+    required this.isManager,
+    required this.onEdit,
+  });
   final CommunityModel community;
   final bool isManager;
+  final VoidCallback onEdit;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -55,8 +60,7 @@ final class _ProfileImageHeader extends StatelessWidget {
               IconButton(
                 padding: PagePaddings.allXS,
                 icon: IconConstants.settings.toIcon,
-                onPressed: () =>
-                    CommunityEditRoute(community).push<void>(context),
+                onPressed: onEdit,
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(Colors.white),
                   shape: WidgetStateProperty.all(

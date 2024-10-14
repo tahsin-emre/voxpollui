@@ -10,7 +10,6 @@ import 'package:voxpollui/features/sub_features/common_widgets/custom_app_bar.da
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
-import 'package:voxpollui/product/initialize/router/route_tree.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
@@ -32,44 +31,48 @@ class _CommunityDetailViewState extends State<CommunityDetailView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(
-          IconConstants.add,
-          color: AppColor.white,
-        ),
-      ),
+      floatingActionButton: isManager
+          ? FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: AppColor.primary,
+              child: const Icon(
+                IconConstants.add,
+                color: AppColor.white,
+              ),
+            )
+          : null,
       body: ValueListenableBuilder(
         valueListenable: isLoadingNotifier,
         builder: (_, isLoading, __) {
           return BlocBuilder<CommunityCubit, CommunityState>(
             builder: (_, state) {
-              return Skeletonizer(
-                enabled: isLoading,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      _ProfileImageHeader(
-                        widget.community,
-                        isManager: isManager,
-                      ),
-                      _ProfileInfo(
-                        widget.community,
-                        pollCount: (state.selectedNewPolls?.length ?? 0) +
-                            (state.selectedOldPolls?.length ?? 0),
-                      ),
-                      const Divider(),
-                      _ProfileTabNav(
-                        pageNotifier,
-                        (val) => pageNotifier.value = val,
-                      ),
-                      _ProfileTabView(
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _ProfileImageHeader(
+                      community,
+                      isManager: isManager,
+                      onEdit: onEdit,
+                    ),
+                    _ProfileInfo(
+                      community,
+                      pollCount: (state.selectedNewPolls?.length ?? 0) +
+                          (state.selectedOldPolls?.length ?? 0),
+                    ),
+                    const Divider(),
+                    _ProfileTabNav(
+                      pageNotifier,
+                      (val) => pageNotifier.value = val,
+                    ),
+                    Skeletonizer(
+                      enabled: isLoading,
+                      child: _ProfileTabView(
                         pageNotifier,
                         newPolls: state.selectedNewPolls ?? [],
                         oldPolls: state.selectedOldPolls ?? [],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             },
