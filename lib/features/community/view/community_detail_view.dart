@@ -31,34 +31,48 @@ class _CommunityDetailViewState extends State<CommunityDetailView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: isManager
+          ? FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: AppColor.primary,
+              child: const Icon(
+                IconConstants.add,
+                color: AppColor.white,
+              ),
+            )
+          : null,
       body: ValueListenableBuilder(
         valueListenable: isLoadingNotifier,
         builder: (_, isLoading, __) {
           return BlocBuilder<CommunityCubit, CommunityState>(
             builder: (_, state) {
-              return Skeletonizer(
-                enabled: isLoading,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      _ProfileImageHeader(widget.community),
-                      _ProfileInfo(
-                        widget.community,
-                        pollCount: (state.selectedNewPolls?.length ?? 0) +
-                            (state.selectedOldPolls?.length ?? 0),
-                      ),
-                      const Divider(),
-                      _ProfileTabNav(
-                        pageNotifier,
-                        (val) => pageNotifier.value = val,
-                      ),
-                      _ProfileTabView(
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _ProfileImageHeader(
+                      community,
+                      isManager: isManager,
+                      onEdit: onEdit,
+                    ),
+                    _ProfileInfo(
+                      community,
+                      pollCount: (state.selectedNewPolls?.length ?? 0) +
+                          (state.selectedOldPolls?.length ?? 0),
+                    ),
+                    const Divider(),
+                    _ProfileTabNav(
+                      pageNotifier,
+                      (val) => pageNotifier.value = val,
+                    ),
+                    Skeletonizer(
+                      enabled: isLoading,
+                      child: _ProfileTabView(
                         pageNotifier,
                         newPolls: state.selectedNewPolls ?? [],
                         oldPolls: state.selectedOldPolls ?? [],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             },

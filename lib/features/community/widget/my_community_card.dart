@@ -13,11 +13,13 @@ final class MyCommunityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => CommunityDetailRoute(community).push<void>(context),
-      leading: community.imageUrl == null
-          ? IconConstants.community.toIcon
-          : CircleAvatar(
-              backgroundImage: NetworkImage(community.imageUrl ?? ''),
-            ),
+      leading: CircleAvatar(
+        backgroundImage: community.imageUrl != null
+            ? NetworkImage(community.imageUrl!)
+            : null,
+        child:
+            community.imageUrl == null ? IconConstants.community.toIcon : null,
+      ),
       title: Row(
         children: [
           Text('${community.name}'),

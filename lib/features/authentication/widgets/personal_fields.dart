@@ -1,16 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:voxpollui/features/sub_features/common_widgets/custom_input_decoration.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/page_paddings.dart';
 
 final class DateField extends StatelessWidget {
-  const DateField(this.onDateChanged, {super.key});
+  const DateField(this.onDateChanged, {this.initialDate, super.key});
   final ValueChanged<DateTime?> onDateChanged;
+  final DateTime? initialDate;
   static final _dateNotifier = ValueNotifier<String?>(null);
   @override
   Widget build(BuildContext context) {
+    _dateNotifier.value =
+        initialDate != null ? _formatDate(initialDate!) : null;
     return GestureDetector(
       onTap: () async {
         final date = await showDatePicker(
@@ -75,9 +79,7 @@ final class RegisterTextField extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: TextField(
         controller: controller,
-        decoration: InputDecoration(
-          labelText: label.tr(),
-        ),
+        decoration: CustomInputDecoration(labelText: label.tr()),
       ),
     );
   }

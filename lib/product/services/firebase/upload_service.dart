@@ -13,7 +13,11 @@ final class UploadService extends BaseService {
     required UploadFolder folder,
     required String userId,
   }) async {
-    final ref = storage.ref().child(userId).child(folder.name).child(file.name);
+    final ref = storage
+        .ref()
+        .child(userId)
+        .child(folder.name)
+        .child('${file.name}_${DateTime.now()}');
     final uploadTask = ref.putFile(File(file.path));
     final snapshot = await uploadTask.whenComplete(() => null);
     final url = await snapshot.ref.getDownloadURL();

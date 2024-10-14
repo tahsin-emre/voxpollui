@@ -53,7 +53,7 @@ mixin CommunityCreateMixin on State<CommunityCreateView> {
       imageUrl: imageUrlNotifier.value,
       categoryId: categoryIdNotifier.value,
       managerList: [_authCubit.state.user!.id],
-      memberCount: 0,
+      memberCount: 1,
     );
     final response = await _communityCubit.createCommunity(community);
     if (response) {

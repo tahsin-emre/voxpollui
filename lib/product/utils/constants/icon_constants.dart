@@ -16,6 +16,8 @@ final class IconConstants {
   static const imageAdd = Icons.add_photo_alternate_outlined;
   static const verify = Icons.verified;
   static const settings = Icons.settings_outlined;
+  static const arrowBack = Icons.arrow_back_outlined;
+  static const newImage = Icons.image_search_outlined;
 }
 
 extension IconConstantsExt on IconData {

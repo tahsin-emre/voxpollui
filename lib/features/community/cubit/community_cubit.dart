@@ -43,6 +43,12 @@ final class CommunityCubit extends Cubit<CommunityState> {
     return true;
   }
 
+  Future<bool> updateCommunity(CommunityModel community) async {
+    final response = await _communityService.updateCommunity(community);
+    if (!response) return false;
+    return true;
+  }
+
   Future<void> getPolls(String communityId) async {
     emit(state.copyWith(isLoading: true));
     final allPolls = await _communityService.getCommunityPolls(communityId);

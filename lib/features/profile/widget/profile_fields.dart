@@ -8,14 +8,13 @@ final class _ProfileImageHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CustomAppBar(context),
         Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Column(
               children: [
                 Image.network(
-                  user.imageUrl ?? 'https://picsum.photos/200',
+                  user.backgroundUrl ?? 'https://picsum.photos/200',
                   width: double.infinity,
                   height: WidgetSizes.maxiL,
                   fit: BoxFit.fitWidth,
@@ -48,12 +47,24 @@ final class _ProfileImageHeader extends StatelessWidget {
             title: '',
           ),
         if (isOwn)
-          AppBar(
-            backgroundColor: Colors.transparent,
+          CustomAppBar(
+            context,
+            isTransparent: true,
+            title: '',
             actions: [
               IconButton(
+                padding: PagePaddings.allXS,
                 icon: IconConstants.settings.toIcon,
-                onPressed: () {},
+                onPressed: () => UserProfileEditRoute(user).push<void>(context),
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Colors.white),
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      side: const BorderSide(color: AppColor.borderColor),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

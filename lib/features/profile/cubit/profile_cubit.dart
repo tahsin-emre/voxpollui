@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/profile/cubit/profile_state.dart';
+import 'package:voxpollui/product/initialize/models/owner_model/user_model.dart';
 import 'package:voxpollui/product/services/firebase/poll_service.dart';
 import 'package:voxpollui/product/services/firebase/user_service.dart';
 
@@ -11,15 +12,26 @@ final class ProfileCubit extends Cubit<ProfileState> {
   Future<void> fetchUser(String userId) async {
     emit(state.copyWith(isLoading: true));
     final user = await _userService.getUser(userId);
+    emit(
+      state.copyWith(
+        user: user,
+        isLoading: false,
+      ),
+    );
+  }
+
+  Future<void> fetchUserPolls(String userId) async {
     final createdPolls = await _pollService.getPollsByUser(userId);
     final participatedPolls = await _pollService.getPollsParticipated(userId);
     emit(
       state.copyWith(
-        user: user,
         createdPolls: createdPolls,
         participatedPolls: participatedPolls,
-        isLoading: false,
       ),
     );
+  }
+
+  void updateUser(UserModel user) {
+    emit(state.copyWith(user: user));
   }
 }

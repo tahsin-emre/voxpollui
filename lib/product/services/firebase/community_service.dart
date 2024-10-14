@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
@@ -13,9 +14,29 @@ final class CommunityService extends BaseService {
   ///Create Community
   Future<bool> createCommunity(CommunityModel community) async {
     try {
-      await db
+      final response = await db
           .collection(FireStoreCollections.communities.name)
           .add(community.toMap());
+      await db
+          .collection(FireStoreCollections.communities.name)
+          .doc(response.id)
+          .collection(FireStoreCollections.members.name)
+          .add({
+        'createdAt': Timestamp.now(),
+        'userId': community.managerList?.first,
+      });
+      return true;
+    } on Exception {
+      return false;
+    }
+  }
+
+  Future<bool> updateCommunity(CommunityModel community) async {
+    try {
+      await db
+          .collection(FireStoreCollections.communities.name)
+          .doc(community.id)
+          .update(community.toMap());
       return true;
     } on Exception {
       return false;

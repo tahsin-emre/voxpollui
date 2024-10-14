@@ -1,20 +1,25 @@
 part of '../view/community_detail_view.dart';
 
 final class _ProfileImageHeader extends StatelessWidget {
-  const _ProfileImageHeader(this.community);
+  const _ProfileImageHeader(
+    this.community, {
+    required this.isManager,
+    required this.onEdit,
+  });
   final CommunityModel community;
+  final bool isManager;
+  final VoidCallback onEdit;
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CustomAppBar(context),
         Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Column(
               children: [
                 Image.network(
-                  community.imageUrl ?? 'https://picsum.photos/200',
+                  community.backgroundUrl ?? 'https://picsum.photos/200',
                   width: double.infinity,
                   height: WidgetSizes.maxiL,
                   fit: BoxFit.fitWidth,
@@ -40,11 +45,34 @@ final class _ProfileImageHeader extends StatelessWidget {
             ),
           ],
         ),
-        CustomAppBar(
-          context,
-          isTransparent: true,
-          title: '',
-        ),
+        if (!isManager)
+          CustomAppBar(
+            context,
+            isTransparent: true,
+            title: '',
+          ),
+        if (isManager)
+          CustomAppBar(
+            context,
+            isTransparent: true,
+            title: '',
+            actions: [
+              IconButton(
+                padding: PagePaddings.allXS,
+                icon: IconConstants.settings.toIcon,
+                onPressed: onEdit,
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Colors.white),
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      side: const BorderSide(color: AppColor.borderColor),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
       ],
     );
   }
@@ -228,3 +256,6 @@ final class _InfoBox extends StatelessWidget {
     );
   }
 }
+
+
+// TODO: limit 5 interest ,
