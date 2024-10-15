@@ -20,7 +20,8 @@ class _CommunityCardState extends State<CommunityCard> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => CommunityDetailRoute(widget.community).push<void>(context),
+      onTap: () =>
+          CommunityDetailRoute(widget.community.id).push<void>(context),
       leading: CircleAvatar(
         backgroundImage: widget.community.imageUrl != null
             ? NetworkImage(widget.community.imageUrl!)
@@ -40,7 +41,10 @@ class _CommunityCardState extends State<CommunityCard> {
         LocaleKeys.community_xMembers
             .tr(args: ['${widget.community.memberCount}']),
       ),
-      trailing: JoinButton(communityId: widget.community.id),
+      trailing: JoinButton(
+        communityId: widget.community.id,
+        onJoin: (i) {},
+      ),
     );
   }
 }

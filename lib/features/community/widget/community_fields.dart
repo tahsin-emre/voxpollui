@@ -83,10 +83,12 @@ final class _CommunityInfo extends StatelessWidget {
     this.community, {
     required this.pollCount,
     required this.isManager,
+    required this.onJoin,
   });
   final CommunityModel community;
   final num pollCount;
   final bool isManager;
+  final ValueChanged<int> onJoin;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -95,9 +97,13 @@ final class _CommunityInfo extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             if (!isManager)
-              Align(
+              Container(
                 alignment: Alignment.centerRight,
-                child: JoinButton(communityId: community.id),
+                margin: PagePaddings.horL,
+                child: JoinButton(
+                  communityId: community.id,
+                  onJoin: onJoin,
+                ),
               ),
             Text(
               community.name ?? '',

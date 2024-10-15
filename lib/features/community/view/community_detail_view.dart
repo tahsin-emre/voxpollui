@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:voxpollui/features/community/cubit/community_cubit.dart';
 import 'package:voxpollui/features/community/cubit/community_state.dart';
@@ -22,9 +21,8 @@ import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
 part '../widget/community_fields.dart';
 
 class CommunityDetailView extends StatefulWidget {
-  const CommunityDetailView({required this.community, super.key});
-  final CommunityModel community;
-
+  const CommunityDetailView({required this.communityId, super.key});
+  final String communityId;
   @override
   State<CommunityDetailView> createState() => _CommunityDetailViewState();
 }
@@ -33,37 +31,40 @@ class _CommunityDetailViewState extends State<CommunityDetailView>
     with CommunityDetailMixin {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: isManager
-          ? FloatingActionButton(
-              onPressed: () {
-                PollCreateRoute(ownerId: community.id).push<void>(context);
-              },
-              backgroundColor: AppColor.primary,
-              child: const Icon(
-                IconConstants.add,
-                color: AppColor.white,
-              ),
-            )
-          : null,
-      body: ValueListenableBuilder(
-        valueListenable: isLoadingNotifier,
-        builder: (_, isLoading, __) {
-          return BlocBuilder<CommunityCubit, CommunityState>(
-            builder: (_, state) {
-              return LiquidPullToRefresh(
-                onRefresh: () async {},
-                child: SingleChildScrollView(
+    return ValueListenableBuilder(
+      valueListenable: isLoadingNotifier,
+      builder: (_, isLoading, __) {
+        return Skeletonizer(
+          enabled: isLoading,
+          child: Scaffold(
+            floatingActionButton: isManager
+                ? FloatingActionButton(
+                    onPressed: () {
+                      PollCreateRoute(ownerId: community!.id)
+                          .push<void>(context);
+                    },
+                    backgroundColor: AppColor.primary,
+                    child: const Icon(
+                      IconConstants.add,
+                      color: AppColor.white,
+                    ),
+                  )
+                : null,
+            body: BlocBuilder<CommunityCubit, CommunityState>(
+              builder: (_, state) {
+                if (community == null) return const SizedBox();
+                return SingleChildScrollView(
                   child: Column(
                     children: [
                       _CommunityImageHeader(
-                        community,
+                        community!,
                         isManager: isManager,
                         onEdit: onEdit,
                       ),
                       _CommunityInfo(
-                        community,
+                        community!,
                         isManager: isManager,
+                        onJoin: onJoin,
                         pollCount: (state.selectedNewPolls?.length ?? 0) +
                             (state.selectedOldPolls?.length ?? 0),
                       ),
@@ -72,22 +73,19 @@ class _CommunityDetailViewState extends State<CommunityDetailView>
                         pageNotifier,
                         (val) => pageNotifier.value = val,
                       ),
-                      Skeletonizer(
-                        enabled: isLoading,
-                        child: _CommunityTabView(
-                          pageNotifier,
-                          newPolls: state.selectedNewPolls ?? [],
-                          oldPolls: state.selectedOldPolls ?? [],
-                        ),
+                      _CommunityTabView(
+                        pageNotifier,
+                        newPolls: state.selectedNewPolls ?? [],
+                        oldPolls: state.selectedOldPolls ?? [],
                       ),
                     ],
                   ),
-                ),
-              );
-            },
-          );
-        },
-      ),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

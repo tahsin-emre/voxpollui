@@ -12,7 +12,7 @@ final class MyCommunityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => CommunityDetailRoute(community).push<void>(context),
+      onTap: () => CommunityDetailRoute(community.id).push<void>(context),
       leading: CircleAvatar(
         backgroundImage: community.imageUrl != null
             ? NetworkImage(community.imageUrl!)

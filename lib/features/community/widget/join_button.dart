@@ -6,11 +6,15 @@ import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/services/firebase/community_service.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
-import 'package:voxpollui/product/utils/constants/page_paddings.dart';
 
 class JoinButton extends StatefulWidget {
-  const JoinButton({required this.communityId, super.key});
+  const JoinButton({
+    required this.communityId,
+    required this.onJoin,
+    super.key,
+  });
   final String communityId;
+  final ValueChanged<int> onJoin;
   @override
   State<JoinButton> createState() => _JoinButtonState();
 }
@@ -46,10 +50,10 @@ class _JoinButtonState extends State<JoinButton> {
             }
             final response = await process;
             if (!response) return;
+            widget.onJoin(isMember ? -1 : 1);
             await checkMembership();
           },
           child: Container(
-            margin: PagePaddings.horL,
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
