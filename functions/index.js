@@ -10,21 +10,24 @@ const db = getFirestore();
 
 exports.vote = onDocumentCreated("polls/{pollId}/votes/{userId}", async (event) => {
   const pollId = event.params.pollId;
-  const optionId = event.data.optionId;
-  const pollRef = db.collection("users").doc(pollId);
+  const snapshot = event.data;
+  const optionId = snapshot.data().optionId;
+  const pollRef = db.collection("polls").doc(pollId);
   const pollSnap = await pollRef.get();
   const pollData = pollSnap.data();
   const options = pollData.options;
   const updatedOptions = options.map((option) => {
     if (option.id === optionId) {
+      const newValue = option.voteCount + 1;
+      delete option.voteCount;
       return {
         ...option,
-        voteCount: option.voteCount + 1,
+        voteCount: newValue,
       };
     }
     return option;
   });
-  await pollRef.update({"options": updatedOptions});
+  await pollRef.update({options: updatedOptions});
 });
 
 exports.following = onDocumentCreated("users/{userId}/following/{followingId}", async (event) => {

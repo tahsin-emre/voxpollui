@@ -45,11 +45,12 @@ mixin PollDetailsMixin on State<PollDetailsView> {
   }
 
   Future<bool> votePoll(PollOption pollOption, int totalVoteCount) async {
-    return _pollService.votePoll(
+    final response = await _pollService.votePoll(
       widget.poll.id,
       _authCubit.state.user!.id,
       pollOption.id ?? 'unknown',
     );
+    return response;
   }
 
   Future<void> checkUserVoted() async {
