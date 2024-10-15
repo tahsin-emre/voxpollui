@@ -123,23 +123,24 @@ RouteBase get $communityDetailRoute => GoRouteData.$route(
 extension $CommunityDetailRouteExtension on CommunityDetailRoute {
   static CommunityDetailRoute _fromState(GoRouterState state) =>
       CommunityDetailRoute(
-        state.extra as CommunityModel,
+        state.uri.queryParameters['community-id']!,
       );
 
   String get location => GoRouteData.$location(
         '/community/detail',
+        queryParams: {
+          'community-id': communityId,
+        },
       );
 
-  void go(BuildContext context) => context.go(location, extra: $extra);
+  void go(BuildContext context) => context.go(location);
 
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: $extra);
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: $extra);
+      context.pushReplacement(location);
 
-  void replace(BuildContext context) =>
-      context.replace(location, extra: $extra);
+  void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $communityEditRoute => GoRouteData.$route(
@@ -280,11 +281,15 @@ RouteBase get $pollCreateRoute => GoRouteData.$route(
     );
 
 extension $PollCreateRouteExtension on PollCreateRoute {
-  static PollCreateRoute _fromState(GoRouterState state) =>
-      const PollCreateRoute();
+  static PollCreateRoute _fromState(GoRouterState state) => PollCreateRoute(
+        ownerId: state.uri.queryParameters['owner-id']!,
+      );
 
   String get location => GoRouteData.$location(
         '/poll/create',
+        queryParams: {
+          'owner-id': ownerId,
+        },
       );
 
   void go(BuildContext context) => context.go(location);

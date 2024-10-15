@@ -20,6 +20,28 @@ final class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
+  void followUser() {
+    final user = state.user;
+    if (user == null) return;
+    emit(
+      state.copyWith(
+        user: user.copyWith(followersCount: user.followersCount + 1),
+        isLoading: false,
+      ),
+    );
+  }
+
+  void unfollowUser() {
+    final user = state.user;
+    if (user == null) return;
+    emit(
+      state.copyWith(
+        user: user.copyWith(followersCount: user.followersCount - 1),
+        isLoading: false,
+      ),
+    );
+  }
+
   Future<void> fetchUserPolls(String userId) async {
     final createdPolls = await _pollService.getPollsByUser(userId);
     final participatedPolls = await _pollService.getPollsParticipated(userId);

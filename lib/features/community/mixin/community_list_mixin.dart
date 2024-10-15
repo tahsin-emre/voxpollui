@@ -12,7 +12,11 @@ mixin CommunityListMixin on State<CommunityListView> {
   @override
   void initState() {
     super.initState();
-    _communityCubit.fetchCommunityList(
+    pullCommunities();
+  }
+
+  Future<void> pullCommunities() async {
+    await _communityCubit.fetchCommunityList(
       _authCubit.state.user!.id,
     );
   }

@@ -26,7 +26,7 @@ final class PollUserTile extends StatelessWidget {
             }
             if (owner.ownerType == OwnerType.community) {
               final community = owner as CommunityModel;
-              CommunityDetailRoute(community).push<void>(context);
+              CommunityDetailRoute(community.id).push<void>(context);
               return;
             }
           },

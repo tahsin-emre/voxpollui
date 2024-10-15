@@ -36,13 +36,6 @@ final class CommunityCubit extends Cubit<CommunityState> {
     return _communityService.createCommunity(community);
   }
 
-  Future<bool> joinCommunity(String userId, String communityId) async {
-    final response = await _communityService.joinCommunity(userId, communityId);
-    if (!response) return false;
-    await fetchCommunityList(userId);
-    return true;
-  }
-
   Future<bool> updateCommunity(CommunityModel community) async {
     final response = await _communityService.updateCommunity(community);
     if (!response) return false;

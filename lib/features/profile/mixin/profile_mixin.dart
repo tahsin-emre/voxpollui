@@ -26,10 +26,5 @@ mixin ProfileMixin on State<ProfileView> {
     _profileCubit.fetchUserPolls(widget.userId);
   }
 
-  Future<void> signOut() async {
-    await _authCubit.signOut();
-    navToSplash();
-  }
-
   void navToSplash() => const SplashRoute().go(context);
 }

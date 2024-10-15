@@ -16,7 +16,7 @@ mixin HomeMixin on State<HomeView> {
   }
 
   void onAdd() {
-    const PollCreateRoute().push<void>(context);
+    PollCreateRoute(ownerId: user.id).push<void>(context);
   }
 
   void onPageChanged(int index) {

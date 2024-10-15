@@ -12,12 +12,12 @@ class CommunityCreateRoute extends GoRouteData {
 
 @TypedGoRoute<CommunityDetailRoute>(path: CommunityDetailRoute.path)
 class CommunityDetailRoute extends GoRouteData {
-  const CommunityDetailRoute(this.$extra);
+  const CommunityDetailRoute(this.communityId);
   static const String path = '/community/detail';
-  final CommunityModel $extra;
+  final String communityId;
   @override
   TPage buildPage(BuildContext context, GoRouterState state) {
-    return TPage(child: CommunityDetailView(community: $extra));
+    return TPage(child: CommunityDetailView(communityId: communityId));
   }
 }
 
