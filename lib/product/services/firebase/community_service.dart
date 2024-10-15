@@ -3,8 +3,6 @@ import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
-import 'package:voxpollui/product/services/http/http_endpoints.dart';
-import 'package:voxpollui/product/services/http/http_service.dart';
 
 final class CommunityService extends BaseService {
   factory CommunityService() => _instance;
@@ -31,6 +29,7 @@ final class CommunityService extends BaseService {
     }
   }
 
+  ///Update Community
   Future<bool> updateCommunity(CommunityModel community) async {
     try {
       await db
@@ -45,11 +44,49 @@ final class CommunityService extends BaseService {
 
   ///Join Community
   Future<bool> joinCommunity(String userId, String communityId) async {
-    final response = await HttpService().sendRequest(
-      HttpEndpoints.joincommunity,
-      {'userId': userId, 'communityId': communityId},
-    );
-    if (response.body == 'true') return true;
+    try {
+      await db
+          .collection(FireStoreCollections.communities.name)
+          .doc(communityId)
+          .collection(FireStoreCollections.members.name)
+          .doc(userId)
+          .set({
+        'userId': userId,
+        'createdAt': Timestamp.now(),
+      });
+      return true;
+    } on Exception {
+      return false;
+    }
+  }
+
+  ///Leave Community
+  Future<bool> leaveCommunity(String userId, String communityId) async {
+    try {
+      await db
+          .collection(FireStoreCollections.communities.name)
+          .doc(communityId)
+          .collection(FireStoreCollections.members.name)
+          .doc(userId)
+          .delete();
+      return true;
+    } on Exception {
+      return false;
+    }
+  }
+
+  ///Check Membership
+  Future<bool> checkMembership({
+    required String userId,
+    required String communityId,
+  }) async {
+    final response = await db
+        .collection(FireStoreCollections.communities.name)
+        .doc(communityId)
+        .collection(FireStoreCollections.members.name)
+        .doc(userId)
+        .get();
+    if (response.exists) return true;
     return false;
   }
 

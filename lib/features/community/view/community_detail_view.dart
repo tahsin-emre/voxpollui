@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:voxpollui/features/community/cubit/community_cubit.dart';
 import 'package:voxpollui/features/community/cubit/community_state.dart';
 import 'package:voxpollui/features/community/mixin/community_detail_mixin.dart';
+import 'package:voxpollui/features/community/widget/join_button.dart';
 import 'package:voxpollui/features/poll/widget/poll_tile.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/custom_app_bar.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
@@ -49,33 +51,37 @@ class _CommunityDetailViewState extends State<CommunityDetailView>
         builder: (_, isLoading, __) {
           return BlocBuilder<CommunityCubit, CommunityState>(
             builder: (_, state) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _ProfileImageHeader(
-                      community,
-                      isManager: isManager,
-                      onEdit: onEdit,
-                    ),
-                    _ProfileInfo(
-                      community,
-                      pollCount: (state.selectedNewPolls?.length ?? 0) +
-                          (state.selectedOldPolls?.length ?? 0),
-                    ),
-                    const Divider(),
-                    _ProfileTabNav(
-                      pageNotifier,
-                      (val) => pageNotifier.value = val,
-                    ),
-                    Skeletonizer(
-                      enabled: isLoading,
-                      child: _ProfileTabView(
-                        pageNotifier,
-                        newPolls: state.selectedNewPolls ?? [],
-                        oldPolls: state.selectedOldPolls ?? [],
+              return LiquidPullToRefresh(
+                onRefresh: () async {},
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _CommunityImageHeader(
+                        community,
+                        isManager: isManager,
+                        onEdit: onEdit,
                       ),
-                    ),
-                  ],
+                      _CommunityInfo(
+                        community,
+                        isManager: isManager,
+                        pollCount: (state.selectedNewPolls?.length ?? 0) +
+                            (state.selectedOldPolls?.length ?? 0),
+                      ),
+                      const Divider(),
+                      _CommunityTabNav(
+                        pageNotifier,
+                        (val) => pageNotifier.value = val,
+                      ),
+                      Skeletonizer(
+                        enabled: isLoading,
+                        child: _CommunityTabView(
+                          pageNotifier,
+                          newPolls: state.selectedNewPolls ?? [],
+                          oldPolls: state.selectedOldPolls ?? [],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

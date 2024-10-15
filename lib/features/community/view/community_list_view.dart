@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:voxpollui/features/community/cubit/community_cubit.dart';
 import 'package:voxpollui/features/community/cubit/community_state.dart';
@@ -30,43 +31,48 @@ class _CommunityListViewState extends State<CommunityListView>
         builder: (_, state) {
           final list = state.communityList ?? [];
           final myList = state.myCommunityList ?? [];
-          return Skeletonizer(
-            enabled: state.isLoading,
-            child: ListView(
-              padding: PagePaddings.allL,
-              children: [
-                AppSearchBar(
-                  onChanged: (value) {},
-                  label: LocaleKeys.community_communitySearch,
-                ),
-                ExtendedElevatedButton(
-                  onPressed: navToCreate,
-                  text: LocaleKeys.community_createCommunity.tr(),
-                ),
-                Padding(
-                  padding: PagePaddings.horL,
-                  child: Text(
-                    LocaleKeys.community_myCommunities.tr(),
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: FontConstants.gilroyBold,
+          return LiquidPullToRefresh(
+            onRefresh: pullCommunities,
+            springAnimationDurationInMilliseconds: 350,
+            showChildOpacityTransition: false,
+            child: Skeletonizer(
+              enabled: state.isLoading,
+              child: ListView(
+                padding: PagePaddings.allL,
+                children: [
+                  AppSearchBar(
+                    onChanged: (value) {},
+                    label: LocaleKeys.community_communitySearch,
+                  ),
+                  ExtendedElevatedButton(
+                    onPressed: navToCreate,
+                    text: LocaleKeys.community_createCommunity.tr(),
+                  ),
+                  Padding(
+                    padding: PagePaddings.horL,
+                    child: Text(
+                      LocaleKeys.community_myCommunities.tr(),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: FontConstants.gilroyBold,
+                      ),
                     ),
                   ),
-                ),
-                ...myList.map(MyCommunityCard.new),
-                const SizedBox(height: WidgetSizes.xl),
-                Padding(
-                  padding: PagePaddings.horL,
-                  child: Text(
-                    LocaleKeys.community_recomendedCommunities.tr(),
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: FontConstants.gilroyBold,
+                  ...myList.map(MyCommunityCard.new),
+                  const SizedBox(height: WidgetSizes.xl),
+                  Padding(
+                    padding: PagePaddings.horL,
+                    child: Text(
+                      LocaleKeys.community_recomendedCommunities.tr(),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: FontConstants.gilroyBold,
+                      ),
                     ),
                   ),
-                ),
-                ...list.map(CommunityCard.new),
-              ],
+                  ...list.map(CommunityCard.new),
+                ],
+              ),
             ),
           );
         },

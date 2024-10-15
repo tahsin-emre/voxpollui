@@ -1,7 +1,7 @@
 part of '../view/community_detail_view.dart';
 
-final class _ProfileImageHeader extends StatelessWidget {
-  const _ProfileImageHeader(
+final class _CommunityImageHeader extends StatelessWidget {
+  const _CommunityImageHeader(
     this.community, {
     required this.isManager,
     required this.onEdit,
@@ -78,20 +78,35 @@ final class _ProfileImageHeader extends StatelessWidget {
   }
 }
 
-final class _ProfileInfo extends StatelessWidget {
-  const _ProfileInfo(this.community, {required this.pollCount});
+final class _CommunityInfo extends StatelessWidget {
+  const _CommunityInfo(
+    this.community, {
+    required this.pollCount,
+    required this.isManager,
+  });
   final CommunityModel community;
   final num pollCount;
+  final bool isManager;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          community.name ?? '',
-          style: TextStyle(
-            fontSize: 22,
-            fontFamily: FontConstants.gilroyBold,
-          ),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            if (!isManager)
+              Align(
+                alignment: Alignment.centerRight,
+                child: JoinButton(communityId: community.id),
+              ),
+            Text(
+              community.name ?? '',
+              style: TextStyle(
+                fontSize: 22,
+                fontFamily: FontConstants.gilroyBold,
+              ),
+            ),
+          ],
         ),
         Text(
           '@${community.userName}',
@@ -128,8 +143,8 @@ final class _ProfileInfo extends StatelessWidget {
   }
 }
 
-final class _ProfileTabNav extends StatelessWidget {
-  const _ProfileTabNav(this.pageNotifier, this.onTap);
+final class _CommunityTabNav extends StatelessWidget {
+  const _CommunityTabNav(this.pageNotifier, this.onTap);
   final ValueNotifier<int> pageNotifier;
   final ValueChanged<int> onTap;
   @override
@@ -166,8 +181,8 @@ final class _ProfileTabNav extends StatelessWidget {
   }
 }
 
-final class _ProfileTabView extends StatelessWidget {
-  const _ProfileTabView(
+final class _CommunityTabView extends StatelessWidget {
+  const _CommunityTabView(
     this.pageNotifier, {
     required this.newPolls,
     required this.oldPolls,

@@ -17,6 +17,7 @@ abstract class  LocaleKeys {
   static const base_finish = 'base.finish';
   static const base_and = 'base.and';
   static const base_join = 'base.join';
+  static const base_leave = 'base.leave';
   static const base_results = 'base.results';
   static const base_search = 'base.search';
   static const base_tryAgain = 'base.tryAgain';

@@ -1,7 +1,9 @@
 /* eslint-disable max-len */
 const {initializeApp} = require("firebase-admin/app");
 const {getFirestore} = require("firebase-admin/firestore");
+const {setGlobalOptions} = require("firebase-functions");
 const {onDocumentCreated, onDocumentDeleted} = require("firebase-functions/v2/firestore");
+setGlobalOptions({region: "europe-west3"});
 initializeApp();
 const db = getFirestore();
 
@@ -38,7 +40,7 @@ exports.followed = onDocumentCreated("users/{userId}/followers/{followingId}", a
   const userRef = db.collection("users").doc(userId);
   const userSnap = await userRef.get();
   const userData = userSnap.data();
-  await userRef.update({followersCount: userData.followersCount + 1});
+  await userRef.update({"followersCount": userData.followersCount + 1});
 });
 
 exports.unfollowing = onDocumentDeleted("users/{userId}/following/{followingId}", async (event) => {

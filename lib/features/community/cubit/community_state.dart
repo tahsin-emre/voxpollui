@@ -9,6 +9,7 @@ final class CommunityState extends Equatable {
     this.communityList,
     this.myCommunityList,
     this.categoryList,
+    this.selectedCommunity,
     this.selectedNewPolls,
     this.selectedOldPolls,
   });
@@ -18,6 +19,7 @@ final class CommunityState extends Equatable {
     List<CommunityModel>? communityList,
     List<CommunityModel>? myCommunityList,
     List<CategoryModel>? categoryList,
+    CommunityModel? selectedCommunity,
     List<PollModel>? selectedNewPolls,
     List<PollModel>? selectedOldPolls,
   }) {
@@ -26,6 +28,7 @@ final class CommunityState extends Equatable {
       communityList: communityList ?? this.communityList,
       myCommunityList: myCommunityList ?? this.myCommunityList,
       categoryList: categoryList ?? this.categoryList,
+      selectedCommunity: selectedCommunity ?? this.selectedCommunity,
       selectedNewPolls: selectedNewPolls ?? this.selectedNewPolls,
       selectedOldPolls: selectedOldPolls ?? this.selectedOldPolls,
     );
@@ -35,6 +38,7 @@ final class CommunityState extends Equatable {
   final List<CommunityModel>? communityList;
   final List<CommunityModel>? myCommunityList;
   final List<CategoryModel>? categoryList;
+  final CommunityModel? selectedCommunity;
   final List<PollModel>? selectedNewPolls;
   final List<PollModel>? selectedOldPolls;
 
@@ -44,6 +48,7 @@ final class CommunityState extends Equatable {
         communityList,
         myCommunityList,
         categoryList,
+        selectedCommunity,
         selectedNewPolls,
         selectedOldPolls,
       ];

@@ -1,9 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
-import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
-import 'package:voxpollui/features/community/cubit/community_cubit.dart';
+import 'package:voxpollui/features/community/widget/join_button.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
 import 'package:voxpollui/product/initialize/router/route_tree.dart';
@@ -43,22 +40,7 @@ class _CommunityCardState extends State<CommunityCard> {
         LocaleKeys.community_xMembers
             .tr(args: ['${widget.community.memberCount}']),
       ),
-      trailing: Skeletonizer(
-        enabled: isLoading,
-        child: TextButton(
-          onPressed: () async {
-            setState(() => isLoading = true);
-            final authCubit = context.read<AuthCubit>();
-            final communityCubit = context.read<CommunityCubit>();
-            if (authCubit.state.user == null) return;
-            await communityCubit.joinCommunity(
-              authCubit.state.user!.id,
-              widget.community.id,
-            );
-          },
-          child: Text(LocaleKeys.base_join.tr()),
-        ),
-      ),
+      trailing: JoinButton(communityId: widget.community.id),
     );
   }
 }
