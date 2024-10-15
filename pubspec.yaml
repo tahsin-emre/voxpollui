@@ -32,6 +32,7 @@ dependencies:
   flutter_polls: ^0.1.6
   adaptive_theme: ^3.6.0
   flutter_markdown: ^0.7.3+2
+  liquid_pull_to_refresh: ^3.0.1
 
 dev_dependencies:
   flutter_test:

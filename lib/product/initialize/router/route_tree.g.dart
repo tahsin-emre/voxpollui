@@ -280,11 +280,15 @@ RouteBase get $pollCreateRoute => GoRouteData.$route(
     );
 
 extension $PollCreateRouteExtension on PollCreateRoute {
-  static PollCreateRoute _fromState(GoRouterState state) =>
-      const PollCreateRoute();
+  static PollCreateRoute _fromState(GoRouterState state) => PollCreateRoute(
+        ownerId: state.uri.queryParameters['owner-id']!,
+      );
 
   String get location => GoRouteData.$location(
         '/poll/create',
+        queryParams: {
+          'owner-id': ownerId,
+        },
       );
 
   void go(BuildContext context) => context.go(location);

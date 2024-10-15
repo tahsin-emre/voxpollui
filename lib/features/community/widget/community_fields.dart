@@ -256,6 +256,3 @@ final class _InfoBox extends StatelessWidget {
     );
   }
 }
-
-
-// TODO: limit 5 interest ,

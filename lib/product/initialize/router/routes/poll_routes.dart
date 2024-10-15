@@ -2,11 +2,12 @@ part of '../route_tree.dart';
 
 @TypedGoRoute<PollCreateRoute>(path: PollCreateRoute.path)
 class PollCreateRoute extends GoRouteData {
-  const PollCreateRoute();
+  const PollCreateRoute({required this.ownerId});
   static const String path = '/poll/create';
+  final String ownerId;
   @override
   TPage buildPage(BuildContext context, GoRouterState state) {
-    return TPage(child: const PollCreateView());
+    return TPage(child: PollCreateView(ownerId: ownerId));
   }
 }
 

@@ -61,7 +61,7 @@ mixin PollCreateMixin on State<PollCreateView> {
     );
     final poll = PollModel(
       id: '',
-      ownerId: _authCubit.state.user!.id,
+      ownerId: widget.ownerId,
       title: titleCont.text,
       createdAt: DateTime.now(),
       endAt: endTime,

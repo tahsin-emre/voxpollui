@@ -61,7 +61,7 @@ class _FormInterestsState extends State<FormInterests> {
                     if (isSelected) {
                       selectedCategories.remove(category);
                     } else {
-                      if (selectedCategories.length == 10) return;
+                      if (selectedCategories.length == 5) return;
                       selectedCategories.add(category);
                     }
                     setState(() {});

@@ -1,8 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
-import 'package:voxpollui/product/services/http/http_endpoints.dart';
-import 'package:voxpollui/product/services/http/http_service.dart';
 
 final class PollService extends BaseService {
   factory PollService() => _instance;
@@ -90,11 +89,20 @@ final class PollService extends BaseService {
 
   ///Vote Poll
   Future<bool> votePoll(String pollId, String userId, String optionId) async {
-    final response = await HttpService().sendRequest(
-      HttpEndpoints.votepoll,
-      {'pollId': pollId, 'userId': userId, 'optionId': optionId},
-    );
-    if (response.body == 'true') return true;
-    return false;
+    try {
+      await db
+          .collection(FireStoreCollections.polls.name)
+          .doc(pollId)
+          .collection(FireStoreCollections.votes.name)
+          .doc(userId)
+          .set({
+        'optionId': optionId,
+        'createdAt': Timestamp.now(),
+        'userId': userId,
+      });
+      return true;
+    } on Exception {
+      return false;
+    }
   }
 }

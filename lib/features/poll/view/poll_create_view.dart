@@ -23,8 +23,8 @@ import 'package:voxpollui/product/utils/constants/widget_sizes.dart';
 part '../widget/poll_create_fields.dart';
 
 class PollCreateView extends StatefulWidget {
-  const PollCreateView({super.key});
-
+  const PollCreateView({required this.ownerId, super.key});
+  final String ownerId;
   @override
   State<PollCreateView> createState() => _PollCreateViewState();
 }
