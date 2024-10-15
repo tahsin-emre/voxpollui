@@ -43,6 +43,7 @@ mixin LoginMixin on State<LoginView> {
     await _authService.verifyPhone(
       phoneNumber: phone,
       authStream: authStream,
+      context: context,
     );
   }
 

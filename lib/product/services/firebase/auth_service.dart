@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
+import 'package:voxpollui/product/utils/extensions/context_ext.dart';
 
 final class AuthService extends BaseService {
   factory AuthService() => _instance;
@@ -13,6 +15,8 @@ final class AuthService extends BaseService {
   Future<void> verifyPhone({
     required String phoneNumber,
     required StreamController<AuthStatus> authStream,
+    //it will deleted
+    required BuildContext context,
   }) async {
     try {
       await auth.verifyPhoneNumber(
@@ -27,14 +31,18 @@ final class AuthService extends BaseService {
           authStream.sink.add(AuthStatus.onCodeSent);
         },
         verificationFailed: (FirebaseException e) {
+          context.showSnackBar(e.message ?? 'error');
           log('message: ${e.message}');
           authStream.sink.add(AuthStatus.onError);
         },
         codeAutoRetrievalTimeout: (timeout) {
+          context.showSnackBar('timeout $timeout');
+          log('message: $timeout');
           authStream.sink.add(AuthStatus.onError);
         },
       );
     } on Exception catch (e) {
+      context.showSnackBar(e.toString());
       log('message: $e');
       authStream.sink.add(AuthStatus.onError);
     }
