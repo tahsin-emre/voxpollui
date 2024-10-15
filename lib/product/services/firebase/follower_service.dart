@@ -1,6 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:voxpollui/product/services/firebase/base_service.dart';
-import 'package:voxpollui/product/services/http/http_endpoints.dart';
-import 'package:voxpollui/product/services/http/http_service.dart';
 
 final class FollowerService extends BaseService {
   factory FollowerService() => _instance;
@@ -25,23 +24,45 @@ final class FollowerService extends BaseService {
     required String localUserId,
     required String targetUserId,
   }) async {
-    final response = await HttpService().sendRequest(
-      HttpEndpoints.followuser,
-      {'userId': targetUserId, 'followerId': localUserId},
-    );
-    if (response.body == 'true') return true;
-    return false;
+    try {
+      await db
+          .collection(FireStoreCollections.users.name)
+          .doc(localUserId)
+          .collection(FireStoreCollections.following.name)
+          .doc(targetUserId)
+          .set({'createdAt': Timestamp.now(), 'userId': targetUserId});
+      await db
+          .collection(FireStoreCollections.users.name)
+          .doc(targetUserId)
+          .collection(FireStoreCollections.followers.name)
+          .doc(localUserId)
+          .set({'createdAt': Timestamp.now(), 'userId': localUserId});
+      return true;
+    } on Exception {
+      return false;
+    }
   }
 
   Future<bool> unfollowUser({
     required String localUserId,
     required String targetUserId,
   }) async {
-    final response = await HttpService().sendRequest(
-      HttpEndpoints.unfollowuser,
-      {'userId': targetUserId, 'followerId': localUserId},
-    );
-    if (response.body == 'true') return true;
-    return false;
+    try {
+      await db
+          .collection(FireStoreCollections.users.name)
+          .doc(localUserId)
+          .collection(FireStoreCollections.following.name)
+          .doc(targetUserId)
+          .delete();
+      await db
+          .collection(FireStoreCollections.users.name)
+          .doc(targetUserId)
+          .collection(FireStoreCollections.followers.name)
+          .doc(localUserId)
+          .delete();
+      return true;
+    } on Exception {
+      return false;
+    }
   }
 }

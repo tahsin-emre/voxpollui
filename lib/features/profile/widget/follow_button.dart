@@ -54,11 +54,13 @@ class _FollowButtonState extends State<FollowButton> {
             final targetUserId = widget.userId;
             final Future<bool> process;
             if (isFollowing) {
+              _profileCubit.unfollowUser();
               process = _followerService.unfollowUser(
                 localUserId: localUserId ?? '',
                 targetUserId: targetUserId,
               );
             } else {
+              _profileCubit.followUser();
               process = _followerService.followUser(
                 localUserId: localUserId ?? '',
                 targetUserId: targetUserId,
@@ -66,8 +68,7 @@ class _FollowButtonState extends State<FollowButton> {
             }
             final response = await process;
             if (!response) return;
-            await _profileCubit.fetchUser(targetUserId);
-            isLoadingNotifier.value = false;
+            await checkFollowing();
           },
           child: Container(
             margin: PagePaddings.horL,
