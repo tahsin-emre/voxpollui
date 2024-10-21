@@ -59,10 +59,26 @@ final class _CommunityImageHeader extends StatelessWidget {
             actions: [
               IconButton(
                 padding: PagePaddings.allXS,
+                icon: IconConstants.more.toIcon,
+                onPressed: () {
+                  // context.showSheet();
+                },
+                style: ButtonStyle(
+                  // backgroundColor: WidgetStateProperty.all(Colors.white),
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      side: const BorderSide(color: AppColor.borderColor),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ),
+              ),
+              IconButton(
+                padding: PagePaddings.allXS,
                 icon: IconConstants.settings.toIcon,
                 onPressed: onEdit,
                 style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.white),
+                  // backgroundColor: WidgetStateProperty.all(Colors.white),
                   shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                       side: const BorderSide(color: AppColor.borderColor),
