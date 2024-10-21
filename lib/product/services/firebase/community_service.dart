@@ -90,6 +90,17 @@ final class CommunityService extends BaseService {
     return false;
   }
 
+  ///Get Members of a Community
+  Future<List<String>> getCommunityMemberIds(String communityId) async {
+    final response = await db
+        .collection(FireStoreCollections.communities.name)
+        .doc(communityId)
+        .collection(FireStoreCollections.members.name)
+        .get();
+    final memberIds = response.docs.map((e) => e.id).toList();
+    return memberIds;
+  }
+
   ///Get Communities
   Future<List<CommunityModel>> getCommunities() async {
     final response =

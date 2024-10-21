@@ -31,3 +31,14 @@ class CommunityEditRoute extends GoRouteData {
     return TPage(child: CommunityEditView(community: $extra));
   }
 }
+
+@TypedGoRoute<CommunityMembersRoute>(path: CommunityMembersRoute.path)
+class CommunityMembersRoute extends GoRouteData {
+  const CommunityMembersRoute(this.$extra);
+  static const String path = '/community/members';
+  final CommunityModel $extra;
+  @override
+  TPage buildPage(BuildContext context, GoRouterState state) {
+    return TPage(child: CommunityMembersView(community: $extra));
+  }
+}
