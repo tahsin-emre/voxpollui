@@ -59,10 +59,26 @@ final class _CommunityImageHeader extends StatelessWidget {
             actions: [
               IconButton(
                 padding: PagePaddings.allXS,
+                icon: IconConstants.more.toIcon,
+                onPressed: () {
+                  // context.showSheet();
+                },
+                style: ButtonStyle(
+                  // backgroundColor: WidgetStateProperty.all(Colors.white),
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      side: const BorderSide(color: AppColor.borderColor),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ),
+              ),
+              IconButton(
+                padding: PagePaddings.allXS,
                 icon: IconConstants.settings.toIcon,
                 onPressed: onEdit,
                 style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.white),
+                  // backgroundColor: WidgetStateProperty.all(Colors.white),
                   shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                       side: const BorderSide(color: AppColor.borderColor),
@@ -136,10 +152,14 @@ final class _CommunityInfo extends StatelessWidget {
             _InfoBox(
               title: LocaleKeys.profile_members.tr(),
               value: community.memberCount ?? 0,
+              onTap: () {
+                CommunityMembersRoute(community).push<void>(context);
+              },
             ),
             _InfoBox(
               title: LocaleKeys.profile_pollCount.tr(),
               value: pollCount,
+              onTap: () {},
             ),
           ],
         ),
@@ -250,29 +270,37 @@ final class _TabNavBox extends StatelessWidget {
 }
 
 final class _InfoBox extends StatelessWidget {
-  const _InfoBox({required this.title, required this.value});
+  const _InfoBox({
+    required this.title,
+    required this.value,
+    required this.onTap,
+  });
   final String title;
   final num value;
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 14,
-              fontFamily: FontConstants.gilroyRegular,
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 14,
+                fontFamily: FontConstants.gilroyRegular,
+              ),
             ),
-          ),
-          Text(
-            value.toString(),
-            style: TextStyle(
-              fontSize: 20,
-              fontFamily: FontConstants.gilroyBold,
+            Text(
+              value.toString(),
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: FontConstants.gilroyBold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

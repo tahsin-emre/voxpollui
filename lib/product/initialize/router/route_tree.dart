@@ -7,6 +7,7 @@ import 'package:voxpollui/features/community/view/community_create_view.dart';
 import 'package:voxpollui/features/community/view/community_detail_view.dart';
 import 'package:voxpollui/features/community/view/community_edit_view.dart';
 import 'package:voxpollui/features/community/view/community_list_view.dart';
+import 'package:voxpollui/features/community/view/community_members_view.dart';
 import 'package:voxpollui/features/discover/view/discover_view.dart';
 import 'package:voxpollui/features/feed/view/feed_view.dart';
 import 'package:voxpollui/features/home/view/home_view.dart';

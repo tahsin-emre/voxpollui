@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
@@ -17,6 +18,7 @@ final class CustomAppBar extends AppBar {
           scrolledUnderElevation: 0,
           forceMaterialTransparency: false,
           backgroundColor: isTransparent ? Colors.transparent : AppColor.white,
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
           elevation: 0,
           centerTitle: true,
           title: title == null

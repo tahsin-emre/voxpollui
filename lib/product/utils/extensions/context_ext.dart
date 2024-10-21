@@ -9,4 +9,12 @@ extension ContextExt on BuildContext {
       ),
     );
   }
+
+  Future<T?> showSheet<T>(Widget sheet) {
+    return showModalBottomSheet<T?>(
+      barrierColor: Colors.white38,
+      context: this,
+      builder: (context) => sheet,
+    );
+  }
 }

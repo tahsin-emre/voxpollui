@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:voxpollui/features/sub_features/bottom_sheets/user_bottom_sheet.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/owner_model.dart';
@@ -8,10 +9,12 @@ import 'package:voxpollui/product/initialize/router/route_tree.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
+import 'package:voxpollui/product/utils/extensions/context_ext.dart';
 
 final class PollUserTile extends StatelessWidget {
-  const PollUserTile(this.owner, {super.key});
+  const PollUserTile(this.owner, {required this.pollId, super.key});
   final OwnerModel owner;
+  final String pollId;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -92,7 +95,15 @@ final class PollUserTile extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            context.showSheet<void>(
+              UserPollBottomSheet(
+                userName: owner.userName ?? '',
+                userId: owner.id,
+                pollId: pollId,
+              ),
+            );
+          },
           child: IconConstants.more.toIcon,
         ),
       ],

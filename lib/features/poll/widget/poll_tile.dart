@@ -31,7 +31,7 @@ final class PollTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (owner != null) PollUserTile(owner),
+                if (owner != null) PollUserTile(owner, pollId: poll.id),
                 const SizedBox(height: 10),
                 if (owner != null) _PollTile(poll, owner),
               ],
