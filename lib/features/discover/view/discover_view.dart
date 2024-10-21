@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voxpollui/features/discover/mixin/discover_mixin.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/app_search_bar.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/utils/constants/page_paddings.dart';
@@ -10,7 +11,7 @@ class DiscoverView extends StatefulWidget {
   State<DiscoverView> createState() => _DiscoverViewState();
 }
 
-class _DiscoverViewState extends State<DiscoverView> {
+class _DiscoverViewState extends State<DiscoverView> with DiscoverMixin {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
