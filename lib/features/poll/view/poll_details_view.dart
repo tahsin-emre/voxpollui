@@ -37,7 +37,10 @@ class _PollDetailsViewState extends State<PollDetailsView>
               padding: PagePaddings.horL,
               child: ListView(
                 children: [
-                  PollUserTile(widget.owner),
+                  PollUserTile(
+                    widget.owner,
+                    pollId: widget.poll.id,
+                  ),
                   const SizedBox(height: WidgetSizes.xxl),
                   if (imageUrl != null)
                     Center(

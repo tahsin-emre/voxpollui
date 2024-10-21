@@ -86,7 +86,7 @@ final class UserTileFromId extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      context.showSheet(
+                      context.showSheet<void>(
                         BottomSheet(
                           onClosing: () {},
                           builder: (_) => const SafeArea(

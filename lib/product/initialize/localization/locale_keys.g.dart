@@ -158,6 +158,13 @@ abstract class  LocaleKeys {
   static const discover_showAll = 'discover.showAll';
   static const discover_search = 'discover.search';
   static const discover = 'discover';
+  static const sheet_sharePoll = 'sheet.sharePoll';
+  static const sheet_reportPoll = 'sheet.reportPoll';
+  static const sheet_xUnfollow = 'sheet.xUnfollow';
+  static const sheet_xBlock = 'sheet.xBlock';
+  static const sheet_xReport = 'sheet.xReport';
+  static const sheet_xMute = 'sheet.xMute';
+  static const sheet = 'sheet';
   static const politics = 'politics';
   static const sports = 'sports';
   static const history = 'history';

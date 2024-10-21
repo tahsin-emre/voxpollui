@@ -169,6 +169,14 @@
         "showAll": "Tümünü Göster",
         "search": "Ara"
     },
+    "sheet": {
+        "sharePoll": "Anketi paylaş",
+        "reportPoll": "Anketi şikayet et",
+        "xUnfollow": "@{} adlı kişiyi takibi bırak",
+        "xBlock": "@{} adlı kişiyi engelle",
+        "xReport": "@{} adlı kişiyi şikayet et",
+        "xMute": "@{} adlı kişiyi sessize al"
+    },
     "politics": "Politika",
     "sports": "Spor",
     "history": "Tarih",

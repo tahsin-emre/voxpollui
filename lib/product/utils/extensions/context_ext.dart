@@ -10,8 +10,9 @@ extension ContextExt on BuildContext {
     );
   }
 
-  void showSheet(Widget sheet) {
-    showModalBottomSheet<void>(
+  Future<T?> showSheet<T>(Widget sheet) {
+    return showModalBottomSheet<T?>(
+      barrierColor: Colors.white38,
       context: this,
       builder: (context) => sheet,
     );
