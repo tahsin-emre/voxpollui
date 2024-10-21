@@ -7,6 +7,7 @@ import 'package:voxpollui/product/utils/constants/color_constants.dart';
 import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
 import 'package:voxpollui/product/utils/constants/page_paddings.dart';
+import 'package:voxpollui/product/utils/extensions/context_ext.dart';
 
 final class UserTileFromId extends StatelessWidget {
   const UserTileFromId(this.userId, {super.key});
@@ -81,7 +82,19 @@ final class UserTileFromId extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    context.showSheet(
+                      BottomSheet(
+                        onClosing: () {},
+                        builder: (_) => const SafeArea(
+                          top: false,
+                          left: false,
+                          right: false,
+                          child: Text('data'),
+                        ),
+                      ),
+                    );
+                  },
                   child: IconConstants.more.toIcon,
                 ),
               ],

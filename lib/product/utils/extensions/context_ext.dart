@@ -9,4 +9,11 @@ extension ContextExt on BuildContext {
       ),
     );
   }
+
+  void showSheet(Widget sheet) {
+    showModalBottomSheet<void>(
+      context: this,
+      builder: (context) => sheet,
+    );
+  }
 }
