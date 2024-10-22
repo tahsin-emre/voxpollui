@@ -6,7 +6,6 @@ import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
 import 'package:voxpollui/features/community/cubit/community_cubit.dart';
 import 'package:voxpollui/features/discover/cubit/discover_cubit.dart';
 import 'package:voxpollui/features/poll/cubit/poll_cubit.dart';
-import 'package:voxpollui/features/profile/cubit/profile_cubit.dart';
 import 'package:voxpollui/product/initialize/router/app_router.dart';
 import 'package:voxpollui/product/initialize/theme/app_theme.dart';
 import 'package:voxpollui/product/utils/constants/product_constants.dart';
@@ -21,7 +20,6 @@ final class MainApp extends StatelessWidget {
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => PollCubit()),
         BlocProvider(create: (_) => CommunityCubit()),
-        BlocProvider(create: (_) => ProfileCubit()),
         BlocProvider(create: (_) => DiscoverCubit()),
       ],
       child: AdaptiveTheme(

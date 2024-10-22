@@ -40,24 +40,19 @@ final class _ProfileImageHeader extends StatelessWidget {
             ),
           ],
         ),
-        if (!isOwn)
-          CustomAppBar(
-            context,
-            isTransparent: true,
-            title: '',
-          ),
-        if (isOwn)
-          CustomAppBar(
-            context,
-            isTransparent: true,
-            title: '',
-            actions: [
+        CustomAppBar(
+          context,
+          isTransparent: true,
+          title: '',
+          actions: [
+            if (isOwn)
               IconButton(
                 padding: PagePaddings.allXS,
-                icon: IconConstants.settings.toIcon,
+                icon: IconConstants.settings.toCustomIcon(
+                  color: AppColor.white,
+                ),
                 onPressed: () => UserProfileEditRoute(user).push<void>(context),
                 style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.white),
                   shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                       side: const BorderSide(color: AppColor.borderColor),
@@ -66,16 +61,24 @@ final class _ProfileImageHeader extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
+          ],
+        ),
       ],
     );
   }
 }
 
 final class _ProfileInfo extends StatelessWidget {
-  const _ProfileInfo(this.user, {required this.pollCount, required this.isOwn});
+  const _ProfileInfo(
+    this.user, {
+    required this.pollCount,
+    required this.isOwn,
+    required this.onFollow,
+    required this.onUnfollow,
+  });
   final UserModel user;
+  final VoidCallback onFollow;
+  final VoidCallback onUnfollow;
   final num pollCount;
   final bool isOwn;
   @override
@@ -88,7 +91,11 @@ final class _ProfileInfo extends StatelessWidget {
             if (!isOwn)
               Align(
                 alignment: Alignment.centerRight,
-                child: FollowButton(userId: user.id),
+                child: FollowButton(
+                  userId: user.id,
+                  onFollow: onFollow,
+                  onUnfollow: onUnfollow,
+                ),
               ),
             Text(
               user.name ?? '',

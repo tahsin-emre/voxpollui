@@ -38,10 +38,12 @@ final class CustomAppBar extends AppBar {
                   color: Colors.black,
                   onPressed: () => context.pop(),
                   style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(Colors.white),
                     shape: WidgetStateProperty.all(
                       RoundedRectangleBorder(
-                        side: const BorderSide(color: AppColor.borderColor),
+                        side: const BorderSide(
+                          color: AppColor.borderColor,
+                          width: 1.25,
+                        ),
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
