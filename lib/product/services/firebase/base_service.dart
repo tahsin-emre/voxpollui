@@ -24,4 +24,7 @@ enum FireStoreCollections {
 enum FireStoreFields {
   none,
   ownerId,
+  name,
+  title,
+  userName,
 }

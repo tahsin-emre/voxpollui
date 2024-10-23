@@ -3,4 +3,6 @@ import 'package:voxpollui/features/discover/cubit/discover_state.dart';
 
 final class DiscoverCubit extends Cubit<DiscoverState> {
   DiscoverCubit() : super(const DiscoverState());
+
+  void reset() => emit(const DiscoverState());
 }

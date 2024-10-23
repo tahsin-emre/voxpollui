@@ -38,6 +38,7 @@ class _AppSearchBarState extends State<AppSearchBar> {
             fontFamily: FontConstants.gilroyMedium,
           ),
         ),
+        onChanged: widget.onChanged,
         onSubmitted: (value) {},
       ),
     );
