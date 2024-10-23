@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
-import 'package:voxpollui/features/profile/cubit/profile_cubit.dart';
 import 'package:voxpollui/features/profile/view/profile_edit_view.dart';
 
 mixin ProfileEditMixin on State<ProfileEditView> {
@@ -60,7 +59,6 @@ mixin ProfileEditMixin on State<ProfileEditView> {
       dateOfBirth: dateNotifier.value,
     );
     context.read<AuthCubit>().updateUser(user);
-    context.read<ProfileCubit>().updateUser(user);
     context.pop();
   }
 }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:voxpollui/features/poll/mixin/poll_details_mixin.dart';
-import 'package:voxpollui/features/poll/widget/poll_user_tile.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/custom_app_bar.dart';
+import 'package:voxpollui/features/sub_features/common_widgets/owner_tile.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/owner_model.dart';
 import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
@@ -37,8 +37,8 @@ class _PollDetailsViewState extends State<PollDetailsView>
               padding: PagePaddings.horL,
               child: ListView(
                 children: [
-                  PollUserTile(
-                    widget.owner,
+                  OwnerTile(
+                    owner: widget.owner,
                     pollId: widget.poll.id,
                   ),
                   const SizedBox(height: WidgetSizes.xxl),

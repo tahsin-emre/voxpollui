@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
-import 'package:voxpollui/features/community/cubit/community_cubit.dart';
 import 'package:voxpollui/features/community/view/community_detail_view.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
+import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 import 'package:voxpollui/product/initialize/router/route_tree.dart';
 import 'package:voxpollui/product/services/firebase/community_service.dart';
 
 mixin CommunityDetailMixin on State<CommunityDetailView> {
   late final _authCubit = context.read<AuthCubit>();
-  late final _communityCubit = context.read<CommunityCubit>();
   final _communityService = CommunityService();
-  CommunityModel? community;
-  final isLoadingNotifier = ValueNotifier<bool>(true);
+  final isLoadingNotifier = ValueNotifier<bool>(false);
   final pageNotifier = ValueNotifier<int>(0);
+  CommunityModel? community;
+  final List<PollModel> newPolls = [];
+  final List<PollModel> oldPolls = [];
 
   bool get isManager {
     if (_authCubit.state.user == null) return false;
@@ -43,8 +44,15 @@ mixin CommunityDetailMixin on State<CommunityDetailView> {
   }
 
   Future<void> getPolls() async {
-    if (community == null) return;
-    await _communityCubit.getPolls(community!.id);
+    final allPolls =
+        await _communityService.getCommunityPolls(widget.communityId);
+    final news =
+        allPolls.where((e) => e.endAt!.isAfter(DateTime.now())).toList();
+    final olds =
+        allPolls.where((e) => e.endAt!.isBefore(DateTime.now())).toList();
+    newPolls.addAll(news);
+    oldPolls.addAll(olds);
+    setState(() {});
   }
 
   Future<void> onEdit() async {

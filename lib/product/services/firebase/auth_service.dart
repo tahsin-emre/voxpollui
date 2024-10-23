@@ -42,7 +42,6 @@ final class AuthService extends BaseService {
         },
       );
     } on Exception catch (e) {
-      context.showSnackBar(e.toString());
       log('message: $e');
       authStream.sink.add(AuthStatus.onError);
     }

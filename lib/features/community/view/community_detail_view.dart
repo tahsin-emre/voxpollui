@@ -1,9 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:voxpollui/features/community/cubit/community_cubit.dart';
-import 'package:voxpollui/features/community/cubit/community_state.dart';
 import 'package:voxpollui/features/community/mixin/community_detail_mixin.dart';
 import 'package:voxpollui/features/community/widget/join_button.dart';
 import 'package:voxpollui/features/poll/widget/poll_tile.dart';
@@ -35,57 +32,64 @@ class _CommunityDetailViewState extends State<CommunityDetailView>
       valueListenable: isLoadingNotifier,
       builder: (_, isLoading, __) {
         return Skeletonizer(
-          enabled: isLoading,
+          enabled: isLoading || community == null,
           child: Scaffold(
-            floatingActionButton: isManager
-                ? FloatingActionButton(
-                    onPressed: () {
-                      PollCreateRoute(ownerId: community!.id)
-                          .push<void>(context);
-                    },
-                    backgroundColor: AppColor.primary,
-                    child: const Icon(
-                      IconConstants.add,
-                      color: AppColor.white,
+            floatingActionButton: _PollFab(
+              isManager: isManager,
+              communityId: widget.communityId,
+            ),
+            body: SingleChildScrollView(
+              child: community == null
+                  ? const SizedBox.shrink()
+                  : Column(
+                      children: [
+                        _CommunityImageHeader(
+                          community!,
+                          isManager: isManager,
+                          onEdit: onEdit,
+                        ),
+                        _CommunityInfo(
+                          community!,
+                          isManager: isManager,
+                          onJoin: onJoin,
+                          pollCount: newPolls.length + oldPolls.length,
+                        ),
+                        const Divider(),
+                        _CommunityTabNav(
+                          pageNotifier,
+                          (val) => pageNotifier.value = val,
+                        ),
+                        _CommunityTabView(
+                          pageNotifier,
+                          newPolls: newPolls,
+                          oldPolls: oldPolls,
+                        ),
+                      ],
                     ),
-                  )
-                : null,
-            body: BlocBuilder<CommunityCubit, CommunityState>(
-              builder: (_, state) {
-                if (community == null) return const SizedBox();
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      _CommunityImageHeader(
-                        community!,
-                        isManager: isManager,
-                        onEdit: onEdit,
-                      ),
-                      _CommunityInfo(
-                        community!,
-                        isManager: isManager,
-                        onJoin: onJoin,
-                        pollCount: (state.selectedNewPolls?.length ?? 0) +
-                            (state.selectedOldPolls?.length ?? 0),
-                      ),
-                      const Divider(),
-                      _CommunityTabNav(
-                        pageNotifier,
-                        (val) => pageNotifier.value = val,
-                      ),
-                      _CommunityTabView(
-                        pageNotifier,
-                        newPolls: state.selectedNewPolls ?? [],
-                        oldPolls: state.selectedOldPolls ?? [],
-                      ),
-                    ],
-                  ),
-                );
-              },
             ),
           ),
         );
       },
+    );
+  }
+}
+
+final class _PollFab extends StatelessWidget {
+  const _PollFab({required this.isManager, required this.communityId});
+  final bool isManager;
+  final String communityId;
+  @override
+  Widget build(BuildContext context) {
+    if (!isManager) return const SizedBox.shrink();
+    return FloatingActionButton(
+      onPressed: () {
+        PollCreateRoute(ownerId: communityId).push<void>(context);
+      },
+      backgroundColor: AppColor.primary,
+      child: const Icon(
+        IconConstants.add,
+        color: AppColor.white,
+      ),
     );
   }
 }

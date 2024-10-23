@@ -32,12 +32,12 @@ final class _CommunityImageHeader extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 50,
-                  backgroundColor: AppColor.black,
+                  backgroundColor: AppColor.primary,
                   backgroundImage: community.imageUrl != null
                       ? NetworkImage(community.imageUrl!)
                       : null,
                   child: community.imageUrl == null
-                      ? IconConstants.profile
+                      ? IconConstants.community
                           .toCustomIcon(size: 64, color: AppColor.white)
                       : null,
                 ),
@@ -45,34 +45,28 @@ final class _CommunityImageHeader extends StatelessWidget {
             ),
           ],
         ),
-        if (!isManager)
-          CustomAppBar(
-            context,
-            isTransparent: true,
-            title: '',
-          ),
-        if (isManager)
-          CustomAppBar(
-            context,
-            isTransparent: true,
-            title: '',
-            actions: [
-              IconButton(
-                padding: PagePaddings.allXS,
-                icon: IconConstants.more.toIcon,
-                onPressed: () {
-                  // context.showSheet();
-                },
-                style: ButtonStyle(
-                  // backgroundColor: WidgetStateProperty.all(Colors.white),
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      side: const BorderSide(color: AppColor.borderColor),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
+        CustomAppBar(
+          context,
+          isTransparent: true,
+          title: '',
+          actions: [
+            IconButton(
+              padding: PagePaddings.allXS,
+              icon: IconConstants.more.toIcon,
+              onPressed: () {
+                // context.showSheet();
+              },
+              style: ButtonStyle(
+                // backgroundColor: WidgetStateProperty.all(Colors.white),
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    side: const BorderSide(color: AppColor.borderColor),
+                    borderRadius: BorderRadius.circular(4),
                   ),
                 ),
               ),
+            ),
+            if (isManager)
               IconButton(
                 padding: PagePaddings.allXS,
                 icon: IconConstants.settings.toIcon,
@@ -87,8 +81,8 @@ final class _CommunityImageHeader extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
+          ],
+        ),
       ],
     );
   }

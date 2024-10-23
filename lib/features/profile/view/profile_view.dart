@@ -1,10 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:voxpollui/features/poll/widget/poll_tile.dart';
-import 'package:voxpollui/features/profile/cubit/profile_cubit.dart';
-import 'package:voxpollui/features/profile/cubit/profile_state.dart';
 import 'package:voxpollui/features/profile/mixin/profile_mixin.dart';
 import 'package:voxpollui/features/profile/widget/follow_button.dart';
 import 'package:voxpollui/features/sub_features/common_widgets/custom_app_bar.dart';
@@ -31,21 +28,23 @@ class _ProfileViewState extends State<ProfileView> with ProfileMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<ProfileCubit, ProfileState>(
-        builder: (_, state) {
-          final user = state.user;
+      body: ValueListenableBuilder(
+        valueListenable: isLoadingNotifier,
+        builder: (_, isLoading, __) {
           return Skeletonizer(
-            enabled: state.isLoading,
+            enabled: isLoading,
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   if (user != null)
-                    _ProfileImageHeader(user, isOwn: isOwnProfile),
+                    _ProfileImageHeader(user!, isOwn: isOwnProfile),
                   if (user != null)
                     _ProfileInfo(
-                      user,
-                      pollCount: state.createdPolls?.length ?? 0,
+                      user!,
+                      pollCount: createdPolls.length,
                       isOwn: isOwnProfile,
+                      onFollow: followUser,
+                      onUnfollow: unfollowUser,
                     ),
                   const Divider(),
                   _ProfileTabNav(
@@ -54,8 +53,8 @@ class _ProfileViewState extends State<ProfileView> with ProfileMixin {
                   ),
                   _ProfileTabView(
                     pageNotifier,
-                    createdPolls: state.createdPolls ?? [],
-                    participatedPolls: state.participatedPolls ?? [],
+                    createdPolls: createdPolls,
+                    participatedPolls: participatedPolls,
                   ),
                 ],
               ),

@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:voxpollui/features/authentication/cubit/auth_cubit.dart';
-import 'package:voxpollui/features/profile/cubit/profile_cubit.dart';
 import 'package:voxpollui/product/initialize/localization/locale_keys.g.dart';
 import 'package:voxpollui/product/services/firebase/follower_service.dart';
 import 'package:voxpollui/product/utils/constants/color_constants.dart';
@@ -10,15 +9,21 @@ import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/page_paddings.dart';
 
 final class FollowButton extends StatefulWidget {
-  const FollowButton({required this.userId, super.key});
+  const FollowButton({
+    required this.userId,
+    required this.onFollow,
+    required this.onUnfollow,
+    super.key,
+  });
   final String userId;
+  final VoidCallback? onFollow;
+  final VoidCallback? onUnfollow;
   @override
   State<FollowButton> createState() => _FollowButtonState();
 }
 
 class _FollowButtonState extends State<FollowButton> {
   late final _authCubit = context.read<AuthCubit>();
-  late final _profileCubit = context.read<ProfileCubit>();
   final isLoadingNotifier = ValueNotifier<bool>(false);
   final _followerService = FollowerService();
   bool isFollowing = false;
@@ -54,13 +59,13 @@ class _FollowButtonState extends State<FollowButton> {
             final targetUserId = widget.userId;
             final Future<bool> process;
             if (isFollowing) {
-              _profileCubit.unfollowUser();
+              widget.onUnfollow?.call();
               process = _followerService.unfollowUser(
                 localUserId: localUserId ?? '',
                 targetUserId: targetUserId,
               );
             } else {
-              _profileCubit.followUser();
+              widget.onFollow?.call();
               process = _followerService.followUser(
                 localUserId: localUserId ?? '',
                 targetUserId: targetUserId,

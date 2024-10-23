@@ -15,8 +15,8 @@ final class IconConstants {
   static const more = Icons.more_vert_outlined;
   static const imageAdd = Icons.add_photo_alternate_outlined;
   static const verify = Icons.verified;
-  static const settings = Icons.settings_outlined;
-  static const arrowBack = Icons.arrow_back_outlined;
+  static const settings = Icons.settings;
+  static const arrowBack = Icons.arrow_back_rounded;
   static const newImage = Icons.image_search_outlined;
   static const close = Icons.close_outlined;
   static const edit = Icons.edit_outlined;

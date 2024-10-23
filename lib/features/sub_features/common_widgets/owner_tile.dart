@@ -11,38 +11,22 @@ import 'package:voxpollui/product/utils/constants/font_constants.dart';
 import 'package:voxpollui/product/utils/constants/icon_constants.dart';
 import 'package:voxpollui/product/utils/extensions/context_ext.dart';
 
-final class PollUserTile extends StatelessWidget {
-  const PollUserTile(this.owner, {required this.pollId, super.key});
+final class OwnerTile extends StatelessWidget {
+  const OwnerTile({required this.owner, this.pollId, super.key});
   final OwnerModel owner;
-  final String pollId;
+  final String? pollId;
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
-          onTap: () {
-            if (owner.ownerType == OwnerType.user) {
-              final user = owner as UserModel;
-              UserProfileRoute(uid: user.id).push<void>(context);
-              return;
-            }
-            if (owner.ownerType == OwnerType.community) {
-              final community = owner as CommunityModel;
-              CommunityDetailRoute(community.id).push<void>(context);
-              return;
-            }
-          },
+          onTap: () => navigateOwnerPage(context),
           child: CircleAvatar(
             radius: 25,
             backgroundColor: AppColor.black,
-            backgroundImage:
-                owner.imageUrl != null ? NetworkImage(owner.imageUrl!) : null,
-            child: owner.imageUrl == null
-                ? owner.ownerType == OwnerType.user
-                    ? IconConstants.profile.toIcon
-                    : IconConstants.community.toIcon
-                : null,
+            backgroundImage: getOwnerImage,
+            child: getIcon?.toIcon,
           ),
         ),
         const SizedBox(width: 10),
@@ -73,17 +57,7 @@ final class PollUserTile extends StatelessWidget {
                 ],
               ),
               Text(
-                owner.ownerType == OwnerType.user
-                    ? LocaleKeys.home_drawer_followerText.tr(
-                        args: [
-                          (owner as UserModel).followersCount.toString(),
-                        ],
-                      )
-                    : LocaleKeys.community_xMembers.tr(
-                        args: [
-                          (owner as CommunityModel).memberCount.toString(),
-                        ],
-                      ),
+                subText,
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.black,
@@ -95,18 +69,68 @@ final class PollUserTile extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {
-            context.showSheet<void>(
-              UserPollBottomSheet(
-                userName: owner.userName ?? '',
-                userId: owner.id,
-                pollId: pollId,
-              ),
-            );
-          },
+          onTap: () => showBottomSheet(context),
           child: IconConstants.more.toIcon,
         ),
       ],
     );
+  }
+
+  void showBottomSheet(BuildContext context) {
+    if (pollId == null) return;
+    context.showSheet<void>(
+      UserPollBottomSheet(
+        userName: owner.userName ?? '',
+        userId: owner.id,
+        pollId: pollId!,
+      ),
+    );
+  }
+
+  String get subText {
+    if (owner.ownerType == OwnerType.user) {
+      return LocaleKeys.home_drawer_followerText.tr(
+        args: [
+          (owner as UserModel).followersCount.toString(),
+        ],
+      );
+    }
+    if (owner.ownerType == OwnerType.community) {
+      return LocaleKeys.community_xMembers.tr(
+        args: [
+          (owner as CommunityModel).memberCount.toString(),
+        ],
+      );
+    }
+    return '';
+  }
+
+  ImageProvider? get getOwnerImage {
+    if (owner.imageUrl == null) return null;
+    return NetworkImage(owner.imageUrl!);
+  }
+
+  IconData? get getIcon {
+    if (owner.imageUrl != null) return null;
+    if (owner.ownerType == OwnerType.user) {
+      return IconConstants.profile;
+    }
+    if (owner.ownerType == OwnerType.community) {
+      return IconConstants.community;
+    }
+    return IconConstants.profile;
+  }
+
+  void navigateOwnerPage(BuildContext context) {
+    if (owner.ownerType == OwnerType.user) {
+      final user = owner as UserModel;
+      UserProfileRoute(uid: user.id).push<void>(context);
+      return;
+    }
+    if (owner.ownerType == OwnerType.community) {
+      final community = owner as CommunityModel;
+      CommunityDetailRoute(community.id).push<void>(context);
+      return;
+    }
   }
 }
