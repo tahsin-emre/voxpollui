@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:voxpollui/product/initialize/models/category_model.dart';
 import 'package:voxpollui/product/initialize/models/owner_model/community_model.dart';
-import 'package:voxpollui/product/initialize/models/poll/poll_model.dart';
 
 final class CommunityState extends Equatable {
   const CommunityState({
@@ -9,8 +8,6 @@ final class CommunityState extends Equatable {
     this.communityList,
     this.myCommunityList,
     this.categoryList,
-    this.selectedNewPolls,
-    this.selectedOldPolls,
   });
 
   CommunityState copyWith({
@@ -18,16 +15,12 @@ final class CommunityState extends Equatable {
     List<CommunityModel>? communityList,
     List<CommunityModel>? myCommunityList,
     List<CategoryModel>? categoryList,
-    List<PollModel>? selectedNewPolls,
-    List<PollModel>? selectedOldPolls,
   }) {
     return CommunityState(
       isLoading: isLoading ?? this.isLoading,
       communityList: communityList ?? this.communityList,
       myCommunityList: myCommunityList ?? this.myCommunityList,
       categoryList: categoryList ?? this.categoryList,
-      selectedNewPolls: selectedNewPolls ?? this.selectedNewPolls,
-      selectedOldPolls: selectedOldPolls ?? this.selectedOldPolls,
     );
   }
 
@@ -35,8 +28,6 @@ final class CommunityState extends Equatable {
   final List<CommunityModel>? communityList;
   final List<CommunityModel>? myCommunityList;
   final List<CategoryModel>? categoryList;
-  final List<PollModel>? selectedNewPolls;
-  final List<PollModel>? selectedOldPolls;
 
   @override
   List<Object?> get props => [
@@ -44,7 +35,5 @@ final class CommunityState extends Equatable {
         communityList,
         myCommunityList,
         categoryList,
-        selectedNewPolls,
-        selectedOldPolls,
       ];
 }
