@@ -10,23 +10,18 @@ final class DiscoverService extends BaseService {
 
   Future<List<UserModel>> getUsers(String keyword) async {
     try {
-      final responseName = await db
-          .collection(FireStoreCollections.users.name)
-          .where(FireStoreFields.name.name, isGreaterThanOrEqualTo: keyword)
-          .where(FireStoreFields.name.name, isLessThan: '${keyword}z')
-          .limit(5)
-          .get();
-      final responseUsername = await db
+      final response = await db
           .collection(FireStoreCollections.users.name)
           .where(
-            FireStoreFields.userName.name,
-            isGreaterThanOrEqualTo: keyword.toLowerCase(),
+            FireStoreFields.searchIndex.name,
+            arrayContains: keyword.toLowerCase(),
           )
-          .where(FireStoreFields.userName.name, isLessThan: '${keyword}z')
           .limit(5)
           .get();
-      final snapshots = {...responseName.docs, ...responseUsername.docs};
-      return snapshots.map((e) => UserModel.fromJson(e.data(), e.id)).toList();
+
+      return response.docs
+          .map((e) => UserModel.fromJson(e.data(), e.id))
+          .toList();
     } on Exception {
       return [];
     }
@@ -34,23 +29,16 @@ final class DiscoverService extends BaseService {
 
   Future<List<CommunityModel>> getCommunities(String keyword) async {
     try {
-      final responseName = await db
-          .collection(FireStoreCollections.communities.name)
-          .where(FireStoreFields.name.name, isGreaterThanOrEqualTo: keyword)
-          .where(FireStoreFields.name.name, isLessThan: '${keyword}z')
-          .limit(5)
-          .get();
-      final responseUsername = await db
+      final response = await db
           .collection(FireStoreCollections.communities.name)
           .where(
-            FireStoreFields.userName.name,
-            isGreaterThanOrEqualTo: keyword.toLowerCase(),
+            FireStoreFields.searchIndex.name,
+            arrayContains: keyword.toLowerCase(),
           )
-          .where(FireStoreFields.userName.name, isLessThan: '${keyword}z')
           .limit(5)
           .get();
-      final snapshots = {...responseName.docs, ...responseUsername.docs};
-      return snapshots
+
+      return response.docs
           .map((e) => CommunityModel.fromJson(e.data(), e.id))
           .toList();
     } on Exception {
@@ -62,10 +50,13 @@ final class DiscoverService extends BaseService {
     try {
       final response = await db
           .collection(FireStoreCollections.polls.name)
-          .where(FireStoreFields.title.name, isGreaterThanOrEqualTo: keyword)
-          .where(FireStoreFields.title.name, isLessThan: '${keyword}z')
+          .where(
+            FireStoreFields.searchIndex.name,
+            arrayContains: keyword.toLowerCase(),
+          )
           .limit(5)
           .get();
+
       return response.docs
           .map((e) => PollModel.fromJson(e.data(), e.id))
           .toList();

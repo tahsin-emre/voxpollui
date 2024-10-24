@@ -54,9 +54,11 @@ final class PollService extends BaseService {
   ///Create Poll
   Future<String?> createPoll(PollModel poll) async {
     try {
-      final pollId = await db
-          .collection(FireStoreCollections.polls.name)
-          .add(poll.toMap());
+      final searchIndex = generateSearchIndex('${poll.title}');
+      final pollMap = poll.toMap();
+      pollMap[FireStoreFields.searchIndex.name] = searchIndex;
+      final pollId =
+          await db.collection(FireStoreCollections.polls.name).add(pollMap);
       return pollId.id;
     } catch (e) {
       return null;

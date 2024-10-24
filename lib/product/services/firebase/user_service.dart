@@ -31,7 +31,14 @@ final class UserService extends BaseService {
   /// Return true if the user is created successfully, otherwise return false
   Future<bool> createUser(UserModel user) async {
     try {
-      await db.collection('users').doc(user.id).set(user.toMap());
+      final searchIndex =
+          generateSearchIndex('${user.name} ${user.surname} ${user.userName}');
+      final userMap = user.toMap();
+      userMap[FireStoreFields.searchIndex.name] = searchIndex;
+      await db
+          .collection(FireStoreCollections.users.name)
+          .doc(user.id)
+          .set(userMap);
       return true;
     } on Exception {
       return false;
@@ -39,8 +46,15 @@ final class UserService extends BaseService {
   }
 
   Future<bool> updateUser(UserModel user) async {
+    final searchIndex =
+        generateSearchIndex('${user.name} ${user.surname} ${user.userName}');
+    final userMap = user.toMap();
+    userMap[FireStoreFields.searchIndex.name] = searchIndex;
     try {
-      await db.collection('users').doc(user.id).update(user.toMap());
+      await db
+          .collection(FireStoreCollections.users.name)
+          .doc(user.id)
+          .update(userMap);
       return true;
     } on Exception {
       return false;
