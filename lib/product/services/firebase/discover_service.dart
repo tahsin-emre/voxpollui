@@ -14,7 +14,7 @@ final class DiscoverService extends BaseService {
           .collection(FireStoreCollections.users.name)
           .where(
             FireStoreFields.searchIndex.name,
-            arrayContains: keyword.toLowerCase(),
+            arrayContainsAny: generateSearchIndex(keyword),
           )
           .limit(5)
           .get();

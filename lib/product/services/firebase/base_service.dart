@@ -8,12 +8,18 @@ abstract class BaseService {
   final storage = FirebaseStorage.instance;
 }
 
-List<String> generateSearchIndex(String text) {
-  final keyText = text.toLowerCase().replaceAll(' ', '');
+List<String> generateSearchIndex(String data) {
   final keywords = <String>[];
-  for (var i = 0; i < keyText.length; i++) {
-    keywords.add(keyText.substring(i).toLowerCase());
+
+  final texts = data.toLowerCase().split(' ');
+  for (final text in texts) {
+    for (var i = 0; i < text.length; i++) {
+      for (var j = i + 3; j <= text.length; j++) {
+        keywords.add(text.substring(i, j));
+      }
+    }
   }
+
   return keywords;
 }
 
