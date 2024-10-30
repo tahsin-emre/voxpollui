@@ -26,13 +26,13 @@ final class PollTile extends StatelessWidget {
         return Skeletonizer(
           enabled: owner == null,
           child: Container(
-            margin: PagePaddings.allS,
-            padding: PagePaddings.allL,
+            margin: PagePaddings.allXS,
+            padding: PagePaddings.allM,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (owner != null) OwnerTile(owner: owner, pollId: poll.id),
-                const SizedBox(height: 10),
+                const SizedBox(height: WidgetSizes.m),
                 if (owner != null) _PollTile(poll, owner),
               ],
             ),
@@ -74,7 +74,6 @@ final class _PollTile extends StatelessWidget {
             fontFamily: FontConstants.gilroyBold,
           ),
         ),
-        const SizedBox(height: WidgetSizes.s),
         Text(
           LocaleKeys.poll_xUserJoined.tr(args: [userVoted.toString()]),
           style: TextStyle(
@@ -83,7 +82,6 @@ final class _PollTile extends StatelessWidget {
             fontFamily: FontConstants.gilroyLight,
           ),
         ),
-        const SizedBox(height: WidgetSizes.s),
         ExtendedElevatedButton(
           onPressed: () => PollDetailsRoute(PollExtra(poll: poll, owner: owner))
               .push<void>(context),

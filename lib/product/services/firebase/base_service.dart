@@ -40,4 +40,6 @@ enum FireStoreFields {
   none,
   ownerId,
   searchIndex,
+  createdAt,
+  categoryId,
 }
