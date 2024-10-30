@@ -12,9 +12,13 @@ final class CommunityService extends BaseService {
   ///Create Community
   Future<bool> createCommunity(CommunityModel community) async {
     try {
+      final searchIndex =
+          generateSearchIndex('${community.name} ${community.userName}');
+      final communityMap = community.toMap();
+      communityMap[FireStoreFields.searchIndex.name] = searchIndex;
       final response = await db
           .collection(FireStoreCollections.communities.name)
-          .add(community.toMap());
+          .add(communityMap);
       await db
           .collection(FireStoreCollections.communities.name)
           .doc(response.id)
@@ -31,11 +35,15 @@ final class CommunityService extends BaseService {
 
   ///Update Community
   Future<bool> updateCommunity(CommunityModel community) async {
+    final searchIndex =
+        generateSearchIndex('${community.name} ${community.userName}');
+    final communityMap = community.toMap();
+    communityMap[FireStoreFields.searchIndex.name] = searchIndex;
     try {
       await db
           .collection(FireStoreCollections.communities.name)
           .doc(community.id)
-          .update(community.toMap());
+          .update(communityMap);
       return true;
     } on Exception {
       return false;

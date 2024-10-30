@@ -35,6 +35,11 @@ final class AuthCubit extends Cubit<AuthState> {
     return user;
   }
 
+  Future<List<String>> getFollowIds() async {
+    final result = await _userService.getFollowIds(state.user!.id);
+    return result;
+  }
+
   void updateUser(UserModel user) {
     _userService.updateUser(user);
     emit(state.copyWith(user: user));

@@ -31,7 +31,14 @@ final class UserService extends BaseService {
   /// Return true if the user is created successfully, otherwise return false
   Future<bool> createUser(UserModel user) async {
     try {
-      await db.collection('users').doc(user.id).set(user.toMap());
+      final searchIndex =
+          generateSearchIndex('${user.name} ${user.surname} ${user.userName}');
+      final userMap = user.toMap();
+      userMap[FireStoreFields.searchIndex.name] = searchIndex;
+      await db
+          .collection(FireStoreCollections.users.name)
+          .doc(user.id)
+          .set(userMap);
       return true;
     } on Exception {
       return false;
@@ -39,11 +46,45 @@ final class UserService extends BaseService {
   }
 
   Future<bool> updateUser(UserModel user) async {
+    final searchIndex =
+        generateSearchIndex('${user.name} ${user.surname} ${user.userName}');
+    final userMap = user.toMap();
+    userMap[FireStoreFields.searchIndex.name] = searchIndex;
     try {
-      await db.collection('users').doc(user.id).update(user.toMap());
+      await db
+          .collection(FireStoreCollections.users.name)
+          .doc(user.id)
+          .update(userMap);
       return true;
     } on Exception {
       return false;
+    }
+  }
+
+  Future<List<String>> getFollowIds(String userId) async {
+    try {
+      final responseFollow = await db
+          .collection(FireStoreCollections.users.name)
+          .doc(userId)
+          .collection(FireStoreCollections.following.name)
+          .get();
+      final responseCommunity = await db
+          .collectionGroup(FireStoreCollections.members.name)
+          .where('userId', isEqualTo: userId)
+          .get();
+      final idList = responseCommunity.docs
+          .map((e) => e.reference.parent.parent?.id)
+          .toList();
+      final result = <String>[];
+      for (final id in idList) {
+        result.add(id ?? '');
+      }
+      for (final doc in responseFollow.docs) {
+        result.add(doc.id);
+      }
+      return result;
+    } on Exception {
+      return [];
     }
   }
 

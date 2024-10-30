@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:voxpollui/features/poll/widget/poll_tile.dart';
 import 'package:voxpollui/features/profile/mixin/profile_mixin.dart';
@@ -33,30 +34,35 @@ class _ProfileViewState extends State<ProfileView> with ProfileMixin {
         builder: (_, isLoading, __) {
           return Skeletonizer(
             enabled: isLoading,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  if (user != null)
-                    _ProfileImageHeader(user!, isOwn: isOwnProfile),
-                  if (user != null)
-                    _ProfileInfo(
-                      user!,
-                      pollCount: createdPolls.length,
-                      isOwn: isOwnProfile,
-                      onFollow: followUser,
-                      onUnfollow: unfollowUser,
+            child: LiquidPullToRefresh(
+              onRefresh: fetchAllData,
+              springAnimationDurationInMilliseconds: 350,
+              showChildOpacityTransition: false,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    if (user != null)
+                      _ProfileImageHeader(user!, isOwn: isOwnProfile),
+                    if (user != null)
+                      _ProfileInfo(
+                        user!,
+                        pollCount: createdPolls.length,
+                        isOwn: isOwnProfile,
+                        onFollow: followUser,
+                        onUnfollow: unfollowUser,
+                      ),
+                    const Divider(),
+                    _ProfileTabNav(
+                      pageNotifier,
+                      (val) => pageNotifier.value = val,
                     ),
-                  const Divider(),
-                  _ProfileTabNav(
-                    pageNotifier,
-                    (val) => pageNotifier.value = val,
-                  ),
-                  _ProfileTabView(
-                    pageNotifier,
-                    createdPolls: createdPolls,
-                    participatedPolls: participatedPolls,
-                  ),
-                ],
+                    _ProfileTabView(
+                      pageNotifier,
+                      createdPolls: createdPolls,
+                      participatedPolls: participatedPolls,
+                    ),
+                  ],
+                ),
               ),
             ),
           );

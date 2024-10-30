@@ -8,6 +8,21 @@ abstract class BaseService {
   final storage = FirebaseStorage.instance;
 }
 
+List<String> generateSearchIndex(String data) {
+  final keywords = <String>[];
+
+  final texts = data.toLowerCase().split(' ');
+  for (final text in texts) {
+    for (var i = 0; i < text.length; i++) {
+      for (var j = i + 3; j <= text.length; j++) {
+        keywords.add(text.substring(i, j));
+      }
+    }
+  }
+
+  return keywords;
+}
+
 enum FireStoreCollections {
   //Top Level Collections
   users,
@@ -24,4 +39,7 @@ enum FireStoreCollections {
 enum FireStoreFields {
   none,
   ownerId,
+  searchIndex,
+  createdAt,
+  categoryId,
 }

@@ -98,7 +98,7 @@ final class _ProfileInfo extends StatelessWidget {
                 ),
               ),
             Text(
-              user.name ?? '',
+              '${user.name} ${user.surname}',
               style: TextStyle(
                 fontSize: 22,
                 fontFamily: FontConstants.gilroyBold,

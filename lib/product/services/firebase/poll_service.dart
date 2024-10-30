@@ -9,10 +9,26 @@ final class PollService extends BaseService {
   static final PollService _instance = PollService._();
 
   ///Get Polls For Feed View
-  Future<List<PollModel>> getFeedPolls() async {
-    ///Implement getPolls via Cloud Functions
-    final polls = await db.collection(FireStoreCollections.polls.name).get();
-    return polls.docs.map((e) => PollModel.fromJson(e.data(), e.id)).toList();
+  Future<List<PollModel>> getFeedPolls(List<String> followId) async {
+    final result = <PollModel>[];
+    final chunkedList = <List<String>>[];
+    for (var i = 0; i < followId.length; i += 10) {
+      final end = i + 10;
+      final chunk =
+          followId.sublist(i, end > followId.length ? followId.length : end);
+      chunkedList.add(chunk);
+    }
+    for (final chunk in chunkedList) {
+      final polls = await db
+          .collection(FireStoreCollections.polls.name)
+          .where(FireStoreFields.ownerId.name, whereIn: chunk)
+          .get();
+      final list =
+          polls.docs.map((e) => PollModel.fromJson(e.data(), e.id)).toList();
+      result.addAll(list);
+    }
+
+    return result;
   }
 
   ///Get Poll Details
@@ -54,9 +70,11 @@ final class PollService extends BaseService {
   ///Create Poll
   Future<String?> createPoll(PollModel poll) async {
     try {
-      final pollId = await db
-          .collection(FireStoreCollections.polls.name)
-          .add(poll.toMap());
+      final searchIndex = generateSearchIndex('${poll.title}');
+      final pollMap = poll.toMap();
+      pollMap[FireStoreFields.searchIndex.name] = searchIndex;
+      final pollId =
+          await db.collection(FireStoreCollections.polls.name).add(pollMap);
       return pollId.id;
     } catch (e) {
       return null;
