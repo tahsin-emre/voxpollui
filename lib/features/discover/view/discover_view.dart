@@ -34,6 +34,7 @@ class _DiscoverViewState extends State<DiscoverView> with DiscoverMixin {
               label: LocaleKeys.base_search,
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _DiscoverTabView(
                   pageNotifier: pageNotifier,
@@ -42,14 +43,13 @@ class _DiscoverViewState extends State<DiscoverView> with DiscoverMixin {
                   communities: communities,
                   polls: polls,
                 ),
-                Container(
-                  margin: PagePaddings.allS,
-                  alignment: Alignment.centerLeft,
+                Padding(
+                  padding: PagePaddings.horL,
                   child: Text(
                     LocaleKeys.discover_title.tr(),
                     style: TextStyle(
-                      fontFamily: FontConstants.gilroyBold,
                       fontSize: 24,
+                      fontFamily: FontConstants.gilroyBold,
                     ),
                   ),
                 ),
