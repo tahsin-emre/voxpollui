@@ -21,7 +21,7 @@ class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: PagePaddings.allL,
+      padding: PagePaddings.horS.add(const EdgeInsets.only(bottom: 16)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [

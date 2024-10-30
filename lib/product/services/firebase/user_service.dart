@@ -61,6 +61,33 @@ final class UserService extends BaseService {
     }
   }
 
+  Future<List<String>> getFollowIds(String userId) async {
+    try {
+      final responseFollow = await db
+          .collection(FireStoreCollections.users.name)
+          .doc(userId)
+          .collection(FireStoreCollections.following.name)
+          .get();
+      final responseCommunity = await db
+          .collectionGroup(FireStoreCollections.members.name)
+          .where('userId', isEqualTo: userId)
+          .get();
+      final idList = responseCommunity.docs
+          .map((e) => e.reference.parent.parent?.id)
+          .toList();
+      final result = <String>[];
+      for (final id in idList) {
+        result.add(id ?? '');
+      }
+      for (final doc in responseFollow.docs) {
+        result.add(doc.id);
+      }
+      return result;
+    } on Exception {
+      return [];
+    }
+  }
+
   Future<List<CategoryModel>> getCategories() async {
     try {
       final response =

@@ -40,10 +40,8 @@ class _DiscoverTabView extends StatelessWidget {
                 ),
               ),
             if (page == 0 || page == 3) ...polls.map(PollTile.new),
-            // if (users.isNotEmpty ||
-            // communities.isNotEmpty ||
-            // polls.isNotEmpty)
-            //   const Divider(),
+            if (users.isNotEmpty || communities.isNotEmpty || polls.isNotEmpty)
+              const Divider(),
           ],
         );
       },
